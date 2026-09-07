@@ -16,7 +16,9 @@ import {
   Sun, 
   ArrowRight,
   Sparkles,
-  Command
+  Command,
+  Target,
+  Building2
 } from 'lucide-react';
 
 const SEARCH_ITEMS = [
@@ -47,13 +49,14 @@ const SEARCH_ITEMS = [
   { id: 'sub-math', category: 'Core Subject', title: 'Linear Algebra & Calculus (Eigenvalues, Cayley-Hamilton)', type: 'topic', topic: 'Matrices & Determinants (Maths)', tab: 'studyHub' },
 
   // Platform Tools
-  { id: 'tool-mock', category: 'Exam Tool', title: 'Mock Test Engine (70M MAKAUT / GATE / JEE CBT Timed Papers)', type: 'tool', tab: 'mockTests', icon: FileCheck },
+  { id: 'tool-mock', category: 'Exam Tool', title: 'Mock Test Engine (Dynamic 3-Step Course & Subject Studio)', type: 'tool', tab: 'mockTests', icon: FileCheck },
+  { id: 'tool-pyq', category: 'Prediction Tool', title: 'PYQ Predictor Vault (95% Yield Likelihood Matrix)', type: 'tool', tab: 'pyqVault', icon: Target },
   { id: 'tool-doubt', category: 'AI Tool', title: 'AI Instant Doubt Solver (Step Derivations & OCR)', type: 'tool', tab: 'doubtSolver', icon: HelpCircle },
-  { id: 'tool-cards', category: 'Study Tool', title: 'Flashcard Decks (Anki SM-2 Spaced Repetition)', type: 'tool', tab: 'flashcards', icon: Layers },
+  { id: 'tool-cards', category: 'Study Tool', title: 'Flashcard Studio (Anki SM-2 Spaced Repetition)', type: 'tool', tab: 'flashcards', icon: Layers },
   { id: 'tool-focus', category: 'Productivity', title: 'Pomodoro Focus Room (432Hz Alpha Waves & Rain Audio)', type: 'tool', tab: 'focusRoom', icon: Timer },
   { id: 'tool-viva', category: 'Lab Tool', title: 'AI Viva Voice Examiner (Speech Recognition Simulator)', type: 'tool', tab: 'vivaExaminer', icon: Mic },
-  { id: 'tool-twin', category: 'AI Tool', title: 'Digital Memory Twin (Ebbinghaus Forgetting Curve)', type: 'tool', tab: 'digitalTwin', icon: Brain },
-  { id: 'tool-dag', category: 'AI Tool', title: 'Knowledge DAG Graph (Prerequisite Blocker Discovery)', type: 'tool', tab: 'conceptGraph', icon: Network },
+  { id: 'tool-twin', category: 'AI Tool', title: 'Cognitive Memory Twin (Ebbinghaus Forgetting Curve)', type: 'tool', tab: 'digitalTwin', icon: Brain },
+  { id: 'tool-dag', category: 'AI Tool', title: 'Knowledge Graph (Prerequisite Blocker Discovery)', type: 'tool', tab: 'conceptGraph', icon: Network },
   { id: 'tool-cheat', category: 'Study Tool', title: '1-Page Formula Cheat Sheets (High-Yield Matrices)', type: 'tool', tab: 'cheatSheets', icon: FileText }
 ];
 
@@ -101,8 +104,8 @@ export const CommandPalette = ({
       if (onSelectTopic) onSelectTopic(item.topic);
       setActiveTab('studyHub');
     } else if (item.type === 'semester') {
-      setActiveTab('collegeHub');
-    } else {
+      setActiveTab('collegeHub', { semester: item.semNum });
+    } else if (item.tab) {
       setActiveTab(item.tab);
     }
   };
@@ -110,10 +113,10 @@ export const CommandPalette = ({
   const handleKeyDownInList = (e) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
-      setSelectedIndex((prev) => (prev + 1) % Math.max(1, filteredItems.length));
+      setSelectedIndex((prev) => (prev < filteredItems.length - 1 ? prev + 1 : 0));
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
-      setSelectedIndex((prev) => (prev - 1 + filteredItems.length) % Math.max(1, filteredItems.length));
+      setSelectedIndex((prev) => (prev > 0 ? prev - 1 : filteredItems.length - 1));
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (filteredItems[selectedIndex]) {
@@ -125,12 +128,12 @@ export const CommandPalette = ({
   return (
     <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-glass-modal bg-black/60 backdrop-blur-md animate-fade-in" />
-        <Dialog.Content className="fixed left-1/2 top-[16%] -translate-x-1/2 z-glass-modal w-[95vw] sm:w-[620px] max-h-[74vh] rounded-3xl glass-card border border-white/60 dark:border-white/12 shadow-2xl overflow-hidden flex flex-col animate-scale-in">
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md animate-fade-in" />
+        <Dialog.Content className="fixed top-[15%] left-1/2 -translate-x-1/2 z-50 w-[95vw] max-w-2xl rounded-2xl bg-[#161B22] border border-[#30363D] shadow-2xl shadow-black/80 overflow-hidden text-neutral-200 outline-none animate-scale-in">
           
           {/* Search Header Input */}
-          <div className="p-4 border-b border-[#083A4F]/10 dark:border-white/[0.08] flex items-center gap-3 bg-white/40 dark:bg-[#083A4F]/30">
-            <Search className="w-5 h-5 text-[#407E8C] shrink-0" />
+          <div className="p-4 border-b border-[#30363D] flex items-center gap-3 bg-[#0D1117]">
+            <Search className="w-5 h-5 text-[#00F59B] shrink-0" />
             <input
               ref={inputRef}
               type="text"
@@ -140,10 +143,10 @@ export const CommandPalette = ({
                 setSelectedIndex(0);
               }}
               onKeyDown={handleKeyDownInList}
-              placeholder="Search B.Tech Semesters, GATE Papers, JEE Mocks, or Topics..."
-              className="w-full bg-transparent text-sm sm:text-base text-[#083A4F] dark:text-white placeholder:text-neutral-400 focus:outline-none font-sans"
+              placeholder="Search B.Tech Semesters, GATE Papers, Mock Tests, or Topics..."
+              className="w-full bg-transparent text-sm sm:text-base text-white placeholder:text-neutral-500 focus:outline-none font-sans"
             />
-            <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-lg glass-pill text-[10px] font-mono text-[#083A4F] dark:text-[#E5E1DD]">
+            <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-[#21262D] text-[10px] font-mono text-neutral-400 border border-white/5">
               <kbd>ESC</kbd>
             </span>
           </div>
@@ -151,7 +154,7 @@ export const CommandPalette = ({
           {/* Results List */}
           <div className="p-2 overflow-y-auto max-h-[50vh] space-y-1">
             {filteredItems.length === 0 ? (
-              <div className="py-12 text-center text-xs font-mono text-neutral-400">
+              <div className="py-12 text-center text-xs font-mono text-neutral-500">
                 No matching academic topics or tools found for "{query}".
               </div>
             ) : (
@@ -164,29 +167,29 @@ export const CommandPalette = ({
                     key={item.id}
                     onClick={() => handleSelect(item)}
                     onMouseEnter={() => setSelectedIndex(idx)}
-                    className={`p-3 rounded-2xl flex items-center justify-between gap-3 text-xs transition-all cursor-pointer select-none ${
+                    className={`p-3 rounded-xl flex items-center justify-between gap-3 text-xs transition-all cursor-pointer select-none ${
                       isSelected
-                        ? 'glass-teal font-semibold border border-[#407E8C]/30 shadow-xs'
-                        : 'text-[#083A4F] dark:text-neutral-300 hover:bg-[#083A4F]/5 dark:hover:bg-white/5'
+                        ? 'bg-[#00F59B]/15 text-white font-semibold border border-[#00F59B]/40 shadow-glow-green'
+                        : 'text-neutral-300 hover:bg-white/5 border border-transparent'
                     }`}
                   >
                     <div className="flex items-center gap-3 truncate">
                       <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
                         isSelected 
-                          ? 'bg-[#083A4F] dark:bg-[#407E8C] text-white shadow-xs' 
-                          : 'glass-surface text-[#083A4F]/70 dark:text-neutral-400'
+                          ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green font-bold' 
+                          : 'bg-[#21262D] text-neutral-400'
                       }`}>
                         <Icon className="w-4 h-4" />
                       </div>
                       <div className="truncate">
-                        <div className="truncate font-medium text-[#083A4F] dark:text-white">{item.title}</div>
-                        <div className="text-[10px] font-mono text-[#407E8C] dark:text-[#6BB0C0] uppercase tracking-wider">{item.category}</div>
+                        <div className="truncate font-medium text-white">{item.title}</div>
+                        <div className="text-[10px] font-mono text-[#00F59B] uppercase tracking-wider">{item.category}</div>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-2 shrink-0">
                       {isSelected && (
-                        <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono text-[#407E8C] dark:text-[#6BB0C0]">
+                        <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono text-[#00F59B]">
                           <span>Select</span>
                           <ArrowRight className="w-3 h-3" />
                         </span>
@@ -199,7 +202,7 @@ export const CommandPalette = ({
           </div>
 
           {/* Footer Quick Keys Help */}
-          <div className="p-3 border-t border-[#083A4F]/10 dark:border-white/[0.08] bg-white/40 dark:bg-[#083A4F]/40 flex items-center justify-between text-[11px] font-mono text-[#083A4F]/70 dark:text-neutral-400 px-4">
+          <div className="p-3 border-t border-[#30363D] bg-[#0D1117] flex items-center justify-between text-[11px] font-mono text-neutral-400 px-4">
             <div className="flex items-center gap-4">
               <span>↑↓ Navigate</span>
               <span>↵ Open</span>
@@ -208,9 +211,9 @@ export const CommandPalette = ({
             {setIsDark && (
               <button
                 onClick={() => setIsDark(!isDark)}
-                className="hover:text-[#407E8C] dark:hover:text-white flex items-center gap-1 cursor-pointer transition-colors"
+                className="hover:text-[#00F59B] text-neutral-400 flex items-center gap-1 cursor-pointer transition-colors"
               >
-                {isDark ? <Sun className="w-3.5 h-3.5 text-[#A58D66]" /> : <Moon className="w-3.5 h-3.5 text-[#083A4F]" />}
+                {isDark ? <Sun className="w-3.5 h-3.5 text-[#00F59B]" /> : <Moon className="w-3.5 h-3.5 text-[#00F59B]" />}
                 <span>Toggle Theme</span>
               </button>
             )}
@@ -221,4 +224,3 @@ export const CommandPalette = ({
     </Dialog.Root>
   );
 };
-

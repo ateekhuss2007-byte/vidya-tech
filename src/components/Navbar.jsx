@@ -37,6 +37,36 @@ import {
 import { AuthModal } from './AuthModal';
 import { examStreams } from '../data/examPatterns';
 
+// Concentric arches icon inspired by Gemini Notebook
+const NotebookArchesIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5.5 h-5.5 shrink-0">
+    <path d="M3.5 19.5C3.5 10.94 10.44 4 19 4" stroke="#38BDF8" strokeWidth="2.5" strokeLinecap="round"/>
+    <path d="M3.5 19.5C3.5 13.98 7.98 9.5 13.5 9.5C16.26 9.5 18.76 10.62 20.56 12.44" stroke="#0EA5E9" strokeWidth="2.2" strokeLinecap="round"/>
+    <path d="M3.5 19.5C3.5 16.46 5.96 14 9 14C10.52 14 11.9 14.62 12.89 15.61" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+
+// Discord Icon
+const DiscordIcon = () => (
+  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+  </svg>
+);
+
+// Reddit Icon
+const RedditIcon = () => (
+  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.703zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.688-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+  </svg>
+);
+
+// X (Twitter) Icon
+const XIcon = () => (
+  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </svg>
+);
+
 export const Navbar = ({ 
   activeTab, 
   setActiveTab, 
@@ -58,14 +88,13 @@ export const Navbar = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Essential Primary Links
+  // Clean Reference Navigation Links
   const navLinks = [
-    { id: 'home', label: 'Home' },
+    { id: 'home', label: 'Overview' },
     { id: 'studyHub', label: 'Study Room' },
-    { id: 'dashboard', label: 'Dashboard' },
+    { id: 'collegeHub', label: 'Curriculum' },
     { id: 'mockTests', label: 'Mock Tests' },
-    { id: 'doubtSolver', label: 'Doubt Solver' },
-    { id: 'collegeHub', label: 'Curriculum' }
+    { id: 'dashboard', label: 'Dashboard' }
   ];
 
   const handleLogout = () => {
@@ -83,35 +112,30 @@ export const Navbar = ({
     <>
       <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         isScrolled
-          ? 'backdrop-blur-xl bg-[#FAF9F7]/95 dark:bg-[#083A4F]/95 border-b border-[#083A4F]/15 dark:border-white/15 shadow-sm'
-          : 'backdrop-blur-md bg-[#FAF9F7]/80 dark:bg-[#083A4F]/80 border-b border-[#083A4F]/5 dark:border-white/5'
+          ? 'bg-white/90 dark:bg-[#060B14]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 shadow-[0_2px_15px_rgba(0,0,0,0.04)]'
+          : 'bg-white dark:bg-[#060B14] border-b border-slate-200/50 dark:border-slate-800/50'
       }`}>
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-18">
-            
-            {/* 1. Left: Minimal Brand Logo */}
-            <div className="flex items-center gap-6">
-              <button 
-                type="button"
-                onClick={() => setActiveTab('home')} 
-                className="flex items-center gap-2.5 text-left group cursor-pointer focus:outline-none"
-              >
-                <div className="w-8 h-8 rounded-xl bg-[#083A4F] text-white flex items-center justify-center shadow-xs border border-[#407E8C]/30 group-hover:border-[#407E8C] transition-colors">
-                  <Brain className="w-4 h-4 text-[#407E8C]" />
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="font-display font-extrabold text-lg tracking-tight text-[#083A4F] dark:text-white">
-                    VIDYA
-                  </span>
-                  <span className="text-[11px] font-bold px-1.5 py-0.5 rounded-md bg-[#A58D66] text-white tracking-wider">
-                    AI
-                  </span>
-                </div>
-              </button>
-            </div>
+        <div className="w-full px-5 sm:px-8 md:px-12 lg:px-16 flex items-center justify-between h-16 sm:h-17">
+          
+          {/* 1. Left: Gemini Notebook-style Logo (Blue Arches + Vidya AI) */}
+          <div className="flex items-center shrink-0">
+            <button 
+              type="button"
+              onClick={() => setActiveTab('home')} 
+              className="flex items-center gap-2.5 text-left group cursor-pointer focus:outline-none"
+            >
+              <NotebookArchesIcon />
+              <span className="font-sans font-medium text-[17px] sm:text-[18px] tracking-tight text-slate-900 dark:text-white">
+                Vidya AI
+              </span>
+            </button>
+          </div>
 
-            {/* 2. Center: Clean, Airy Navigation Links */}
-            <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+          {/* 2. Right: Overview (underlined) + Links + Discord/Reddit/X + Get the App */}
+          <div className="flex items-center gap-5 sm:gap-6 lg:gap-7">
+            
+            {/* Primary Nav Links */}
+            <nav className="hidden md:flex items-center gap-5 lg:gap-6">
               {navLinks.map((link) => {
                 const isActive = activeTab === link.id;
 
@@ -120,155 +144,164 @@ export const Navbar = ({
                     key={link.id}
                     type="button"
                     onClick={() => setActiveTab(link.id)}
-                    className={`relative px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all cursor-pointer ${
+                    className={`relative text-[14px] transition-colors cursor-pointer py-1 ${
                       isActive
-                        ? 'text-[#083A4F] dark:text-white font-semibold'
-                        : 'text-[#083A4F]/70 dark:text-[#E5E1DD]/75 hover:text-[#083A4F] dark:hover:text-white hover:bg-[#083A4F]/5 dark:hover:bg-white/5'
+                        ? 'text-slate-900 dark:text-white font-medium border-b-2 border-slate-900 dark:border-white'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-normal'
                     }`}
                   >
-                    {/* Minimal active indicator */}
-                    {isActive && (
-                      <motion.div
-                        layoutId="navActivePill"
-                        transition={{ type: "spring", stiffness: 450, damping: 35 }}
-                        className="absolute inset-0 bg-[#083A4F]/8 dark:bg-white/10 rounded-xl -z-10"
-                      />
-                    )}
-                    <span>{link.label}</span>
-                    {isActive && (
-                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#407E8C] rounded-full" />
-                    )}
+                    {link.label}
                   </button>
                 );
               })}
             </nav>
 
-            {/* 3. Right: Search, Theme Toggle, and Primary Action */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              
-              {/* Universal Search Button */}
+            {/* Social Icons (Discord, Reddit, X) */}
+            <div className="hidden lg:flex items-center gap-3.5 text-slate-700 dark:text-slate-300 pl-1 border-l border-slate-200 dark:border-slate-800">
+              <a 
+                href="https://discord.com" 
+                target="_blank" 
+                rel="noreferrer" 
+                aria-label="Discord Community"
+                className="p-1 hover:text-sky-500 transition-colors"
+              >
+                <DiscordIcon />
+              </a>
+              <a 
+                href="https://reddit.com" 
+                target="_blank" 
+                rel="noreferrer" 
+                aria-label="Reddit Community"
+                className="p-1 hover:text-sky-500 transition-colors"
+              >
+                <RedditIcon />
+              </a>
+              <a 
+                href="https://x.com" 
+                target="_blank" 
+                rel="noreferrer" 
+                aria-label="X (Twitter)"
+                className="p-1 hover:text-sky-500 transition-colors"
+              >
+                <XIcon />
+              </a>
+            </div>
+
+            {/* Utility Search & Theme Toggle */}
+            <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
               <button
                 type="button"
                 onClick={onOpenSearch}
                 aria-label="Search"
-                className="p-2 sm:px-3 sm:py-1.5 rounded-xl text-[#083A4F]/75 dark:text-[#E5E1DD]/80 hover:text-[#083A4F] dark:hover:text-white hover:bg-[#083A4F]/5 dark:hover:bg-white/10 transition-all flex items-center gap-2 cursor-pointer border border-transparent hover:border-[#083A4F]/10 dark:hover:border-white/10"
+                className="p-1.5 rounded-lg hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer"
               >
-                <Search className="w-4 h-4 text-[#407E8C]" />
-                <span className="hidden lg:inline text-xs font-mono">Search</span>
-                <kbd className="hidden lg:inline-flex items-center text-[10px] px-1.5 py-0.5 rounded bg-[#083A4F]/8 dark:bg-white/10 font-mono text-[#083A4F]/70 dark:text-[#E5E1DD]/70">
-                  ⌘K
-                </kbd>
+                <Search className="w-4 h-4" />
               </button>
 
-              {/* Theme Toggle Button */}
               <button
                 type="button"
                 onClick={() => setIsDark(!isDark)}
                 aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                className="p-2 rounded-xl text-[#083A4F]/75 dark:text-[#E5E1DD]/80 hover:text-[#083A4F] dark:hover:text-white hover:bg-[#083A4F]/5 dark:hover:bg-white/10 transition-all cursor-pointer"
+                className="p-1.5 rounded-lg hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer"
               >
                 {isDark ? (
-                  <Sun className="w-4 h-4 text-[#A58D66]" />
+                  <Sun className="w-4 h-4 text-sky-400" />
                 ) : (
-                  <Moon className="w-4 h-4 text-[#083A4F]" />
+                  <Moon className="w-4 h-4 text-slate-700" />
                 )}
               </button>
+            </div>
 
-              {/* Primary User Account or Sign In CTA */}
-              {user ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button 
-                      type="button"
-                      className="flex items-center gap-2 p-1 rounded-full hover:ring-2 hover:ring-[#407E8C]/40 transition-all cursor-pointer focus:outline-none"
-                    >
-                      <Avatar className="w-8 h-8 border border-[#407E8C]/30">
-                        <AvatarImage src={user.avatar} alt={user.name} />
-                        <AvatarFallback className="bg-[#083A4F] text-white font-bold text-xs">
-                          {user.name ? user.name.slice(0, 2).toUpperCase() : 'AK'}
-                        </AvatarFallback>
-                      </Avatar>
-                    </button>
-                  </DropdownMenuTrigger>
-
-                  <DropdownMenuContent
-                    side="bottom"
-                    align="end"
-                    className="z-50 min-w-[220px] p-2 rounded-2xl bg-[#FAF9F7] dark:bg-[#062432] border border-[#083A4F]/15 dark:border-[#407E8C]/25 shadow-xl text-xs space-y-1"
+            {/* Rightmost Action: "Get the app" and User Profile / Sign In */}
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button 
+                    type="button"
+                    className="flex items-center gap-2 p-0.5 rounded-full hover:ring-2 hover:ring-sky-400 transition-all cursor-pointer focus:outline-none shrink-0"
                   >
-                    <div className="px-3 py-2 border-b border-[#083A4F]/10 dark:border-white/10">
-                      <div className="font-bold text-[#083A4F] dark:text-white truncate">{user.name}</div>
-                      <div className="text-[10px] text-neutral-500 font-mono truncate">{user.email}</div>
-                      <div className="mt-1.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#A58D66]/20 text-[#A58D66] dark:text-[#C5AF88] font-mono text-[9px] font-bold">
-                        <Award className="w-2.5 h-2.5" />
-                        {user.plan || 'Pro Scholar'}
-                      </div>
-                    </div>
+                    <Avatar className="w-8 h-8 border border-slate-200 dark:border-slate-700">
+                      <AvatarImage src={user.avatar} alt={user.name} />
+                      <AvatarFallback className="bg-sky-500 text-white font-medium text-xs">
+                        {user.name ? user.name.slice(0, 2).toUpperCase() : 'AK'}
+                      </AvatarFallback>
+                    </Avatar>
+                  </button>
+                </DropdownMenuTrigger>
 
-                    <DropdownMenuItem
-                      onClick={() => setActiveTab('dashboard')}
-                      className="px-3 py-2 rounded-xl hover:bg-[#083A4F]/5 dark:hover:bg-white/5 flex items-center gap-2 cursor-pointer font-medium text-neutral-700 dark:text-neutral-300"
-                    >
-                      <LayoutDashboard className="w-3.5 h-3.5" />
-                      <span>Student Dashboard</span>
-                    </DropdownMenuItem>
+                <DropdownMenuContent
+                  side="bottom"
+                  align="end"
+                  className="z-50 min-w-[220px] p-2 rounded-2xl bg-white/95 dark:bg-[#0B132B]/95 backdrop-blur-2xl border border-slate-200 dark:border-slate-800 shadow-xl text-xs space-y-1"
+                >
+                  <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800">
+                    <div className="font-semibold text-slate-900 dark:text-white text-sm truncate">{user.name}</div>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono truncate">{user.email}</div>
+                  </div>
 
-                    <DropdownMenuItem
-                      onClick={() => setActiveTab('conceptGraph')}
-                      className="px-3 py-2 rounded-xl hover:bg-[#083A4F]/5 dark:hover:bg-white/5 flex items-center gap-2 cursor-pointer font-medium text-neutral-700 dark:text-neutral-300"
-                    >
-                      <Network className="w-3.5 h-3.5" />
-                      <span>Curriculum Graph</span>
-                    </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => setActiveTab('dashboard')}
+                    className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2.5 cursor-pointer font-medium text-slate-700 dark:text-slate-200"
+                  >
+                    <LayoutDashboard className="w-3.5 h-3.5 text-sky-500" />
+                    <span>Dashboard</span>
+                  </DropdownMenuItem>
 
-                    <DropdownMenuSeparator />
+                  <DropdownMenuSeparator />
 
-                    <DropdownMenuItem
-                      onClick={handleLogout}
-                      className="px-3 py-2 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center gap-2 cursor-pointer font-medium"
-                    >
-                      <LogOut className="w-3.5 h-3.5" />
-                      <span>Sign Out</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    className="px-3 py-2 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center gap-2.5 cursor-pointer font-medium"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <div className="flex items-center gap-4">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('studyHub')}
+                  className="hidden sm:inline-block text-[14px] font-normal text-slate-900 dark:text-white hover:text-sky-500 transition-colors cursor-pointer"
+                >
+                  Get the app
+                </button>
                 <button
                   type="button"
                   onClick={() => setAuthModalOpen(true)}
-                  className="px-4 py-2 rounded-xl bg-[#407E8C] hover:bg-[#346875] text-white font-semibold text-xs transition-all shadow-xs flex items-center gap-1.5 cursor-pointer shrink-0"
+                  className="text-[13px] font-medium px-4 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 transition-all cursor-pointer shadow-xs"
                 >
-                  <LogIn className="w-3.5 h-3.5" />
-                  <span>Sign In</span>
+                  Sign In
                 </button>
-              )}
+              </div>
+            )}
 
-              {/* Mobile Hamburger Menu Button */}
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(true)}
-                className="md:hidden p-2 rounded-xl text-[#083A4F] dark:text-white hover:bg-[#083A4F]/5 dark:hover:bg-white/10 shrink-0 cursor-pointer"
-                aria-label="Open navigation menu"
-              >
-                <Menu className="w-5 h-5" />
-              </button>
-
-            </div>
+            {/* Mobile Hamburger Menu Button */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="md:hidden p-1.5 rounded-lg text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 shrink-0 cursor-pointer"
+              aria-label="Open navigation menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
 
           </div>
+
         </div>
       </header>
 
       {/* Clean Mobile Drawer Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <div className="fixed inset-0 z-50 md:hidden">
+          <div className="fixed inset-0 z-50 lg:hidden">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setMobileMenuOpen(false)}
-              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             />
             
             <motion.div
@@ -276,30 +309,30 @@ export const Navbar = ({
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: "spring", stiffness: 350, damping: 32 }}
-              className="absolute top-0 right-0 bottom-0 w-[80vw] max-w-[320px] bg-[#FAF9F7] dark:bg-[#052735] p-5 shadow-2xl z-10 flex flex-col justify-between overflow-y-auto"
+              className="absolute top-0 right-0 bottom-0 w-[85vw] max-w-[340px] bg-[#F8FAFC] dark:bg-[#060B14] p-6 shadow-2xl z-10 flex flex-col justify-between overflow-y-auto border-l border-white/60 dark:border-sky-500/20"
             >
               <div className="space-y-6">
                 {/* Drawer Header */}
-                <div className="flex items-center justify-between pb-3 border-b border-[#083A4F]/10 dark:border-white/10">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-[#083A4F] text-white flex items-center justify-center">
-                      <Brain className="w-4 h-4 text-[#407E8C]" />
+                <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-sky-500/20">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-sky-400 via-sky-500 to-blue-600 text-white flex items-center justify-center shadow-sm">
+                      <Brain className="w-4 h-4 text-white" />
                     </div>
-                    <span className="font-display font-extrabold text-base text-[#083A4F] dark:text-white">
+                    <span className="font-montserrat font-extrabold text-lg text-slate-900 dark:text-white">
                       VIDYA AI
                     </span>
                   </div>
                   <button 
                     type="button"
                     onClick={() => setMobileMenuOpen(false)} 
-                    className="p-1.5 rounded-lg text-neutral-400 hover:text-neutral-700 dark:hover:text-white cursor-pointer"
+                    className="p-2 rounded-xl text-slate-400 hover:text-slate-700 dark:hover:text-white cursor-pointer"
                   >
                     <X className="w-5 h-5" />
                   </button>
                 </div>
 
                 {/* Mobile Navigation Links */}
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   {navLinks.map((link) => {
                     const isActive = activeTab === link.id;
                     return (
@@ -310,10 +343,10 @@ export const Navbar = ({
                           setActiveTab(link.id);
                           setMobileMenuOpen(false);
                         }}
-                        className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                        className={`w-full text-left px-4 py-3 rounded-2xl text-sm font-semibold transition-all cursor-pointer ${
                           isActive
-                            ? 'bg-[#407E8C] text-white font-semibold shadow-xs'
-                            : 'text-[#083A4F] dark:text-neutral-200 hover:bg-[#083A4F]/5 dark:hover:bg-white/5'
+                            ? 'bg-gradient-to-r from-sky-400 to-blue-600 text-white shadow-md shadow-sky-500/20'
+                            : 'text-slate-700 dark:text-slate-200 hover:bg-sky-500/10 dark:hover:bg-sky-400/10'
                         }`}
                       >
                         {link.label}
@@ -324,7 +357,7 @@ export const Navbar = ({
               </div>
 
               {/* Drawer Bottom Actions */}
-              <div className="pt-4 border-t border-[#083A4F]/10 dark:border-white/10 space-y-2">
+              <div className="pt-5 border-t border-slate-200 dark:border-sky-500/20 space-y-3">
                 {!user ? (
                   <button
                     type="button"
@@ -332,7 +365,7 @@ export const Navbar = ({
                       setMobileMenuOpen(false);
                       setAuthModalOpen(true);
                     }}
-                    className="w-full py-2.5 rounded-xl bg-[#407E8C] text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-xs"
+                    className="w-full py-3.5 rounded-full liquid-glass-button text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md cursor-pointer"
                   >
                     <LogIn className="w-4 h-4" />
                     <span>Sign In</span>
@@ -344,7 +377,7 @@ export const Navbar = ({
                       setMobileMenuOpen(false);
                       handleLogout();
                     }}
-                    className="w-full py-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 font-semibold text-xs flex items-center justify-center gap-2"
+                    className="w-full py-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Sign Out</span>

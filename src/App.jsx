@@ -158,14 +158,14 @@ export const App = () => {
 
   return (
     <TooltipProvider delayDuration={150}>
-      <div className="min-h-screen bg-[#FAF9F7] dark:bg-[#052735] text-[#083A4F] dark:text-[#FAF9F8] flex flex-col font-sans transition-colors duration-300 selection:bg-[#407E8C] selection:text-white relative overflow-x-hidden">
+      <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#060B14] text-[#0F172A] dark:text-[#F1F5F9] flex flex-col font-sans transition-colors duration-300 selection:bg-sky-400 selection:text-white relative overflow-x-hidden">
         
-        {/* Brand Ambient Fluid Glows (Navy, Teal, Gold & Sand) for Frosted Glass Refraction */}
+        {/* Google Sky Blue Fluid Ambient Light Mesh for Liquid Glass Refraction */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-          <div className="liquid-ambient-orb liquid-orb-navy w-[680px] h-[680px] -top-28 -left-20 opacity-45 dark:opacity-60" />
-          <div className="liquid-ambient-orb liquid-orb-teal w-[620px] h-[620px] top-[28%] -right-32 opacity-50 dark:opacity-45" />
-          <div className="liquid-ambient-orb liquid-orb-sand w-[580px] h-[580px] top-[58%] -left-28 opacity-60 dark:opacity-30" />
-          <div className="liquid-ambient-orb liquid-orb-gold w-[520px] h-[520px] -bottom-24 right-[12%] opacity-40 dark:opacity-35" />
+          <div className="absolute w-[700px] h-[700px] -top-32 -left-20 bg-sky-400/15 dark:bg-sky-500/15 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute w-[640px] h-[640px] top-[24%] -right-36 bg-blue-500/12 dark:bg-blue-600/18 rounded-full blur-[130px] pointer-events-none" />
+          <div className="absolute w-[580px] h-[580px] top-[60%] -left-28 bg-cyan-300/10 dark:bg-sky-400/10 rounded-full blur-[110px] pointer-events-none" />
+          <div className="absolute w-[500px] h-[500px] -bottom-24 right-[12%] bg-sky-500/12 dark:bg-blue-700/15 rounded-full blur-[120px] pointer-events-none" />
         </div>
       
         {/* Toast Notifications */}

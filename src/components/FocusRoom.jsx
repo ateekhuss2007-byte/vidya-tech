@@ -65,7 +65,6 @@ export const FocusRoom = () => {
   // Clean Web Audio Synthesizer for Ambient Binaural Alpha Waves
   const toggleAmbientSound = (soundType) => {
     if (activeAudio === soundType) {
-      // Stop
       if (oscillatorRef.current) {
         try {
           oscillatorRef.current.stop();
@@ -94,18 +93,17 @@ export const FocusRoom = () => {
       const gain = ctx.createGain();
 
       if (soundType === 'alpha') {
-        // 432 Hz Alpha wave tuned focus tone
         osc.type = 'sine';
         osc.frequency.setValueAtTime(432, ctx.currentTime);
         gain.gain.setValueAtTime(0.04, ctx.currentTime);
-      } else if (soundType === 'whitenoise') {
+      } else if (soundType === 'rain') {
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(220, ctx.currentTime);
-        gain.gain.setValueAtTime(0.03, ctx.currentTime);
-      } else {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(174, ctx.currentTime); // 174Hz deep relaxing frequency
+        osc.frequency.setValueAtTime(174, ctx.currentTime);
         gain.gain.setValueAtTime(0.05, ctx.currentTime);
+      } else {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(80, ctx.currentTime);
+        gain.gain.setValueAtTime(0.02, ctx.currentTime);
       }
 
       osc.connect(gain);
@@ -115,10 +113,9 @@ export const FocusRoom = () => {
       oscillatorRef.current = osc;
       gainNodeRef.current = gain;
       setActiveAudio(soundType);
-      toast.success(`Playing Ambient ${soundType.toUpperCase()} Focus Waves!`);
+      toast.success(`Ambient Audio Active: ${soundType.toUpperCase()} Soundscape`);
     } catch (err) {
-      toast.info(`Ambient audio simulated for ${soundType}.`);
-      setActiveAudio(soundType);
+      toast.error('Web Audio not supported in this environment.');
     }
   };
 
@@ -147,28 +144,28 @@ export const FocusRoom = () => {
   };
 
   return (
-    <div className="w-full fluid-container py-6 sm:py-10 animate-fade-in space-y-8">
+    <div className="w-full fluid-container py-6 sm:py-8 animate-fade-in space-y-6">
       
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-300 text-xs font-bold mb-2">
-            <Timer className="w-3.5 h-3.5 text-emerald-500" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 text-xs font-mono font-bold mb-2 shadow-glow-green">
+            <Timer className="w-3.5 h-3.5 text-[#00F59B]" />
             <span>Deep Focus & Cognitive Recovery Studio</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-white">
             Pomodoro Study Room & Lo-Fi Studio
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-2xl">
+          <p className="text-xs sm:text-sm text-neutral-400 mt-1 max-w-2xl font-sans">
             25-minute deep focus sprints with built-in binaural alpha waves and micro-break routines to prevent mental fatigue.
           </p>
         </div>
 
-        <div className="p-3.5 rounded-2xl bg-white dark:bg-[#0D1326] border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex items-center gap-3">
-          <Flame className="w-5 h-5 text-amber-500" />
+        <div className="p-3.5 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm flex items-center gap-3">
+          <Flame className="w-5 h-5 text-[#00F59B]" />
           <div>
-            <div className="text-[11px] text-slate-400">Completed Sprints</div>
-            <div className="text-sm font-bold text-slate-900 dark:text-white font-mono">{completedPomodoros} Focus Blocks (1.25 hrs)</div>
+            <div className="text-[11px] text-neutral-400 font-mono">Completed Sprints</div>
+            <div className="text-sm font-bold text-white font-mono">{completedPomodoros} Focus Blocks (1.25 hrs)</div>
           </div>
         </div>
       </div>
@@ -179,30 +176,31 @@ export const FocusRoom = () => {
         {/* Left Column (7 cols): Pomodoro Clock & Ambient Audio */}
         <div className="lg:col-span-7 space-y-6">
           
-          <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 text-white shadow-xl border border-emerald-900/40 text-center space-y-8">
-            
+          <div className="p-8 sm:p-12 rounded-3xl bg-[#0D1117] text-white shadow-xl border border-[#30363D] text-center space-y-8 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#00F59B]/10 rounded-full blur-3xl pointer-events-none" />
+
             {/* Mode Pills */}
-            <div className="inline-flex items-center gap-2 p-1.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10">
+            <div className="inline-flex items-center gap-2 p-1.5 rounded-2xl bg-[#161B22] border border-[#30363D] relative z-10">
               <button
                 onClick={() => setTimerMode('focus', 25)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                  mode === 'focus' ? 'bg-emerald-600 text-white shadow-md' : 'text-slate-300 hover:text-white'
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  mode === 'focus' ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green font-mono' : 'text-neutral-400 hover:text-white font-mono'
                 }`}
               >
                 🧠 Deep Focus (25m)
               </button>
               <button
                 onClick={() => setTimerMode('shortBreak', 5)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                  mode === 'shortBreak' ? 'bg-emerald-600 text-white shadow-md' : 'text-slate-300 hover:text-white'
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  mode === 'shortBreak' ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green font-mono' : 'text-neutral-400 hover:text-white font-mono'
                 }`}
               >
                 ☕ Short Break (5m)
               </button>
               <button
                 onClick={() => setTimerMode('longBreak', 15)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                  mode === 'longBreak' ? 'bg-emerald-600 text-white shadow-md' : 'text-slate-300 hover:text-white'
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  mode === 'longBreak' ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green font-mono' : 'text-neutral-400 hover:text-white font-mono'
                 }`}
               >
                 🌴 Long Break (15m)
@@ -210,30 +208,30 @@ export const FocusRoom = () => {
             </div>
 
             {/* Huge Digital Countdown */}
-            <div className="space-y-2">
-              <div className="text-6xl sm:text-8xl font-display font-extrabold tracking-tight font-mono text-emerald-400 drop-shadow-md">
+            <div className="space-y-2 relative z-10">
+              <div className="text-6xl sm:text-8xl font-display font-extrabold tracking-tight font-mono text-[#00F59B] drop-shadow-[0_0_20px_rgba(0,245,155,0.35)]">
                 {formatTime(timeLeft)}
               </div>
-              <div className="text-xs font-mono text-slate-400">
+              <div className="text-xs font-mono text-neutral-400">
                 {isRunning ? '● Focus sprint in progress...' : 'Paused — ready when you are'}
               </div>
             </div>
 
             {/* Play / Pause / Reset Buttons */}
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex items-center justify-center gap-4 relative z-10">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsRunning(!isRunning)}
-                className="px-8 py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm shadow-lg shadow-emerald-500/20 flex items-center gap-2"
+                className="px-8 py-3.5 rounded-2xl bg-[#00F59B] hover:bg-[#1AFFB2] text-[#07090D] font-extrabold text-sm shadow-glow-green flex items-center gap-2 cursor-pointer transition-all"
               >
-                {isRunning ? <Pause className="w-5 h-5 fill-slate-950" /> : <Play className="w-5 h-5 fill-slate-950" />}
+                {isRunning ? <Pause className="w-5 h-5 fill-[#07090D]" /> : <Play className="w-5 h-5 fill-[#07090D]" />}
                 <span>{isRunning ? 'Pause Timer' : 'Start Focus Sprint'}</span>
               </motion.button>
 
               <button
                 onClick={() => setTimeLeft(mode === 'focus' ? 25 * 60 : 5 * 60)}
-                className="p-3.5 rounded-2xl bg-white/10 hover:bg-white/20 text-slate-300 transition-all"
+                className="p-3.5 rounded-2xl bg-[#161B22] hover:bg-[#21262D] text-neutral-300 border border-[#30363D] transition-all cursor-pointer"
                 title="Reset Timer"
               >
                 <RotateCcw className="w-5 h-5" />
@@ -243,14 +241,14 @@ export const FocusRoom = () => {
           </div>
 
           {/* Ambient Study Audio Selector */}
-          <div className="p-6 rounded-3xl bg-white dark:bg-[#0D1326] border border-slate-200/80 dark:border-slate-800/80 shadow-sm space-y-4">
+          <div className="p-6 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-                <Headphones className="w-4 h-4 text-emerald-500" />
+              <h3 className="font-bold text-sm text-white flex items-center gap-2">
+                <Headphones className="w-4 h-4 text-[#00F59B]" />
                 <span>Ambient Study Audio & Binaural Beats</span>
               </h3>
               {activeAudio && (
-                <span className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
+                <span className="text-[11px] font-mono text-[#00F59B] font-bold flex items-center gap-1">
                   <Volume2 className="w-3.5 h-3.5 animate-pulse" /> Playing
                 </span>
               )}
@@ -265,15 +263,15 @@ export const FocusRoom = () => {
                 <button
                   key={sound.id}
                   onClick={() => toggleAmbientSound(sound.id)}
-                  className={`p-3.5 rounded-2xl border text-left transition-all ${
+                  className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer ${
                     activeAudio === sound.id
-                      ? 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-500 text-emerald-900 dark:text-emerald-200 font-bold shadow-sm'
-                      : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-emerald-400'
+                      ? 'bg-[#00F59B]/15 border-[#00F59B] text-white font-bold shadow-glow-green'
+                      : 'bg-[#161B22] border-[#30363D] text-neutral-300 hover:border-[#00F59B]/50'
                   }`}
                 >
                   <div className="text-xl mb-1">{sound.icon}</div>
-                  <div className="text-xs font-bold">{sound.name}</div>
-                  <div className="text-[10px] text-slate-400">{sound.desc}</div>
+                  <div className="text-xs font-bold text-white">{sound.name}</div>
+                  <div className="text-[10px] text-neutral-400">{sound.desc}</div>
                 </button>
               ))}
             </div>
@@ -284,9 +282,9 @@ export const FocusRoom = () => {
         {/* Right Column (5 cols): Sprint Task Goal Checklist */}
         <div className="lg:col-span-5 space-y-6">
           
-          <div className="p-6 rounded-3xl bg-white dark:bg-[#0D1326] border border-slate-200/80 dark:border-slate-800/80 shadow-sm space-y-4">
-            <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+          <div className="p-6 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm space-y-4">
+            <h3 className="font-bold text-sm text-white flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-[#00F59B]" />
               <span>Sprint Goals for this Session</span>
             </h3>
 
@@ -295,16 +293,16 @@ export const FocusRoom = () => {
                 <div
                   key={t.id}
                   onClick={() => toggleTask(t.id)}
-                  className={`p-3 rounded-2xl border text-xs cursor-pointer transition-all flex items-center gap-3 ${
+                  className={`p-3 rounded-xl border text-xs cursor-pointer transition-all flex items-center gap-3 ${
                     t.completed
-                      ? 'bg-emerald-50/60 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-900/40 text-slate-400 line-through'
-                      : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:border-emerald-400'
+                      ? 'bg-[#161B22]/40 border-[#30363D] text-neutral-500 line-through'
+                      : 'bg-[#161B22] border-[#30363D] text-neutral-200 hover:border-[#00F59B]/40'
                   }`}
                 >
                   <div className={`w-4 h-4 rounded-md flex items-center justify-center border ${
-                    t.completed ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300 dark:border-slate-600'
+                    t.completed ? 'bg-[#00F59B] border-[#00F59B] text-[#07090D]' : 'border-neutral-600'
                   }`}>
-                    {t.completed && <CheckCircle2 className="w-3 h-3 text-white" />}
+                    {t.completed && <CheckCircle2 className="w-3 h-3 text-[#07090D]" />}
                   </div>
                   <span>{t.text}</span>
                 </div>
@@ -317,11 +315,11 @@ export const FocusRoom = () => {
                 value={newTaskText}
                 onChange={(e) => setNewTaskText(e.target.value)}
                 placeholder="Add goal for next 25-min sprint..."
-                className="flex-1 px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs outline-none focus:ring-2 focus:ring-emerald-500"
+                className="flex-1 px-3.5 py-2 rounded-xl bg-[#161B22] border border-[#30363D] text-white placeholder:text-neutral-500 text-xs outline-none focus:border-[#00F59B]"
               />
               <button
                 type="submit"
-                className="px-3.5 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-500"
+                className="px-3.5 py-2 rounded-xl bg-[#00F59B] hover:bg-[#1AFFB2] text-[#07090D] text-xs font-bold shadow-glow-green cursor-pointer"
               >
                 Add
               </button>

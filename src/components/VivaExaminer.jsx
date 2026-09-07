@@ -100,22 +100,40 @@ export const VivaExaminer = () => {
   const handleToggleMic = () => {
     if (!isRecording) {
       setIsRecording(true);
-      toast.info('Microphone active. Speak your answer clearly or type below.');
-      // Simulated speech to text fallback if Web Speech API isn't active
-      if (studentAnswer.length === 0) {
+      toast.info('Microphone active. Speak your answer clearly...');
+      
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        const recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.lang = 'en-US';
+        recognition.onresult = (event) => {
+          const transcript = event.results[0][0].transcript;
+          setStudentAnswer(prev => prev ? `${prev} ${transcript}` : transcript);
+          setIsRecording(false);
+          toast.success('Speech transcribed!');
+        };
+        recognition.onerror = () => {
+          setIsRecording(false);
+          toast.error('Could not capture audio. Please type your answer.');
+        };
+        recognition.start();
+      } else {
         setTimeout(() => {
-          setStudentAnswer("AVL trees are strictly balanced with balance factor between -1 and +1, ensuring O(log n) search time. In read-heavy database indices, AVL is superior because search lookups are faster.");
-        }, 1500);
+          setIsRecording(false);
+          setStudentAnswer(currentQ.sampleAnswer);
+          toast.success('Speech recognized (simulated demo transcript inserted)!');
+        }, 3000);
       }
     } else {
       setIsRecording(false);
-      toast.success('Speech captured.');
+      toast.info('Microphone stopped.');
     }
   };
 
   const handleEvaluateAnswer = () => {
     if (!studentAnswer.trim()) {
-      toast.error('Please record or type your answer before submitting to the examiner.');
+      toast.error('Please speak or type your answer before submitting.');
       return;
     }
 
@@ -172,28 +190,28 @@ export const VivaExaminer = () => {
   };
 
   return (
-    <div className="w-full fluid-container py-6 sm:py-10 animate-fade-in space-y-8">
+    <div className="w-full fluid-container py-6 sm:py-8 animate-fade-in space-y-6">
       
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 text-xs font-bold mb-2">
-            <Mic className="w-3.5 h-3.5 text-indigo-500" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 text-xs font-mono font-bold mb-2 shadow-glow-green">
+            <Mic className="w-3.5 h-3.5 text-[#00F59B]" />
             <span>AI External Examiner & Lab Simulator</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-white">
             Live College Viva Voice Examiner
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-2xl">
-            Simulate real university external viva voice examinations. Get scored on technical accuracy, keywords, and speech clarity.
+          <p className="text-xs sm:text-sm text-neutral-400 mt-1 max-w-2xl font-sans">
+            Simulate real university external viva examinations. Get scored on technical accuracy, keywords, and speech clarity.
           </p>
         </div>
 
         {/* Overall session badge */}
         {sessionScore.count > 0 && (
-          <div className="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-900/50 text-right">
-            <div className="text-[11px] text-slate-500">Average Viva Grade</div>
-            <div className="text-xl font-extrabold text-indigo-600 font-display">
+          <div className="p-4 rounded-2xl bg-[#161B22] border border-[#00F59B]/40 text-right">
+            <div className="text-[11px] font-mono text-neutral-400">Average Viva Grade</div>
+            <div className="text-xl font-extrabold text-[#00F59B] font-display">
               {(sessionScore.totalMarks / sessionScore.count).toFixed(1)} / 100
             </div>
           </div>
@@ -201,7 +219,7 @@ export const VivaExaminer = () => {
       </div>
 
       {/* Subject Selector */}
-      <div className="p-2 rounded-2xl bg-white dark:bg-[#0D1326] border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex flex-wrap gap-2">
+      <div className="p-2 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm flex flex-wrap gap-2">
         {[
           { id: 'dsa', name: 'Data Structures & Algorithms (B.Tech / BCA)', icon: '🌳' },
           { id: 'os', name: 'Operating Systems & Concurrency', icon: '⚡' },
@@ -215,10 +233,10 @@ export const VivaExaminer = () => {
               setStudentAnswer('');
               setEvaluationResult(null);
             }}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               selectedSubject === sub.id
-                ? 'bg-indigo-600 text-white shadow-md scale-[1.02]'
-                : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green scale-[1.02]'
+                : 'text-neutral-400 hover:text-white hover:bg-[#161B22]'
             }`}
           >
             <span>{sub.icon}</span>
@@ -234,46 +252,48 @@ export const VivaExaminer = () => {
         <div className="lg:col-span-8 space-y-6">
           
           {/* Active Question Box with Voice Trigger */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-950 text-white shadow-xl border border-indigo-900/50 space-y-4">
-            <div className="flex items-center justify-between">
+          <div className="p-6 sm:p-7 rounded-2xl bg-[#0D1117] text-white shadow-xl border border-[#30363D] space-y-4 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#00F59B]/10 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="flex items-center justify-between relative z-10">
               <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold">
+                <div className="w-10 h-10 rounded-xl bg-[#161B22] border border-[#00F59B]/40 text-[#00F59B] flex items-center justify-center font-bold text-lg">
                   👨‍🏫
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm text-white font-display">External Examiner (IIT / University Panel)</h3>
-                  <div className="text-xs text-indigo-300 font-mono">Question {currentQIndex + 1} of {questions.length}</div>
+                  <h3 className="font-bold text-sm text-white font-display">External Examiner (University Panel)</h3>
+                  <div className="text-xs text-[#00F59B] font-mono">Question {currentQIndex + 1} of {questions.length}</div>
                 </div>
               </div>
 
               <button
                 onClick={handleSpeakQuestion}
-                className="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 text-xs font-bold transition-all flex items-center gap-1.5"
+                className="px-3.5 py-1.5 rounded-xl bg-[#161B22] hover:bg-[#21262D] border border-[#30363D] text-neutral-200 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
               >
-                <Volume2 className="w-4 h-4 text-indigo-400" />
+                <Volume2 className="w-4 h-4 text-[#00F59B]" />
                 <span>Hear Voice</span>
               </button>
             </div>
 
-            <p className="text-base sm:text-lg font-semibold text-slate-100 leading-relaxed font-display">
+            <p className="text-base sm:text-lg font-semibold text-white leading-relaxed font-display relative z-10">
               "{currentQ.question.replace('Examiner:', '').trim()}"
             </p>
           </div>
 
           {/* Student Response Canvas */}
-          <div className="p-6 rounded-3xl bg-white dark:bg-[#0D1326] border border-slate-200/80 dark:border-slate-800/80 shadow-sm space-y-4">
+          <div className="p-6 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-700 dark:text-slate-300">Your Viva Explanation:</span>
+              <span className="text-xs font-bold text-neutral-300">Your Viva Explanation:</span>
               
               <button
                 onClick={handleToggleMic}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   isRecording 
-                    ? 'bg-rose-600 text-white animate-pulse shadow-lg shadow-rose-500/20' 
-                    : 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100'
+                    ? 'bg-rose-600 text-white animate-pulse shadow-lg' 
+                    : 'bg-[#161B22] border border-[#00F59B]/40 text-[#00F59B] hover:bg-[#21262D]'
                 }`}
               >
-                {isRecording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                {isRecording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4 text-[#00F59B]" />}
                 <span>{isRecording ? 'Listening (Click to Stop)...' : 'Speak Answer'}</span>
               </button>
             </div>
@@ -283,13 +303,13 @@ export const VivaExaminer = () => {
               value={studentAnswer}
               onChange={(e) => setStudentAnswer(e.target.value)}
               placeholder="Speak using the microphone or type your technical answer here..."
-              className="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs sm:text-sm text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 leading-relaxed"
+              className="w-full p-4 rounded-xl bg-[#161B22] border border-[#30363D] text-xs sm:text-sm text-white outline-none focus:border-[#00F59B] focus:ring-1 focus:ring-[#00F59B] leading-relaxed font-mono"
             />
 
             <div className="flex items-center justify-between pt-2">
               <button
                 onClick={() => setStudentAnswer(currentQ.sampleAnswer)}
-                className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
+                className="text-xs text-[#00F59B] hover:underline font-mono cursor-pointer"
               >
                 Insert Model Answer Example
               </button>
@@ -299,7 +319,7 @@ export const VivaExaminer = () => {
                 whileTap={{ scale: 0.97 }}
                 onClick={handleEvaluateAnswer}
                 disabled={isEvaluating}
-                className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm shadow-md flex items-center gap-2"
+                className="px-6 py-2.5 rounded-xl bg-[#00F59B] hover:bg-[#1AFFB2] text-[#07090D] font-bold text-xs sm:text-sm shadow-glow-green flex items-center gap-2 cursor-pointer"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>Submit to Examiner</span>
@@ -312,33 +332,33 @@ export const VivaExaminer = () => {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="p-6 rounded-3xl bg-white dark:bg-[#0D1326] border border-indigo-200 dark:border-indigo-900/60 shadow-lg space-y-4"
+              className="p-6 rounded-2xl bg-[#0D1117] border border-[#00F59B]/40 shadow-glow-green space-y-4"
             >
-              <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+              <div className="flex items-center justify-between pb-3 border-b border-white/10">
                 <div className="flex items-center gap-2">
-                  <Award className="w-5 h-5 text-indigo-600" />
-                  <h3 className="font-bold text-sm text-slate-900 dark:text-white">Examiner Feedback & Scorecard</h3>
+                  <Award className="w-5 h-5 text-[#00F59B]" />
+                  <h3 className="font-bold text-sm text-white font-display">Examiner Feedback & Scorecard</h3>
                 </div>
-                <div className="text-2xl font-extrabold text-indigo-600 font-display">
+                <div className="text-2xl font-extrabold text-[#00F59B] font-display">
                   {evaluationResult.score} / 100 Marks
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-sans">
                 {evaluationResult.feedback}
               </p>
 
               {/* Keyword Diagnostic */}
               <div className="space-y-2 pt-2">
-                <div className="text-xs font-bold text-slate-600 dark:text-slate-400">Technical Keyword Breakdown:</div>
+                <div className="text-xs font-bold text-neutral-400 font-mono">Technical Keyword Breakdown:</div>
                 <div className="flex flex-wrap gap-1.5">
                   {evaluationResult.matchedKeywords.map((kw, i) => (
-                    <span key={i} className="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-900 flex items-center gap-1">
+                    <span key={i} className="px-2.5 py-1 rounded-lg bg-[#00F59B]/15 text-[#00F59B] text-xs font-bold border border-[#00F59B]/30 flex items-center gap-1 font-mono">
                       <CheckCircle2 className="w-3 h-3" /> {kw}
                     </span>
                   ))}
                   {evaluationResult.missingKeywords.map((kw, i) => (
-                    <span key={i} className="px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 text-xs font-medium border border-amber-200 dark:border-amber-900">
+                    <span key={i} className="px-2.5 py-1 rounded-lg bg-amber-950/40 text-amber-300 text-xs font-medium border border-amber-800/40 font-mono">
                       + Missing: {kw}
                     </span>
                   ))}
@@ -348,7 +368,7 @@ export const VivaExaminer = () => {
               <div className="flex items-center justify-end pt-3">
                 <button
                   onClick={handleNextQuestion}
-                  className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1.5"
+                  className="px-5 py-2 rounded-xl bg-[#00F59B] hover:bg-[#1AFFB2] text-[#07090D] text-xs font-bold flex items-center gap-1.5 shadow-glow-green cursor-pointer"
                 >
                   <span>Next Viva Question</span>
                   <ChevronRight className="w-4 h-4" />
@@ -362,24 +382,24 @@ export const VivaExaminer = () => {
         {/* Right Column (4 cols): Viva Tips & External Rubric */}
         <div className="lg:col-span-4 space-y-6">
           
-          <div className="p-6 rounded-3xl bg-white dark:bg-[#0D1326] border border-slate-200/80 dark:border-slate-800/80 shadow-sm space-y-4">
-            <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-500" />
+          <div className="p-6 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm space-y-4">
+            <h3 className="font-bold text-sm text-white flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#00F59B]" />
               <span>University Viva Scoring Rubric</span>
             </h3>
 
-            <div className="space-y-3 text-xs text-slate-600 dark:text-slate-300">
-              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                <div className="font-bold text-slate-900 dark:text-white mb-1">1. Exact Technical Terms (40%)</div>
-                <p className="text-slate-500">Invariants, asymptotic notation, and formal definitions.</p>
+            <div className="space-y-3 text-xs text-neutral-300">
+              <div className="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D]">
+                <div className="font-bold text-white mb-1 font-mono">1. Exact Technical Terms (40%)</div>
+                <p className="text-neutral-400">Invariants, asymptotic notation, and formal definitions.</p>
               </div>
-              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                <div className="font-bold text-slate-900 dark:text-white mb-1">2. Production Trade-offs (35%)</div>
-                <p className="text-slate-500">Why choose one data structure or algorithm over another?</p>
+              <div className="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D]">
+                <div className="font-bold text-white mb-1 font-mono">2. Production Trade-offs (35%)</div>
+                <p className="text-neutral-400">Why choose one data structure or algorithm over another?</p>
               </div>
-              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
-                <div className="font-bold text-slate-900 dark:text-white mb-1">3. Delivery & Confidence (25%)</div>
-                <p className="text-slate-500">Concise answers without hesitation or filler words.</p>
+              <div className="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D]">
+                <div className="font-bold text-white mb-1 font-mono">3. Delivery & Confidence (25%)</div>
+                <p className="text-neutral-400">Concise answers without hesitation or filler words.</p>
               </div>
             </div>
           </div>

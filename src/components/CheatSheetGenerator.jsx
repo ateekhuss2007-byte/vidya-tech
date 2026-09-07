@@ -22,7 +22,6 @@ const cheatSheetsData = [
     id: 'dsa_matrix',
     title: 'DSA & Algorithms: Master Complexity & Recurrence Matrix',
     category: 'Computer Science (B.Tech / BCA / GATE)',
-    color: 'border-blue-500',
     sections: [
       {
         heading: 'Master Theorem (Divide & Conquer)',
@@ -51,7 +50,6 @@ const cheatSheetsData = [
     id: 'calculus_matrix',
     title: 'Engineering Mathematics: Calculus & Linear Algebra Formula Sheet',
     category: 'Class 12 / B.Tech / GATE 2027',
-    color: 'border-purple-500',
     sections: [
       {
         heading: 'Standard Integration Formulas',
@@ -74,7 +72,6 @@ const cheatSheetsData = [
     id: 'dbms_matrix',
     title: 'DBMS: Normal Forms & SQL Query Optimization Sheet',
     category: 'BCA / B.Tech / University Semesters',
-    color: 'border-emerald-500',
     sections: [
       {
         heading: 'Database Normalization Hierarchy',
@@ -96,24 +93,21 @@ const cheatSheetsData = [
 
 export const CheatSheetGenerator = () => {
   const [selectedSheetId, setSelectedSheetId] = useState('dsa_matrix');
-  const [searchQuery, setSearchQuery] = useState('');
   const [copiedSection, setCopiedSection] = useState(null);
 
   const activeSheet = cheatSheetsData.find(s => s.id === selectedSheetId) || cheatSheetsData[0];
 
-  const handleCopy = (text, idx) => {
-    navigator.clipboard.writeText(text);
-    setCopiedSection(idx);
-    toast.success('Formulas copied to clipboard!');
+  const handleCopy = (content, index) => {
+    navigator.clipboard.writeText(content);
+    setCopiedSection(index);
+    toast.success('Formula snippet copied to clipboard!');
     setTimeout(() => setCopiedSection(null), 2000);
   };
 
   const handlePrintPDF = () => {
-    toast.info(`Preparing 1-Page Printable PDF for ${activeSheet.title}...`);
-    
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
-      toast.error('Please allow popups to download PDF!');
+      toast.error('Please allow popups to download printable PDF.');
       return;
     }
 
@@ -125,8 +119,8 @@ export const CheatSheetGenerator = () => {
         <style>
           @page { size: A4; margin: 15mm; }
           body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #111; line-height: 1.4; padding: 10px; }
-          .header { text-align: center; border-bottom: 2px solid #2563eb; padding-bottom: 8px; margin-bottom: 12px; }
-          .title { font-size: 18px; font-weight: bold; margin: 0; color: #1e3a8a; }
+          .header { text-align: center; border-bottom: 2px solid #00F59B; padding-bottom: 8px; margin-bottom: 12px; }
+          .title { font-size: 18px; font-weight: bold; margin: 0; color: #0a0a0a; }
           .category { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; margin-top: 2px; }
           .grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
           .card { border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 12px; background: #f8fafc; page-break-inside: avoid; }
@@ -170,26 +164,26 @@ export const CheatSheetGenerator = () => {
   };
 
   return (
-    <div className="w-full fluid-container py-6 sm:py-10 animate-fade-in space-y-8">
+    <div className="w-full fluid-container py-6 sm:py-8 animate-fade-in space-y-6">
       
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-300 text-xs font-bold mb-2">
-            <FileText className="w-3.5 h-3.5 text-purple-500" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 text-xs font-mono font-bold mb-2 shadow-glow-green">
+            <FileText className="w-3.5 h-3.5 text-[#00F59B]" />
             <span>High-Yield 1-Page Formula & Revision Sheets</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-white">
             1-Page AI Revision Cheat-Sheet Generator
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-2xl">
+          <p className="text-xs sm:text-sm text-neutral-400 mt-1 max-w-2xl font-sans">
             Condensed, printable 1-page formula summaries, time-complexity matrices, and theorem proofs for last-minute exam revision.
           </p>
         </div>
 
         <button
           onClick={handlePrintPDF}
-          className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md flex items-center gap-2"
+          className="px-5 py-2.5 rounded-xl bg-[#00F59B] hover:bg-[#1AFFB2] text-[#07090D] font-bold text-xs shadow-glow-green flex items-center gap-2 cursor-pointer transition-all"
         >
           <Printer className="w-4 h-4" />
           <span>Download Printable PDF</span>
@@ -197,15 +191,15 @@ export const CheatSheetGenerator = () => {
       </div>
 
       {/* Sheet Tabs */}
-      <div className="p-2 rounded-2xl bg-white dark:bg-[#0D1326] border border-slate-200/80 dark:border-slate-800/80 shadow-sm flex flex-wrap gap-2">
+      <div className="p-2 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm flex flex-wrap gap-2">
         {cheatSheetsData.map((sheet) => (
           <button
             key={sheet.id}
             onClick={() => setSelectedSheetId(sheet.id)}
-            className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
+            className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               selectedSheetId === sheet.id
-                ? 'bg-purple-600 text-white shadow-md scale-[1.02]'
-                : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green scale-[1.02]'
+                : 'text-neutral-400 hover:text-white hover:bg-[#161B22]'
             }`}
           >
             {sheet.title.split(':')[0]}
@@ -214,19 +208,19 @@ export const CheatSheetGenerator = () => {
       </div>
 
       {/* Active Cheat Sheet Card */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1326] border border-slate-200/80 dark:border-slate-800/80 shadow-sm space-y-6">
+      <div className="p-6 sm:p-7 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm space-y-6">
         
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
           <div>
-            <div className="text-[11px] font-mono text-purple-600 dark:text-purple-400 font-bold uppercase">{activeSheet.category}</div>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white font-display">{activeSheet.title}</h2>
+            <div className="text-[11px] font-mono text-[#00F59B] font-bold uppercase">{activeSheet.category}</div>
+            <h2 className="text-base sm:text-lg font-bold text-white font-display mt-0.5">{activeSheet.title}</h2>
           </div>
 
           <button
             onClick={handlePrintPDF}
-            className="px-4 py-2 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 hover:bg-purple-100 text-xs font-bold transition-all flex items-center gap-1.5 border border-purple-200 dark:border-purple-900/50"
+            className="px-4 py-2 rounded-xl bg-[#161B22] hover:bg-[#21262D] text-white border border-[#30363D] hover:border-[#00F59B]/40 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
           >
-            <Download className="w-3.5 h-3.5 text-purple-600" />
+            <Download className="w-3.5 h-3.5 text-[#00F59B]" />
             <span>Export 1-Page PDF</span>
           </button>
         </div>
@@ -235,24 +229,24 @@ export const CheatSheetGenerator = () => {
           {activeSheet.sections.map((sec, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 space-y-3 relative group"
+              className="p-5 rounded-xl bg-[#161B22] border border-[#30363D] space-y-3 relative group"
             >
               <div className="flex items-center justify-between">
-                <h3 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white font-mono flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-purple-500"></span>
+                <h3 className="font-bold text-xs sm:text-sm text-white font-mono flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00F59B]"></span>
                   <span>{sec.heading}</span>
                 </h3>
 
                 <button
                   onClick={() => handleCopy(sec.content, idx)}
-                  className="p-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-purple-600 transition-all text-xs flex items-center gap-1"
+                  className="p-1.5 rounded-lg bg-[#0D1117] border border-[#30363D] text-neutral-400 hover:text-[#00F59B] transition-all text-xs flex items-center gap-1 cursor-pointer"
                 >
-                  {copiedSection === idx ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                  {copiedSection === idx ? <Check className="w-3 h-3 text-[#00F59B]" /> : <Copy className="w-3 h-3" />}
                   <span className="text-[10px]">{copiedSection === idx ? 'Copied' : 'Copy'}</span>
                 </button>
               </div>
 
-              <pre className="text-xs text-slate-700 dark:text-slate-300 font-mono whitespace-pre-wrap leading-relaxed overflow-x-auto">
+              <pre className="text-xs text-neutral-300 font-mono whitespace-pre-wrap leading-relaxed overflow-x-auto">
                 {sec.content}
               </pre>
             </div>

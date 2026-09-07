@@ -62,63 +62,63 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
       
       {/* Header Banner */}
-      <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-purple-500/30 mb-8 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="rounded-2xl p-6 sm:p-8 bg-[#0D1117] border border-[#30363D] mb-8 relative overflow-hidden shadow-xl">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#00F59B]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 text-xs font-bold mb-2">
-              <GraduationCap className="w-3.5 h-3.5 text-purple-400" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 text-xs font-bold mb-2">
+              <GraduationCap className="w-3.5 h-3.5 text-[#00F59B]" />
               <span>University & Higher-Ed Specialized Hub</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-white">
+            <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-[#F0F6FC]">
               B.Tech & College Academic Hub
             </h1>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1">
+            <p className="text-xs sm:text-sm text-[#8B949E] mt-1">
               AI Instant Topic Master, full chapter notes, lab vivas, YouTube lectures, and 10-mark recurring university questions.
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full sm:w-auto p-1.5 rounded-2xl bg-slate-900/90 border border-slate-800">
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full sm:w-auto p-1.5 rounded-2xl bg-[#161B22] border border-[#30363D]">
             <button
               onClick={() => setActiveTabLocal('semesterAnalyzer')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'semesterAnalyzer'
-                  ? 'bg-blue-600 text-white shadow-glow-cyan'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
+                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
               }`}
             >
-              <GraduationCap className="w-3.5 h-3.5 text-blue-300" />
+              <GraduationCap className="w-3.5 h-3.5" />
               <span>🎯 Sem 1-8 Analyzer</span>
             </button>
             <button
               onClick={() => setActiveTabLocal('pyqVault')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'pyqVault'
-                  ? 'bg-amber-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
+                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
               }`}
             >
-              <Flame className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
+              <Flame className="w-3.5 h-3.5" />
               <span>📜 Predicted Papers & PYQs (70M)</span>
             </button>
             <button
               onClick={() => setActiveTabLocal('deepDive')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'deepDive'
-                  ? 'bg-brand-600 text-white shadow-glow-cyan'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
+                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+              <Sparkles className="w-3.5 h-3.5" />
               <span>🔍 AI Topic Search</span>
             </button>
             <button
               onClick={() => setActiveTabLocal('materials')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'materials'
-                  ? 'bg-brand-600 text-white shadow-glow-cyan'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
+                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
               }`}
             >
               📚 Subject Materials
@@ -127,8 +127,8 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               onClick={() => setActiveTabLocal('viva')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'viva'
-                  ? 'bg-purple-600 text-white shadow-glow-purple'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
+                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
               }`}
             >
               🎤 Lab Viva Trainer
@@ -137,8 +137,8 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               onClick={() => setActiveTabLocal('pyq')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'pyq'
-                  ? 'bg-brand-600 text-white shadow-glow-cyan'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
+                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
               }`}
             >
               🔥 PYQ Heatmap
@@ -147,8 +147,8 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               onClick={() => setActiveTabLocal('cram')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'cram'
-                  ? 'bg-rose-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-rose-500 text-white shadow-sm'
+                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
               }`}
             >
               ⚡ 1-Night Emergency

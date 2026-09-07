@@ -94,38 +94,38 @@ export const AiAssistant = ({ setActiveTab }) => {
       {/* Persistent Floating Bottom-Right Trigger Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 px-4 py-3 rounded-full bg-[#083A4F] text-white shadow-xl hover:shadow-2xl hover:scale-105 transition-all flex items-center gap-2.5 font-medium text-xs cursor-pointer border border-[#407E8C]/30 select-none"
+        className="fixed bottom-6 right-6 z-40 px-4 py-2.5 rounded-full liquid-glass text-slate-900 dark:text-sky-100 shadow-[0_8px_30px_rgba(14,165,233,0.3)] hover:shadow-[0_12px_40px_rgba(56,189,248,0.5)] hover:scale-105 transition-all flex items-center gap-2.5 font-medium text-xs cursor-pointer border border-sky-400/40 select-none backdrop-blur-2xl"
         aria-label="Open VIDYA AI Assistant"
       >
         <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#A58D66] opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#A58D66]" />
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400" />
         </span>
-        <Sparkles className="w-4 h-4 text-[#A58D66]" />
-        <span className="font-semibold">Ask VIDYA AI</span>
+        <Sparkles className="w-4 h-4 text-sky-400" />
+        <span className="font-semibold text-slate-900 dark:text-sky-100 tracking-wide font-montserrat">Ask VIDYA AI</span>
       </button>
 
       {/* Radix Dialog for AI Assistant */}
       <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm animate-fade-in" />
-          <Dialog.Content className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-50 w-[95vw] sm:w-[440px] max-h-[85vh] rounded-2xl bg-[#FAF9F7] dark:bg-[#052735] border border-[#083A4F]/15 dark:border-[#407E8C]/20 shadow-2xl flex flex-col justify-between overflow-hidden animate-slide-in">
+          <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md animate-fade-in" />
+          <Dialog.Content className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-50 w-[95vw] sm:w-[440px] max-h-[85vh] rounded-3xl liquid-glass-card border border-white/80 dark:border-sky-500/30 shadow-2xl flex flex-col justify-between overflow-hidden animate-slide-in backdrop-blur-2xl">
             
             {/* Header */}
-            <div className="p-4 sm:p-5 border-b border-black/[0.06] dark:border-white/[0.06] flex items-center justify-between bg-black/[0.02] dark:bg-white/[0.02]">
+            <div className="p-4 sm:p-5 border-b border-black/[0.06] dark:border-sky-500/20 flex items-center justify-between bg-sky-500/[0.04]">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-[#083A4F] text-[#407E8C] flex items-center justify-center shrink-0 shadow-sm border border-[#407E8C]/30">
-                  <Brain className="w-4 h-4" />
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm border border-sky-300/40">
+                  <Brain className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <Dialog.Title className="text-sm font-bold text-neutral-900 dark:text-white font-display">
+                  <Dialog.Title className="text-sm font-bold text-slate-900 dark:text-white font-montserrat">
                     VIDYA Cognitive Co-Pilot
                   </Dialog.Title>
-                  <p className="text-[10px] text-neutral-500 dark:text-neutral-400 font-mono">Grounded in Student State</p>
+                  <p className="text-[10px] text-sky-500 dark:text-sky-300 font-mono font-medium">Grounded in Student State</p>
                 </div>
               </div>
               <Dialog.Close asChild>
-                <button className="p-1.5 rounded-full text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all">
+                <button className="p-1.5 rounded-full text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer">
                   <X className="w-4 h-4" />
                 </button>
               </Dialog.Close>
@@ -141,15 +141,15 @@ export const AiAssistant = ({ setActiveTab }) => {
                   }`}
                 >
                   {msg.role === 'assistant' && (
-                    <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0 text-[10px] font-mono mt-0.5">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 text-white font-bold flex items-center justify-center shrink-0 text-[10px] font-mono mt-0.5 shadow-xs">
                       V
                     </div>
                   )}
                   <div
                     className={`p-3.5 rounded-2xl max-w-[85%] leading-relaxed ${
                       msg.role === 'user'
-                        ? 'bg-[#0E1015] dark:bg-white text-white dark:text-[#0E1015] rounded-br-none font-medium'
-                        : 'bg-[#FBFBF9] dark:bg-[#0A0C10] border border-black/[0.06] dark:border-white/[0.06] text-neutral-800 dark:text-neutral-200 rounded-bl-none'
+                        ? 'bg-sky-500 text-white rounded-br-none font-medium shadow-sm'
+                        : 'liquid-glass border border-white/60 dark:border-sky-500/20 text-slate-800 dark:text-sky-100 rounded-bl-none'
                     }`}
                   >
                     <p className="whitespace-pre-line">{msg.text}</p>
@@ -158,11 +158,11 @@ export const AiAssistant = ({ setActiveTab }) => {
               ))}
 
               {isThinking && (
-                <div className="flex items-center gap-2 text-xs text-neutral-500 font-mono pl-8 animate-pulse">
+                <div className="flex items-center gap-2 text-xs text-sky-500 dark:text-sky-300 font-mono pl-8 animate-pulse">
                   <div className="flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-bounce" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-bounce [animation-delay:0.2s]" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-bounce [animation-delay:0.4s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-bounce" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-bounce [animation-delay:0.2s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-300 animate-bounce [animation-delay:0.4s]" />
                   </div>
                   <span>Analyzing your learning pattern...</span>
                 </div>
@@ -170,12 +170,12 @@ export const AiAssistant = ({ setActiveTab }) => {
             </div>
 
             {/* Quick Suggested Prompt Chips */}
-            <div className="px-4 py-2 flex flex-wrap gap-1.5 border-t border-black/[0.04] dark:border-white/[0.04] bg-black/[0.01] dark:bg-white/[0.01]">
+            <div className="px-4 py-2 flex flex-wrap gap-1.5 border-t border-black/[0.04] dark:border-sky-500/20 bg-sky-500/[0.02]">
               {suggestedPrompts.map((prompt, i) => (
                 <button
                   key={i}
                   onClick={() => handleSend(prompt)}
-                  className="px-2.5 py-1 rounded-full bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.06] dark:hover:bg-white/[0.1] text-neutral-700 dark:text-neutral-300 text-[11px] font-mono transition-all cursor-pointer truncate max-w-[200px]"
+                  className="px-2.5 py-1 rounded-full bg-sky-500/10 hover:bg-sky-500/20 text-sky-700 dark:text-sky-300 text-[11px] font-mono transition-all cursor-pointer truncate max-w-[200px] border border-sky-400/20"
                 >
                   {prompt}
                 </button>
@@ -188,19 +188,19 @@ export const AiAssistant = ({ setActiveTab }) => {
                 e.preventDefault();
                 handleSend();
               }}
-              className="p-3.5 border-t border-black/[0.06] dark:border-white/[0.06] flex items-center gap-2 bg-[#FBFBF9] dark:bg-[#0A0C10]"
+              className="p-3.5 border-t border-black/[0.06] dark:border-sky-500/20 flex items-center gap-2 bg-white/40 dark:bg-slate-900/40"
             >
               <input
                 type="text"
                 value={inputQuery}
                 onChange={(e) => setInputQuery(e.target.value)}
                 placeholder="Ask about your syllabus, weak nodes, or study plan..."
-                className="flex-grow px-3.5 py-2.5 rounded-2xl bg-white dark:bg-[#12151D] border border-black/[0.08] dark:border-white/[0.08] text-neutral-900 dark:text-white placeholder:text-neutral-400 text-xs focus:outline-none focus:ring-1 focus:ring-neutral-900 dark:focus:ring-white transition-all font-sans"
+                className="flex-grow px-3.5 py-2.5 rounded-2xl bg-white/70 dark:bg-slate-950/60 border border-slate-200 dark:border-sky-500/30 text-slate-900 dark:text-white placeholder:text-slate-400 text-xs focus:outline-none focus:ring-2 focus:ring-sky-400/40 transition-all font-sans"
               />
               <button
                 type="submit"
                 disabled={!inputQuery.trim() || isThinking}
-                className="p-2.5 rounded-2xl bg-[#0E1015] dark:bg-white text-white dark:text-[#0E1015] hover:opacity-90 disabled:opacity-40 transition-all cursor-pointer shadow-sm shrink-0"
+                className="p-2.5 rounded-2xl liquid-glass-button disabled:opacity-40 transition-all cursor-pointer shrink-0 font-bold"
               >
                 <Send className="w-3.5 h-3.5" />
               </button>

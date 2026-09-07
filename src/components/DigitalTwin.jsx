@@ -45,14 +45,14 @@ export const DigitalTwin = () => {
       {/* Friendly Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-300 text-xs font-bold mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 border border-[#00F59B]/30 text-[#00F59B] text-xs font-bold mb-2">
             <Brain className="w-3.5 h-3.5" />
             <span>AI Memory Predictor</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 dark:text-[#F0F6FC]">
             Your Memory Twin
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-[#8B949E] mt-1 font-sans">
             See exactly when you will forget a topic and when to review it in 10 minutes.
           </p>
         </div>
@@ -61,7 +61,7 @@ export const DigitalTwin = () => {
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
           onClick={handleReinforce}
-          className="px-5 py-2.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-md shadow-blue-500/20 flex items-center gap-2"
+          className="px-5 py-2.5 rounded-xl bg-[#00F59B] hover:bg-[#5EFCC2] text-[#07090D] font-bold text-xs sm:text-sm shadow-md shadow-[#00F59B]/20 flex items-center gap-2"
         >
           <Sparkles className="w-4 h-4" />
           <span>Quick 10-Min Revision</span>
@@ -70,49 +70,49 @@ export const DigitalTwin = () => {
 
       {/* 3 Main Simple Metric Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="p-5 rounded-2xl bg-white dark:bg-[#0D1326] border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
-          <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Current Recall Score</div>
-          <div className="text-3xl sm:text-4xl font-extrabold font-display text-blue-600 dark:text-blue-400 mt-1">
+        <div className="p-5 rounded-2xl bg-white dark:bg-[#0D1117] border border-slate-200/80 dark:border-[#30363D] shadow-sm">
+          <div className="text-xs font-bold text-slate-400 dark:text-[#8B949E] uppercase tracking-wider font-mono">Current Recall Score</div>
+          <div className="text-3xl sm:text-4xl font-extrabold font-display text-[#00F59B] mt-1">
             {retentionPercent}%
           </div>
-          <p className="text-xs text-slate-500 mt-2">
+          <p className="text-xs text-slate-500 dark:text-[#8B949E] mt-2">
             {retentionPercent > 75 ? '🟢 Safe zone — no immediate review needed.' : '🟡 Review recommended today.'}
           </p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white dark:bg-[#0D1326] border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
-          <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Recommended Next Review</div>
-          <div className="text-3xl sm:text-4xl font-extrabold font-display text-purple-600 dark:text-purple-400 mt-1">
+        <div className="p-5 rounded-2xl bg-white dark:bg-[#0D1117] border border-slate-200/80 dark:border-[#30363D] shadow-sm">
+          <div className="text-xs font-bold text-slate-400 dark:text-[#8B949E] uppercase tracking-wider font-mono">Recommended Next Review</div>
+          <div className="text-3xl sm:text-4xl font-extrabold font-display text-sky-400 mt-1">
             In 2 Days
           </div>
-          <p className="text-xs text-slate-500 mt-2">
+          <p className="text-xs text-slate-500 dark:text-[#8B949E] mt-2">
             Automatically added to your calendar schedule.
           </p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white dark:bg-[#0D1326] border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
-          <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Active Memory Streak</div>
-          <div className="text-3xl sm:text-4xl font-extrabold font-display text-emerald-600 dark:text-emerald-400 mt-1">
+        <div className="p-5 rounded-2xl bg-white dark:bg-[#0D1117] border border-slate-200/80 dark:border-[#30363D] shadow-sm">
+          <div className="text-xs font-bold text-slate-400 dark:text-[#8B949E] uppercase tracking-wider font-mono">Active Memory Streak</div>
+          <div className="text-3xl sm:text-4xl font-extrabold font-display text-[#00F59B] mt-1">
             14 Days
           </div>
-          <p className="text-xs text-slate-500 mt-2">
+          <p className="text-xs text-slate-500 dark:text-[#8B949E] mt-2">
             100% schedule flexibility — zero guilt rescheduling.
           </p>
         </div>
       </div>
 
       {/* Clean Interactive Slider Tool */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1326] border border-slate-200/80 dark:border-slate-800/80 shadow-sm">
-        <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
+      <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#0D1117] border border-slate-200/80 dark:border-[#30363D] shadow-sm">
+        <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100 dark:border-[#30363D]">
           <div>
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+            <h2 className="text-base sm:text-lg font-bold font-display text-slate-900 dark:text-[#F0F6FC]">
               Interactive Forgetting Simulator
             </h2>
-            <p className="text-xs text-slate-500">Slide the days to see how memory decays without review.</p>
+            <p className="text-xs text-slate-500 dark:text-[#8B949E]">Slide the days to see how memory decays without review.</p>
           </div>
           <button
             onClick={handleReset}
-            className="text-xs text-slate-400 hover:text-blue-500 flex items-center gap-1 font-medium"
+            className="text-xs text-slate-400 dark:text-[#8B949E] hover:text-[#00F59B] flex items-center gap-1 font-medium transition-colors"
           >
             <RotateCcw className="w-3.5 h-3.5" /> Reset
           </button>
@@ -122,9 +122,9 @@ export const DigitalTwin = () => {
           
           {/* Slider 1 */}
           <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
+            <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-[#F0F6FC]">
               <span>Days passed since last study:</span>
-              <span className="text-blue-600 dark:text-blue-400 font-mono text-sm">{daysSinceStudy} Days</span>
+              <span className="text-[#00F59B] font-mono text-sm">{daysSinceStudy} Days</span>
             </div>
             <input
               type="range"
@@ -132,9 +132,9 @@ export const DigitalTwin = () => {
               max="14"
               value={daysSinceStudy}
               onChange={(e) => setDaysSinceStudy(Number(e.target.value))}
-              className="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-600"
+              className="w-full h-2.5 bg-slate-100 dark:bg-[#161B22] rounded-lg appearance-none cursor-pointer accent-[#00F59B]"
             />
-            <div className="flex justify-between text-[10px] text-slate-400 font-mono">
+            <div className="flex justify-between text-[10px] text-slate-400 dark:text-[#8B949E] font-mono">
               <span>Day 0 (Just Studied)</span>
               <span>Day 7</span>
               <span>Day 14 (Forgotten)</span>
@@ -143,9 +143,9 @@ export const DigitalTwin = () => {
 
           {/* Slider 2 */}
           <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
+            <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-[#F0F6FC]">
               <span>Number of past revisions:</span>
-              <span className="text-emerald-600 dark:text-emerald-400 font-mono text-sm">{reviewsDone} Reviews</span>
+              <span className="text-sky-400 font-mono text-sm">{reviewsDone} Reviews</span>
             </div>
             <input
               type="range"
@@ -153,9 +153,9 @@ export const DigitalTwin = () => {
               max="4"
               value={reviewsDone}
               onChange={(e) => setReviewsDone(Number(e.target.value))}
-              className="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+              className="w-full h-2.5 bg-slate-100 dark:bg-[#161B22] rounded-lg appearance-none cursor-pointer accent-sky-400"
             />
-            <div className="flex justify-between text-[10px] text-slate-400 font-mono">
+            <div className="flex justify-between text-[10px] text-slate-400 dark:text-[#8B949E] font-mono">
               <span>0 Reviews (Fast decay)</span>
               <span>2 Reviews (Standard)</span>
               <span>4 Reviews (Permanent)</span>
@@ -164,13 +164,13 @@ export const DigitalTwin = () => {
 
         </div>
 
-        {/* Big Clean Result Box */}
-        <div className="mt-8 p-5 rounded-2xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* Result Box */}
+        <div className="mt-8 p-5 rounded-xl bg-emerald-50/80 dark:bg-[#00F59B]/5 border border-emerald-100 dark:border-[#00F59B]/20 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <div className="font-bold text-sm text-blue-950 dark:text-blue-200">
-              Predicted Retention on Day {daysSinceStudy}: <span className="text-blue-600 dark:text-blue-400 text-lg">{retentionPercent}%</span>
+            <div className="font-bold text-sm text-emerald-950 dark:text-[#F0F6FC] font-display">
+              Predicted Retention on Day {daysSinceStudy}: <span className="text-[#00F59B] text-lg font-mono font-bold">{retentionPercent}%</span>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-600 dark:text-[#8B949E] mt-0.5">
               {retentionPercent > 70 
                 ? 'Your knowledge is stable. You will easily solve exam questions on this topic.'
                 : 'Memory has started fading. A 10-minute quick revision now will protect your exam grade.'}
@@ -179,7 +179,7 @@ export const DigitalTwin = () => {
 
           <button
             onClick={handleReinforce}
-            className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shrink-0 shadow-sm"
+            className="px-4 py-2 rounded-xl bg-[#00F59B] hover:bg-[#5EFCC2] text-[#07090D] font-bold text-xs shrink-0 shadow-sm"
           >
             Review Now
           </button>

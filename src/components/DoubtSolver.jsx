@@ -171,36 +171,36 @@ export const DoubtSolver = () => {
   return (
     <div className="w-full fluid-container py-6 sm:py-10 animate-fade-in space-y-8">
       
-      {/* Header Banner - Executive Glass Navy */}
-      <div className="rounded-3xl p-6 sm:p-8 bg-[#083A4F] text-[#E5E1DD] border border-[#407E8C]/30 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      {/* Header Banner - Google Obsidian & Light Green */}
+      <div className="rounded-3xl p-6 sm:p-8 bg-[#0D1117] text-[#F0F6FC] border border-[#30363D] shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         {/* Subtle glowing ambient accents */}
-        <div className="absolute top-0 right-1/4 w-72 h-72 bg-[#407E8C]/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#A58D66]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-72 h-72 bg-[#00F59B]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#4E8AFF]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-2xl space-y-2 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-[#E5E1DD]">
-            <Sparkles className="w-3.5 h-3.5 text-[#A58D66]" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#00F59B]/10 border border-[#00F59B]/30 text-xs font-mono font-bold text-[#00F59B] shadow-glow-green">
+            <Sparkles className="w-3.5 h-3.5" />
             <span>24/7 AI Instant Doubt Solver & OCR</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-white">
             Ask any question, get instant step-by-step solutions.
           </h1>
-          <p className="text-sm text-[#E5E1DD]/80 leading-relaxed">
+          <p className="text-sm text-neutral-400 leading-relaxed font-sans">
             Upload question photos, paste equations, or pick from high-yield university & competitive PYQs.
           </p>
         </div>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 relative z-10 shrink-0">
-          <div className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-xs font-mono text-[#E5E1DD]">
-            <Zap className="w-4 h-4 text-[#A58D66] fill-[#A58D66]" />
+          <div className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#161B22] border border-[#30363D] text-xs font-mono text-[#00F59B]">
+            <Zap className="w-4 h-4 text-[#00F59B] fill-[#00F59B]" />
             <span>Latency: 0.4s</span>
           </div>
 
           <button
             onClick={() => setApiKeyModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#407E8C]/20 hover:bg-[#407E8C]/30 backdrop-blur-md border border-[#407E8C]/40 text-xs font-semibold text-[#E5E1DD] transition-all cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#161B22] hover:bg-[#21262D] border border-[#30363D] hover:border-[#00F59B]/40 text-xs font-semibold text-white transition-all cursor-pointer"
           >
-            <Key className="w-3.5 h-3.5 text-[#A58D66]" />
+            <Key className="w-3.5 h-3.5 text-[#00F59B]" />
             <span>{isGeminiConfigured() ? 'Gemini Key Configured' : 'Setup Gemini API'}</span>
           </button>
         </div>

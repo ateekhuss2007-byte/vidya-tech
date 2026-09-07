@@ -23,7 +23,7 @@ export const CognitivePreview = ({ setActiveTab, onOpenTopic, user }) => {
   const [activeView, setActiveView] = useState('twin'); // 'twin' | 'retention' | 'prereq'
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6">
+    <div className="w-full max-w-6xl xl:max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}

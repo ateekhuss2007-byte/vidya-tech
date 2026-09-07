@@ -131,22 +131,22 @@ export const PyqPredictorVault: React.FC<PyqPredictorVaultProps> = ({
     <div className="w-full space-y-8 animate-fade-in print:space-y-4">
       
       {/* 1. Header & Autonomous Exam Intelligence Engine Hero */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1326] border border-black/[0.08] dark:border-white/[0.08] shadow-sm space-y-6 relative overflow-hidden print:hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 dark:bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-10 w-80 h-80 bg-[#D4F038]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="p-6 sm:p-8 rounded-3xl bg-[#0D1117] border border-[#30363D] shadow-sm space-y-6 relative overflow-hidden print:hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#00F59B]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-10 w-80 h-80 bg-[#4E8AFF]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
           <div className="space-y-1.5 max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60 text-xs font-mono font-bold">
-              <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 text-xs font-mono font-bold shadow-glow-green">
+              <span className="w-2 h-2 rounded-full bg-[#00F59B] animate-pulse" />
               <span>Autonomous University PYQ Intelligence & Predicted Papers</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 dark:text-white leading-tight">
-              Subject-Wise <span className="text-blue-600 dark:text-blue-400">Predicted Question Papers</span> & 7-Year PYQ Vault
+            <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-white leading-tight">
+              Subject-Wise <span className="text-[#00F59B]">Predicted Question Papers</span> & 7-Year PYQ Vault
             </h1>
 
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+            <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-sans">
               Statistically synthesized question papers mapped to <strong>Course Outcomes (CO1-CO6)</strong> and <strong>Bloom's Taxonomy</strong>. Featuring exact 70-Mark / 3-Hour university exam formats, step-by-step evaluation rubrics, and recurring numerical invariants.
             </p>
           </div>
@@ -155,26 +155,26 @@ export const PyqPredictorVault: React.FC<PyqPredictorVaultProps> = ({
             <button
               type="button"
               onClick={handlePrintPaper}
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-mono font-bold text-neutral-800 dark:text-neutral-200 border border-black/[0.06] dark:border-white/[0.08] transition-all cursor-pointer shadow-xs"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-[#161B22] hover:bg-[#21262D] text-xs font-mono font-bold text-neutral-200 border border-[#30363D] transition-all cursor-pointer shadow-xs"
             >
-              <Printer className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              <Printer className="w-4 h-4 text-[#00F59B]" />
               <span>Print / PDF ↗</span>
             </button>
 
             <button
               type="button"
               onClick={handleCopyPaperMarkdown}
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-mono font-bold text-neutral-800 dark:text-neutral-200 border border-black/[0.06] dark:border-white/[0.08] transition-all cursor-pointer shadow-xs"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-[#161B22] hover:bg-[#21262D] text-xs font-mono font-bold text-neutral-200 border border-[#30363D] transition-all cursor-pointer shadow-xs"
             >
-              <Copy className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <Copy className="w-4 h-4 text-[#00F59B]" />
               <span>Copy Markdown</span>
             </button>
           </div>
         </div>
 
         {/* Branch Filters (Horizontal Scrollable Pills) */}
-        <div className="space-y-2 pt-2 border-t border-black/[0.05] dark:border-white/[0.06]">
-          <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">
+        <div className="space-y-2 pt-2 border-t border-white/10">
+          <div className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 font-bold">
             Select Engineering Branch:
           </div>
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
@@ -187,8 +187,8 @@ export const PyqPredictorVault: React.FC<PyqPredictorVaultProps> = ({
                   onClick={() => setSelectedBranch(branch.id)}
                   className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                     isSelected
-                      ? 'bg-blue-600 text-white font-bold shadow-md shadow-blue-500/20'
-                      : 'bg-black/[0.03] dark:bg-white/[0.05] text-slate-600 dark:text-slate-400 hover:bg-black/[0.06] dark:hover:bg-white/[0.08]'
+                      ? 'bg-[#00F59B] text-[#07090D] font-bold shadow-glow-green'
+                      : 'bg-[#161B22] text-neutral-400 hover:text-white border border-[#30363D]'
                   }`}
                 >
                   <span>{branch.icon}</span>

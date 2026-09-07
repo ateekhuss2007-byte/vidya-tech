@@ -142,244 +142,54 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
   const currentGoals = getGoalsForStream();
 
   return (
-    <section className="relative w-full pt-12 sm:pt-20 pb-12 px-4 sm:px-6 lg:px-8 text-center space-y-8 max-w-4xl mx-auto">
+    <section className="relative w-full min-h-[76vh] flex flex-col items-center justify-center pt-18 sm:pt-24 lg:pt-28 pb-18 sm:pb-24 px-4 sm:px-8 lg:px-12 xl:px-16 text-center space-y-9 w-full max-w-7xl 2xl:max-w-[1500px] mx-auto">
       
-      {/* Dynamic Brand Fluid Liquid Morphing Ambient Orbs */}
-      <div className="liquid-ambient-orb liquid-orb-navy w-[340px] h-[340px] -top-12 -left-20 -z-10" />
-      <div className="liquid-ambient-orb liquid-orb-teal w-[380px] h-[380px] top-10 -right-24 -z-10" />
-      <div className="liquid-ambient-orb liquid-orb-gold w-[280px] h-[280px] bottom-0 left-1/3 -z-10" />
+      {/* Google Sky Blue Fluid Ambient Light Glows - Full Width Diffusion */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] sm:w-[1200px] lg:w-[1440px] h-[540px] bg-gradient-to-tr from-sky-400/22 via-blue-500/18 to-cyan-300/22 blur-[140px] pointer-events-none -z-10 rounded-full" />
+      <div className="absolute top-1/3 -left-28 w-[420px] h-[420px] bg-sky-400/15 blur-[120px] pointer-events-none -z-10 rounded-full" />
+      <div className="absolute top-1/3 -right-28 w-[420px] h-[420px] bg-blue-500/15 blur-[120px] pointer-events-none -z-10 rounded-full" />
 
-      {/* Background Architectural Subtle Glow & Grid */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-25 pointer-events-none -z-20 [mask-image:radial-gradient(ellipse_70%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#407E8C]/10 dark:bg-[#407E8C]/15 blur-3xl pointer-events-none -z-10" />
-
-      {/* 1. Frosted Glass Telemetry Badge */}
+      {/* 2. Massive, Screen-Optimized Typography (NotebookLM / Google AI Flagship Style) */}
       <motion.div
-        initial={{ opacity: 0, y: -8 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="flex justify-center"
+        transition={{ duration: 0.45, delay: 0.08 }}
+        className="space-y-6 w-full"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full frosted-glass-pill text-xs font-mono font-medium text-[#083A4F] dark:text-[#E5E1DD] border border-[#083A4F]/10 dark:border-[#E5E1DD]/15 shadow-sm">
-          <span className="w-2 h-2 rounded-full bg-[#407E8C] animate-pulse" />
-          <span>VIDYA AI • Cognitive Exam Intelligence</span>
-        </div>
-      </motion.div>
-
-      {/* 2. Bold, Clean, Calm Typography */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.05 }}
-        className="space-y-4"
-      >
-        <h1 className="text-4xl sm:text-6xl lg:text-[70px] font-extrabold font-display tracking-tight text-[#083A4F] dark:text-[#FAF9F8] leading-[1.1]">
-          Master your syllabus. <br />
-          <span className="bg-gradient-to-r from-[#407E8C] via-[#A58D66] to-[#407E8C] dark:from-[#5499A8] dark:via-[#C4AE88] dark:to-[#5499A8] bg-clip-text text-transparent">
-            Without the exam stress.
+        <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[96px] xl:text-[110px] tracking-tight leading-[1.04] select-none">
+          <span className="font-montserrat font-black text-slate-900 dark:text-[#F8FAFC] block">
+            Understanding changes everything.
           </span>
         </h1>
 
-        <p className="text-base sm:text-lg text-[#083A4F]/75 dark:text-[#CBDCE3] leading-relaxed max-w-2xl mx-auto font-normal">
-          AI exam blueprints, 70-mark university pattern simulators, and authentic 10-mark repeated PYQs designed for Indian college and competitive students.
+        <p className="text-lg sm:text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl sm:max-w-4xl mx-auto font-normal font-sans pt-2">
+          Master dense university syllabi, crack repeated 10-mark PYQs, and conquer your exams with effortless conceptual clarity and zero panic.
         </p>
-      </motion.div>
 
-      {/* 3. Floating Glass Planner & Search Container */}
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.1 }}
-        className="w-full max-w-3xl mx-auto pt-2"
-      >
-        <div className="p-4 sm:p-6 rounded-2xl glass-card text-left space-y-4 shadow-xl border border-white/60 dark:border-white/10 relative z-glass-floating">
-          
-          {/* Stream Filter Pills */}
-          <div className="flex items-center justify-between gap-2 flex-wrap pb-2 border-b border-[#083A4F]/10 dark:border-white/[0.08]">
-            <span className="text-[11px] font-mono text-[#083A4F]/70 dark:text-[#CBDCE3]/70 font-semibold uppercase tracking-wider">
-              Target Stream
-            </span>
-            <div className="flex items-center gap-1.5 flex-wrap">
-              {streams.map((s) => (
-                <button
-                  key={s.id}
-                  type="button"
-                  onClick={() => setSelectedStream(s.id)}
-                  className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-all cursor-pointer ${
-                    selectedStream === s.id
-                      ? 'bg-[#407E8C] text-white shadow-xs font-bold'
-                      : 'bg-white/60 dark:bg-[#083A4F]/50 text-[#083A4F] dark:text-[#CBDCE3] hover:bg-[#E5E1DD]/50 dark:hover:bg-[#407E8C]/20 border border-[#083A4F]/10 dark:border-white/10'
-                  }`}
-                >
-                  <span className="mr-1">{s.icon}</span>
-                  <span>{s.name.split(' ')[0]}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Form Inputs Grid (Inputs with high contrast and readable glass finish) */}
-          <form 
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (heroTopic.trim()) {
-                if (onOpenTopic) onOpenTopic(heroTopic.trim());
-                else setActiveTab('studyHub');
-                toast.success(`Launching study room for "${heroTopic.trim()}"`);
-                return;
-              }
-              handleFinishWizard();
-            }} 
-            className="space-y-3.5"
+        {/* Quick CTA Actions - Google Style Pill Buttons */}
+        <div className="pt-4 flex items-center justify-center gap-4 sm:gap-5 flex-wrap">
+          <button
+            type="button"
+            onClick={() => setActiveTab('studyHub')}
+            className="px-9 py-4 sm:py-4.5 rounded-full liquid-glass-button font-bold text-base sm:text-lg flex items-center justify-center gap-3 cursor-pointer group shadow-[0_10px_35px_rgba(14,165,233,0.4)] hover:shadow-[0_14px_45px_rgba(56,189,248,0.6)] select-none hover:-translate-y-0.5 transition-all"
           >
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-2.5">
-              
-              {/* Input 1: Sub-selection (Semester or Paper or Track) */}
-              <div className="sm:col-span-4">
-                <label className="block text-[10px] font-mono uppercase tracking-wider text-[#083A4F]/70 dark:text-[#CBDCE3]/70 font-bold mb-1">
-                  {selectedStream === 'btech' ? 'Semester' : selectedStream === 'gate' ? 'Paper' : selectedStream === 'jee' ? 'Track' : 'Section'}
-                </label>
-                {selectedStream === 'btech' && (
-                  <select
-                    value={selectedSem}
-                    onChange={(e) => setSelectedSem(Number(e.target.value))}
-                    className="w-full px-3 py-2.5 rounded-xl glass-input text-xs font-mono font-semibold text-[#083A4F] dark:text-[#FAF9F8] focus:outline-none"
-                  >
-                    {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
-                      <option key={n} value={n} className="dark:bg-[#083A4F] text-[#083A4F] dark:text-white">
-                        Semester {n} (B.Tech)
-                      </option>
-                    ))}
-                  </select>
-                )}
-                {selectedStream === 'gate' && (
-                  <select
-                    value={selectedGatePaper}
-                    onChange={(e) => setSelectedGatePaper(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl glass-input text-xs font-mono font-semibold text-[#083A4F] dark:text-[#FAF9F8] focus:outline-none"
-                  >
-                    {gatePapers.map(p => (
-                      <option key={p.id} value={p.id} className="dark:bg-[#083A4F] text-[#083A4F] dark:text-white">
-                        {p.name.split('—')[0].trim()}
-                      </option>
-                    ))}
-                  </select>
-                )}
-                {selectedStream === 'jee' && (
-                  <select
-                    value={selectedJeeTrack}
-                    onChange={(e) => setSelectedJeeTrack(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl glass-input text-xs font-mono font-semibold text-[#083A4F] dark:text-[#FAF9F8] focus:outline-none"
-                  >
-                    {jeeTracks.map(t => (
-                      <option key={t.id} value={t.id} className="dark:bg-[#083A4F] text-[#083A4F] dark:text-white">
-                        {t.name}
-                      </option>
-                    ))}
-                  </select>
-                )}
-                {selectedStream === 'ssc' && (
-                  <select
-                    value={selectedSscSection}
-                    onChange={(e) => setSelectedSscSection(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-xl glass-input text-xs font-mono font-semibold text-[#083A4F] dark:text-[#FAF9F8] focus:outline-none"
-                  >
-                    {sscSections.map(s => (
-                      <option key={s.id} value={s.id} className="dark:bg-[#083A4F] text-[#083A4F] dark:text-white">
-                        {s.name}
-                      </option>
-                    ))}
-                  </select>
-                )}
-              </div>
-
-              {/* Input 2: Specific Concept / Topic Search */}
-              <div className="sm:col-span-5">
-                <label className="block text-[10px] font-mono uppercase tracking-wider text-[#083A4F]/70 dark:text-[#CBDCE3]/70 font-bold mb-1">
-                  Focus Topic or Concept
-                </label>
-                <input
-                  type="text"
-                  value={heroTopic}
-                  onChange={(e) => setHeroTopic(e.target.value)}
-                  placeholder="e.g. Matrices, Normalization, Calculus..."
-                  className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs font-sans text-[#083A4F] dark:text-[#FAF9F8] placeholder:text-neutral-400 focus:outline-none"
-                />
-              </div>
-
-              {/* Input 3: Preparation Need */}
-              <div className="sm:col-span-3">
-                <label className="block text-[10px] font-mono uppercase tracking-wider text-[#083A4F]/70 dark:text-[#CBDCE3]/70 font-bold mb-1">
-                  Blueprint Goal
-                </label>
-                <select
-                  value={selectedGoal}
-                  onChange={(e) => setSelectedGoal(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-xl glass-input text-xs font-mono font-semibold text-[#083A4F] dark:text-[#FAF9F8] focus:outline-none"
-                >
-                  <option value="blueprint" className="dark:bg-[#083A4F] text-[#083A4F] dark:text-white">Pass Blueprint</option>
-                  <option value="mockTest" className="dark:bg-[#083A4F] text-[#083A4F] dark:text-white">Mock Simulator</option>
-                  <option value="cheatsheet" className="dark:bg-[#083A4F] text-[#083A4F] dark:text-white">Cheat Sheet</option>
-                </select>
-              </div>
-
-            </div>
-
-            {/* Bottom Row: Primary CTA + Wizard trigger */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
-              <div className="text-[11px] font-mono text-[#083A4F]/70 dark:text-[#CBDCE3]/70 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-[#A58D66]" />
-                <span>Instant AI 70-Mark & Competitive Question Matcher</span>
-              </div>
-
-              <div className="flex items-center gap-2 w-full sm:w-auto">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setWizardStep(1);
-                    setIsWizardOpen(true);
-                  }}
-                  className="px-3.5 py-2.5 rounded-xl glass-button-secondary text-xs font-mono font-semibold shrink-0 cursor-pointer"
-                >
-                  3-Step Wizard
-                </button>
-                <button
-                  type="submit"
-                  className="flex-grow sm:flex-grow-0 px-6 py-2.5 rounded-xl bg-[#407E8C] text-white hover:bg-[#336570] active:bg-[#264D56] font-bold text-xs sm:text-sm transition-all shadow-md shadow-[#407E8C]/20 flex items-center justify-center gap-2 cursor-pointer group select-none hover:-translate-y-0.5"
-                >
-                  <span>Launch Study Plan</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </button>
-              </div>
-            </div>
-
-          </form>
-
+            <span>Start Learning</span>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setWizardStep(1);
+              setIsWizardOpen(true);
+            }}
+            className="px-8 py-4 sm:py-4.5 rounded-full liquid-glass border border-slate-200/90 dark:border-sky-500/30 text-slate-700 dark:text-sky-200 hover:border-sky-400 text-base sm:text-lg font-semibold cursor-pointer transition-all hover:scale-[1.02]"
+          >
+            3-Step Wizard
+          </button>
         </div>
       </motion.div>
 
-      {/* 4. Minimal, Clean Trust Stats */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.4, delay: 0.15 }}
-        className="pt-4 flex items-center justify-center gap-8 text-xs font-mono text-[#083A4F]/65 dark:text-[#CBDCE3]/70 flex-wrap"
-      >
-        <div className="flex items-center gap-1.5">
-          <CheckCircle2 className="w-3.5 h-3.5 text-[#407E8C]" />
-          <span>Sem 1 to 8 Syllabi</span>
-        </div>
-        <span className="text-[#083A4F]/20 dark:text-[#E5E1DD]/20">•</span>
-        <div className="flex items-center gap-1.5">
-          <CheckCircle2 className="w-3.5 h-3.5 text-[#407E8C]" />
-          <span>70-Mark Pattern Accurate</span>
-        </div>
-        <span className="text-[#083A4F]/20 dark:text-[#E5E1DD]/20">•</span>
-        <div className="flex items-center gap-1.5">
-          <CheckCircle2 className="w-3.5 h-3.5 text-[#407E8C]" />
-          <span>80%+ Repeated PYQs</span>
-        </div>
-      </motion.div>
+
 
       {/* 5. Guided Step-by-Step Preparation Modal (Adaptive to Stream) */}
       <Dialog.Root open={isWizardOpen} onOpenChange={setIsWizardOpen}>
