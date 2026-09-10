@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import * as Dialog from '@radix-ui/react-dialog';
 import { 
   Sparkles, 
   ArrowRight, 
@@ -27,18 +26,38 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
   
   // Stream-specific sub-selection
   const [selectedSem, setSelectedSem] = useState(3);
+  const [selectedBcaSem, setSelectedBcaSem] = useState(2);
   const [selectedGatePaper, setSelectedGatePaper] = useState('CS');
   const [selectedJeeTrack, setSelectedJeeTrack] = useState('jee_main');
   const [selectedSscSection, setSelectedSscSection] = useState('ssc_full');
+  const [selectedCbse12Track, setSelectedCbse12Track] = useState('cbse12_pcm_cs');
+  const [selectedCbse10Subject, setSelectedCbse10Subject] = useState('cbse10_math');
   
   const [selectedGoal, setSelectedGoal] = useState('blueprint');
   const [heroTopic, setHeroTopic] = useState('');
 
   const streams = [
-    { id: 'btech', name: 'B.Tech Engineering', desc: 'Semester 1 to 8 (MAKAUT & University)', icon: '🎓' },
-    { id: 'gate', name: 'GATE 2027', desc: 'IIT Madras (CS, DA, EC, EE, ME, CE)', icon: '🏛️' },
-    { id: 'jee', name: 'JEE (Main & Advanced)', desc: 'NTA Computer Based Test (PCM)', icon: '⚡' },
-    { id: 'ssc', name: 'Govt Job Exams', desc: 'SSC CGL, Railway & Aptitude', icon: '🎯' }
+    { id: 'btech', name: 'B.Tech Engineering', desc: 'Semester 1 to 8 (MAKAUT & Autonomous)', icon: '🎓' },
+    { id: 'cbse_12', name: 'CBSE Class 12 Board', desc: 'Science (PCM / Biology / CS Python & SQL)', icon: '🏫' },
+    { id: 'cbse_10', name: 'CBSE Class 10 Board', desc: 'Maths, Science, Social Science & English', icon: '🎒' },
+    { id: 'ssc', name: 'SSC CGL (Govt Exams)', desc: 'Tier-1 & Tier-2 Speed CBT Simulator', icon: '🎯' },
+    { id: 'jee', name: 'NTA JEE (Main & Advanced)', desc: 'NTA Computer Based Test (300 Marks PCM)', icon: '⚡' },
+    { id: 'gate', name: 'GATE 2027 (IIT Madras)', desc: 'National Test (CS, DA, EC, EE, ME, CE)', icon: '🏛️' },
+    { id: 'bca', name: 'BCA / MCA Semester', desc: 'C, Python, Java OOPs, DBMS SQL, Web Tech', icon: '💻' }
+  ];
+
+  const cbse12Tracks = [
+    { id: 'cbse12_pcm_cs', name: 'PCM + Computer Science', desc: 'Calculus, Vectors, Optics, Electrostatics, Organic Chemistry & Python/SQL' },
+    { id: 'cbse12_pcm_bio', name: 'PCM + Biology', desc: 'Calculus, Ray/Wave Optics, Genetics, Human Physiology & Organic Reactions' },
+    { id: 'cbse12_math', name: 'Mathematics Focus', desc: 'Integration, Differential Equations, 3D Geometry, Vectors & Matrices' },
+    { id: 'cbse12_phys', name: 'Physics Focus', desc: 'Gauss Law, Lens Maker Formula, LCR Circuits, Wave Optics & Semiconductors' }
+  ];
+
+  const cbse10Subjects = [
+    { id: 'cbse10_math', name: 'Mathematics (Standard / Basic)', desc: 'Thales Theorem, Quadratic Equations, Arithmetic Progressions & Trigonometry' },
+    { id: 'cbse10_sci', name: 'Integrated Science', desc: 'Light Reflection/Refraction, Electricity, Life Processes & Chemical Reactions' },
+    { id: 'cbse10_sst', name: 'Social Science', desc: 'Nationalism in India, Federalism, Agriculture & Sectors of Indian Economy' },
+    { id: 'cbse10_eng', name: 'English Language & Literature', desc: 'Reading Passages, Analytical Paragraphs, Grammar Rules & First Flight' }
   ];
 
   const gatePapers = [
@@ -69,25 +88,43 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
     switch (selectedStream) {
       case 'gate':
         return [
+          { id: 'blueprint', label: 'Complete GATE Syllabus Blueprint & Study Room', desc: 'Detailed topics, hardest hurdle warnings, and repeated PYQs', icon: BookOpen },
           { id: 'mockTest', label: 'Official 100-Mark IIT Madras Simulator', desc: 'Timed 65-question test with MCQs, MSQs & NAT numericals', icon: FileCheck },
-          { id: 'blueprint', label: '25-Year GATE PYQ Topic Analysis Bank', desc: 'High-yield recurring questions sorted by subject weightage', icon: BookOpen },
           { id: 'cheatsheet', label: 'Engineering Math & Aptitude Cheat Sheet', desc: 'High-speed formula derivation and shortcut cards', icon: Layers }
         ];
       case 'jee':
         return [
+          { id: 'blueprint', label: 'High-Weightage Chapter Blueprint & Study Room', desc: 'Isolate 80%+ repeated derivations, reactions and numerical patterns', icon: BookOpen },
           { id: 'mockTest', label: 'Official 300-Mark NTA JEE CBT Simulator', desc: 'Timed 75-question test with +4 / -1 negative marking', icon: FileCheck },
-          { id: 'blueprint', label: 'High-Weightage Chapter Blueprint & 15-Year PYQs', desc: 'Isolate 80%+ repeated derivations, reactions and numerical patterns', icon: BookOpen },
           { id: 'cheatsheet', label: '1-Page JEE Formula Sheets & Key Named Reactions', desc: 'Emergency speed-solving formulas for Physics, Chemistry & Maths', icon: Layers }
         ];
       case 'ssc':
         return [
+          { id: 'blueprint', label: 'SSC CGL Topic Blueprint & Study Room', desc: 'Complete breakdown of Arithmetic, Reasoning, GK & English', icon: BookOpen },
           { id: 'mockTest', label: 'SSC CGL 60-Min Speed Mock Test Paper', desc: '100-Question full simulator with -0.50 negative marking', icon: FileCheck },
-          { id: 'blueprint', label: 'Previous 10-Year Question Weightage Map', desc: 'Focus on recurring Arithmetic, Reasoning & GK patterns', icon: BookOpen },
           { id: 'cheatsheet', label: 'Quantitative Shortcut Tricks & Vocab Sheets', desc: 'Mental math shortcuts, grammar rules & GK capsules', icon: Layers }
+        ];
+      case 'cbse_12':
+        return [
+          { id: 'blueprint', label: 'Class 12 Board Blueprint & Study Room', desc: 'Subject chapters, hardest derivations, and repeated board PYQs', icon: BookOpen },
+          { id: 'mockTest', label: 'Official 80-Mark CBSE Board Model Paper', desc: 'Timed board exam simulator with step-by-step marking rubrics', icon: FileCheck },
+          { id: 'cheatsheet', label: '1-Page Derivation & Formula Cheat Sheet', desc: 'Lens Maker, Gauss Law, Nernst equation & calculus summaries', icon: Layers }
+        ];
+      case 'cbse_10':
+        return [
+          { id: 'blueprint', label: 'Class 10 Board Blueprint & Study Room', desc: 'NCERT chapters, Thales theorem proofs, and 5-mark PYQs', icon: BookOpen },
+          { id: 'mockTest', label: 'Official 80-Mark CBSE Class 10 Model Paper', desc: 'Full-length board test with Section A to E rubrics', icon: FileCheck },
+          { id: 'cheatsheet', label: 'High-Yield Formula & Theorem Cheat Sheet', desc: 'Trigonometry values, quadratic formulas, and ray diagrams', icon: Layers }
+        ];
+      case 'bca':
+        return [
+          { id: 'blueprint', label: 'BCA Semester Curriculum & Study Room', desc: 'C, Python, Java, and DBMS SQL complete blueprints', icon: BookOpen },
+          { id: 'mockTest', label: 'Official 70-Mark University Model Paper', desc: 'MCQs, algorithm logic & program code questions', icon: FileCheck },
+          { id: 'cheatsheet', label: 'Syntax & Algorithm Logic Cheat Sheet', desc: 'Stack, Queue, SQL queries, and Python OOPs cheat sheet', icon: Layers }
         ];
       default: // btech
         return [
-          { id: 'blueprint', label: '30-Day Exam Pass Blueprint & Repeated PYQs', desc: 'Isolate 80%+ repeated 10M questions & hardest hurdles', icon: BookOpen },
+          { id: 'blueprint', label: '30-Day Exam Pass Blueprint & Study Room', desc: 'Isolate 80%+ repeated 10M questions & hardest hurdles', icon: BookOpen },
           { id: 'mockTest', label: 'Official 70-Mark University Mock Test Paper', desc: 'Timed exam simulator with Group A, B, C marking', icon: FileCheck },
           { id: 'cheatsheet', label: '1-Page Formula & Theorem Cheat Sheet', desc: 'Emergency last-minute recall sheets', icon: Layers }
         ];
@@ -98,35 +135,56 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
     setIsWizardOpen(false);
     confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
 
+    // Map internal stream id to target track & exam keys
+    let trackKey = 'btech';
+    let examKey = 'btech_makaut';
+    let streamLabel = 'B.Tech Engineering';
+
     if (selectedStream === 'btech') {
-      localStorage.setItem('vidya_selected_exam', 'btech_makaut');
-      const targetTab = selectedGoal === 'mockTest' ? 'mockTests' : selectedGoal === 'cheatsheet' ? 'cheatSheets' : 'studyHub';
-      if (onOpenSemester) {
-        onOpenSemester(selectedSem, targetTab);
-      } else {
-        setActiveTab(targetTab);
-      }
-      toast.success(`Loaded Semester ${selectedSem} B.Tech Blueprint!`);
-    } else if (selectedStream === 'gate') {
-      localStorage.setItem('vidya_selected_exam', 'gate_2027');
-      const targetTab = selectedGoal === 'cheatsheet' ? 'cheatSheets' : 'mockTests';
-      setActiveTab(targetTab);
-      toast.success(`Loaded GATE 2027 (${selectedGatePaper}) Intelligence!`, {
-        description: 'IIT Madras 100-Mark official pattern & PYQs ready.'
-      });
-    } else if (selectedStream === 'jee') {
-      localStorage.setItem('vidya_selected_exam', 'jee_main');
-      const targetTab = selectedGoal === 'cheatsheet' ? 'cheatSheets' : 'mockTests';
-      setActiveTab(targetTab);
-      toast.success(`Loaded JEE Main & Advanced Intelligence!`, {
-        description: 'NTA 300-Mark official pattern & high-yield PYQs ready.'
-      });
+      trackKey = 'btech';
+      examKey = 'btech_makaut';
+      streamLabel = `B.Tech Semester ${selectedSem}`;
+    } else if (selectedStream === 'cbse_12') {
+      trackKey = 'cbse_12';
+      examKey = 'cbse_12';
+      streamLabel = 'CBSE Class 12 Board';
+    } else if (selectedStream === 'cbse_10') {
+      trackKey = 'cbse_10';
+      examKey = 'cbse_10';
+      streamLabel = 'CBSE Class 10 Board';
     } else if (selectedStream === 'ssc') {
-      localStorage.setItem('vidya_selected_exam', 'ssc_cgl');
-      const targetTab = selectedGoal === 'cheatsheet' ? 'cheatSheets' : 'mockTests';
-      setActiveTab(targetTab);
-      toast.success(`Loaded SSC CGL Speed Test Suite!`);
+      trackKey = 'ssc_cgl';
+      examKey = 'ssc_cgl';
+      streamLabel = 'SSC CGL';
+    } else if (selectedStream === 'jee') {
+      trackKey = 'jee_main';
+      examKey = 'jee_main';
+      streamLabel = 'NTA JEE Main';
+    } else if (selectedStream === 'gate') {
+      trackKey = 'gate_2027';
+      examKey = 'gate_2027';
+      streamLabel = `GATE 2027 (${selectedGatePaper})`;
+    } else if (selectedStream === 'bca') {
+      trackKey = 'bca_college';
+      examKey = 'bca_college';
+      streamLabel = `BCA Semester ${selectedBcaSem}`;
     }
+
+    // Persist user selection
+    localStorage.setItem('vidya_target_track', trackKey);
+    localStorage.setItem('vidya_selected_exam', examKey);
+
+    const targetTab = selectedGoal === 'mockTest' ? 'mockTests' : selectedGoal === 'cheatsheet' ? 'cheatSheets' : 'studyHub';
+
+    if (selectedStream === 'btech' && onOpenSemester) {
+      onOpenSemester(selectedSem, targetTab);
+    } else {
+      setActiveTab(targetTab);
+    }
+
+    toast.success(`Loaded ${streamLabel} Experience!`, {
+      description: `Target set: ${selectedGoal === 'mockTest' ? 'Mock Test Engine' : selectedGoal === 'cheatsheet' ? 'Cheat Sheet Studio' : 'Study Room Blueprint'}`
+    });
   };
 
   const getStep1ButtonText = () => {
@@ -135,7 +193,10 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
       case 'gate': return 'Next: Choose GATE Paper';
       case 'jee': return 'Next: Choose JEE Focus Track';
       case 'ssc': return 'Next: Choose Exam Section';
-      default: return 'Next: Choose Syllabus';
+      case 'cbse_12': return 'Next: Choose Class 12 Track';
+      case 'cbse_10': return 'Next: Choose Class 10 Subject';
+      case 'bca': return 'Next: Choose BCA Semester';
+      default: return 'Next: Choose Focus';
     }
   };
 
@@ -144,12 +205,12 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
   return (
     <section className="relative w-full min-h-[76vh] flex flex-col items-center justify-center pt-18 sm:pt-24 lg:pt-28 pb-18 sm:pb-24 px-4 sm:px-8 lg:px-12 xl:px-16 text-center space-y-9 w-full max-w-7xl 2xl:max-w-[1500px] mx-auto">
       
-      {/* Google Sky Blue Fluid Ambient Light Glows - Full Width Diffusion */}
+      {/* Ambient Light Glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] sm:w-[1200px] lg:w-[1440px] h-[540px] bg-gradient-to-tr from-sky-400/22 via-blue-500/18 to-cyan-300/22 blur-[140px] pointer-events-none -z-10 rounded-full" />
       <div className="absolute top-1/3 -left-28 w-[420px] h-[420px] bg-sky-400/15 blur-[120px] pointer-events-none -z-10 rounded-full" />
       <div className="absolute top-1/3 -right-28 w-[420px] h-[420px] bg-blue-500/15 blur-[120px] pointer-events-none -z-10 rounded-full" />
 
-      {/* 2. Massive, Screen-Optimized Typography (NotebookLM / Google AI Flagship Style) */}
+      {/* Hero Typography */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -163,10 +224,11 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
         </h1>
 
         <p className="text-lg sm:text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl sm:max-w-4xl mx-auto font-normal font-sans pt-2">
-          Master dense university syllabi, crack repeated 10-mark PYQs, and conquer your exams with effortless conceptual clarity and zero panic.
+          Turn any syllabus into a perfect score with AI precision, authentic exam simulators, 
+          spaced repetition, and 24/7 step-by-step doubt derivations.
         </p>
 
-        {/* Quick CTA Actions - Google Style Pill Buttons */}
+        {/* Action Buttons: Start Learning & 3-Step Wizard */}
         <div className="pt-4 flex items-center justify-center gap-4 sm:gap-5 flex-wrap">
           <button
             type="button"
@@ -176,45 +238,58 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
             <span>Start Learning</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
           </button>
+          
           <button
             type="button"
             onClick={() => {
               setWizardStep(1);
               setIsWizardOpen(true);
             }}
-            className="px-8 py-4 sm:py-4.5 rounded-full liquid-glass border border-slate-200/90 dark:border-sky-500/30 text-slate-700 dark:text-sky-200 hover:border-sky-400 text-base sm:text-lg font-semibold cursor-pointer transition-all hover:scale-[1.02]"
+            className="px-8 py-4 sm:py-4.5 rounded-full liquid-glass border border-slate-200/90 dark:border-sky-500/30 text-slate-700 dark:text-sky-200 hover:border-sky-400 text-base sm:text-lg font-semibold cursor-pointer transition-all hover:scale-[1.02] flex items-center gap-2"
           >
-            3-Step Wizard
+            <Sparkles className="w-4 h-4 text-sky-500 dark:text-sky-400" />
+            <span>3-Step Wizard</span>
           </button>
         </div>
       </motion.div>
 
-
-
       {/* 5. Guided Step-by-Step Preparation Modal (Adaptive to Stream) */}
-      <Dialog.Root open={isWizardOpen} onOpenChange={setIsWizardOpen}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 z-glass-modal bg-black/60 backdrop-blur-md animate-fade-in" />
-          <Dialog.Content className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-glass-modal w-[95vw] sm:w-[540px] max-h-[90vh] rounded-3xl glass-card shadow-2xl p-6 sm:p-8 space-y-6 text-left overflow-y-auto animate-scale-in border border-white/60 dark:border-white/12">
+      {isWizardOpen && (
+        <div 
+          className="fixed inset-0 z-[9999] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-fade-in"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsWizardOpen(false);
+          }}
+        >
+          <div className="relative w-full max-w-xl max-h-[90vh] rounded-3xl bg-[#0D1117] border border-[#30363D] shadow-2xl p-6 sm:p-8 space-y-6 text-left overflow-y-auto animate-scale-in my-8 text-white">
             
             {/* Header & Step Indicator */}
-            <div className="flex items-center justify-between pb-3 border-b border-[#083A4F]/10 dark:border-white/[0.06]">
+            <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#A58D66]/20 text-[#8D7652] dark:text-[#C4AE88]">
+                <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30">
                   Step {wizardStep} of 3
                 </span>
-                <span className="text-xs font-mono text-[#083A4F]/60 dark:text-[#CBDCE3]/60">
+                <span className="text-xs font-mono text-neutral-400">
                   {wizardStep === 1 && 'Select Target Exam'}
-                  {wizardStep === 2 && (selectedStream === 'btech' ? 'Select Semester' : selectedStream === 'gate' ? 'Select Paper' : selectedStream === 'jee' ? 'Select JEE Track' : 'Select Section')}
+                  {wizardStep === 2 && (
+                    selectedStream === 'btech' ? 'Select Semester' :
+                    selectedStream === 'cbse_12' ? 'Select Focus Track' :
+                    selectedStream === 'cbse_10' ? 'Select Focus Subject' :
+                    selectedStream === 'gate' ? 'Select Paper' :
+                    selectedStream === 'jee' ? 'Select JEE Track' :
+                    selectedStream === 'bca' ? 'Select Semester' : 'Select Section'
+                  )}
                   {wizardStep === 3 && 'Choose Goal'}
                 </span>
               </div>
 
-              <Dialog.Close asChild>
-                <button className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 text-neutral-500 cursor-pointer">
-                  <X className="w-4 h-4" />
-                </button>
-              </Dialog.Close>
+              <button 
+                type="button"
+                onClick={() => setIsWizardOpen(false)}
+                className="p-1.5 rounded-lg bg-[#21262D] hover:bg-[#30363D] text-neutral-400 hover:text-white transition-all cursor-pointer border border-[#30363D]"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
 
             {/* STEP 1: What are you preparing for? */}
@@ -225,16 +300,16 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                     What are you preparing for?
                   </h3>
                   <p className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
-                    VIDYA AI will customize the question paper pattern and syllabus matrices.
+                    VIDYA AI will customize the question paper pattern, syllabus, and PYQ blueprints.
                   </p>
                 </div>
 
-                <div className="space-y-2 pt-1">
+                <div className="space-y-2 pt-1 max-h-[360px] overflow-y-auto pr-1">
                   {streams.map((s) => (
                     <div
                       key={s.id}
                       onClick={() => setSelectedStream(s.id)}
-                      className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                      className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
                         selectedStream === s.id
                           ? 'glass-teal shadow-xs border-[#407E8C]'
                           : 'glass-surface hover:border-[#407E8C]/40'
@@ -270,11 +345,11 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
               </div>
             )}
 
-            {/* STEP 2: Stream-Specific Branch / Subject / Semester Selection */}
+            {/* STEP 2: Stream-Specific Sub-Selection */}
             {wizardStep === 2 && (
               <div className="space-y-4 animate-fade-in">
                 
-                {/* 2A. B.Tech Engineering Semesters (1 to 8) */}
+                {/* 2A. B.Tech Semesters (1 to 8) */}
                 {selectedStream === 'btech' && (
                   <>
                     <div className="space-y-1">
@@ -309,7 +384,95 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                   </>
                 )}
 
-                {/* 2B. GATE 2027 Papers (IIT Madras Pattern) */}
+                {/* 2B. CBSE Class 12 Tracks */}
+                {selectedStream === 'cbse_12' && (
+                  <>
+                    <div className="space-y-1">
+                      <h3 className="text-xl font-bold font-display text-[#083A4F] dark:text-[#FAF9F8]">
+                        Select your Class 12 Focus Track
+                      </h3>
+                      <p className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
+                        CBSE 80/70-mark official board pattern with step-by-step marking rubrics.
+                      </p>
+                    </div>
+
+                    <div className="space-y-2 pt-1 max-h-[280px] overflow-y-auto">
+                      {cbse12Tracks.map((t) => (
+                        <div
+                          key={t.id}
+                          onClick={() => setSelectedCbse12Track(t.id)}
+                          className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                            selectedCbse12Track === t.id
+                              ? 'glass-teal shadow-xs border-[#407E8C]'
+                              : 'glass-surface hover:border-[#407E8C]/40'
+                          }`}
+                        >
+                          <div>
+                            <div className="text-sm font-bold text-[#083A4F] dark:text-white font-display">
+                              {t.name}
+                            </div>
+                            <div className="text-[11px] text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
+                              {t.desc}
+                            </div>
+                          </div>
+                          {selectedCbse12Track === t.id && (
+                            <CheckCircle2 className="w-4 h-4 text-[#407E8C] shrink-0" />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="p-3.5 rounded-xl glass-teal text-xs font-mono">
+                      Selected: <strong>{cbse12Tracks.find(t => t.id === selectedCbse12Track)?.name}</strong>.
+                    </div>
+                  </>
+                )}
+
+                {/* 2C. CBSE Class 10 Subjects */}
+                {selectedStream === 'cbse_10' && (
+                  <>
+                    <div className="space-y-1">
+                      <h3 className="text-xl font-bold font-display text-[#083A4F] dark:text-[#FAF9F8]">
+                        Select your Class 10 Subject Focus
+                      </h3>
+                      <p className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
+                        CBSE 80-mark board model papers, NCERT proofs, and formula sheets.
+                      </p>
+                    </div>
+
+                    <div className="space-y-2 pt-1 max-h-[280px] overflow-y-auto">
+                      {cbse10Subjects.map((s) => (
+                        <div
+                          key={s.id}
+                          onClick={() => setSelectedCbse10Subject(s.id)}
+                          className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                            selectedCbse10Subject === s.id
+                              ? 'glass-teal shadow-xs border-[#407E8C]'
+                              : 'glass-surface hover:border-[#407E8C]/40'
+                          }`}
+                        >
+                          <div>
+                            <div className="text-sm font-bold text-[#083A4F] dark:text-white font-display">
+                              {s.name}
+                            </div>
+                            <div className="text-[11px] text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
+                              {s.desc}
+                            </div>
+                          </div>
+                          {selectedCbse10Subject === s.id && (
+                            <CheckCircle2 className="w-4 h-4 text-[#407E8C] shrink-0" />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="p-3.5 rounded-xl glass-teal text-xs font-mono">
+                      Selected: <strong>{cbse10Subjects.find(s => s.id === selectedCbse10Subject)?.name}</strong>.
+                    </div>
+                  </>
+                )}
+
+                {/* 2D. GATE 2027 Papers */}
                 {selectedStream === 'gate' && (
                   <>
                     <div className="space-y-1">
@@ -353,7 +516,7 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                   </>
                 )}
 
-                {/* 2C. JEE Focus Tracks */}
+                {/* 2E. JEE Focus Tracks */}
                 {selectedStream === 'jee' && (
                   <>
                     <div className="space-y-1">
@@ -397,7 +560,7 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                   </>
                 )}
 
-                {/* 2D. Govt Exams (SSC CGL / Railway) */}
+                {/* 2F. SSC CGL Sections */}
                 {selectedStream === 'ssc' && (
                   <>
                     <div className="space-y-1">
@@ -441,6 +604,41 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                   </>
                 )}
 
+                {/* 2G. BCA / MCA Semesters (1 to 6) */}
+                {selectedStream === 'bca' && (
+                  <>
+                    <div className="space-y-1">
+                      <h3 className="text-xl font-bold font-display text-[#083A4F] dark:text-[#FAF9F8]">
+                        Which BCA / MCA Semester are you in?
+                      </h3>
+                      <p className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
+                        University 70-mark pattern covering C, Python, Java, DBMS & Web Tech.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-2.5 pt-2">
+                      {[1, 2, 3, 4, 5, 6].map((sem) => (
+                        <button
+                          key={sem}
+                          type="button"
+                          onClick={() => setSelectedBcaSem(sem)}
+                          className={`p-3.5 rounded-xl text-xs font-mono font-bold transition-all text-center cursor-pointer ${
+                            selectedBcaSem === sem
+                              ? 'bg-[#407E8C] text-white shadow-sm border border-[#407E8C]'
+                              : 'glass-surface text-[#083A4F] dark:text-[#E5E1DD] hover:bg-[#E5E1DD]/30'
+                          }`}
+                        >
+                          Semester {sem}
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="p-3.5 rounded-xl glass-teal text-xs font-mono">
+                      Selected: <strong>Semester {selectedBcaSem} BCA / MCA</strong>.
+                    </div>
+                  </>
+                )}
+
                 {/* Back / Next Buttons for Step 2 */}
                 <div className="flex items-center gap-2 pt-2">
                   <button
@@ -472,10 +670,7 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                     What do you need right now?
                   </h3>
                   <p className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
-                    {selectedStream === 'btech' && `Choose what you want VIDYA AI to generate for Semester ${selectedSem}.`}
-                    {selectedStream === 'gate' && `Choose what you want VIDYA AI to generate for GATE 2027 (${selectedGatePaper}).`}
-                    {selectedStream === 'jee' && `Choose what you want VIDYA AI to generate for your JEE (Main & Advanced) preparation.`}
-                    {selectedStream === 'ssc' && `Choose what you want VIDYA AI to generate for your Govt exam preparation.`}
+                    Choose what you want VIDYA AI to generate for your preparation.
                   </p>
                 </div>
 
@@ -535,9 +730,9 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
               </div>
             )}
 
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
+          </div>
+        </div>
+      )}
 
     </section>
   );
