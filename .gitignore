@@ -32,3 +32,6 @@ cloudflared*
 .env
 .env.local
 .env.*.local
+
+# Scratch temporary files
+scratch/
