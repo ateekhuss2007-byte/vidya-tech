@@ -43,20 +43,26 @@ import {
   queryR25Syllabus,
   R25Course
 } from '../../data/btechSemesterSyllabusData';
+import { getUniversityById } from '../../data/panIndiaUniversitiesData';
+import { getVerifiedCoursesForUniversity } from '../../data/officialSyllabusRegistry';
+import { DataProvenanceBadge } from '../ui/DataProvenanceBadge';
 
 interface BtechSemesterAnalyzerProps {
   setActiveTab?: (tab: any) => void;
   onSelectTopic?: (topic: string) => void;
   onOpenMockTest?: (subject: string, streamId?: string) => void;
   initialSemester?: number;
+  selectedUniversityId?: string;
 }
 
 export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({ 
   setActiveTab, 
   onSelectTopic,
   onOpenMockTest,
-  initialSemester = 3
+  initialSemester = 3,
+  selectedUniversityId = 'makaut'
 }) => {
+  const universityMeta = getUniversityById(selectedUniversityId);
   const [selectedSem, setSelectedSem] = useState<number>(initialSemester || 3);
   const [searchInput, setSearchInput] = useState<string>('');
   const [isSearching, setIsSearching] = useState<boolean>(false);
@@ -80,10 +86,40 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
 
   const semesterData = analyzeSemesterSyllabus(selectedSem);
 
-  // Get all official R-25 courses for the active semester
-  const semesterR25Courses = useMemo(() => {
+  // Check if verified official courses exist for the selected university
+  const verifiedCourses = useMemo(() => {
+    return getVerifiedCoursesForUniversity(selectedUniversityId, selectedSem);
+  }, [selectedUniversityId, selectedSem]);
+
+  // Unified courses: either verified university courses with provenance, or R25_COURSES fallback
+  const semesterR25Courses: (R25Course & { source?: any; detailedModules?: any })[] = useMemo(() => {
+    if (verifiedCourses.length > 0) {
+      return verifiedCourses.map(vc => ({
+        code: vc.courseCode,
+        name: vc.courseTitle,
+        semester: vc.semester,
+        type: (vc.courseType === 'Practical' ? 'Practical' : 'Theory') as any,
+        category: (vc.category || 'Major') as any,
+        contact: `${vc.contactHours?.lecture || 3}-${vc.contactHours?.tutorial || 0}-${vc.contactHours?.practical || 0}`,
+        credits: vc.credits || 4,
+        contactHours: vc.contactHours?.total || 4,
+        prerequisites: vc.prerequisites.join(', '),
+        courseObjectives: vc.courseObjectives.map(o => o.text),
+        courseOutcomes: vc.courseOutcomes.map(o => ({ co: o.code, description: o.text })),
+        modules: vc.modules.map(m => ({
+          moduleNumber: m.moduleNumber,
+          title: m.officialTitle,
+          lectures: m.hours ? `${m.hours} Lectures` : undefined,
+          topics: m.topics.map(t => t.officialTopic)
+        })),
+        detailedModules: vc.modules,
+        textBooks: vc.textbooks.map(b => `${b.author ? b.author + ': ' : ''}${b.title}${b.publisher ? ' (' + b.publisher + ')' : ''}`),
+        referenceBooks: vc.referenceBooks?.map(b => `${b.author ? b.author + ': ' : ''}${b.title}`) || [],
+        source: vc.source
+      }));
+    }
     return R25_COURSES.filter(c => c.semester === selectedSem);
-  }, [selectedSem]);
+  }, [verifiedCourses, selectedSem]);
 
   const semesterTheoryCourses = useMemo(() => {
     return semesterR25Courses.filter(c => c.type === 'Theory');
@@ -153,15 +189,15 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
         
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 text-xs font-mono font-bold">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 border border-[#00F59B]/30 text-[#00F59B] text-xs font-mono font-bold">
               <GraduationCap className="w-3.5 h-3.5" />
-              <span>NIT Autonomous / MAKAUT [Regulation-25] Official Curriculum (NEP 2020)</span>
+              <span>{universityMeta.icon} {universityMeta.shortName} [{universityMeta.regulationCode}] Official Curriculum</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold font-display text-neutral-900 dark:text-white">
-              B.Tech CSE <span className="text-blue-600 dark:text-blue-400">Regulation-25 Intelligence Engine</span>
+              {universityMeta.shortName} <span className="text-[#00F59B]">Curriculum & Syllabus Intelligence</span>
             </h2>
             <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 max-w-2xl font-sans">
-              100% verified syllabus across all 8 Semesters (160 Credits). Search any course code (e.g. CS302, CS401), topic (e.g. Dijkstra, K-Maps, Booth), or lab experiment.
+              {universityMeta.description} Active Blueprint: <span className="text-[#00F59B] font-mono">{universityMeta.blueprintPattern?.split('(')[0] || 'Official Pattern'}</span>. Search any course code, module topic, or lab experiment.
             </p>
           </div>
 
@@ -601,9 +637,14 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                           Semester {selectedSem} • {selectedCourse.credits} Credits • {selectedCourse.contactHours || 36} Hours
                         </span>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-bold font-display text-neutral-900 dark:text-white">
-                        {selectedCourse.name}
-                      </h3>
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <h3 className="text-xl sm:text-2xl font-bold font-display text-neutral-900 dark:text-white">
+                          {selectedCourse.name}
+                        </h3>
+                        {selectedCourse.source && (
+                          <DataProvenanceBadge metadata={selectedCourse.source} />
+                        )}
+                      </div>
                       <p className="text-xs text-neutral-500 dark:text-neutral-400 font-sans max-w-2xl">
                         Select any module below to inspect its detailed syllabus chapters, video derivations, lecture hours, and AI revision notes.
                       </p>
@@ -755,46 +796,85 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
 
                   {/* Chapters List */}
                   <div className="space-y-2.5">
-                    {selectedModule.topics?.map((topic, idx) => (
-                      <div
-                        key={idx}
-                        className="p-3.5 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.05] dark:border-white/[0.06] hover:border-blue-400 dark:hover:border-blue-500/50 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 group"
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className="w-7 h-7 rounded-lg bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.04] dark:border-white/[0.06] flex items-center justify-center text-xs font-mono font-bold text-neutral-700 dark:text-neutral-300 shrink-0 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-colors">
-                            #{idx + 1}
-                          </span>
-                          <span className="text-xs sm:text-sm font-semibold text-neutral-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors font-sans">
-                            {topic}
-                          </span>
-                        </div>
+                    {selectedModule.topics?.map((topic, idx) => {
+                      const detailedMod = (selectedCourse as any).detailedModules?.find(
+                        (m: any) => m.moduleNumber === selectedModule.moduleNumber
+                      );
+                      const topicObj = detailedMod?.topics?.[idx];
+                      const hasMicroTopics = topicObj?.microTopics && topicObj.microTopics.length > 0;
 
-                        <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
-                          <button
-                            type="button"
-                            onClick={() => handleTopicClick(topic, selectedCourse.code, selectedCourse.name, selectedSem)}
-                            className="px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-600 hover:text-white text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60 text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs"
-                          >
-                            <BookOpen className="w-3.5 h-3.5" />
-                            <span>Full Notes & Formulas</span>
-                          </button>
+                      return (
+                        <div
+                          key={idx}
+                          className="p-3.5 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.05] dark:border-white/[0.06] hover:border-blue-400 dark:hover:border-blue-500/50 transition-all flex flex-col justify-between gap-3 group"
+                        >
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div className="flex items-center gap-3">
+                              <span className="w-7 h-7 rounded-lg bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.04] dark:border-white/[0.06] flex items-center justify-center text-xs font-mono font-bold text-neutral-700 dark:text-neutral-300 shrink-0 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-colors">
+                                #{idx + 1}
+                              </span>
+                              <div>
+                                <span className="text-xs sm:text-sm font-semibold text-neutral-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors font-sans">
+                                  {topic}
+                                </span>
+                                {topicObj && (
+                                  <div className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 flex items-center gap-1 mt-0.5">
+                                    <span>✓ Official Syllabus Prescribed</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
 
-                          {onSelectTopic && (
-                            <button
-                              type="button"
-                              onClick={() => {
-                                handleTopicClick(topic, selectedCourse.code, selectedCourse.name, selectedSem);
-                                if (onSelectTopic) onSelectTopic(topic);
-                              }}
-                              className="px-2.5 py-1.5 rounded-lg bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-neutral-700 dark:text-neutral-300 text-xs font-mono font-medium transition-colors cursor-pointer"
-                              title="Topic Video & Derivation"
-                            >
-                              <Play className="w-3.5 h-3.5 text-blue-500" />
-                            </button>
+                            <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+                              <button
+                                type="button"
+                                onClick={() => handleTopicClick(topic, selectedCourse.code, selectedCourse.name, selectedSem)}
+                                className="px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-600 hover:text-white text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60 text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs"
+                              >
+                                <BookOpen className="w-3.5 h-3.5" />
+                                <span>Full Notes & Formulas</span>
+                              </button>
+
+                              {onSelectTopic && (
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    handleTopicClick(topic, selectedCourse.code, selectedCourse.name, selectedSem);
+                                    if (onSelectTopic) onSelectTopic(topic);
+                                  }}
+                                  className="px-2.5 py-1.5 rounded-lg bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-neutral-700 dark:text-neutral-300 text-xs font-mono font-medium transition-colors cursor-pointer"
+                                  title="Topic Video & Derivation"
+                                >
+                                  <Play className="w-3.5 h-3.5 text-blue-500" />
+                                </button>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* AI-Derived Micro-Topics Breakdown */}
+                          {hasMicroTopics && (
+                            <div className="mt-1 pt-2.5 border-t border-black/[0.04] dark:border-white/[0.05] space-y-1.5">
+                              <div className="text-[10px] font-mono text-purple-600 dark:text-purple-400 font-bold flex items-center gap-1.5">
+                                <Sparkles className="w-3 h-3 text-purple-500" />
+                                <span>AI-Derived Micro-Topic Decomposition (SIH26043 Remediation):</span>
+                              </div>
+                              <div className="flex flex-wrap gap-1.5">
+                                {topicObj.microTopics.map((mt: any) => (
+                                  <span
+                                    key={mt.id}
+                                    className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-purple-500/10 border border-purple-500/20 text-purple-700 dark:text-purple-300 flex items-center gap-1"
+                                    title={`Derived from: ${mt.derivedFromOfficialTopic}`}
+                                  >
+                                    <span className="opacity-60">•</span>
+                                    <span>{mt.name}</span>
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
                           )}
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
 
                   {/* Prev / Next Module Navigation */}

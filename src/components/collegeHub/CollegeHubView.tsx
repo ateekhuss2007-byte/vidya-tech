@@ -5,6 +5,10 @@ import { BtechStudyMaterialView } from './BtechStudyMaterialView';
 import { TopicDeepDiveSection } from './TopicDeepDiveSection';
 import { BtechSemesterAnalyzer } from './BtechSemesterAnalyzer';
 import { PyqPredictorVault } from './PyqPredictorVault';
+import { UniversitySelectorBar } from './UniversitySelectorBar';
+import { UniversalSyllabusUploaderModal } from './UniversalSyllabusUploaderModal';
+import { UniversityFacultyFinder } from './UniversityFacultyFinder';
+import { UniversityBlueprintViewer } from './UniversityBlueprintViewer';
 import { LabVivaItem, PyqHeatmapItem, EmergencyCramItem } from '../../types';
 import { 
   GraduationCap, 
@@ -18,10 +22,12 @@ import {
   Volume2, 
   BookOpen, 
   Clock, 
-  ArrowRight,
-  TrendingUp,
-  Library,
-  Search
+  ArrowRight, 
+  TrendingUp, 
+  Library, 
+  Search,
+  Users,
+  FileCheck
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -40,7 +46,9 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
   const contextSetActiveTab = study?.setActiveTab;
 
   const setActiveTab = propSetActiveTab || contextSetActiveTab || (() => {});
-  const [activeTab, setActiveTabLocal] = useState<'semesterAnalyzer' | 'pyqVault' | 'deepDive' | 'materials' | 'viva' | 'pyq' | 'cram'>('semesterAnalyzer');
+  const [selectedUniversityId, setSelectedUniversityId] = useState<string>('makaut');
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState<boolean>(false);
+  const [activeTab, setActiveTabLocal] = useState<'semesterAnalyzer' | 'facultyFinder' | 'blueprint' | 'pyqVault' | 'deepDive' | 'materials' | 'viva' | 'pyq' | 'cram'>('semesterAnalyzer');
   const [revealedAnswers, setRevealedAnswers] = useState<{ [id: string]: boolean }>({});
 
   const toggleReveal = (id: string) => {
@@ -58,9 +66,28 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
     });
   };
 
+  const handleCustomSyllabusLoaded = (parsed: any) => {
+    // When custom syllabus is ingested, switch to analyzer tab
+    setActiveTabLocal('semesterAnalyzer');
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
       
+      {/* Pan-India University & Authority Switcher Bar */}
+      <UniversitySelectorBar
+        selectedUniversityId={selectedUniversityId}
+        onSelectUniversity={(uniId) => setSelectedUniversityId(uniId)}
+        onOpenUploadModal={() => setIsUploadModalOpen(true)}
+      />
+
+      {/* Universal AI Syllabus Uploader Modal */}
+      <UniversalSyllabusUploaderModal
+        isOpen={isUploadModalOpen}
+        onClose={() => setIsUploadModalOpen(false)}
+        onSyllabusLoaded={handleCustomSyllabusLoaded}
+      />
+
       {/* Header Banner */}
       <div className="rounded-2xl p-6 sm:p-8 bg-[#0D1117] border border-[#30363D] mb-8 relative overflow-hidden shadow-xl">
         <div className="absolute top-0 right-0 w-80 h-80 bg-[#00F59B]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
@@ -69,13 +96,13 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 text-xs font-bold mb-2">
               <GraduationCap className="w-3.5 h-3.5 text-[#00F59B]" />
-              <span>University & Higher-Ed Specialized Hub</span>
+              <span>Pan-India Technical University Academic Intelligence Hub</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-[#F0F6FC]">
-              B.Tech & College Academic Hub
+              B.Tech & Technical University Engine
             </h1>
             <p className="text-xs sm:text-sm text-[#8B949E] mt-1">
-              AI Instant Topic Master, full chapter notes, lab vivas, YouTube lectures, and 10-mark recurring university questions.
+              Curricula across 35 institutions (MAKAUT, AKTU, VTU, Anna Univ, JNTU, IITs, NITs), topic-accredited teachers, official blueprints, and recurring PYQs.
             </p>
           </div>
 
@@ -92,6 +119,28 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               <span>🎯 Sem 1-8 Analyzer</span>
             </button>
             <button
+              onClick={() => setActiveTabLocal('facultyFinder')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
+                activeTab === 'facultyFinder'
+                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
+                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
+              }`}
+            >
+              <Users className="w-3.5 h-3.5" />
+              <span>👨‍🏫 Topic Teachers (SIH26043)</span>
+            </button>
+            <button
+              onClick={() => setActiveTabLocal('blueprint')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
+                activeTab === 'blueprint'
+                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
+                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
+              }`}
+            >
+              <FileCheck className="w-3.5 h-3.5" />
+              <span>🏛️ Exam Blueprints</span>
+            </button>
+            <button
               onClick={() => setActiveTabLocal('pyqVault')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'pyqVault'
@@ -100,7 +149,7 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               }`}
             >
               <Flame className="w-3.5 h-3.5" />
-              <span>📜 Predicted Papers & PYQs (70M)</span>
+              <span>📜 Predicted Papers & PYQs</span>
             </button>
             <button
               onClick={() => setActiveTabLocal('deepDive')}
@@ -161,9 +210,20 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
       {activeTab === 'semesterAnalyzer' && (
         <BtechSemesterAnalyzer 
           initialSemester={initialSemester}
+          selectedUniversityId={selectedUniversityId}
           setActiveTab={setActiveTab} 
           onOpenMockTest={onOpenMockTest} 
         />
+      )}
+
+      {/* Tab 0.1: SIH26043 Topic-Accredited Teachers */}
+      {activeTab === 'facultyFinder' && (
+        <UniversityFacultyFinder selectedUniversityId={selectedUniversityId} />
+      )}
+
+      {/* Tab 0.2: Official University Examination Blueprints */}
+      {activeTab === 'blueprint' && (
+        <UniversityBlueprintViewer selectedUniversityId={selectedUniversityId} />
       )}
 
       {/* Tab 0.5: Subject-Wise Predicted Semester Question Papers & PYQ Vault */}

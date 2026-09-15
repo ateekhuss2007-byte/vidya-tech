@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
+    "validate:registry": "npx vite-node scripts/validateUniversityRegistry.ts",
+    "validate:syllabus": "npx vite-node scripts/validateSyllabusRegistry.ts",
     "preview": "vite preview"
   },
   "dependencies": {

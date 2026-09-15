@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FileCheck, 
@@ -14,7 +14,6 @@ import {
   Award, 
   GraduationCap, 
   Layers, 
-  Send,
   Eye, 
   Check, 
   ChevronRight, 
@@ -32,13 +31,14 @@ import {
   Hash,
   Timer,
   Calendar,
-  Filter
+  Filter,
+  Send
 } from 'lucide-react';
 import { COURSE_DEFINITIONS, generateDynamicMockPaper } from '../data/mockPaperDatabase';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
 
-export const MockTestEngine = ({ user, initialSubject }) => {
+export const MockTestEngine = ({ _user, initialSubject }) => {
   // Wizard & Configuration State
   // Step 1: Course/Stream selection
   // Step 2: Semester selection (Which semester?)
@@ -147,6 +147,49 @@ export const MockTestEngine = ({ user, initialSubject }) => {
     }
   }, [initialSubject]);
 
+  // Handler: Submit Paper & Instant Grading
+  const handleSubmitPaper = useCallback(() => {
+    let score = 0;
+    let totalMcq = 0;
+    let correctCount = 0;
+    let incorrectCount = 0;
+
+    if (activeTestPaper) {
+      activeTestPaper.groups.forEach(g => {
+        g.questions.forEach(q => {
+          if (q.type === 'mcq') {
+            totalMcq += q.marks;
+            if (userAnswers[q.id]) {
+              if (userAnswers[q.id] === q.correct) {
+                score += q.marks;
+                correctCount++;
+              } else {
+                // Negative marking penalty by exam type
+                const penalty = selectedStreamId === 'ssc_cgl' 
+                  ? 0.50 
+                  : selectedStreamId === 'gate_2027' 
+                    ? (q.marks === 1 ? 0.33 : 0.66) 
+                    : selectedStreamId === 'jee_main' 
+                      ? 1.0 
+                      : 0;
+                score = Math.max(0, score - penalty);
+                incorrectCount++;
+              }
+            }
+          }
+        });
+      });
+    }
+
+    setShowAnswers(true);
+    setIsTimerRunning(false);
+    setScoreResult({ score, totalMcq, correctCount, incorrectCount });
+    confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
+    toast.success('Mock Paper Evaluated!', {
+      description: `Final Score: ${score.toFixed(1)} Marks. Detailed step-marking rubric now visible.`
+    });
+  }, [activeTestPaper, userAnswers, selectedStreamId]);
+
   // Timer countdown effect
   useEffect(() => {
     let interval = null;
@@ -159,7 +202,7 @@ export const MockTestEngine = ({ user, initialSubject }) => {
       toast.warning('Time Up! Mock test automatically submitted for evaluation.');
     }
     return () => clearInterval(interval);
-  }, [activeTestPaper, isTimerRunning, timeLeftSeconds, scoreResult]);
+  }, [activeTestPaper, isTimerRunning, timeLeftSeconds, scoreResult, handleSubmitPaper]);
 
   const formatTimer = (seconds) => {
     const h = Math.floor(seconds / 3600);
@@ -387,49 +430,6 @@ export const MockTestEngine = ({ user, initialSubject }) => {
   const toggleMarkForReview = (questionId) => {
     setMarkedForReview(prev => ({ ...prev, [questionId]: !prev[questionId] }));
     toast.info('Question marked for review.');
-  };
-
-  // Handler: Submit Paper & Instant Grading
-  const handleSubmitPaper = () => {
-    let score = 0;
-    let totalMcq = 0;
-    let correctCount = 0;
-    let incorrectCount = 0;
-
-    if (activeTestPaper) {
-      activeTestPaper.groups.forEach(g => {
-        g.questions.forEach(q => {
-          if (q.type === 'mcq') {
-            totalMcq += q.marks;
-            if (userAnswers[q.id]) {
-              if (userAnswers[q.id] === q.correct) {
-                score += q.marks;
-                correctCount++;
-              } else {
-                // Negative marking penalty by exam type
-                const penalty = selectedStreamId === 'ssc_cgl' 
-                  ? 0.50 
-                  : selectedStreamId === 'gate_2027' 
-                    ? (q.marks === 1 ? 0.33 : 0.66) 
-                    : selectedStreamId === 'jee_main' 
-                      ? 1.0 
-                      : 0;
-                score = Math.max(0, score - penalty);
-                incorrectCount++;
-              }
-            }
-          }
-        });
-      });
-    }
-
-    setShowAnswers(true);
-    setIsTimerRunning(false);
-    setScoreResult({ score, totalMcq, correctCount, incorrectCount });
-    confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
-    toast.success('Mock Paper Evaluated!', {
-      description: `Final Score: ${score.toFixed(1)} Marks. Detailed step-marking rubric now visible.`
-    });
   };
 
   // Filtered subjects for Step 3 (scoped to selected semester)

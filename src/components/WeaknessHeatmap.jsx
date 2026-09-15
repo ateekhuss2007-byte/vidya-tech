@@ -1,16 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Radar, 
-  AlertTriangle, 
-  CheckCircle2, 
-  Sparkles, 
-  ArrowRight, 
   Play, 
-  TrendingDown, 
-  TrendingUp, 
-  Brain,
-  Layers,
   Target
 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -43,13 +34,14 @@ export const WeaknessHeatmap = ({ setActiveTab }) => {
   const [selectedStreamIndex, setSelectedStreamIndex] = useState(0);
 
   const activeStream = CHAPTER_MASTERY_DATA[selectedStreamIndex];
+  const criticalGapsCount = activeStream.chapters.filter(ch => ch.score < 60).length;
 
   const handleLaunchFixDrill = (chapter) => {
     confetti({ particleCount: 50, spread: 60 });
     toast.success(`Launching 10-Question Targeted Fix Drill for ${chapter.name}!`, {
       description: 'AI has assembled a custom remediation question set.'
     });
-    if (setActiveTab) setActiveTab('mockTests');
+    if (setActiveTab) setActiveTab('mockTests', { subject: activeStream.subject });
   };
 
   return (
@@ -73,7 +65,9 @@ export const WeaknessHeatmap = ({ setActiveTab }) => {
 
         <div className="p-4 rounded-xl bg-[#161B22] border border-[#30363D] text-center shrink-0 relative z-10">
           <div className="text-[10px] text-[#8B949E] font-mono">IDENTIFIED GAPS</div>
-          <div className="text-2xl font-bold text-rose-400 font-display">2 Critical Topics</div>
+          <div className="text-2xl font-bold text-rose-400 font-display">
+            {criticalGapsCount} Critical {criticalGapsCount === 1 ? 'Topic' : 'Topics'}
+          </div>
         </div>
       </div>
 
