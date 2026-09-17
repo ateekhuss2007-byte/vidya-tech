@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Layers, 
@@ -12,10 +12,14 @@ import {
   ChevronLeft,
   ChevronRight,
   Zap,
-  Repeat
+  Repeat,
+  Calculator,
+  Activity
 } from 'lucide-react';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
+import { calculateSM2 } from '../utils/cognitiveEngine';
+import { CognitiveProofModal } from './cognitive/CognitiveProofModal';
 
 const DECKS = [
   {
@@ -81,18 +85,53 @@ export const FlashcardStudio = () => {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [reviewedCount, setReviewedCount] = useState(0);
+  const [proofModalOpen, setProofModalOpen] = useState(false);
+
+  // Persistent SM-2 states per card key
+  const [cardStates, setCardStates] = useState(() => {
+    try {
+      const saved = localStorage.getItem('vidya_sm2_deck_states');
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
 
   const currentDeck = DECKS.find(d => d.id === selectedDeckId) || DECKS[0];
   const currentCard = currentDeck.cards[currentCardIndex];
+  const currentCardKey = `${selectedDeckId}_${currentCardIndex}`;
+  
+  const currentCardState = cardStates[currentCardKey] || {
+    repetitions: 0,
+    easeFactor: 2.5,
+    intervalDays: 1,
+    lastReviewedAt: null,
+    nextDueDate: null,
+    stabilityDays: 2.0
+  };
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
   };
 
-  const handleRate = (rating) => {
+  const handleRate = (quality, label) => {
     setReviewedCount(prev => prev + 1);
-    toast.success(`Scheduled for review: ${rating}!`, {
-      description: 'SM-2 spaced interval updated in your Digital Memory Twin.'
+
+    // Genuine SM-2 Spaced Repetition calculation
+    const result = calculateSM2(currentCardState, quality);
+    const updatedStates = {
+      ...cardStates,
+      [currentCardKey]: result.nextState
+    };
+    setCardStates(updatedStates);
+    try {
+      localStorage.setItem('vidya_sm2_deck_states', JSON.stringify(updatedStates));
+    } catch (e) {
+      console.warn('Could not persist SM-2 states:', e);
+    }
+
+    toast.success(`SM-2 Schedule: ${label}`, {
+      description: `Next review: ${result.nextState.intervalDays} day(s) | EF: ${result.newEaseFactor.toFixed(2)} | Stability: ${result.nextState.stabilityDays}d`
     });
 
     if (currentCardIndex + 1 < currentDeck.cards.length) {
@@ -128,9 +167,19 @@ export const FlashcardStudio = () => {
           </p>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#007AFF]/30 text-center relative z-10 shrink-0">
-          <div className="text-[10px] text-[#007AFF] font-mono">CARDS REVIEWED</div>
-          <div className="text-2xl font-bold text-white font-display">{reviewedCount} Cards</div>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 relative z-10 shrink-0">
+          <button
+            onClick={() => setProofModalOpen(true)}
+            className="px-4 py-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-xs font-mono font-bold text-[#007AFF] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm"
+          >
+            <Calculator className="w-4 h-4 text-[#007AFF]" />
+            <span>Inspect SM-2 Formulas</span>
+          </button>
+
+          <div className="p-3.5 rounded-2xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#007AFF]/30 text-center">
+            <div className="text-[10px] text-[#007AFF] font-mono">CARDS REVIEWED</div>
+            <div className="text-xl font-bold text-white font-display">{reviewedCount} Cards</div>
+          </div>
         </div>
       </div>
 
@@ -160,9 +209,17 @@ export const FlashcardStudio = () => {
       {/* 3D Flip Card Container */}
       <div className="max-w-2xl mx-auto space-y-6">
         
-        <div className="flex items-center justify-between text-xs text-neutral-400 font-mono">
-          <span>Card {currentCardIndex + 1} of {currentDeck.cards.length} ({currentCard.category})</span>
-          <span>Click card to flip 🔄</span>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-neutral-400 font-mono">
+          <div className="flex items-center gap-2">
+            <span>Card {currentCardIndex + 1} of {currentDeck.cards.length} ({currentCard.category})</span>
+          </div>
+          <div className="flex items-center gap-2 text-[11px] text-[#007AFF] bg-white/[0.04] px-2.5 py-1 rounded-lg border border-white/5">
+            <span>EF: {currentCardState.easeFactor.toFixed(2)}</span>
+            <span>•</span>
+            <span>Int: {currentCardState.intervalDays}d</span>
+            <span>•</span>
+            <span>S: {currentCardState.stabilityDays}d</span>
+          </div>
         </div>
 
         {/* The Card */}
@@ -196,8 +253,8 @@ export const FlashcardStudio = () => {
             </p>
           </div>
 
-          <div className="text-[11px] text-neutral-400 text-center font-mono">
-            {isFlipped ? 'Rate your recall difficulty below:' : 'Try to actively recall before flipping'}
+          <div className="text-[11px] text-neutral-400 text-center font-mono flex items-center justify-center gap-2">
+            <span>{isFlipped ? 'Rate your recall difficulty below:' : 'Try to actively recall before flipping'}</span>
           </div>
         </motion.div>
 
@@ -209,7 +266,7 @@ export const FlashcardStudio = () => {
             className="grid grid-cols-4 gap-3"
           >
             <button
-              onClick={() => handleRate('Again (<1d)')}
+              onClick={() => handleRate(1, 'Again (<1d)')}
               className="p-3 rounded-2xl bg-rose-950/40 border border-rose-800 text-rose-300 text-xs font-bold hover:bg-rose-900/60 transition-all text-center cursor-pointer"
             >
               <div>Again</div>
@@ -217,7 +274,7 @@ export const FlashcardStudio = () => {
             </button>
 
             <button
-              onClick={() => handleRate('Hard (3d)')}
+              onClick={() => handleRate(3, 'Hard (3d)')}
               className="p-3 rounded-2xl bg-amber-950/40 border border-amber-800 text-amber-300 text-xs font-bold hover:bg-amber-900/60 transition-all text-center cursor-pointer"
             >
               <div>Hard</div>
@@ -225,7 +282,7 @@ export const FlashcardStudio = () => {
             </button>
 
             <button
-              onClick={() => handleRate('Good (6d)')}
+              onClick={() => handleRate(4, 'Good (6d)')}
               className="p-3 rounded-2xl bg-blue-950/40 border border-blue-800 text-blue-300 text-xs font-bold hover:bg-blue-900/60 transition-all text-center cursor-pointer"
             >
               <div>Good</div>
@@ -233,7 +290,7 @@ export const FlashcardStudio = () => {
             </button>
 
             <button
-              onClick={() => handleRate('Easy (12d)')}
+              onClick={() => handleRate(5, 'Easy (12d)')}
               className="p-3 rounded-2xl bg-[#007AFF]/15 border border-[#007AFF]/40 text-[#007AFF] text-xs font-bold hover:bg-[#007AFF]/25 transition-all text-center shadow-md shadow-[#007AFF]/25 cursor-pointer"
             >
               <div>Easy</div>
@@ -243,6 +300,13 @@ export const FlashcardStudio = () => {
         )}
 
       </div>
+
+      {/* Mathematical Proof & Formulas Inspection Modal */}
+      <CognitiveProofModal
+        isOpen={proofModalOpen}
+        onClose={() => setProofModalOpen(false)}
+        initialTab="sm2"
+      />
 
     </div>
   );
