@@ -193,16 +193,16 @@ export const SmartPDFViewer = () => {
     <div className="w-full fluid-container py-6 sm:py-10 animate-fade-in space-y-8">
       
       {/* Header Banner */}
-      <div className="rounded-3xl p-6 sm:p-8 bg-[#0D1117] text-white border border-[#30363D] shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#00F59B]/10 blur-3xl rounded-full pointer-events-none" />
+      <div className="rounded-3xl p-6 sm:p-8 bg-white dark:bg-[#1D1D1F] text-white border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#007AFF]/10 blur-3xl rounded-full pointer-events-none" />
 
         <div className="max-w-2xl space-y-2 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 text-xs font-mono font-bold uppercase tracking-wider shadow-glow-green">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30 text-xs font-mono font-bold uppercase tracking-wider shadow-md shadow-[#007AFF]/25">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Smart In-App PDF Reader & AI Document Extractor</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-white tracking-tight">
-            Read notes with <span className="text-[#00F59B]">AI auto-extracted formulas & exam PYQs</span>.
+            Read notes with <span className="text-[#007AFF]">AI auto-extracted formulas & exam PYQs</span>.
           </h1>
           <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-sans">
             Upload your college lecture notes (.pdf, .txt, .md) or browse synced Google Drive university modules. Highlight any sentence to trigger instant Socratic breakdowns.
@@ -222,7 +222,7 @@ export const SmartPDFViewer = () => {
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="px-4 py-2.5 rounded-full bg-[#00F59B] text-[#07090D] font-bold text-xs hover:bg-[#1AFFB2] transition-all flex items-center gap-2 cursor-pointer shadow-glow-green font-mono"
+            className="px-4 py-2.5 rounded-full bg-[#007AFF] text-white font-bold text-xs hover:bg-[#0062CC] transition-all flex items-center gap-2 cursor-pointer shadow-md shadow-[#007AFF]/25 font-mono"
           >
             <Upload className="w-4 h-4" />
             <span>Upload Notes / PDF</span>
@@ -232,9 +232,9 @@ export const SmartPDFViewer = () => {
             href="https://drive.google.com/drive/folders/1O7WVpqd5f4pYk5AelpoKtF2f_d1jdWrj"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2.5 rounded-full bg-[#161B22] hover:bg-[#21262D] text-white font-semibold text-xs border border-[#30363D] transition-all flex items-center gap-2 cursor-pointer"
+            className="px-4 py-2.5 rounded-full bg-[#F5F5F7] dark:bg-white/[0.04] hover:bg-[#F5F5F7] dark:bg-white/[0.06] text-white font-semibold text-xs border border-[#AAAAAA]/30 dark:border-white/[0.08] transition-all flex items-center gap-2 cursor-pointer"
           >
-            <FolderOpen className="w-4 h-4 text-[#00F59B]" />
+            <FolderOpen className="w-4 h-4 text-[#007AFF]" />
             <span>Drive Vault</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>

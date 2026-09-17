@@ -156,17 +156,17 @@ export const StudyRoomView = ({
       )}
 
       {/* Persistent Active Goal Bar across all streams */}
-      <div className="px-5 py-3 rounded-xl bg-[#161B22] border border-[#30363D] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+      <div className="px-5 py-3 rounded-2xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
         <div className="flex items-center gap-2.5">
           <span className="text-xl">{currentTrackMeta.icon}</span>
           <div>
-            <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">
+            <div className="text-[10px] font-mono text-[#AAAAAA] uppercase tracking-wider">
               Selected Preparation Track:
             </div>
-            <div className="text-xs sm:text-sm font-bold font-mono text-white flex items-center gap-2">
+            <div className="text-xs sm:text-sm font-bold font-mono text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2">
               <span>{currentTrackMeta.title}</span>
               {selectedTrack === 'btech' && (
-                <span className="px-2 py-0.5 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 text-[10px]">
+                <span className="px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30 text-[10px] font-bold">
                   Semester {activeSem}
                 </span>
               )}
@@ -177,7 +177,7 @@ export const StudyRoomView = ({
         <button
           type="button"
           onClick={() => setShowTrackModal(true)}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#21262D] hover:bg-[#30363D] text-[#00F59B] text-xs font-mono font-bold border border-[#30363D] transition-all cursor-pointer self-stretch sm:self-auto justify-center"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.06] hover:bg-[#007AFF]/10 text-[#007AFF] text-xs font-mono font-bold border border-[#AAAAAA]/30 dark:border-white/[0.1] hover:border-[#007AFF] transition-all cursor-pointer self-stretch sm:self-auto justify-center"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>Change Track (B.Tech / 10th / 12th / SSC / JEE / GATE)</span>
@@ -190,31 +190,31 @@ export const StudyRoomView = ({
       {selectedTrack === 'btech' && (
         <>
           {/* Top Study Room Control & Mode Switcher */}
-          <div className="p-6 sm:p-7 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-2 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 text-xs font-mono font-bold shadow-glow-green">
-                <span className="w-2 h-2 rounded-full bg-[#00F59B] animate-pulse"></span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/25 text-xs font-mono font-bold">
+                <span className="w-2 h-2 rounded-full bg-[#007AFF] animate-pulse"></span>
                 <span>B.Tech Hub • 8 Semesters & Topic Engine</span>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-white leading-tight">
-                Complete <span className="text-[#00F59B]">8-Semester B.Tech Syllabus</span> Study Room
+              <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] leading-tight">
+                Complete <span className="text-[#007AFF]">8-Semester B.Tech Syllabus</span> Study Room
               </h1>
 
-              <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-sans">
+              <p className="text-xs sm:text-sm text-[#1D1D1F]/70 dark:text-[#AAAAAA] leading-relaxed font-sans">
                 Every semester from Sem 1 to Sem 8 is analyzed with high-yield 10-mark PYQs, mathematical derivations, lab viva banks, and official university patterns.
               </p>
             </div>
 
             {/* Dual Mode Switcher Pills */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-1.5 p-1.5 rounded-xl bg-[#161B22] border border-[#30363D] shrink-0 self-stretch sm:self-auto w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-1.5 p-1.5 rounded-2xl bg-[#F5F5F7] dark:bg-white/[0.05] border border-[#AAAAAA]/30 dark:border-white/[0.08] shrink-0 self-stretch sm:self-auto w-full sm:w-auto">
               <button
                 type="button"
                 onClick={() => setActiveStudyMode('semester')}
                 className={`flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer select-none ${
                   activeStudyMode === 'semester'
-                    ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green'
-                    : 'text-neutral-400 hover:text-white'
+                    ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25'
+                    : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF]'
                 }`}
               >
                 <GraduationCap className="w-4 h-4 shrink-0" />
@@ -226,8 +226,8 @@ export const StudyRoomView = ({
                 onClick={() => setActiveStudyMode('pyqVault')}
                 className={`flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer select-none ${
                   activeStudyMode === 'pyqVault'
-                    ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green'
-                    : 'text-neutral-400 hover:text-white'
+                    ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25'
+                    : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF]'
                 }`}
               >
                 <Flame className="w-4 h-4 shrink-0" />
@@ -239,8 +239,8 @@ export const StudyRoomView = ({
                 onClick={() => setActiveStudyMode('deepDive')}
                 className={`flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer select-none ${
                   activeStudyMode === 'deepDive'
-                    ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green'
-                    : 'text-neutral-400 hover:text-white'
+                    ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25'
+                    : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF]'
                 }`}
               >
                 <Sparkles className="w-4 h-4 shrink-0" />
@@ -276,13 +276,13 @@ export const StudyRoomView = ({
           {activeStudyMode === 'deepDive' && (
             <div className="space-y-6">
               {/* Quick Topic Chips by Academic Year */}
-              <div className="p-6 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm space-y-4">
+              <div className="p-6 rounded-3xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <div className="text-[10px] font-mono text-neutral-400 font-bold uppercase tracking-wider">
+                    <div className="text-[10px] font-mono text-[#AAAAAA] font-bold uppercase tracking-wider">
                       Quick Focus Selector
                     </div>
-                    <h3 className="font-bold text-base text-white font-display">
+                    <h3 className="font-bold text-base text-[#1D1D1F] dark:text-[#F5F5F7] font-display">
                       Indexed Core Subjects by Academic Year (Semesters 1-8)
                     </h3>
                   </div>
@@ -290,7 +290,7 @@ export const StudyRoomView = ({
                   <button
                     type="button"
                     onClick={() => setActiveStudyMode('semester')}
-                    className="text-xs font-mono text-[#00F59B] hover:underline flex items-center gap-1 cursor-pointer"
+                    className="text-xs font-mono text-[#007AFF] hover:underline flex items-center gap-1 cursor-pointer"
                   >
                     <span>Switch to Full Semester Blueprint →</span>
                   </button>
@@ -298,8 +298,8 @@ export const StudyRoomView = ({
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {yearCategories.map((cat, i) => (
-                    <div key={i} className="p-4 rounded-xl bg-[#161B22] border border-[#30363D] space-y-2.5">
-                      <h4 className="text-xs font-bold font-mono text-white">{cat.year}</h4>
+                    <div key={i} className="p-4 rounded-2xl bg-[#F5F5F7] dark:bg-white/[0.03] border border-[#AAAAAA]/25 dark:border-white/[0.06] space-y-2.5">
+                      <h4 className="text-xs font-bold font-mono text-[#1D1D1F] dark:text-[#F5F5F7]">{cat.year}</h4>
                       <div className="flex flex-col gap-1.5">
                         {cat.subjects.map((subj, idx) => (
                           <button
@@ -308,8 +308,8 @@ export const StudyRoomView = ({
                             onClick={() => handleLaunchTopic(subj)}
                             className={`px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all text-left truncate max-w-full cursor-pointer ${
                               selectedTopic === subj
-                                ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green font-bold'
-                                : 'bg-[#0D1117] text-neutral-300 hover:bg-[#21262D] hover:text-white border border-[#30363D]'
+                                ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25 font-bold'
+                                : 'bg-white dark:bg-[#1D1D1F] text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-[#007AFF] hover:text-[#007AFF] border border-[#AAAAAA]/30 dark:border-white/[0.08]'
                             }`}
                           >
                             {subj}

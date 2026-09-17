@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+   import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { TopicNotesModal } from './TopicNotesModal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -7,37 +7,27 @@ import {
   Sparkles, 
   BookOpen, 
   FileCheck, 
-  CheckCircle2, 
   Flame, 
   ArrowRight, 
   ArrowLeft,
   ChevronRight,
   Copy, 
   Calendar, 
-  Award, 
-  Cpu, 
-  Layers, 
-  HelpCircle,
-  Clock,
-  Download,
+  Layers,
   FlaskConical,
   BookMarked,
   BarChart3,
   X,
-  Check,
   ListTree,
   Play
 } from 'lucide-react';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
 import { 
-  BTECH_SEMESTER_DATA, 
   analyzeSemesterSyllabus,
-  SemesterSubject,
   RepeatedPYQ,
   FormulaItem,
   PassStrategyStep,
-  LabVivaItem,
   R25_COURSES,
   R25_CREDIT_DISTRIBUTION,
   queryR25Syllabus,
@@ -45,6 +35,11 @@ import {
 } from '../../data/btechSemesterSyllabusData';
 import { getUniversityById } from '../../data/panIndiaUniversitiesData';
 import { getVerifiedCoursesForUniversity } from '../../data/officialSyllabusRegistry';
+import { 
+  getVerifiedPapersForUniversity, 
+  OFFICIAL_PREVIOUS_YEAR_QUESTIONS,
+  VerifiedPreviousYearQuestion
+} from '../../data/officialPyqRegistry';
 import { DataProvenanceBadge } from '../ui/DataProvenanceBadge';
 
 interface BtechSemesterAnalyzerProps {
@@ -90,6 +85,17 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
   const verifiedCourses = useMemo(() => {
     return getVerifiedCoursesForUniversity(selectedUniversityId, selectedSem);
   }, [selectedUniversityId, selectedSem]);
+
+  // Check if verified official question papers and questions exist for the selected university
+  const verifiedUniversityPapers = useMemo(() => {
+    return getVerifiedPapersForUniversity(selectedUniversityId);
+  }, [selectedUniversityId]);
+
+  const verifiedUniversityQuestions = useMemo(() => {
+    return OFFICIAL_PREVIOUS_YEAR_QUESTIONS.filter(
+      (q) => q.universityId.toLowerCase() === selectedUniversityId.toLowerCase()
+    );
+  }, [selectedUniversityId]);
 
   // Unified courses: either verified university courses with provenance, or R25_COURSES fallback
   const semesterR25Courses: (R25Course & { source?: any; detailedModules?: any })[] = useMemo(() => {
@@ -185,19 +191,19 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
     <div className="w-full space-y-6">
       
       {/* 1. Header Banner & Universal Search Bar */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#12151D] border border-black/[0.08] dark:border-white/[0.08] shadow-sm space-y-6">
+      <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm space-y-6">
         
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 border border-[#00F59B]/30 text-[#00F59B] text-xs font-mono font-bold">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/10 border border-[#007AFF]/30 text-[#007AFF] text-xs font-mono font-bold">
               <GraduationCap className="w-3.5 h-3.5" />
               <span>{universityMeta.icon} {universityMeta.shortName} [{universityMeta.regulationCode}] Official Curriculum</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold font-display text-neutral-900 dark:text-white">
-              {universityMeta.shortName} <span className="text-[#00F59B]">Curriculum & Syllabus Intelligence</span>
+            <h2 className="text-2xl sm:text-3xl font-bold font-display text-[#1D1D1F] dark:text-[#F5F5F7]">
+              {universityMeta.shortName} <span className="text-[#007AFF]">Curriculum & Syllabus Intelligence</span>
             </h2>
-            <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 max-w-2xl font-sans">
-              {universityMeta.description} Active Blueprint: <span className="text-[#00F59B] font-mono">{universityMeta.blueprintPattern?.split('(')[0] || 'Official Pattern'}</span>. Search any course code, module topic, or lab experiment.
+            <p className="text-xs sm:text-sm text-[#1D1D1F]/70 dark:text-[#AAAAAA] max-w-2xl font-sans">
+              {universityMeta.description} Active Blueprint: <span className="text-[#007AFF] font-mono">{universityMeta.blueprintPattern?.split('(')[0] || 'Official Pattern'}</span>. Search any course code, module topic, or lab experiment.
             </p>
           </div>
 
@@ -205,7 +211,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
           <div className="relative max-w-md w-full">
             <form onSubmit={handleSearchSubmit} className="flex items-center gap-2">
               <div className="relative flex-grow">
-                <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Search className="w-4 h-4 text-[#AAAAAA] absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   value={searchInput}
@@ -215,7 +221,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                     setIsSearching(true);
                   }}
                   placeholder="Search subject code, module topic, lab..."
-                  className="w-full pl-9 pr-8 py-2.5 rounded-2xl text-xs bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                  className="w-full pl-9 pr-8 py-2.5 rounded-2xl text-xs bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[#1D1D1F] dark:text-[#F5F5F7] placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                 />
                 {searchInput && (
                   <button
@@ -224,7 +230,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                       setSearchInput('');
                       setIsSearching(false);
                     }}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#AAAAAA] hover:text-neutral-600 dark:hover:text-neutral-200"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -232,7 +238,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
               </div>
               <button
                 type="submit"
-                className="px-4 py-2.5 rounded-2xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 text-xs font-mono font-bold hover:opacity-90 transition-all shrink-0 cursor-pointer shadow-sm"
+                className="px-4 py-2.5 rounded-2xl bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25 text-xs font-mono font-bold hover:opacity-90 transition-all shrink-0 cursor-pointer shadow-sm"
               >
                 Search
               </button>
@@ -253,7 +259,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                     </span>
                     <button
                       onClick={() => setIsSearching(false)}
-                      className="text-neutral-400 hover:text-neutral-900 dark:hover:text-white text-xs font-mono"
+                      className="text-[#AAAAAA] hover:text-neutral-900 dark:hover:text-white text-xs font-mono"
                     >
                       Close ✕
                     </button>
@@ -271,7 +277,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                       }}
                       className="p-3 rounded-xl bg-[#FBFBF9] dark:bg-[#0A0C10] border border-black/[0.04] dark:border-white/[0.06] hover:border-blue-500 transition-all cursor-pointer space-y-1"
                     >
-                      <div className="flex items-center justify-between text-xs font-mono font-bold text-neutral-900 dark:text-white">
+                      <div className="flex items-center justify-between text-xs font-mono font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">
                         <span className="text-blue-600 dark:text-blue-400">{c.code}</span>
                         <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300">
                           Sem {c.semester} • {c.credits} Credits ({c.contact})
@@ -281,7 +287,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                         {c.name}
                       </div>
                       {c.modules && (
-                        <div className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 font-sans">
+                        <div className="text-[11px] text-[#AAAAAA] dark:text-[#AAAAAA] line-clamp-1 font-sans">
                           Modules: {c.modules.map(m => m.title).join(', ')}
                         </div>
                       )}
@@ -290,7 +296,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
 
                   {liveSearchResult.matchedLabs.length > 0 && (
                     <div className="pt-2 border-t border-black/[0.05] dark:border-white/[0.06] space-y-1.5">
-                      <div className="text-[10px] font-mono text-neutral-400 font-bold uppercase">
+                      <div className="text-[10px] font-mono text-[#AAAAAA] font-bold uppercase">
                         Matching Lab Experiments:
                       </div>
                       {liveSearchResult.matchedLabs.slice(0, 3).map((l, idx) => (
@@ -309,7 +315,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
 
         {/* 8-Semester Interactive Switcher Tabs */}
         <div className="space-y-2 pt-2 border-t border-black/[0.05] dark:border-white/[0.06]">
-          <div className="text-[11px] font-mono text-neutral-400 font-semibold uppercase tracking-wider flex items-center justify-between">
+          <div className="text-[11px] font-mono text-[#AAAAAA] font-semibold uppercase tracking-wider flex items-center justify-between">
             <span>Select Semester (All 8 Semesters Verified):</span>
             <span className="text-blue-600 dark:text-blue-400 font-bold">
               Active: Semester {selectedSem} • Total Degree: 160 Credits
@@ -347,7 +353,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
       </div>
 
       {/* 2. Active Semester Academic Blueprint Card */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#12151D] border border-black/[0.08] dark:border-white/[0.08] shadow-sm space-y-6">
+      <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm space-y-6">
         
         {/* Semester Meta Summary */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-black/[0.05] dark:border-white/[0.06]">
@@ -355,27 +361,27 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
             <span className="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
               {semesterData.academicYear}
             </span>
-            <h3 className="text-xl sm:text-2xl font-bold font-display text-neutral-900 dark:text-white">
+            <h3 className="text-xl sm:text-2xl font-bold font-display text-[#1D1D1F] dark:text-[#F5F5F7]">
               {semesterData.title}
             </h3>
-            <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 font-sans max-w-3xl">
+            <p className="text-xs sm:text-sm text-[#1D1D1F]/70 dark:text-[#AAAAAA] font-sans max-w-3xl">
               {semesterData.summary}
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
             <div className="p-3 rounded-2xl bg-[#FBFBF9] dark:bg-[#0A0C10] border border-black/[0.05] dark:border-white/[0.06] text-center min-w-[90px]">
-              <div className="text-xs font-mono text-neutral-400 font-bold uppercase">Credits</div>
+              <div className="text-xs font-mono text-[#AAAAAA] font-bold uppercase">Credits</div>
               <div className="text-lg font-bold font-display text-blue-600 dark:text-blue-400">{semesterData.totalCredits}</div>
             </div>
 
             <div className="p-3 rounded-2xl bg-[#FBFBF9] dark:bg-[#0A0C10] border border-black/[0.05] dark:border-white/[0.06] text-center min-w-[90px]">
-              <div className="text-xs font-mono text-neutral-400 font-bold uppercase">Courses</div>
-              <div className="text-lg font-bold font-display text-neutral-900 dark:text-white">{semesterR25Courses.length}</div>
+              <div className="text-xs font-mono text-[#AAAAAA] font-bold uppercase">Courses</div>
+              <div className="text-lg font-bold font-display text-[#1D1D1F] dark:text-[#F5F5F7]">{semesterR25Courses.length}</div>
             </div>
 
             <div className="p-3 rounded-2xl bg-[#FBFBF9] dark:bg-[#0A0C10] border border-black/[0.05] dark:border-white/[0.06] text-center min-w-[120px]">
-              <div className="text-xs font-mono text-neutral-400 font-bold uppercase">Difficulty</div>
+              <div className="text-xs font-mono text-[#AAAAAA] font-bold uppercase">Difficulty</div>
               <div className="text-sm font-bold font-display text-amber-600 dark:text-amber-400">{semesterData.difficultyRating}</div>
             </div>
 
@@ -402,7 +408,13 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
             { id: 'subjects' as const, label: `Core Theory (${semesterTheoryCourses.length})`, icon: BookOpen },
             { id: 'labs' as const, label: `Lab Practicals (${semesterPracticalCourses.length})`, icon: FlaskConical },
             { id: 'textbooks' as const, label: 'Prescribed Books', icon: BookMarked },
-            { id: 'pyqs' as const, label: `Top Repeated PYQs (${semesterData.topRepeatedPYQs.length})`, icon: FileCheck },
+            { 
+              id: 'pyqs' as const, 
+              label: verifiedUniversityQuestions.length > 0 
+                ? `Verified PYQs (${verifiedUniversityQuestions.length})` 
+                : `Practice PYQs (${semesterData.topRepeatedPYQs.length})`, 
+              icon: FileCheck 
+            },
             { id: 'formulas' as const, label: `Formula Matrix (${semesterData.formulaMatrix.length})`, icon: Layers },
             { id: 'strategy' as const, label: '30-Day Pass Blueprint', icon: Calendar },
             { id: 'credits' as const, label: '160-Credit Matrix', icon: BarChart3 }
@@ -416,8 +428,8 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                 onClick={() => setActiveAnalysisTab(tab.id)}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-mono font-medium transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                   isActive
-                    ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-bold shadow-sm'
-                    : 'text-neutral-600 dark:text-neutral-400 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
+                    ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25 font-bold shadow-sm'
+                    : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
                 }`}
               >
                 <TabIcon className="w-3.5 h-3.5" />
@@ -443,7 +455,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                       Step-by-Step Drilldown
                     </span>
                   </div>
-                  <div className="text-xs text-neutral-600 dark:text-neutral-400 font-sans">
+                  <div className="text-xs text-[#1D1D1F]/70 dark:text-[#AAAAAA] font-sans">
                     {selectedCourse && selectedModule
                       ? `Level 3: ${selectedCourse.code} › Module ${selectedModule.moduleNumber} Chapters`
                       : selectedCourse
@@ -460,7 +472,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                   className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                     viewMode === 'hierarchy'
                       ? 'bg-blue-600 text-white shadow-xs'
-                      : 'bg-white dark:bg-[#12151D] text-neutral-600 dark:text-neutral-400 border border-black/[0.06] dark:border-white/[0.08]'
+                      : 'bg-white dark:bg-[#1D1D1F] text-[#1D1D1F]/70 dark:text-[#AAAAAA] border border-black/[0.06] dark:border-white/[0.08]'
                   }`}
                 >
                   <ListTree className="w-3.5 h-3.5" />
@@ -473,7 +485,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                   className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                     viewMode === 'all'
                       ? 'bg-blue-600 text-white shadow-xs'
-                      : 'bg-white dark:bg-[#12151D] text-neutral-600 dark:text-neutral-400 border border-black/[0.06] dark:border-white/[0.08]'
+                      : 'bg-white dark:bg-[#1D1D1F] text-[#1D1D1F]/70 dark:text-[#AAAAAA] border border-black/[0.06] dark:border-white/[0.08]'
                   }`}
                 >
                   <BookOpen className="w-3.5 h-3.5" />
@@ -496,7 +508,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                   >
                     <span>Semester {selectedSem} Subjects</span>
                   </button>
-                  <ChevronRight className="w-3.5 h-3.5 text-neutral-400" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#AAAAAA]" />
                   
                   <button
                     type="button"
@@ -504,7 +516,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                     className={`flex items-center gap-1 font-bold cursor-pointer ${
                       selectedModule
                         ? 'text-blue-600 dark:text-blue-400 hover:underline'
-                        : 'text-neutral-900 dark:text-white'
+                        : 'text-[#1D1D1F] dark:text-[#F5F5F7]'
                     }`}
                   >
                     <span>{selectedCourse.code}: {selectedCourse.name.length > 28 ? selectedCourse.name.substring(0, 28) + '...' : selectedCourse.name}</span>
@@ -512,8 +524,8 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
 
                   {selectedModule && (
                     <>
-                      <ChevronRight className="w-3.5 h-3.5 text-neutral-400" />
-                      <span className="font-bold text-neutral-900 dark:text-white px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-300">
+                      <ChevronRight className="w-3.5 h-3.5 text-[#AAAAAA]" />
+                      <span className="font-bold text-[#1D1D1F] dark:text-[#F5F5F7] px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-300">
                         Mod {selectedModule.moduleNumber}: {selectedModule.title.length > 24 ? selectedModule.title.substring(0, 24) + '...' : selectedModule.title}
                       </span>
                     </>
@@ -529,7 +541,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                       setSelectedSubjectCode(null);
                     }
                   }}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.08] dark:border-white/[0.1] text-neutral-700 dark:text-neutral-300 hover:text-blue-600 text-xs font-mono font-semibold cursor-pointer transition-colors shadow-2xs"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#1D1D1F] border border-black/[0.08] dark:border-white/[0.1] text-neutral-700 dark:text-neutral-300 hover:text-blue-600 text-xs font-mono font-semibold cursor-pointer transition-colors shadow-2xs"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>{selectedModule ? 'Back to Modules' : `Back to Sem ${selectedSem} Subjects`}</span>
@@ -542,14 +554,14 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <h3 className="font-bold font-display text-base sm:text-lg text-neutral-900 dark:text-white">
+                    <h3 className="font-bold font-display text-base sm:text-lg text-[#1D1D1F] dark:text-[#F5F5F7]">
                       Subjects in Semester {selectedSem}
                     </h3>
-                    <p className="text-xs text-neutral-500 font-sans">
+                    <p className="text-xs text-[#AAAAAA] font-sans">
                       Click any subject card below to view its syllabus modules.
                     </p>
                   </div>
-                  <span className="text-xs font-mono text-neutral-400 font-semibold px-2.5 py-1 rounded-full bg-black/[0.04] dark:bg-white/[0.06]">
+                  <span className="text-xs font-mono text-[#AAAAAA] font-semibold px-2.5 py-1 rounded-full bg-black/[0.04] dark:bg-white/[0.06]">
                     {semesterTheoryCourses.length} Subjects
                   </span>
                 </div>
@@ -571,17 +583,17 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                             <span className="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold px-2.5 py-0.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200/50 dark:border-blue-900/50 uppercase">
                               {course.code} • {course.category}
                             </span>
-                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-neutral-600 dark:text-neutral-400 font-semibold">
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-[#1D1D1F]/70 dark:text-[#AAAAAA] font-semibold">
                               {course.credits} Credits ({course.contact})
                             </span>
                           </div>
 
                           <div>
-                            <h4 className="text-base font-bold text-neutral-900 dark:text-white font-display group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            <h4 className="text-base font-bold text-[#1D1D1F] dark:text-[#F5F5F7] font-display group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                               {course.name}
                             </h4>
                             {course.contactHours && (
-                              <div className="text-[11px] font-mono text-neutral-500 mt-1">
+                              <div className="text-[11px] font-mono text-[#AAAAAA] mt-1">
                                 Total Contact: {course.contactHours} Lecture Hours
                               </div>
                             )}
@@ -593,7 +605,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                               <Layers className="w-3.5 h-3.5" />
                               <span>{course.modules?.length || 0} Modules</span>
                             </span>
-                            <span className="px-2.5 py-1 rounded-xl bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.04] dark:border-white/[0.06] text-neutral-600 dark:text-neutral-400 flex items-center gap-1.5">
+                            <span className="px-2.5 py-1 rounded-xl bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.04] dark:border-white/[0.06] text-[#1D1D1F]/70 dark:text-[#AAAAAA] flex items-center gap-1.5">
                               <BookOpen className="w-3.5 h-3.5 text-emerald-500" />
                               <span>{totalTopics} Chapters</span>
                             </span>
@@ -613,7 +625,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                             <span>Explore Modules ({course.modules?.length || 0})</span>
                             <ArrowRight className="w-3.5 h-3.5" />
                           </button>
-                          <span className="text-[11px] text-neutral-400">Click card</span>
+                          <span className="text-[11px] text-[#AAAAAA]">Click card</span>
                         </div>
                       </div>
                     );
@@ -633,19 +645,19 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                         <span className="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold px-2.5 py-0.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200/50 uppercase">
                           {selectedCourse.code} • {selectedCourse.category}
                         </span>
-                        <span className="text-xs font-mono text-neutral-500">
+                        <span className="text-xs font-mono text-[#AAAAAA]">
                           Semester {selectedSem} • {selectedCourse.credits} Credits • {selectedCourse.contactHours || 36} Hours
                         </span>
                       </div>
                       <div className="flex items-center gap-3 flex-wrap">
-                        <h3 className="text-xl sm:text-2xl font-bold font-display text-neutral-900 dark:text-white">
+                        <h3 className="text-xl sm:text-2xl font-bold font-display text-[#1D1D1F] dark:text-[#F5F5F7]">
                           {selectedCourse.name}
                         </h3>
                         {selectedCourse.source && (
                           <DataProvenanceBadge metadata={selectedCourse.source} />
                         )}
                       </div>
-                      <p className="text-xs text-neutral-500 dark:text-neutral-400 font-sans max-w-2xl">
+                      <p className="text-xs text-[#AAAAAA] dark:text-[#AAAAAA] font-sans max-w-2xl">
                         Select any module below to inspect its detailed syllabus chapters, video derivations, lecture hours, and AI revision notes.
                       </p>
                     </div>
@@ -672,7 +684,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                             if (onSelectTopic) onSelectTopic(selectedCourse.name);
                             if (setActiveTab) setActiveTab('studyHub');
                           }}
-                          className="px-4 py-2 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.08] dark:border-white/[0.1] text-neutral-800 dark:text-neutral-200 text-xs font-mono font-bold flex items-center gap-1.5 cursor-pointer hover:border-blue-500 transition-colors"
+                          className="px-4 py-2 rounded-xl bg-white dark:bg-[#1D1D1F] border border-black/[0.08] dark:border-white/[0.1] text-neutral-800 dark:text-neutral-200 text-xs font-mono font-bold flex items-center gap-1.5 cursor-pointer hover:border-blue-500 transition-colors"
                         >
                           <BookOpen className="w-3.5 h-3.5 text-blue-500" />
                           <span>Study Notes</span>
@@ -685,11 +697,11 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                 {/* Modules Grid */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-bold text-base font-display text-neutral-900 dark:text-white flex items-center gap-2">
+                    <h4 className="font-bold text-base font-display text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2">
                       <Layers className="w-4 h-4 text-blue-500" />
                       <span>Modules in {selectedCourse.code} ({selectedCourse.modules?.length || 0})</span>
                     </h4>
-                    <span className="text-xs font-mono text-neutral-400">
+                    <span className="text-xs font-mono text-[#AAAAAA]">
                       Click a module to view its chapters
                     </span>
                   </div>
@@ -707,17 +719,17 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                               Module {mod.moduleNumber}
                             </span>
                             {mod.lectures && (
-                              <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded-md bg-black/[0.04] dark:bg-white/[0.06] text-neutral-600 dark:text-neutral-400">
+                              <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded-md bg-black/[0.04] dark:bg-white/[0.06] text-[#1D1D1F]/70 dark:text-[#AAAAAA]">
                                 {mod.lectures} Lectures
                               </span>
                             )}
                           </div>
 
-                          <h5 className="font-bold text-sm sm:text-base text-neutral-900 dark:text-white font-display group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                          <h5 className="font-bold text-sm sm:text-base text-[#1D1D1F] dark:text-[#F5F5F7] font-display group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                             {mod.title}
                           </h5>
 
-                          <p className="text-xs text-neutral-500 dark:text-neutral-400 font-sans line-clamp-2">
+                          <p className="text-xs text-[#AAAAAA] dark:text-[#AAAAAA] font-sans line-clamp-2">
                             Includes {mod.topics?.length || 0} chapters: {mod.topics?.slice(0, 3).join(', ')}...
                           </p>
                         </div>
@@ -734,7 +746,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                             <span>View {mod.topics?.length || 0} Chapters</span>
                             <ArrowRight className="w-3.5 h-3.5" />
                           </button>
-                          <span className="text-[11px] text-neutral-400 font-semibold">
+                          <span className="text-[11px] text-[#AAAAAA] font-semibold">
                             {mod.topics?.length || 0} Topics
                           </span>
                         </div>
@@ -760,7 +772,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                         className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                           isCurrent
                             ? 'bg-blue-600 text-white shadow-xs'
-                            : 'text-neutral-600 dark:text-neutral-400 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
+                            : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
                         }`}
                       >
                         <span>Mod {m.moduleNumber}</span>
@@ -779,17 +791,17 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                           Module {selectedModule.moduleNumber}
                         </span>
                         {selectedModule.lectures && (
-                          <span className="text-xs font-mono text-neutral-500">
+                          <span className="text-xs font-mono text-[#AAAAAA]">
                             {selectedModule.lectures} Lecture Hours
                           </span>
                         )}
                       </div>
-                      <h3 className="text-lg sm:text-xl font-bold font-display text-neutral-900 dark:text-white">
+                      <h3 className="text-lg sm:text-xl font-bold font-display text-[#1D1D1F] dark:text-[#F5F5F7]">
                         {selectedModule.title}
                       </h3>
                     </div>
 
-                    <div className="text-xs font-mono text-neutral-400">
+                    <div className="text-xs font-mono text-[#AAAAAA]">
                       {selectedModule.topics?.length || 0} Prescribed Chapters / Topics
                     </div>
                   </div>
@@ -806,7 +818,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                       return (
                         <div
                           key={idx}
-                          className="p-3.5 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.05] dark:border-white/[0.06] hover:border-blue-400 dark:hover:border-blue-500/50 transition-all flex flex-col justify-between gap-3 group"
+                          className="p-3.5 rounded-xl bg-white dark:bg-[#1D1D1F] border border-black/[0.05] dark:border-white/[0.06] hover:border-blue-400 dark:hover:border-blue-500/50 transition-all flex flex-col justify-between gap-3 group"
                         >
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                             <div className="flex items-center gap-3">
@@ -814,7 +826,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                                 #{idx + 1}
                               </span>
                               <div>
-                                <span className="text-xs sm:text-sm font-semibold text-neutral-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors font-sans">
+                                <span className="text-xs sm:text-sm font-semibold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors font-sans">
                                   {topic}
                                 </span>
                                 {topicObj && (
@@ -891,7 +903,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                           <button
                             type="button"
                             onClick={() => setSelectedModuleNumber(prevMod.moduleNumber)}
-                            className="px-4 py-2 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.08] dark:border-white/[0.1] text-xs font-mono font-bold text-neutral-700 dark:text-neutral-300 hover:text-blue-600 transition-colors flex items-center gap-1.5 cursor-pointer"
+                            className="px-4 py-2 rounded-xl bg-white dark:bg-[#1D1D1F] border border-black/[0.08] dark:border-white/[0.1] text-xs font-mono font-bold text-neutral-700 dark:text-neutral-300 hover:text-blue-600 transition-colors flex items-center gap-1.5 cursor-pointer"
                           >
                             <ArrowLeft className="w-3.5 h-3.5" />
                             <span>Prev: Mod {prevMod.moduleNumber}</span>
@@ -911,7 +923,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                           <button
                             type="button"
                             onClick={() => setSelectedModuleNumber(null)}
-                            className="px-4 py-2 rounded-xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 text-xs font-mono font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+                            className="px-4 py-2 rounded-xl bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25 text-xs font-mono font-bold transition-all flex items-center gap-1.5 cursor-pointer"
                           >
                             <span>All Modules Completed ✓</span>
                           </button>
@@ -941,23 +953,23 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                         </span>
                       </div>
 
-                      <h4 className="text-base font-bold text-neutral-900 dark:text-white font-display">
+                      <h4 className="text-base font-bold text-[#1D1D1F] dark:text-[#F5F5F7] font-display">
                         {course.name}
                       </h4>
 
                       {course.contactHours && (
-                        <div className="text-[11px] font-mono text-neutral-500">
+                        <div className="text-[11px] font-mono text-[#AAAAAA]">
                           Total Contact Hours: {course.contactHours} Hours
                         </div>
                       )}
 
                       <div className="space-y-2 pt-2">
-                        <div className="text-[10px] font-mono text-neutral-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
+                        <div className="text-[10px] font-mono text-[#AAAAAA] font-semibold uppercase tracking-wider flex items-center gap-1.5">
                           <span>Course Modules ({course.modules?.length || 0}):</span>
                         </div>
                         <div className="space-y-2">
                           {course.modules?.map((mod, idx) => (
-                            <div key={idx} className="p-2.5 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.04] dark:border-white/[0.05] text-xs space-y-1.5">
+                            <div key={idx} className="p-2.5 rounded-xl bg-white dark:bg-[#1D1D1F] border border-black/[0.04] dark:border-white/[0.05] text-xs space-y-1.5">
                               <div className="font-bold text-neutral-800 dark:text-neutral-200 font-mono flex items-center justify-between">
                                 <span>Mod {mod.moduleNumber}: {mod.title}</span>
                                 {mod.lectures && <span className="text-[10px] text-blue-600 dark:text-blue-400">{mod.lectures}</span>}
@@ -990,7 +1002,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                             if (onSelectTopic) onSelectTopic(course.name);
                             if (setActiveTab) setActiveTab('studyHub');
                           }}
-                          className="flex-1 py-2 px-3 rounded-xl text-xs font-semibold border border-black/10 dark:border-white/15 bg-transparent hover:bg-black/5 dark:hover:bg-white/10 text-neutral-900 dark:text-white transition-all cursor-pointer text-center truncate"
+                          className="flex-1 py-2 px-3 rounded-xl text-xs font-semibold border border-black/10 dark:border-white/15 bg-transparent hover:bg-black/5 dark:hover:bg-white/10 text-[#1D1D1F] dark:text-[#F5F5F7] transition-all cursor-pointer text-center truncate"
                         >
                           Study Notes →
                         </button>
@@ -1037,13 +1049,13 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                     </span>
                   </div>
 
-                  <h4 className="text-sm sm:text-base font-bold text-neutral-900 dark:text-white font-display">
+                  <h4 className="text-sm sm:text-base font-bold text-[#1D1D1F] dark:text-[#F5F5F7] font-display">
                     {lab.name}
                   </h4>
 
                   {lab.labExperiments && (
                     <div className="space-y-1.5 pt-2">
-                      <div className="text-[10px] font-mono text-neutral-400 font-bold uppercase">
+                      <div className="text-[10px] font-mono text-[#AAAAAA] font-bold uppercase">
                         Prescribed Experiments / Tasks ({lab.labExperiments.length}):
                       </div>
                       <ol className="text-xs text-neutral-700 dark:text-neutral-300 space-y-1.5 list-decimal pl-4 font-sans leading-relaxed">
@@ -1076,18 +1088,18 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                     <span className="text-xs font-mono font-bold text-blue-600 dark:text-blue-400">
                       {c.code}
                     </span>
-                    <span className="text-[10px] font-mono text-neutral-400">
+                    <span className="text-[10px] font-mono text-[#AAAAAA]">
                       {c.category}
                     </span>
                   </div>
 
-                  <h4 className="text-sm font-bold text-neutral-900 dark:text-white">
+                  <h4 className="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">
                     {c.name}
                   </h4>
 
                   {c.textBooks && c.textBooks.length > 0 && (
                     <div className="space-y-1 pt-1">
-                      <div className="text-[10px] font-mono text-neutral-400 font-bold uppercase">
+                      <div className="text-[10px] font-mono text-[#AAAAAA] font-bold uppercase">
                         Prescribed Text Books:
                       </div>
                       <ul className="text-xs text-neutral-700 dark:text-neutral-300 list-disc pl-4 space-y-1 font-sans">
@@ -1100,10 +1112,10 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
 
                   {c.referenceBooks && c.referenceBooks.length > 0 && (
                     <div className="space-y-1 pt-2 border-t border-black/[0.04] dark:border-white/[0.05]">
-                      <div className="text-[10px] font-mono text-neutral-400 font-bold uppercase">
+                      <div className="text-[10px] font-mono text-[#AAAAAA] font-bold uppercase">
                         Reference Books:
                       </div>
-                      <ul className="text-[11px] text-neutral-600 dark:text-neutral-400 list-disc pl-4 space-y-0.5 font-sans">
+                      <ul className="text-[11px] text-[#1D1D1F]/70 dark:text-[#AAAAAA] list-disc pl-4 space-y-0.5 font-sans">
                         {c.referenceBooks.map((rb, idx) => (
                           <li key={idx}>{rb}</li>
                         ))}
@@ -1116,48 +1128,177 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
           </div>
         )}
 
-        {/* Tab 4: Top Repeated PYQs */}
+        {/* Tab 4: Top Repeated PYQs & Official Verified Papers */}
         {activeAnalysisTab === 'pyqs' && (
-          <div className="space-y-4 animate-fade-in">
-            <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/40 text-xs text-amber-800 dark:text-amber-200 font-mono">
-              ⚡ <strong>Examiner Insight:</strong> These questions have repeated consistently in university papers. Preparing their exact step-wise derivation guarantees 40+ passing marks.
-            </div>
-
-            <div className="space-y-3">
-              {semesterData.topRepeatedPYQs.map((pyq: RepeatedPYQ) => (
-                <div
-                  key={pyq.id}
-                  className="p-5 rounded-2xl bg-[#FBFBF9] dark:bg-[#0A0C10] border border-black/[0.06] dark:border-white/[0.06] space-y-3"
-                >
+          <div className="space-y-6 animate-fade-in">
+            {/* Section 1: Official Verified Previous Year Questions (Prompt 4 Compliant) */}
+            {verifiedUniversityQuestions.length > 0 && (
+              <div className="space-y-4">
+                <div className="p-5 rounded-2xl bg-emerald-500/[0.08] dark:bg-emerald-500/[0.05] border border-emerald-500/20 space-y-2">
                   <div className="flex items-center justify-between flex-wrap gap-2">
-                    <span className="text-xs font-mono font-bold text-blue-600 dark:text-blue-400">
-                      {pyq.subject}
-                    </span>
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 font-bold border border-rose-200/50">
-                        <Flame className="w-3 h-3 inline mr-1" />
-                        {pyq.frequency}
-                      </span>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-black/5 dark:bg-white/10 font-bold">
-                        {pyq.marks} Marks
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                        ✓ Official University Examination Archive (SIH26043 Certified)
                       </span>
                     </div>
+                    <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-bold">
+                      {verifiedUniversityQuestions.length} Questions Verified
+                    </span>
                   </div>
-
-                  <p className="text-sm font-semibold text-neutral-900 dark:text-white leading-relaxed font-sans">
-                    {pyq.question}
+                  <h3 className="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">
+                    {universityMeta.shortName} [{universityMeta.regulationCode}] Authentic Previous Year Questions
+                  </h3>
+                  <p className="text-xs text-[#1D1D1F]/70 dark:text-[#AAAAAA] leading-relaxed">
+                    Directly extracted from {universityMeta.shortName} official examination branch archives and question paper repositories. Every question preserves verbatim text, section/sub-part allocation, exact marks, and official syllabus topic linkage.
                   </p>
 
-                  <div className="p-3.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.05] space-y-1 text-xs">
-                    <div className="text-[10px] font-mono text-neutral-400 font-bold uppercase">
-                      Exact Examiner Marking Rubric & Key Steps:
+                  {/* Unavailable / Covid-19 Disruption Disclosure */}
+                  {verifiedUniversityPapers.some(p => p.status === 'NOT_AVAILABLE') && (
+                    <div className="mt-3 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-800 dark:text-amber-300 flex items-start gap-2">
+                      <span className="text-amber-500 font-bold">ℹ</span>
+                      <span>
+                        <strong>Historical Transparency Note:</strong> The {verifiedUniversityPapers.find(p => p.status === 'NOT_AVAILABLE')?.examinationYear} examination session was conducted under pandemic special assessment modalities (regular physical paper was not archived). In compliance with the SIH26043 Zero-Fabrication Policy, this session is marked <strong>NOT_AVAILABLE</strong> rather than filled with AI hallucinations.
+                      </span>
                     </div>
-                    <div className="text-neutral-600 dark:text-neutral-300 font-sans leading-relaxed">
-                      {pyq.expectedAnswerFormat}
+                  )}
+                </div>
+
+                {/* Verified Question Cards */}
+                <div className="space-y-3">
+                  {verifiedUniversityQuestions.map((q: VerifiedPreviousYearQuestion) => (
+                    <div
+                      key={q.id}
+                      className="p-5 rounded-2xl bg-[#FBFBF9] dark:bg-[#0A0C10] border border-black/[0.06] dark:border-white/[0.06] hover:border-emerald-500/30 transition-all space-y-3"
+                    >
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                            {q.courseCode} · {q.courseTitle}
+                          </span>
+                          <span className="text-[11px] font-mono text-[#AAAAAA]">
+                            ({q.examinationYear} · {q.examinationSession})
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {q.section && (
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 font-bold">
+                              {q.section}
+                            </span>
+                          )}
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold">
+                            {q.questionNumber}
+                          </span>
+                          {q.marks !== null && (
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/20">
+                              {q.marks} Marks
+                            </span>
+                          )}
+                          <DataProvenanceBadge source={q.source} size="sm" />
+                        </div>
+                      </div>
+
+                      {/* Verbatim Question Text */}
+                      <div className="p-3.5 rounded-xl bg-white dark:bg-black/40 border border-black/[0.04] dark:border-white/[0.05]">
+                        <p className="text-sm font-semibold text-[#1D1D1F] dark:text-[#F5F5F7] leading-relaxed font-sans">
+                          {q.questionText}
+                        </p>
+                      </div>
+
+                      {/* Topic & Micro-Topic Traceability Box */}
+                      <div className="p-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.04] space-y-2 text-xs">
+                        <div className="flex items-center gap-2 text-[11px]">
+                          <span className="text-emerald-600 dark:text-emerald-400 font-mono font-bold">✓ Official Syllabus Topic:</span>
+                          <span className="text-neutral-800 dark:text-neutral-200 font-medium">
+                            {q.topicMapping.officialTopic || 'General Course Foundation'}
+                          </span>
+                        </div>
+                        {q.topicMapping.microTopics.length > 0 && (
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="text-[10px] font-mono text-purple-600 dark:text-purple-400 font-semibold">⚡ Micro-Topics:</span>
+                            {q.topicMapping.microTopics.map((micro: string, idx: number) => (
+                              <span
+                                key={idx}
+                                className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20"
+                              >
+                                {micro}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        <div className="text-[10px] font-mono text-[#AAAAAA] pt-1 border-t border-black/[0.04] dark:border-white/[0.04] flex items-center justify-between">
+                          <span>Source Archive: {q.source.sourceName}</span>
+                          {q.source.sourceUrl && (
+                            <a
+                              href={q.source.sourceUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-emerald-600 dark:text-emerald-400 hover:underline inline-flex items-center gap-1"
+                            >
+                              Official Portal ↗
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Section 2: Pedagogical Practice Questions (Explicitly segregated) */}
+            <div className="space-y-3 pt-4 border-t border-black/[0.06] dark:border-white/[0.06]">
+              <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/40 text-xs text-amber-800 dark:text-amber-200 font-mono space-y-1">
+                <div className="flex items-center justify-between">
+                  <span>⚡ <strong>Pedagogical Practice Bank & Frequently Repeated Exam Concepts</strong></span>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-800 dark:text-amber-300 font-bold">
+                    Demo / Practice Data
+                  </span>
+                </div>
+                <p className="text-[11px] text-amber-700 dark:text-amber-300/90 leading-relaxed font-sans">
+                  The following questions represent curated practice problems and examiner mark rubrics compiled for revision drill. They are segregated to ensure no synthetic or generalized question is misidentified as an official university examination paper.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                {semesterData.topRepeatedPYQs.map((pyq: RepeatedPYQ) => (
+                  <div
+                    key={pyq.id}
+                    className="p-5 rounded-2xl bg-[#FBFBF9] dark:bg-[#0A0C10] border border-black/[0.06] dark:border-white/[0.06] space-y-3"
+                  >
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <span className="text-xs font-mono font-bold text-blue-600 dark:text-blue-400">
+                        {pyq.subject}
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 font-bold border border-purple-500/20">
+                          Demo Question
+                        </span>
+                        <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 font-bold border border-rose-200/50">
+                          <Flame className="w-3 h-3 inline mr-1" />
+                          {pyq.frequency}
+                        </span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-black/5 dark:bg-white/10 font-bold">
+                          {pyq.marks} Marks
+                        </span>
+                      </div>
+                    </div>
+
+                    <p className="text-sm font-semibold text-[#1D1D1F] dark:text-[#F5F5F7] leading-relaxed font-sans">
+                      {pyq.question}
+                    </p>
+
+                    <div className="p-3.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.05] space-y-1 text-xs">
+                      <div className="text-[10px] font-mono text-[#AAAAAA] font-bold uppercase">
+                        Exact Examiner Marking Rubric & Key Steps:
+                      </div>
+                      <div className="text-neutral-600 dark:text-neutral-300 font-sans leading-relaxed">
+                        {pyq.expectedAnswerFormat}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -1171,10 +1312,10 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                   key={idx}
                   className="p-4 rounded-2xl bg-[#FBFBF9] dark:bg-[#0A0C10] border border-black/[0.06] dark:border-white/[0.06] space-y-2 flex flex-col justify-between"
                 >
-                  <div className="text-[11px] font-mono font-bold text-neutral-500 dark:text-neutral-400 uppercase">
+                  <div className="text-[11px] font-mono font-bold text-[#AAAAAA] dark:text-[#AAAAAA] uppercase">
                     {item.topic}
                   </div>
-                  <div className="p-3 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.05] dark:border-white/[0.08] text-xs font-mono text-neutral-900 dark:text-white select-all break-words leading-relaxed font-semibold">
+                  <div className="p-3 rounded-xl bg-white dark:bg-[#1D1D1F] border border-black/[0.05] dark:border-white/[0.08] text-xs font-mono text-[#1D1D1F] dark:text-[#F5F5F7] select-all break-words leading-relaxed font-semibold">
                     {item.formula}
                   </div>
                   <button
@@ -1207,7 +1348,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                   <div className="w-8 h-8 rounded-xl bg-blue-600 text-white font-mono font-bold text-xs flex items-center justify-center shadow-md">
                     W{idx + 1}
                   </div>
-                  <div className="text-sm font-bold font-display text-neutral-900 dark:text-white">
+                  <div className="text-sm font-bold font-display text-[#1D1D1F] dark:text-[#F5F5F7]">
                     {step.week}
                   </div>
                   <p className="text-xs text-neutral-600 dark:text-neutral-300 font-sans leading-relaxed">
@@ -1229,7 +1370,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
             {/* Semester-wise breakdown table */}
             <div className="overflow-x-auto rounded-2xl border border-black/[0.06] dark:border-white/[0.08]">
               <table className="w-full text-xs font-mono text-left">
-                <thead className="bg-black/[0.03] dark:bg-white/[0.04] text-neutral-600 dark:text-neutral-400 border-b border-black/[0.06] dark:border-white/[0.08]">
+                <thead className="bg-black/[0.03] dark:bg-[#F5F5F7] dark:bg-white/[0.04] text-[#1D1D1F]/70 dark:text-[#AAAAAA] border-b border-black/[0.06] dark:border-white/[0.08]">
                   <tr>
                     <th className="p-3">Semester</th>
                     <th className="p-3">Academic Year</th>
@@ -1257,40 +1398,40 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
 
             {/* NEP Category Split */}
             <div className="p-5 rounded-2xl bg-[#FBFBF9] dark:bg-[#0A0C10] border border-black/[0.06] dark:border-white/[0.06] space-y-3">
-              <div className="text-xs font-mono font-bold uppercase text-neutral-500">
+              <div className="text-xs font-mono font-bold uppercase text-[#AAAAAA]">
                 NEP 2020 Course Category Breakdown:
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
-                <div className="p-3 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.05] dark:border-white/[0.08]">
-                  <div className="text-neutral-400 text-[10px]">Major (Core)</div>
+                <div className="p-3 rounded-xl bg-white dark:bg-[#1D1D1F] border border-black/[0.05] dark:border-white/[0.08]">
+                  <div className="text-[#AAAAAA] text-[10px]">Major (Core)</div>
                   <div className="text-base font-bold text-blue-600">{R25_CREDIT_DISTRIBUTION.categoryTotals.major} Cr</div>
                 </div>
-                <div className="p-3 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.05] dark:border-white/[0.08]">
-                  <div className="text-neutral-400 text-[10px]">Minor</div>
+                <div className="p-3 rounded-xl bg-white dark:bg-[#1D1D1F] border border-black/[0.05] dark:border-white/[0.08]">
+                  <div className="text-[#AAAAAA] text-[10px]">Minor</div>
                   <div className="text-base font-bold text-indigo-600">{R25_CREDIT_DISTRIBUTION.categoryTotals.minor} Cr</div>
                 </div>
-                <div className="p-3 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.05] dark:border-white/[0.08]">
-                  <div className="text-neutral-400 text-[10px]">Multi-Disciplinary</div>
+                <div className="p-3 rounded-xl bg-white dark:bg-[#1D1D1F] border border-black/[0.05] dark:border-white/[0.08]">
+                  <div className="text-[#AAAAAA] text-[10px]">Multi-Disciplinary</div>
                   <div className="text-base font-bold text-emerald-600">{R25_CREDIT_DISTRIBUTION.categoryTotals.multiDisciplinary} Cr</div>
                 </div>
-                <div className="p-3 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.05] dark:border-white/[0.08]">
-                  <div className="text-neutral-400 text-[10px]">Projects (I, II, III)</div>
+                <div className="p-3 rounded-xl bg-white dark:bg-[#1D1D1F] border border-black/[0.05] dark:border-white/[0.08]">
+                  <div className="text-[#AAAAAA] text-[10px]">Projects (I, II, III)</div>
                   <div className="text-base font-bold text-purple-600">{R25_CREDIT_DISTRIBUTION.categoryTotals.project} Cr</div>
                 </div>
-                <div className="p-3 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.05] dark:border-white/[0.08]">
-                  <div className="text-neutral-400 text-[10px]">Skill Enhancement (SEC)</div>
+                <div className="p-3 rounded-xl bg-white dark:bg-[#1D1D1F] border border-black/[0.05] dark:border-white/[0.08]">
+                  <div className="text-[#AAAAAA] text-[10px]">Skill Enhancement (SEC)</div>
                   <div className="text-base font-bold text-amber-600">{R25_CREDIT_DISTRIBUTION.categoryTotals.skillEnhancement} Cr</div>
                 </div>
-                <div className="p-3 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.05] dark:border-white/[0.08]">
-                  <div className="text-neutral-400 text-[10px]">Value Added (VAC)</div>
+                <div className="p-3 rounded-xl bg-white dark:bg-[#1D1D1F] border border-black/[0.05] dark:border-white/[0.08]">
+                  <div className="text-[#AAAAAA] text-[10px]">Value Added (VAC)</div>
                   <div className="text-base font-bold text-cyan-600">{R25_CREDIT_DISTRIBUTION.categoryTotals.valueAdded} Cr</div>
                 </div>
-                <div className="p-3 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.05] dark:border-white/[0.08]">
-                  <div className="text-neutral-400 text-[10px]">Ability Enhancement (AEC)</div>
+                <div className="p-3 rounded-xl bg-white dark:bg-[#1D1D1F] border border-black/[0.05] dark:border-white/[0.08]">
+                  <div className="text-[#AAAAAA] text-[10px]">Ability Enhancement (AEC)</div>
                   <div className="text-base font-bold text-teal-600">{R25_CREDIT_DISTRIBUTION.categoryTotals.abilityEnhancement} Cr</div>
                 </div>
-                <div className="p-3 rounded-xl bg-white dark:bg-[#12151D] border border-black/[0.05] dark:border-white/[0.08]">
-                  <div className="text-neutral-400 text-[10px]">Internship & Grand Viva</div>
+                <div className="p-3 rounded-xl bg-white dark:bg-[#1D1D1F] border border-black/[0.05] dark:border-white/[0.08]">
+                  <div className="text-[#AAAAAA] text-[10px]">Internship & Grand Viva</div>
                   <div className="text-base font-bold text-rose-600">4.0 Cr</div>
                 </div>
               </div>

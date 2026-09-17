@@ -147,9 +147,9 @@ export const Dashboard = ({ setActiveTab, user }) => {
   return (
     <div className="relative w-full fluid-container py-6 sm:py-10 animate-fade-in space-y-8">
       {/* Ambient Neural Backlight Orbs */}
-      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[850px] h-[380px] bg-[#00F59B]/10 blur-[140px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[850px] h-[380px] bg-[#007AFF]/10 blur-[140px] rounded-full pointer-events-none -z-10" />
       <div className="absolute top-96 right-10 w-[450px] h-[450px] bg-[#4E8AFF]/10 blur-[120px] rounded-full pointer-events-none -z-10" />
-      <div className="absolute top-[650px] left-10 w-[400px] h-[400px] bg-[#00F59B]/8 blur-[100px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-[650px] left-10 w-[400px] h-[400px] bg-[#007AFF]/8 blur-[100px] rounded-full pointer-events-none -z-10" />
       
       {/* 1. Header: Greeting, User Name, Twin Status & Exam Target */}
       <DashboardHeader
@@ -166,7 +166,7 @@ export const Dashboard = ({ setActiveTab, user }) => {
           growth={learningMetrics?.prerequisiteReadiness?.growth ?? '+4.2% this week'}
           isPositive={learningMetrics?.prerequisiteReadiness?.isPositive ?? true}
           progress={learningMetrics?.prerequisiteReadiness?.value ?? 87}
-          progressColor="bg-[#00F59B]"
+          progressColor="bg-[#007AFF]"
           subtext={learningMetrics?.prerequisiteReadiness?.subtext ?? 'High focus window (42m remaining)'}
           edgeColor="teal"
           icon={Brain}
@@ -204,7 +204,7 @@ export const Dashboard = ({ setActiveTab, user }) => {
           growth={learningMetrics?.studyVelocity?.growth ?? '+18% acceleration'}
           isPositive={learningMetrics?.studyVelocity?.isPositive ?? true}
           progress={75}
-          progressColor="bg-[#00F59B]"
+          progressColor="bg-[#007AFF]"
           subtext={learningMetrics?.studyVelocity?.subtext ?? 'Ahead of typical cohort preparation speed'}
           edgeColor="navy"
           icon={Flame}

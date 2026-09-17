@@ -451,16 +451,16 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
     <div className="w-full fluid-container py-6 sm:py-8 animate-fade-in space-y-6">
       
       {/* Top Banner & Header */}
-      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-white/10 pb-6">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-[#AAAAAA]/30 dark:border-white/[0.08] pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 text-[#00F59B] text-xs font-mono font-bold mb-2 border border-[#00F59B]/30 shadow-glow-green">
-            <Sparkles className="w-3.5 h-3.5 text-[#00F59B]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/10 text-[#007AFF] text-xs font-mono font-bold mb-2 border border-[#007AFF]/30 shadow-md shadow-[#007AFF]/25">
+            <Sparkles className="w-3.5 h-3.5 text-[#007AFF]" />
             <span>Autonomous Examination Engine • 4-Step Setup</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-white tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight">
             Full-Length Mock Paper Generator
           </h1>
-          <p className="text-xs sm:text-sm text-neutral-400 mt-1 max-w-2xl font-sans">
+          <p className="text-xs sm:text-sm text-[#1D1D1F]/70 dark:text-[#AAAAAA] mt-1 max-w-2xl font-sans">
             Configure your Course, pick your Semester, select your Subject, and adjust your Marks Pattern to generate authentic, university-grade question papers with step rubrics and PDF export.
           </p>
         </div>
@@ -470,14 +470,14 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setActiveTestPaper(null)}
-              className="px-4 py-2 rounded-xl bg-[#161B22] hover:bg-[#21262D] text-white border border-[#30363D] hover:border-[#00F59B]/50 text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm"
+              className="px-4 py-2 rounded-xl bg-white dark:bg-[#1D1D1F] text-[#1D1D1F] dark:text-[#F5F5F7] border border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF] text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm"
             >
-              <Settings2 className="w-3.5 h-3.5 text-[#00F59B]" />
+              <Settings2 className="w-3.5 h-3.5 text-[#007AFF]" />
               <span>Change Course / Semester</span>
             </button>
             <button
               onClick={handleShufflePaper}
-              className="px-4 py-2 rounded-xl bg-[#00F59B]/10 hover:bg-[#00F59B]/20 text-[#00F59B] border border-[#00F59B]/30 text-xs font-bold transition-all flex items-center gap-2 cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] border border-[#007AFF]/30 text-xs font-bold transition-all flex items-center gap-2 cursor-pointer"
             >
               <Shuffle className="w-3.5 h-3.5" />
               <span>New Set (Shuffle)</span>
@@ -493,19 +493,19 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
         <div className="space-y-6">
           
           {/* Step Navigation Progress Bar */}
-          <div className="p-3 sm:p-4 rounded-2xl bg-[#0D1117] border border-[#30363D] flex items-center justify-between gap-2 overflow-x-auto">
+          <div className="p-3 sm:p-4 rounded-2xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center justify-between gap-2 overflow-x-auto">
             
             {/* Step 1 Pill: Course */}
             <button
               onClick={() => setWizardStep(1)}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
                 wizardStep === 1 
-                  ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green' 
-                  : 'bg-[#161B22] text-neutral-300 hover:text-white border border-[#30363D]'
+                  ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25' 
+                  : 'bg-white dark:bg-[#1D1D1F] text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] border border-[#AAAAAA]/30 dark:border-white/[0.08]'
               }`}
             >
               <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                wizardStep === 1 ? 'bg-[#07090D] text-[#00F59B]' : 'bg-[#21262D] text-neutral-300'
+                wizardStep === 1 ? 'bg-[#007AFF] text-white' : 'bg-[#F5F5F7] dark:bg-white/[0.04] text-[#1D1D1F]/60 dark:text-[#AAAAAA]'
               }`}>
                 1
               </div>
@@ -520,12 +520,12 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
               onClick={() => setWizardStep(2)}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
                 wizardStep === 2 
-                  ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green' 
-                  : 'bg-[#161B22] text-neutral-300 hover:text-white border border-[#30363D]'
+                  ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25' 
+                  : 'bg-white dark:bg-[#1D1D1F] text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] border border-[#AAAAAA]/30 dark:border-white/[0.08]'
               }`}
             >
               <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                wizardStep === 2 ? 'bg-[#07090D] text-[#00F59B]' : 'bg-[#21262D] text-neutral-300'
+                wizardStep === 2 ? 'bg-[#007AFF] text-white' : 'bg-[#F5F5F7] dark:bg-white/[0.04] text-[#1D1D1F]/60 dark:text-[#AAAAAA]'
               }`}>
                 2
               </div>
@@ -540,12 +540,12 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
               onClick={() => setWizardStep(3)}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
                 wizardStep === 3 
-                  ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green' 
-                  : 'bg-[#161B22] text-neutral-300 hover:text-white border border-[#30363D]'
+                  ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25' 
+                  : 'bg-white dark:bg-[#1D1D1F] text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] border border-[#AAAAAA]/30 dark:border-white/[0.08]'
               }`}
             >
               <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                wizardStep === 3 ? 'bg-[#07090D] text-[#00F59B]' : 'bg-[#21262D] text-neutral-300'
+                wizardStep === 3 ? 'bg-[#007AFF] text-white' : 'bg-[#F5F5F7] dark:bg-white/[0.04] text-[#1D1D1F]/60 dark:text-[#AAAAAA]'
               }`}>
                 3
               </div>
@@ -560,12 +560,12 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
               onClick={() => setWizardStep(4)}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
                 wizardStep === 4 
-                  ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green' 
-                  : 'bg-[#161B22] text-neutral-300 hover:text-white border border-[#30363D]'
+                  ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25' 
+                  : 'bg-white dark:bg-[#1D1D1F] text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] border border-[#AAAAAA]/30 dark:border-white/[0.08]'
               }`}
             >
               <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                wizardStep === 4 ? 'bg-[#07090D] text-[#00F59B]' : 'bg-[#21262D] text-neutral-300'
+                wizardStep === 4 ? 'bg-[#007AFF] text-white' : 'bg-[#F5F5F7] dark:bg-white/[0.04] text-[#1D1D1F]/60 dark:text-[#AAAAAA]'
               }`}>
                 4
               </div>
@@ -584,8 +584,8 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-lg font-bold font-display text-white flex items-center gap-2">
-                    <GraduationCap className="w-5 h-5 text-[#00F59B]" />
+                  <h2 className="text-lg font-bold font-display text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2">
+                    <GraduationCap className="w-5 h-5 text-[#007AFF]" />
                     <span>Step 1: Which course do you take?</span>
                   </h2>
                   <p className="text-xs text-neutral-400">
@@ -594,7 +594,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                 </div>
                 <button
                   onClick={() => setWizardStep(2)}
-                  className="px-4 py-2 rounded-xl bg-[#00F59B] hover:bg-[#1AFFB2] text-[#07090D] text-xs font-bold transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer shadow-glow-green"
+                  className="px-4 py-2 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white text-xs font-bold transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer shadow-md shadow-[#007AFF]/25"
                 >
                   <span>Next: Choose Semester</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -613,35 +613,35 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                       onClick={() => handleSelectCourse(course.id)}
                       className={`p-5 rounded-2xl border transition-all cursor-pointer relative flex flex-col justify-between gap-4 ${
                         isSelected
-                          ? 'bg-[#161B22] border-[#00F59B] shadow-glow-green ring-1 ring-[#00F59B]'
-                          : 'bg-[#0D1117] border-[#30363D] hover:border-[#00F59B]/50 hover:bg-[#161B22]/80'
+                          ? 'bg-[#F5F5F7] dark:bg-white/[0.04] border-[#007AFF] shadow-md shadow-[#007AFF]/25 ring-1 ring-[#007AFF]'
+                          : 'bg-white dark:bg-[#1D1D1F] border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF]/50 hover:bg-[#F5F5F7] dark:bg-white/[0.04]/80'
                       }`}
                     >
                       <div className="space-y-3">
                         <div className="flex items-start justify-between gap-3">
-                          <span className="text-3xl p-2 rounded-xl bg-[#21262D] border border-white/5">{course.boardLogo}</span>
-                          <span className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-[#21262D] text-neutral-300 border border-white/5">
+                          <span className="text-3xl p-2 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.06] border border-white/5">{course.boardLogo}</span>
+                          <span className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-[#F5F5F7] dark:bg-white/[0.06] text-neutral-300 border border-white/5">
                             {course.category}
                           </span>
                         </div>
 
                         <div>
-                          <h3 className="font-bold text-base text-white">{course.name}</h3>
+                          <h3 className="font-bold text-base text-[#1D1D1F] dark:text-[#F5F5F7]">{course.name}</h3>
                           <p className="text-xs text-neutral-400 mt-0.5">{course.standard}</p>
                         </div>
                       </div>
 
-                      <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs">
-                        <div className="text-[11px] font-mono text-[#00F59B]">
+                      <div className="pt-3 border-t border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center justify-between text-xs">
+                        <div className="text-[11px] font-mono text-[#007AFF]">
                           {course.defaultMarks} Marks • {course.defaultDuration} Mins
                         </div>
                         {isSelected ? (
-                          <div className="flex items-center gap-1.5 text-xs font-bold text-[#00F59B]">
+                          <div className="flex items-center gap-1.5 text-xs font-bold text-[#007AFF]">
                             <CheckCircle2 className="w-4 h-4" />
                             <span>Selected</span>
                           </div>
                         ) : (
-                          <span className="text-neutral-500 text-xs flex items-center gap-1 group-hover:text-white">
+                          <span className="text-[#1D1D1F]/60 dark:text-[#AAAAAA] text-xs flex items-center gap-1 group-hover:text-[#007AFF]">
                             Select <ChevronRight className="w-3.5 h-3.5" />
                           </span>
                         )}
@@ -663,26 +663,26 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-bold font-display text-white flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-[#00F59B]" />
+                  <h2 className="text-lg font-bold font-display text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-[#007AFF]" />
                     <span>Step 2: Which Semester are you preparing for?</span>
                   </h2>
                   <p className="text-xs text-neutral-400">
-                    Select your semester or academic term for <strong className="text-white">{currentCourse.name}</strong> to view matching syllabus and question papers.
+                    Select your semester or academic term for <strong className="text-[#1D1D1F] dark:text-[#F5F5F7]">{currentCourse.name}</strong> to view matching syllabus and question papers.
                   </p>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setWizardStep(1)}
-                    className="px-3.5 py-2 rounded-xl bg-[#161B22] text-neutral-300 hover:text-white border border-[#30363D] text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+                    className="px-3.5 py-2 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back to Course</span>
                   </button>
                   <button
                     onClick={() => setWizardStep(3)}
-                    className="px-4 py-2 rounded-xl bg-[#00F59B] hover:bg-[#1AFFB2] text-[#07090D] text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-glow-green"
+                    className="px-4 py-2 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-md shadow-[#007AFF]/25"
                   >
                     <span>Next: Choose Subject</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -703,13 +703,13 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                       onClick={() => handleSelectSemester(item.sem)}
                       className={`p-4 sm:p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between gap-3 relative ${
                         isSelected
-                          ? 'bg-[#161B22] border-[#00F59B] shadow-glow-green ring-1 ring-[#00F59B]'
-                          : 'bg-[#0D1117] border-[#30363D] hover:border-[#00F59B]/50 hover:bg-[#161B22]/80'
+                          ? 'bg-[#F5F5F7] dark:bg-white/[0.04] border-[#007AFF] shadow-md shadow-[#007AFF]/25 ring-1 ring-[#007AFF]'
+                          : 'bg-white dark:bg-[#1D1D1F] border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF]/50 hover:bg-[#F5F5F7] dark:bg-white/[0.04]/80'
                       }`}
                     >
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-[#21262D] text-[#00F59B] border border-[#00F59B]/20">
+                          <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-[#F5F5F7] dark:bg-white/[0.06] text-[#007AFF] border border-[#007AFF]/20">
                             {item.badge}
                           </span>
                           <span className="text-[11px] font-sans text-neutral-400">
@@ -718,24 +718,24 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                         </div>
 
                         <div>
-                          <h3 className="font-bold text-base text-white">{item.label}</h3>
+                          <h3 className="font-bold text-base text-[#1D1D1F] dark:text-[#F5F5F7]">{item.label}</h3>
                           <p className="text-xs text-neutral-400 line-clamp-2 mt-1 leading-relaxed">
                             {item.desc}
                           </p>
                         </div>
                       </div>
 
-                      <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs">
+                      <div className="pt-3 border-t border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center justify-between text-xs">
                         <span className="text-[11px] font-mono text-neutral-400">
                           {subCount} {subCount === 1 ? 'Subject' : 'Subjects'} available
                         </span>
                         {isSelected ? (
-                          <div className="flex items-center gap-1.5 text-xs font-bold text-[#00F59B]">
+                          <div className="flex items-center gap-1.5 text-xs font-bold text-[#007AFF]">
                             <CheckCircle2 className="w-4 h-4" />
                             <span>Selected</span>
                           </div>
                         ) : (
-                          <span className="text-neutral-500 text-xs flex items-center gap-1 group-hover:text-white">
+                          <span className="text-[#1D1D1F]/60 dark:text-[#AAAAAA] text-xs flex items-center gap-1 group-hover:text-[#007AFF]">
                             Select <ChevronRight className="w-3.5 h-3.5" />
                           </span>
                         )}
@@ -757,26 +757,26 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-bold font-display text-white flex items-center gap-2">
-                    <BookOpen className="w-5 h-5 text-[#00F59B]" />
+                  <h2 className="text-lg font-bold font-display text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2">
+                    <BookOpen className="w-5 h-5 text-[#007AFF]" />
                     <span>Step 3: Select Subject ({selectedSemester && selectedSemester !== 'all' ? `Semester ${selectedSemester}` : 'All Semesters'})</span>
                   </h2>
                   <p className="text-xs text-neutral-400">
-                    Syllabus-grounded question papers for <strong className="text-white">{currentCourse.name}</strong> • {selectedSemester && selectedSemester !== 'all' ? `Semester ${selectedSemester}` : 'Full Course'}.
+                    Syllabus-grounded question papers for <strong className="text-[#1D1D1F] dark:text-[#F5F5F7]">{currentCourse.name}</strong> • {selectedSemester && selectedSemester !== 'all' ? `Semester ${selectedSemester}` : 'Full Course'}.
                   </p>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setWizardStep(2)}
-                    className="px-3.5 py-2 rounded-xl bg-[#161B22] text-neutral-300 hover:text-white border border-[#30363D] text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+                    className="px-3.5 py-2 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back to Semester</span>
                   </button>
                   <button
                     onClick={() => setWizardStep(4)}
-                    className="px-4 py-2 rounded-xl bg-[#00F59B] hover:bg-[#1AFFB2] text-[#07090D] text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-glow-green"
+                    className="px-4 py-2 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-md shadow-[#007AFF]/25"
                   >
                     <span>Next: Marks Pattern</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -786,8 +786,8 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
 
               {/* Quick Semester Switcher Chips */}
               <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-                <span className="text-xs font-mono text-neutral-400 shrink-0 flex items-center gap-1 mr-1">
-                  <Filter className="w-3 h-3 text-[#00F59B]" /> Switch Sem:
+                <span className="text-xs font-mono text-[#1D1D1F]/60 dark:text-[#AAAAAA] shrink-0 flex items-center gap-1 mr-1">
+                  <Filter className="w-3 h-3 text-[#007AFF]" /> Switch Sem:
                 </span>
                 {semesterOptions.map((opt) => {
                   const isAct = selectedSemester === opt.sem || String(selectedSemester) === String(opt.sem);
@@ -805,8 +805,8 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                       }}
                       className={`px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-all shrink-0 cursor-pointer ${
                         isAct
-                          ? 'bg-[#00F59B] text-[#07090D] font-bold shadow-glow-green'
-                          : 'bg-[#161B22] text-neutral-300 hover:text-white border border-[#30363D]'
+                          ? 'bg-[#007AFF] text-white font-bold shadow-md shadow-[#007AFF]/25'
+                          : 'bg-white dark:bg-[#1D1D1F] text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] border border-[#AAAAAA]/30 dark:border-white/[0.08]'
                       }`}
                     >
                       {opt.label.replace('Semester ', 'Sem ')}
@@ -823,7 +823,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                   placeholder={`Search subjects in ${currentCourse.name}... (e.g. Operating Systems, Networks, Math)`}
                   value={subjectSearchQuery}
                   onChange={(e) => setSubjectSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#0D1117] border border-[#30363D] text-white text-xs placeholder:text-neutral-500 outline-none focus:border-[#00F59B] focus:ring-1 focus:ring-[#00F59B]"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-[#1D1D1F] dark:text-[#F5F5F7] text-xs placeholder:text-[#AAAAAA] outline-none focus:border-[#007AFF] focus:ring-1 focus:ring-[#007AFF]"
                 />
               </div>
 
@@ -839,14 +839,14 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                       onClick={() => handleSelectSubject(sub.name)}
                       className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
                         isSelected
-                          ? 'bg-[#161B22] border-[#00F59B] shadow-glow-green ring-1 ring-[#00F59B]'
-                          : 'bg-[#0D1117] border-[#30363D] hover:border-[#00F59B]/50 hover:bg-[#161B22]'
+                          ? 'bg-[#F5F5F7] dark:bg-white/[0.04] border-[#007AFF] shadow-md shadow-[#007AFF]/25 ring-1 ring-[#007AFF]'
+                          : 'bg-white dark:bg-[#1D1D1F] border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF]/50 hover:bg-[#F5F5F7] dark:bg-white/[0.04]'
                       }`}
                     >
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           {sub.code && (
-                            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#21262D] text-[#00F59B] border border-white/5">
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#F5F5F7] dark:bg-white/[0.06] text-[#007AFF] border border-white/5">
                               {sub.code}
                             </span>
                           )}
@@ -856,11 +856,11 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                             </span>
                           )}
                         </div>
-                        <h4 className="font-bold text-sm text-white">{sub.name}</h4>
+                        <h4 className="font-bold text-sm text-[#1D1D1F] dark:text-[#F5F5F7]">{sub.name}</h4>
                       </div>
 
                       <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 border ${
-                        isSelected ? 'bg-[#00F59B] border-[#00F59B] text-[#07090D]' : 'border-neutral-600'
+                        isSelected ? 'bg-[#007AFF] border-[#007AFF] text-white' : 'border-neutral-600'
                       }`}>
                         {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                       </div>
@@ -881,8 +881,8 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-bold font-display text-white flex items-center gap-2">
-                    <Sliders className="w-5 h-5 text-[#00F59B]" />
+                  <h2 className="text-lg font-bold font-display text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2">
+                    <Sliders className="w-5 h-5 text-[#007AFF]" />
                     <span>Step 4: Marks Pattern & Duration (Optional)</span>
                   </h2>
                   <p className="text-xs text-neutral-400">
@@ -892,7 +892,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
 
                 <button
                   onClick={() => setWizardStep(3)}
-                  className="px-3.5 py-2 rounded-xl bg-[#161B22] text-neutral-300 hover:text-white border border-[#30363D] text-xs font-bold transition-all flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
+                  className="px-3.5 py-2 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-xs font-bold transition-all flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>Back to Subject</span>
@@ -907,21 +907,21 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                   onClick={() => setPaperFormat('official')}
                   className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between gap-3 ${
                     paperFormat === 'official'
-                      ? 'bg-[#161B22] border-[#00F59B] shadow-glow-green ring-1 ring-[#00F59B]'
-                      : 'bg-[#0D1117] border-[#30363D] hover:border-[#00F59B]/40'
+                      ? 'bg-[#F5F5F7] dark:bg-white/[0.04] border-[#007AFF] shadow-md shadow-[#007AFF]/25 ring-1 ring-[#007AFF]'
+                      : 'bg-white dark:bg-[#1D1D1F] border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF]/40'
                   }`}
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono text-[#00F59B] font-bold">Recommended</span>
-                      {paperFormat === 'official' && <CheckCircle2 className="w-4 h-4 text-[#00F59B]" />}
+                      <span className="text-xs font-mono text-[#007AFF] font-bold">Recommended</span>
+                      {paperFormat === 'official' && <CheckCircle2 className="w-4 h-4 text-[#007AFF]" />}
                     </div>
-                    <h4 className="font-bold text-sm text-white">🏛️ Official Board Blueprint</h4>
+                    <h4 className="font-bold text-sm text-[#1D1D1F] dark:text-[#F5F5F7]">🏛️ Official Board Blueprint</h4>
                     <p className="text-xs text-neutral-400">
                       Standard {currentCourse.defaultMarks} Marks ({currentCourse.defaultDuration} Mins) with Group A (MCQs), Group B (Short), and Group C (Long).
                     </p>
                   </div>
-                  <div className="text-[11px] font-mono text-neutral-300 bg-[#21262D] px-2.5 py-1 rounded-lg">
+                  <div className="text-[11px] font-mono text-neutral-300 bg-[#F5F5F7] dark:bg-white/[0.06] px-2.5 py-1 rounded-lg">
                     Full Sem / Board Exam
                   </div>
                 </div>
@@ -931,21 +931,21 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                   onClick={() => setPaperFormat('midterm')}
                   className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between gap-3 ${
                     paperFormat === 'midterm'
-                      ? 'bg-[#161B22] border-[#00F59B] shadow-glow-green ring-1 ring-[#00F59B]'
-                      : 'bg-[#0D1117] border-[#30363D] hover:border-[#00F59B]/40'
+                      ? 'bg-[#F5F5F7] dark:bg-white/[0.04] border-[#007AFF] shadow-md shadow-[#007AFF]/25 ring-1 ring-[#007AFF]'
+                      : 'bg-white dark:bg-[#1D1D1F] border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF]/40'
                   }`}
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono text-neutral-400 font-bold">Internal / CA</span>
-                      {paperFormat === 'midterm' && <CheckCircle2 className="w-4 h-4 text-[#00F59B]" />}
+                      <span className="text-xs font-mono text-[#1D1D1F]/60 dark:text-[#AAAAAA] font-bold">Internal / CA</span>
+                      {paperFormat === 'midterm' && <CheckCircle2 className="w-4 h-4 text-[#007AFF]" />}
                     </div>
-                    <h4 className="font-bold text-sm text-white">📝 Mid-Term Assessment</h4>
+                    <h4 className="font-bold text-sm text-[#1D1D1F] dark:text-[#F5F5F7]">📝 Mid-Term Assessment</h4>
                     <p className="text-xs text-neutral-400">
                       30 Marks (60 Mins). Includes 10 MCQs (10m) + 4 Analytical Descriptive questions (20m).
                     </p>
                   </div>
-                  <div className="text-[11px] font-mono text-neutral-300 bg-[#21262D] px-2.5 py-1 rounded-lg">
+                  <div className="text-[11px] font-mono text-neutral-300 bg-[#F5F5F7] dark:bg-white/[0.06] px-2.5 py-1 rounded-lg">
                     Class Test & Mid-Sem
                   </div>
                 </div>
@@ -955,21 +955,21 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                   onClick={() => setPaperFormat('rapid')}
                   className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between gap-3 ${
                     paperFormat === 'rapid'
-                      ? 'bg-[#161B22] border-[#00F59B] shadow-glow-green ring-1 ring-[#00F59B]'
-                      : 'bg-[#0D1117] border-[#30363D] hover:border-[#00F59B]/40'
+                      ? 'bg-[#F5F5F7] dark:bg-white/[0.04] border-[#007AFF] shadow-md shadow-[#007AFF]/25 ring-1 ring-[#007AFF]'
+                      : 'bg-white dark:bg-[#1D1D1F] border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF]/40'
                   }`}
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono text-neutral-400 font-bold">High Speed</span>
-                      {paperFormat === 'rapid' && <CheckCircle2 className="w-4 h-4 text-[#00F59B]" />}
+                      <span className="text-xs font-mono text-[#1D1D1F]/60 dark:text-[#AAAAAA] font-bold">High Speed</span>
+                      {paperFormat === 'rapid' && <CheckCircle2 className="w-4 h-4 text-[#007AFF]" />}
                     </div>
-                    <h4 className="font-bold text-sm text-white">⚡ Rapid Concept Sprint</h4>
+                    <h4 className="font-bold text-sm text-[#1D1D1F] dark:text-[#F5F5F7]">⚡ Rapid Concept Sprint</h4>
                     <p className="text-xs text-neutral-400">
                       15 Marks (20 Mins). 15 Fast Concept Diagnostic MCQs for quick revision and recall.
                     </p>
                   </div>
-                  <div className="text-[11px] font-mono text-neutral-300 bg-[#21262D] px-2.5 py-1 rounded-lg">
+                  <div className="text-[11px] font-mono text-neutral-300 bg-[#F5F5F7] dark:bg-white/[0.06] px-2.5 py-1 rounded-lg">
                     Daily 20-Min Drill
                   </div>
                 </div>
@@ -979,21 +979,21 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                   onClick={() => setPaperFormat('custom')}
                   className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between gap-3 ${
                     paperFormat === 'custom'
-                      ? 'bg-[#161B22] border-[#00F59B] shadow-glow-green ring-1 ring-[#00F59B]'
-                      : 'bg-[#0D1117] border-[#30363D] hover:border-[#00F59B]/40'
+                      ? 'bg-[#F5F5F7] dark:bg-white/[0.04] border-[#007AFF] shadow-md shadow-[#007AFF]/25 ring-1 ring-[#007AFF]'
+                      : 'bg-white dark:bg-[#1D1D1F] border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF]/40'
                   }`}
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono text-[#00F59B] font-bold">Custom Blueprint</span>
-                      {paperFormat === 'custom' && <CheckCircle2 className="w-4 h-4 text-[#00F59B]" />}
+                      <span className="text-xs font-mono text-[#007AFF] font-bold">Custom Blueprint</span>
+                      {paperFormat === 'custom' && <CheckCircle2 className="w-4 h-4 text-[#007AFF]" />}
                     </div>
-                    <h4 className="font-bold text-sm text-white">🛠️ Custom Marks & Time</h4>
+                    <h4 className="font-bold text-sm text-[#1D1D1F] dark:text-[#F5F5F7]">🛠️ Custom Marks & Time</h4>
                     <p className="text-xs text-neutral-400">
                       Specify your own custom Total Marks and Exam Duration.
                     </p>
                   </div>
-                  <div className="text-[11px] font-mono text-neutral-300 bg-[#21262D] px-2.5 py-1 rounded-lg">
+                  <div className="text-[11px] font-mono text-neutral-300 bg-[#F5F5F7] dark:bg-white/[0.06] px-2.5 py-1 rounded-lg">
                     User Configured
                   </div>
                 </div>
@@ -1005,16 +1005,16 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
-                  className="p-5 rounded-2xl bg-[#0D1117] border border-[#00F59B]/30 space-y-4"
+                  className="p-5 rounded-2xl bg-white dark:bg-[#1D1D1F] border border-[#007AFF]/30 space-y-4"
                 >
-                  <div className="text-xs font-mono font-bold text-[#00F59B] uppercase flex items-center gap-2">
+                  <div className="text-xs font-mono font-bold text-[#007AFF] uppercase flex items-center gap-2">
                     <Sliders className="w-4 h-4" />
                     <span>Enter Your Custom Pattern Parameters</span>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-xs text-neutral-300 font-bold flex items-center gap-1.5">
-                        <Hash className="w-3.5 h-3.5 text-[#00F59B]" />
+                        <Hash className="w-3.5 h-3.5 text-[#007AFF]" />
                         <span>Enter Total Marks:</span>
                       </label>
                       <input
@@ -1023,13 +1023,13 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                         max="300"
                         value={customMarks}
                         onChange={(e) => setCustomMarks(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#161B22] border border-[#30363D] text-white text-xs font-mono outline-none focus:border-[#00F59B]"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-[#1D1D1F] dark:text-[#F5F5F7] text-xs font-mono outline-none focus:border-[#007AFF]"
                         placeholder="e.g. 50"
                       />
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-xs text-neutral-300 font-bold flex items-center gap-1.5">
-                        <Timer className="w-3.5 h-3.5 text-[#00F59B]" />
+                        <Timer className="w-3.5 h-3.5 text-[#007AFF]" />
                         <span>Enter Duration (Minutes):</span>
                       </label>
                       <input
@@ -1038,7 +1038,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                         max="360"
                         value={customDuration}
                         onChange={(e) => setCustomDuration(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#161B22] border border-[#30363D] text-white text-xs font-mono outline-none focus:border-[#00F59B]"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-[#1D1D1F] dark:text-[#F5F5F7] text-xs font-mono outline-none focus:border-[#007AFF]"
                         placeholder="e.g. 90"
                       />
                     </div>
@@ -1047,20 +1047,20 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
               )}
 
               {/* Summary & Final Launch Box */}
-              <div className="p-6 rounded-2xl bg-[#161B22] border border-[#30363D] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="p-6 rounded-2xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div className="space-y-1">
-                  <div className="text-xs font-mono text-[#00F59B] font-bold">Ready to Assemble:</div>
-                  <h3 className="text-base sm:text-lg font-bold text-white">
+                  <div className="text-xs font-mono text-[#007AFF] font-bold">Ready to Assemble:</div>
+                  <h3 className="text-base sm:text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">
                     {currentCourse.name} • {selectedSemester && selectedSemester !== 'all' ? `Semester ${selectedSemester}` : 'Full Curriculum'} • {selectedSubject}
                   </h3>
                   <div className="text-xs text-neutral-400 flex flex-wrap items-center gap-3 pt-1">
-                    <span>Semester: <strong className="text-white">{selectedSemester && selectedSemester !== 'all' ? `Sem ${selectedSemester}` : 'All Semesters'}</strong></span>
+                    <span>Semester: <strong className="text-[#1D1D1F] dark:text-[#F5F5F7]">{selectedSemester && selectedSemester !== 'all' ? `Sem ${selectedSemester}` : 'All Semesters'}</strong></span>
                     <span>•</span>
-                    <span>Format: <strong className="text-white">{paperFormat.toUpperCase()}</strong></span>
+                    <span>Format: <strong className="text-[#1D1D1F] dark:text-[#F5F5F7]">{paperFormat.toUpperCase()}</strong></span>
                     <span>•</span>
-                    <span>Total Marks: <strong className="text-white">{paperFormat === 'custom' ? customMarks : paperFormat === 'midterm' ? 30 : paperFormat === 'rapid' ? 15 : currentCourse.defaultMarks}</strong></span>
+                    <span>Total Marks: <strong className="text-[#1D1D1F] dark:text-[#F5F5F7]">{paperFormat === 'custom' ? customMarks : paperFormat === 'midterm' ? 30 : paperFormat === 'rapid' ? 15 : currentCourse.defaultMarks}</strong></span>
                     <span>•</span>
-                    <span>Time: <strong className="text-white">{paperFormat === 'custom' ? `${customDuration} Mins` : paperFormat === 'midterm' ? '60 Mins' : paperFormat === 'rapid' ? '20 Mins' : `${currentCourse.defaultDuration} Mins`}</strong></span>
+                    <span>Time: <strong className="text-[#1D1D1F] dark:text-[#F5F5F7]">{paperFormat === 'custom' ? `${customDuration} Mins` : paperFormat === 'midterm' ? '60 Mins' : paperFormat === 'rapid' ? '20 Mins' : `${currentCourse.defaultDuration} Mins`}</strong></span>
                   </div>
                 </div>
 
@@ -1069,9 +1069,9 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                   whileTap={{ scale: 0.97 }}
                   onClick={() => handleGeneratePaper()}
                   disabled={isEvaluating}
-                  className="w-full md:w-auto px-7 py-3.5 rounded-xl bg-[#00F59B] hover:bg-[#1AFFB2] text-[#07090D] font-display font-extrabold text-xs sm:text-sm shadow-glow-green flex items-center justify-center gap-2 cursor-pointer transition-all shrink-0"
+                  className="w-full md:w-auto px-7 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white font-display font-extrabold text-xs sm:text-sm shadow-md shadow-[#007AFF]/25 flex items-center justify-center gap-2 cursor-pointer transition-all shrink-0"
                 >
-                  <Sparkles className="w-4 h-4 text-[#07090D]" />
+                  <Sparkles className="w-4 h-4 text-white" />
                   <span>Generate Examination Paper</span>
                 </motion.button>
               </div>
@@ -1092,19 +1092,19 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
           <div className="lg:col-span-8 space-y-5">
             
             {/* Header info with PDF Download actions & Live Timer */}
-            <div className="p-5 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="p-5 rounded-2xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <div className="text-[11px] font-mono text-[#00F59B]">
+                <div className="text-[11px] font-mono text-[#007AFF]">
                   {activeTestPaper.courseName || currentCourse.name} • {activeTestPaper.semester && activeTestPaper.semester !== 'All' ? `Semester ${activeTestPaper.semester}` : 'Full Curriculum'} • Code: {activeTestPaper.paperCode}
                 </div>
-                <h2 className="text-base sm:text-lg font-bold text-white mt-0.5">
+                <h2 className="text-base sm:text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mt-0.5">
                   {activeTestPaper.title}
                 </h2>
               </div>
               
               <div className="flex flex-wrap items-center gap-2">
                 {/* Live Timer Pill */}
-                <div className="px-3.5 py-1.5 rounded-xl bg-[#161B22] text-xs font-mono font-bold text-[#00F59B] flex items-center gap-2 border border-[#00F59B]/30 shadow-glow-green">
+                <div className="px-3.5 py-1.5 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] text-xs font-mono font-bold text-[#007AFF] flex items-center gap-2 border border-[#007AFF]/30 shadow-md shadow-[#007AFF]/25">
                   <Clock className="w-3.5 h-3.5" />
                   <span>{formatTimer(timeLeftSeconds)}</span>
                   <button 
@@ -1119,16 +1119,16 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                 <button
                   onClick={() => handleDownloadPDF(false)}
                   title="Download standard question paper PDF for offline practice"
-                  className="px-3 py-1.5 rounded-xl bg-[#161B22] text-neutral-300 hover:text-white border border-[#30363D] hover:border-[#00F59B]/50 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] border border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF]/50 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
                 >
-                  <Download className="w-3.5 h-3.5 text-[#00F59B]" />
+                  <Download className="w-3.5 h-3.5 text-[#007AFF]" />
                   <span>PDF</span>
                 </button>
 
                 <button
                   onClick={() => handleDownloadPDF(true)}
                   title="Download question paper with full step-marking model answer key"
-                  className="px-3 py-1.5 rounded-xl bg-[#00F59B]/10 text-[#00F59B] hover:bg-[#00F59B]/20 border border-[#00F59B]/30 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 border border-[#007AFF]/30 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
                 >
                   <FileText className="w-3.5 h-3.5" />
                   <span>PDF + Solutions</span>
@@ -1137,7 +1137,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
             </div>
 
             {/* Section / Group Tabs with Sliding Pill */}
-            <div className="flex items-center gap-2 border-b border-[#30363D] pb-2 overflow-x-auto">
+            <div className="flex items-center gap-2 border-b border-[#AAAAAA]/30 dark:border-white/[0.08] pb-2 overflow-x-auto">
               {activeTestPaper.groups.map((group, idx) => {
                 const isActive = activeGroupIndex === idx;
                 return (
@@ -1149,15 +1149,15 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                     }}
                     className={`relative px-4 py-2 rounded-xl text-xs font-bold transition-colors duration-150 z-10 shrink-0 cursor-pointer ${
                       isActive
-                        ? 'text-[#07090D]'
-                        : 'bg-[#161B22] text-neutral-300 hover:text-white border border-[#30363D]'
+                        ? 'text-white'
+                        : 'bg-white dark:bg-[#1D1D1F] text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] border border-[#AAAAAA]/30 dark:border-white/[0.08]'
                     }`}
                   >
                     {isActive && (
                       <motion.div
                         layoutId="groupTogglePill"
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                        className="absolute inset-0 bg-[#00F59B] rounded-xl shadow-glow-green -z-10"
+                        className="absolute inset-0 bg-[#007AFF] rounded-xl shadow-md shadow-[#007AFF]/25 -z-10"
                       />
                     )}
                     <span>{group.name.split(':')[0]}</span>
@@ -1168,19 +1168,19 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
 
             {/* Active Question Display Card */}
             {currentQ && (
-              <div className="p-6 sm:p-7 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm space-y-5">
+              <div className="p-6 sm:p-7 rounded-2xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm space-y-5">
                 
-                <div className="flex items-start justify-between gap-4 pb-4 border-b border-white/10">
+                <div className="flex items-start justify-between gap-4 pb-4 border-b border-[#AAAAAA]/30 dark:border-white/[0.08]">
                   <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-[#00F59B] font-mono">
+                    <span className="text-xs font-bold text-[#007AFF] font-mono">
                       Question {currentQuestionIndex + 1} of {currentQuestions.length} ({activeTestPaper.groups[activeGroupIndex].name})
                     </span>
-                    <div className="text-[11px] text-neutral-400 italic">
+                    <div className="text-[11px] text-[#1D1D1F]/60 dark:text-[#AAAAAA] italic">
                       {activeTestPaper.groups[activeGroupIndex].instructions}
                     </div>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="px-2.5 py-0.5 rounded-lg bg-[#21262D] text-xs font-mono font-bold text-[#00F59B] border border-white/5">
+                    <span className="px-2.5 py-0.5 rounded-lg bg-[#F5F5F7] dark:bg-white/[0.06] text-xs font-mono font-bold text-[#007AFF] border border-white/5">
                       [{currentQ.marks} Mark{currentQ.marks > 1 ? 's' : ''}]
                     </span>
                     <button
@@ -1188,7 +1188,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                       className={`p-1.5 rounded-lg border text-xs flex items-center gap-1 cursor-pointer transition-colors ${
                         markedForReview[currentQ.id]
                           ? 'bg-purple-900/40 text-purple-300 border-purple-500 font-bold'
-                          : 'text-neutral-400 border-[#30363D] hover:bg-[#161B22]'
+                          : 'text-neutral-400 border-[#AAAAAA]/30 dark:border-white/[0.08] hover:bg-[#F5F5F7] dark:bg-white/[0.04]'
                       }`}
                     >
                       <Bookmark className="w-3.5 h-3.5" />
@@ -1197,12 +1197,12 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                   </div>
                 </div>
 
-                <h3 className="font-bold text-sm sm:text-base text-white leading-relaxed whitespace-pre-line">
+                <h3 className="font-bold text-sm sm:text-base text-[#1D1D1F] dark:text-[#F5F5F7] leading-relaxed whitespace-pre-line">
                   {currentQ.text}
                 </h3>
 
                 {currentQ.subparts && (
-                  <ul className="space-y-1.5 text-xs text-neutral-300 list-disc list-inside bg-[#161B22] p-4 rounded-xl border border-[#30363D]">
+                  <ul className="space-y-1.5 text-xs text-neutral-300 list-disc list-inside bg-[#F5F5F7] dark:bg-white/[0.04] p-4 rounded-xl border border-[#AAAAAA]/30 dark:border-white/[0.08]">
                     {currentQ.subparts.map((sub, sIdx) => (
                       <li key={sIdx}>{sub}</li>
                     ))}
@@ -1216,9 +1216,9 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                       const isSelected = userAnswers[currentQ.id] === opt;
                       const isThisCorrect = opt === currentQ.correct;
 
-                      let btnStyle = 'bg-[#161B22] border-[#30363D] text-neutral-200 hover:border-[#00F59B]/50 hover:bg-[#21262D]';
+                      let btnStyle = 'bg-white dark:bg-[#1D1D1F] border-[#AAAAAA]/30 dark:border-white/[0.08] text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-[#007AFF] hover:bg-[#007AFF]/5';
                       if (isSelected) {
-                        btnStyle = 'bg-[#00F59B]/15 border-[#00F59B] text-white font-bold shadow-glow-green';
+                        btnStyle = 'bg-[#007AFF]/10 border-[#007AFF] text-[#007AFF] font-bold shadow-sm shadow-[#007AFF]/15';
                       }
                       if (showAnswers) {
                         if (isThisCorrect) {
@@ -1235,7 +1235,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                           className={`p-4 rounded-xl border text-left text-xs transition-all flex items-center justify-between cursor-pointer ${btnStyle}`}
                         >
                           <span>{opt}</span>
-                          {isSelected && <Check className="w-4 h-4 text-[#00F59B] shrink-0 ml-2" />}
+                          {isSelected && <Check className="w-4 h-4 text-[#007AFF] shrink-0 ml-2" />}
                         </button>
                       );
                     })}
@@ -1250,7 +1250,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                       placeholder="Write your step-by-step mathematical proof, architectural derivation, algorithm, or code solution here..."
                       value={userAnswers[currentQ.id] || ''}
                       onChange={(e) => handleTextAnswerChange(currentQ.id, e.target.value)}
-                      className="w-full p-4 rounded-xl bg-[#161B22] border border-[#30363D] text-white text-xs outline-none focus:ring-1 focus:ring-[#00F59B] focus:border-[#00F59B] font-mono leading-relaxed"
+                      className="w-full p-4 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-[#1D1D1F] dark:text-[#F5F5F7] text-xs outline-none focus:ring-1 focus:ring-[#007AFF] focus:border-[#007AFF] font-mono leading-relaxed bg-white dark:bg-[#1D1D1F]"
                     />
                   </div>
                 )}
@@ -1260,29 +1260,29 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                   <motion.div
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="p-4 rounded-xl bg-[#161B22] border border-[#00F59B]/40 text-xs space-y-2"
+                    className="p-4 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#007AFF]/40 text-xs space-y-2"
                   >
-                    <div className="font-bold text-[#00F59B] flex items-center gap-1.5">
+                    <div className="font-bold text-[#007AFF] flex items-center gap-1.5">
                       <CheckCircle2 className="w-4 h-4" />
                       <span>Official Step-Marking Rubric & Model Solution:</span>
                     </div>
                     {currentQ.correct && (
-                      <div className="text-white font-mono">
-                        Correct Option: <span className="text-[#00F59B] font-bold">{currentQ.correct}</span>
+                      <div className="text-[#1D1D1F] dark:text-[#F5F5F7] font-mono">
+                        Correct Option: <span className="text-[#007AFF] font-bold">{currentQ.correct}</span>
                       </div>
                     )}
-                    <p className="text-neutral-300 leading-relaxed font-mono whitespace-pre-line">
+                    <p className="text-[#1D1D1F]/80 dark:text-[#AAAAAA] leading-relaxed font-mono whitespace-pre-line">
                       {currentQ.explanation || currentQ.modelAnswer || 'Standard step-marking applied based on syllabus rubrics.'}
                     </p>
                   </motion.div>
                 )}
 
                 {/* Previous / Next Navigation Buttons */}
-                <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                <div className="flex items-center justify-between pt-4 border-t border-[#AAAAAA]/30 dark:border-white/[0.08]">
                   <button
                     disabled={currentQuestionIndex === 0}
                     onClick={() => setCurrentQuestionIndex(prev => prev - 1)}
-                    className="px-4 py-2 rounded-xl bg-[#161B22] hover:bg-[#21262D] text-neutral-300 hover:text-white text-xs font-bold disabled:opacity-30 flex items-center gap-1.5 border border-[#30363D] cursor-pointer"
+                    className="px-4 py-2 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] hover:bg-[#F5F5F7] dark:bg-white/[0.06] text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] text-xs font-bold disabled:opacity-30 flex items-center gap-1.5 border border-[#AAAAAA]/30 dark:border-white/[0.08] cursor-pointer"
                   >
                     <ChevronLeft className="w-4 h-4" /> Previous
                   </button>
@@ -1290,7 +1290,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                   <button
                     disabled={currentQuestionIndex === currentQuestions.length - 1}
                     onClick={() => setCurrentQuestionIndex(prev => prev + 1)}
-                    className="px-4 py-2 rounded-xl bg-[#00F59B] hover:bg-[#1AFFB2] text-[#07090D] text-xs font-bold disabled:opacity-30 flex items-center gap-1.5 cursor-pointer shadow-glow-green"
+                    className="px-4 py-2 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white text-xs font-bold disabled:opacity-30 flex items-center gap-1.5 cursor-pointer shadow-md shadow-[#007AFF]/25"
                   >
                     Next <ChevronRight className="w-4 h-4" />
                   </button>
@@ -1300,19 +1300,19 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
             )}
 
             {/* Bottom Actions Toolbar */}
-            <div className="p-4 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setShowAnswers(!showAnswers)}
-                  className="px-4 py-2 rounded-xl bg-[#161B22] hover:bg-[#21262D] text-neutral-200 text-xs font-bold border border-[#30363D] flex items-center gap-1.5 cursor-pointer transition-colors"
+                  className="px-4 py-2 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] hover:bg-[#F5F5F7] dark:bg-white/[0.06] text-neutral-200 text-xs font-bold border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center gap-1.5 cursor-pointer transition-colors"
                 >
-                  <Eye className="w-4 h-4 text-[#00F59B]" />
+                  <Eye className="w-4 h-4 text-[#007AFF]" />
                   <span>{showAnswers ? 'Hide Solution Key' : 'Reveal Model Answer Key'}</span>
                 </button>
 
                 <button
                   onClick={() => handleDownloadPDF(false)}
-                  className="px-3.5 py-2 rounded-xl bg-[#161B22] hover:bg-[#21262D] text-neutral-300 text-xs font-bold border border-[#30363D] flex items-center gap-1.5 cursor-pointer"
+                  className="px-3.5 py-2 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] hover:bg-[#F5F5F7] dark:bg-white/[0.06] text-neutral-300 text-xs font-bold border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center gap-1.5 cursor-pointer"
                 >
                   <Printer className="w-4 h-4 text-neutral-400" />
                   <span>Print</span>
@@ -1323,7 +1323,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={handleSubmitPaper}
-                className="px-6 py-2.5 rounded-xl bg-[#00F59B] hover:bg-[#1AFFB2] text-[#07090D] font-bold text-xs sm:text-sm shadow-glow-green flex items-center justify-center gap-2 cursor-pointer transition-all"
+                className="px-6 py-2.5 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white font-bold text-xs sm:text-sm shadow-md shadow-[#007AFF]/25 flex items-center justify-center gap-2 cursor-pointer transition-all"
               >
                 <Send className="w-4 h-4" />
                 <span>Submit Full Paper & Check Score</span>
@@ -1335,10 +1335,10 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
           {/* Right Column (4 cols): Full Question Navigator Palette */}
           <div className="lg:col-span-4 space-y-5">
             
-            <div className="p-5 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm space-y-4">
+            <div className="p-5 rounded-2xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="font-bold text-sm text-white">Question Palette</h3>
-                <span className="text-xs font-mono text-neutral-400">
+                <h3 className="font-bold text-sm text-[#1D1D1F] dark:text-[#F5F5F7]">Question Palette</h3>
+                <span className="text-xs font-mono text-[#1D1D1F]/60 dark:text-[#AAAAAA]">
                   {Object.keys(userAnswers).length} / {currentQuestions.length} Answered
                 </span>
               </div>
@@ -1350,16 +1350,16 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                   const isRev = markedForReview[q.id];
                   const isCur = currentQuestionIndex === qIdx;
 
-                  let badgeColor = 'bg-[#161B22] text-neutral-400 border-[#30363D]';
+                  let badgeColor = 'bg-[#F5F5F7] dark:bg-white/[0.04] text-neutral-400 border-[#AAAAAA]/30 dark:border-white/[0.08]';
                   if (isRev) badgeColor = 'bg-purple-600 text-white font-bold border-purple-500';
-                  else if (isAns) badgeColor = 'bg-[#00F59B] text-[#07090D] font-bold border-[#00F59B] shadow-glow-green';
+                  else if (isAns) badgeColor = 'bg-[#007AFF] text-white font-bold border-[#007AFF] shadow-md shadow-[#007AFF]/25';
 
                   return (
                     <button
                       key={q.id}
                       onClick={() => setCurrentQuestionIndex(qIdx)}
                       className={`h-10 rounded-xl text-xs transition-all border font-mono cursor-pointer ${badgeColor} ${
-                        isCur ? 'ring-2 ring-[#00F59B] scale-105' : ''
+                        isCur ? 'ring-2 ring-[#007AFF] scale-105' : ''
                       }`}
                     >
                       {qIdx + 1}
@@ -1369,9 +1369,9 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
               </div>
 
               {/* Status Legend */}
-              <div className="pt-4 border-t border-white/10 space-y-2 text-[11px] text-neutral-400">
+              <div className="pt-4 border-t border-[#AAAAAA]/30 dark:border-white/[0.08] space-y-2 text-[11px] text-[#1D1D1F]/60 dark:text-[#AAAAAA]">
                 <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded bg-[#00F59B]"></span>
+                  <span className="w-3 h-3 rounded bg-[#007AFF]"></span>
                   <span>Answered Question</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -1379,17 +1379,17 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                   <span>Marked for Review</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded bg-[#161B22] border border-[#30363D]"></span>
+                  <span className="w-3 h-3 rounded bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08]"></span>
                   <span>Not Answered Yet</span>
                 </div>
               </div>
 
               {/* Score summary if submitted */}
               {scoreResult && (
-                <div className="p-4 rounded-xl bg-[#161B22] border border-[#00F59B]/50 space-y-2">
-                  <div className="text-xs font-mono font-bold text-[#00F59B]">Instant Evaluation Result:</div>
-                  <div className="text-2xl font-extrabold font-display text-white">
-                    {scoreResult.score.toFixed(1)} <span className="text-xs font-mono text-neutral-400">/ {scoreResult.totalMcq} MCQs</span>
+                <div className="p-4 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#007AFF]/50 space-y-2">
+                  <div className="text-xs font-mono font-bold text-[#007AFF]">Instant Evaluation Result:</div>
+                  <div className="text-2xl font-extrabold font-display text-[#1D1D1F] dark:text-[#F5F5F7]">
+                    {scoreResult.score.toFixed(1)} <span className="text-xs font-mono text-[#1D1D1F]/60 dark:text-[#AAAAAA]">/ {scoreResult.totalMcq} MCQs</span>
                   </div>
                   <div className="text-[11px] text-neutral-300">
                     Correct: <strong className="text-emerald-400">{scoreResult.correctCount}</strong> • Incorrect: <strong className="text-rose-400">{scoreResult.incorrectCount}</strong>
@@ -1399,25 +1399,25 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
             </div>
 
             {/* Quick Actions Card */}
-            <div className="p-5 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm space-y-3 text-xs">
-              <div className="font-bold text-white flex items-center gap-2">
-                <Settings2 className="w-4 h-4 text-[#00F59B]" />
+            <div className="p-5 rounded-2xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm space-y-3 text-xs">
+              <div className="font-bold text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2">
+                <Settings2 className="w-4 h-4 text-[#007AFF]" />
                 <span>Paper Controls</span>
               </div>
-              <p className="text-neutral-400 leading-relaxed">
+              <p className="text-[#1D1D1F]/70 dark:text-[#AAAAAA] leading-relaxed">
                 Need another variation or different subject? You can shuffle the question pool or return to the setup wizard at any time.
               </p>
               <div className="space-y-2 pt-1">
                 <button
                   onClick={handleShufflePaper}
-                  className="w-full py-2.5 rounded-xl bg-[#161B22] hover:bg-[#21262D] text-white border border-[#30363D] hover:border-[#00F59B]/50 font-bold transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-2.5 rounded-xl bg-white dark:bg-[#1D1D1F] text-[#1D1D1F] dark:text-[#F5F5F7] border border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF] font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
                 >
-                  <Shuffle className="w-3.5 h-3.5 text-[#00F59B]" />
+                  <Shuffle className="w-3.5 h-3.5 text-[#007AFF]" />
                   <span>Shuffle New Question Set</span>
                 </button>
                 <button
                   onClick={() => setActiveTestPaper(null)}
-                  className="w-full py-2.5 rounded-xl bg-[#00F59B]/10 hover:bg-[#00F59B]/20 text-[#00F59B] border border-[#00F59B]/30 font-bold transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-2.5 rounded-xl bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] border border-[#007AFF]/30 font-bold transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>Configure Different Course / Subject</span>

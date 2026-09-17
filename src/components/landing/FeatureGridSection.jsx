@@ -83,7 +83,7 @@ export const FeatureGridSection = ({ setActiveTab }) => {
   ];
 
   return (
-    <section className="w-full fluid-container space-y-8">
+    <section id="feature-grid" className="w-full fluid-container space-y-8 scroll-mt-24 perspective-stage">
       <SectionHeader
         badge="Platform Architecture"
         badgeVariant="neutral"
@@ -93,39 +93,49 @@ export const FeatureGridSection = ({ setActiveTab }) => {
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {features.map((feat) => {
+        {features.map((feat, idx) => {
           const Icon = feat.icon;
 
           return (
             <motion.div
               key={feat.id}
-              whileHover={{ y: -4, scale: 1.01 }}
-              transition={{ duration: 0.22, ease: 'easeOut' }}
+              initial={{ opacity: 0, y: 28, rotateX: 7 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ 
+                duration: 0.55, 
+                delay: (idx % 4) * 0.08, 
+                ease: [0.16, 1, 0.3, 1] 
+              }}
+              whileHover={{ y: -6, scale: 1.015 }}
               onClick={() => setActiveTab(feat.id)}
-              className="p-6 rounded-2xl frosted-glass-card liquid-sheen cursor-pointer group flex flex-col justify-between space-y-4 relative overflow-hidden transition-all duration-300"
+              className="p-6 rounded-2xl bg-white/95 dark:bg-[#1D1D1F]/90 cursor-pointer group flex flex-col justify-between space-y-4 relative overflow-hidden transition-all duration-300 border border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF] hover:shadow-xl hover:shadow-[#007AFF]/10 backdrop-blur-md scroll-gpu"
             >
+              {/* Apple Blue Gradient Top Accent on Hover */}
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#007AFF] via-[#5AC8FA] to-[#007AFF] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold frosted-glass-pill text-[#083A4F] dark:text-[#E5E1DD] border border-[#083A4F]/10 dark:border-[#E5E1DD]/15">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#F5F5F7] dark:bg-white/[0.05] text-[#1D1D1F] dark:text-[#F5F5F7] border border-[#AAAAAA]/30 group-hover:border-[#007AFF]/40 group-hover:text-[#007AFF] transition-colors">
                     {feat.badge}
                   </span>
-                  <div className="w-8 h-8 rounded-xl frosted-glass flex items-center justify-center text-[#083A4F]/70 dark:text-[#CBDCE3]/70 group-hover:text-[#407E8C] dark:group-hover:text-[#5499A8] group-hover:scale-110 transition-all border border-[#083A4F]/10 dark:border-[#E5E1DD]/15">
+                  <div className="w-8 h-8 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.05] flex items-center justify-center text-[#1D1D1F]/70 dark:text-[#AAAAAA] group-hover:text-[#007AFF] dark:group-hover:text-[#007AFF] group-hover:bg-[#007AFF]/10 group-hover:scale-110 transition-all border border-[#AAAAAA]/30 group-hover:border-[#007AFF]/30">
                     <Icon className="w-4 h-4" />
                   </div>
                 </div>
 
-                <h3 className="font-bold text-base text-[#083A4F] dark:text-[#FAF9F8] font-display group-hover:text-[#407E8C] dark:group-hover:text-[#5499A8] transition-colors">
+                <h3 className="font-bold text-base text-[#1D1D1F] dark:text-[#F5F5F7] font-display group-hover:text-[#007AFF] transition-colors">
                   {feat.title}
                 </h3>
 
-                <p className="text-xs text-[#083A4F]/70 dark:text-[#CBDCE3]/70 leading-relaxed font-sans">
+                <p className="text-xs text-[#1D1D1F]/70 dark:text-[#AAAAAA] leading-relaxed font-sans">
                   {feat.description}
                 </p>
               </div>
 
-              <div className="text-xs font-semibold text-[#083A4F] dark:text-[#E5E1DD] flex items-center gap-1 group-hover:translate-x-1.5 transition-transform pt-2 border-t border-[#083A4F]/10 dark:border-white/[0.06] group-hover:text-[#407E8C]">
+              <div className="text-xs font-semibold text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-1 group-hover:translate-x-1.5 transition-transform pt-2 border-t border-[#AAAAAA]/20 dark:border-white/[0.06] group-hover:text-[#007AFF]">
                 <span>{feat.action}</span>
-                <ChevronRight className="w-3.5 h-3.5 text-[#407E8C] transition-colors" />
+                <ChevronRight className="w-3.5 h-3.5 text-[#AAAAAA] group-hover:text-[#007AFF] transition-colors" />
               </div>
             </motion.div>
           );

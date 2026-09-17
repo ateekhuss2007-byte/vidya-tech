@@ -5,34 +5,38 @@ import { ArrowRight, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00F59B] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 dark:focus-visible:ring-[#00F59B] cursor-pointer select-none group",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 dark:focus-visible:ring-[#007AFF] cursor-pointer select-none group",
   {
     variants: {
       variant: {
         default:
-          "bg-[#00F59B] text-[#050709] font-semibold hover:bg-[#2EE59D] active:bg-[#00D687] shadow-sm shadow-[#00F59B]/25 border border-[#00F59B]",
+          "bg-[#007AFF] text-white font-semibold hover:bg-[#0062CC] active:bg-[#0051A8] shadow-sm shadow-[#007AFF]/25 border border-[#007AFF]",
         primary:
-          "bg-[#00F59B] text-[#050709] font-semibold hover:bg-[#2EE59D] active:bg-[#00D687] shadow-sm shadow-[#00F59B]/25 border border-[#00F59B]",
+          "bg-[#007AFF] text-white font-semibold hover:bg-[#0062CC] active:bg-[#0051A8] shadow-sm shadow-[#007AFF]/25 border border-[#007AFF]",
         secondary:
-          "bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-md border border-neutral-200 dark:border-[#30363D] text-[#07090D] dark:text-[#F0F6FC] hover:bg-white dark:hover:bg-[#161B22] hover:border-[#00F59B]/50 hover:text-[#00F59B] dark:hover:text-[#00F59B] hover:-translate-y-0.5 active:translate-y-0 shadow-xs",
+          "bg-white/90 dark:bg-[#2C2C2E]/90 backdrop-blur-md border border-[#AAAAAA]/30 text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-[#007AFF]/50 hover:text-[#007AFF] dark:hover:text-[#007AFF] hover:-translate-y-0.5 active:translate-y-0 shadow-xs",
         glass:
-          "bg-white/60 dark:bg-[#161B22]/60 backdrop-blur-md border border-white/60 dark:border-white/10 text-[#07090D] dark:text-[#F0F6FC] hover:bg-white/90 dark:hover:bg-[#161B22]/90 hover:border-[#00F59B]/40 hover:-translate-y-0.5 active:translate-y-0 shadow-xs",
+          "bg-white/70 dark:bg-[#2C2C2E]/70 backdrop-blur-md border border-[#AAAAAA]/25 text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-[#007AFF]/40 hover:-translate-y-0.5 active:translate-y-0 shadow-xs",
         accent:
-          "bg-[#F59E0B] text-[#050709] font-semibold hover:bg-[#D97706] active:bg-[#B45309] shadow-sm shadow-[#F59E0B]/20 border border-[#F59E0B]",
+          "bg-[#007AFF] text-white font-semibold hover:bg-[#0062CC] active:bg-[#0051A8] shadow-sm shadow-[#007AFF]/25 border border-[#007AFF]",
+        orange:
+          "bg-[#007AFF] text-white font-semibold hover:bg-[#0062CC] active:bg-[#0051A8] shadow-sm shadow-[#007AFF]/25 border border-[#007AFF]",
+        apple:
+          "bg-[#007AFF] text-white font-semibold hover:bg-[#0062CC] active:bg-[#0051A8] shadow-sm shadow-[#007AFF]/25 border border-[#007AFF]",
         premium:
-          "bg-gradient-to-r from-[#00F59B] to-[#34D399] text-[#050709] font-bold hover:opacity-90 shadow-sm shadow-[#00F59B]/30 border border-[#00F59B]",
+          "bg-gradient-to-r from-[#007AFF] to-[#5AC8FA] text-white font-bold hover:opacity-90 shadow-sm shadow-[#007AFF]/30 border border-[#007AFF]",
         dark:
-          "bg-[#0D1117] text-[#F0F6FC] hover:bg-[#161B22] active:bg-[#07090D] shadow-sm shadow-black/50 border border-[#30363D] hover:border-[#00F59B]/40",
+          "bg-[#1D1D1F] text-[#F5F5F7] hover:bg-[#2C2C2E] active:bg-[#121214] shadow-sm border border-[#AAAAAA]/30 hover:border-[#007AFF]/40",
         destructive:
           "bg-rose-600 text-white hover:bg-rose-700 shadow-sm",
         outline:
-          "border border-neutral-300 dark:border-[#30363D] bg-transparent hover:bg-neutral-100 dark:hover:bg-[#161B22] text-[#07090D] dark:text-[#F0F6FC] hover:border-[#00F59B]/40",
+          "border border-[#AAAAAA]/40 bg-transparent hover:bg-black/5 dark:hover:bg-white/5 text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-[#007AFF] hover:text-[#007AFF]",
         ghost:
-          "hover:bg-[#00F59B]/10 text-[#07090D] dark:text-[#F0F6FC] hover:text-[#00F59B] dark:hover:text-[#00F59B]",
+          "hover:bg-[#007AFF]/10 text-[#1D1D1F] dark:text-[#F5F5F7] hover:text-[#007AFF] dark:hover:text-[#007AFF]",
         link:
-          "text-[#00F59B] underline-offset-4 hover:underline",
+          "text-[#007AFF] underline-offset-4 hover:underline",
         ai:
-          "bg-gradient-to-r from-[#07090D] via-[#161B22] to-[#07090D] text-[#00F59B] hover:border-[#00F59B] shadow-sm border border-[#00F59B]/40 font-mono text-xs"
+          "bg-[#1D1D1F] text-[#007AFF] hover:border-[#007AFF] shadow-sm border border-[#007AFF]/40 font-mono text-xs"
       },
       size: {
         default: "h-9 px-4 py-2 text-xs sm:text-sm",

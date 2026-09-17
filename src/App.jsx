@@ -158,14 +158,13 @@ export const App = () => {
 
   return (
     <TooltipProvider delayDuration={150}>
-      <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#060B14] text-[#0F172A] dark:text-[#F1F5F9] flex flex-col font-sans transition-colors duration-300 selection:bg-sky-400 selection:text-white relative overflow-x-hidden">
+      <div className="min-h-screen bg-[#F5F5F7] dark:bg-[#1D1D1F] text-[#1D1D1F] dark:text-[#F5F5F7] flex flex-col font-sans transition-colors duration-300 selection:bg-[#007AFF] selection:text-white relative overflow-x-hidden">
         
-        {/* Google Sky Blue Fluid Ambient Light Mesh for Liquid Glass Refraction */}
+        {/* Apple Modern Fluid Ambient Light Mesh */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-          <div className="absolute w-[700px] h-[700px] -top-32 -left-20 bg-sky-400/15 dark:bg-sky-500/15 rounded-full blur-[120px] pointer-events-none" />
-          <div className="absolute w-[640px] h-[640px] top-[24%] -right-36 bg-blue-500/12 dark:bg-blue-600/18 rounded-full blur-[130px] pointer-events-none" />
-          <div className="absolute w-[580px] h-[580px] top-[60%] -left-28 bg-cyan-300/10 dark:bg-sky-400/10 rounded-full blur-[110px] pointer-events-none" />
-          <div className="absolute w-[500px] h-[500px] -bottom-24 right-[12%] bg-sky-500/12 dark:bg-blue-700/15 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute w-[700px] h-[700px] -top-32 -left-20 bg-[#007AFF]/[0.06] dark:bg-[#007AFF]/[0.08] rounded-full blur-[130px] pointer-events-none" />
+          <div className="absolute w-[640px] h-[640px] top-[24%] -right-36 bg-[#007AFF]/[0.05] dark:bg-[#007AFF]/[0.07] rounded-full blur-[140px] pointer-events-none" />
+          <div className="absolute w-[580px] h-[580px] top-[60%] -left-28 bg-[#AAAAAA]/[0.08] dark:bg-[#AAAAAA]/[0.04] rounded-full blur-[120px] pointer-events-none" />
         </div>
       
         {/* Toast Notifications */}

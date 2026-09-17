@@ -3,19 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Sparkles, 
   ArrowRight, 
-  CheckCircle2, 
-  FileCheck, 
-  Brain, 
-  Mic, 
-  FileText, 
-  Timer, 
-  Search,
-  ChevronRight,
-  TrendingUp, 
-  Activity, 
-  Layers, 
-  ArrowUpRight,
-  BookOpen
+  Search
 } from 'lucide-react';
 import { examStreams } from '../data/examPatterns';
 import { toast } from 'sonner';
@@ -52,7 +40,7 @@ export const HomePage = ({ setActiveTab, onOpenTopic, onOpenSemester, user }) =>
   };
 
   return (
-    <div className="w-full space-y-16 sm:space-y-24 pb-20 animate-fade-in">
+    <div className="w-full space-y-16 sm:space-y-24 pb-20 animate-fade-in relative">
       
       {/* 1. Hero Section */}
       <HeroSection 
@@ -79,7 +67,7 @@ export const HomePage = ({ setActiveTab, onOpenTopic, onOpenSemester, user }) =>
       />
 
       {/* 5. Quick Study Room & Topic Search Studio (Floating Glass Container) */}
-      <section className="w-full fluid-container">
+      <section id="study-vault" className="w-full fluid-container scroll-mt-24">
         <div className="p-6 sm:p-8 rounded-2xl glass-card text-left space-y-5 relative overflow-hidden shadow-xl border border-white/60 dark:border-white/10">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="space-y-1.5">
@@ -102,7 +90,7 @@ export const HomePage = ({ setActiveTab, onOpenTopic, onOpenSemester, user }) =>
                 if (onOpenTopic) onOpenTopic('Matrices & Determinants (Maths)');
                 else setActiveTab('studyHub');
               }}
-              className="shrink-0 shadow-sm"
+              className="shrink-0 shadow-md shadow-[#007AFF]/20"
             >
               Open Study Room
             </Button>
@@ -125,23 +113,23 @@ export const HomePage = ({ setActiveTab, onOpenTopic, onOpenSemester, user }) =>
                 name="homeTopicSearch"
                 type="text"
                 placeholder="Search any topic: Maths Matrix, Eigenvalues, Normalization, Banker's Algorithm, Calculus..."
-                className="w-full pl-11 pr-4 py-3 text-xs sm:text-sm rounded-xl glass-input text-[#083A4F] dark:text-white placeholder:text-neutral-400 focus:outline-none transition-all font-sans"
+                className="w-full pl-11 pr-4 py-3 text-xs sm:text-sm rounded-xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/10 text-[#1D1D1F] dark:text-[#F5F5F7] placeholder:text-neutral-400 focus:outline-none transition-all font-sans focus:ring-2 focus:ring-[#007AFF]/30 focus:border-[#007AFF]"
               />
             </div>
             <Button
               type="submit"
               variant="primary"
               size="md"
-              className="px-6 py-3 rounded-xl shrink-0"
+              className="px-6 py-3 rounded-xl shrink-0 shadow-md shadow-[#007AFF]/20"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#A58D66] mr-1.5" />
+              <Sparkles className="w-3.5 h-3.5 text-white mr-1.5" />
               <span>Get Notes & Videos</span>
             </Button>
           </form>
 
           {/* Quick Topic Chips */}
-          <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-[#083A4F]/10 dark:border-white/[0.06]">
-            <span className="text-xs text-neutral-500 font-medium">Popular:</span>
+          <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-[#AAAAAA]/20 dark:border-white/[0.06]">
+            <span className="text-xs text-[#AAAAAA] font-medium">Popular:</span>
             {[
               'Matrices & Determinants (Maths)',
               'Eigenvalues & Eigenvectors',
@@ -158,7 +146,7 @@ export const HomePage = ({ setActiveTab, onOpenTopic, onOpenSemester, user }) =>
                   if (onOpenTopic) onOpenTopic(t);
                   else setActiveTab('studyHub');
                 }}
-                className="px-3 py-1 rounded-lg text-xs glass-pill text-[#083A4F] dark:text-neutral-300 hover:border-[#407E8C] hover:text-[#407E8C] transition-all font-mono cursor-pointer"
+                className="px-3 py-1 rounded-lg text-xs bg-[#F5F5F7] dark:bg-white/[0.05] border border-[#AAAAAA]/30 dark:border-white/10 text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-[#007AFF] hover:text-[#007AFF] transition-all font-mono cursor-pointer"
               >
                 {t}
               </button>
@@ -389,8 +377,8 @@ export const HomePage = ({ setActiveTab, onOpenTopic, onOpenSemester, user }) =>
                   />
                 </div>
                 <div>
-                  <div className="text-[11px] font-mono text-[#407E8C] font-bold uppercase">{activeCourse.category}</div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#083A4F] dark:text-white font-display">
+                  <div className="text-[11px] font-mono text-[#007AFF] font-bold uppercase">{activeCourse.category}</div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] font-display">
                     {activeCourse.name}
                   </h3>
                 </div>
@@ -401,7 +389,7 @@ export const HomePage = ({ setActiveTab, onOpenTopic, onOpenSemester, user }) =>
                 size="md"
                 showArrow
                 onClick={handleStartCourse}
-                className="shrink-0 shadow-sm"
+                className="shrink-0 shadow-md shadow-[#007AFF]/20"
               >
                 Launch {activeCourse.name.split('(')[0]} Simulator
               </Button>
@@ -409,19 +397,19 @@ export const HomePage = ({ setActiveTab, onOpenTopic, onOpenSemester, user }) =>
 
             {/* Pattern & Marks Structure */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <div className="p-4 rounded-xl glass-surface space-y-1">
-                <div className="text-[10px] font-mono text-neutral-400 uppercase font-semibold">OFFICIAL PATTERN</div>
-                <div className="text-sm font-bold text-[#083A4F] dark:text-white mt-1">{activeCourse.patternName}</div>
-                <div className="text-xs text-neutral-500 mt-1">Full Marks: <strong className="text-[#083A4F] dark:text-neutral-300">{activeCourse.totalMarks} Marks</strong> ({activeCourse.durationMinutes} Mins)</div>
+              <div className="p-4 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/10 space-y-1">
+                <div className="text-[10px] font-mono text-[#AAAAAA] uppercase font-semibold">OFFICIAL PATTERN</div>
+                <div className="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mt-1">{activeCourse.patternName}</div>
+                <div className="text-xs text-[#AAAAAA] mt-1">Full Marks: <strong className="text-[#1D1D1F] dark:text-[#F5F5F7]">{activeCourse.totalMarks} Marks</strong> ({activeCourse.durationMinutes} Mins)</div>
               </div>
 
-              <div className="p-4 rounded-xl glass-surface md:col-span-2 space-y-1">
-                <div className="text-[10px] font-mono text-neutral-400 uppercase font-semibold">SECTION & GROUP STRUCTURE</div>
+              <div className="p-4 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/10 md:col-span-2 space-y-1">
+                <div className="text-[10px] font-mono text-[#AAAAAA] uppercase font-semibold">SECTION & GROUP STRUCTURE</div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-2">
                   {activeCourse.structure.map((st, sIdx) => (
-                    <div key={sIdx} className="p-2.5 rounded-lg glass-pill text-xs">
-                      <div className="font-semibold text-[#083A4F] dark:text-white">{st.name}</div>
-                      <div className="text-[#407E8C] dark:text-[#6BB0C0] font-mono font-bold text-[11px]">{st.marks} • {st.count}</div>
+                    <div key={sIdx} className="p-2.5 rounded-lg bg-white dark:bg-white/[0.06] border border-[#AAAAAA]/30 dark:border-white/10 text-xs">
+                      <div className="font-semibold text-[#1D1D1F] dark:text-[#F5F5F7]">{st.name}</div>
+                      <div className="text-[#007AFF] font-mono font-bold text-[11px]">{st.marks} • {st.count}</div>
                     </div>
                   ))}
                 </div>
@@ -433,29 +421,29 @@ export const HomePage = ({ setActiveTab, onOpenTopic, onOpenSemester, user }) =>
 
       </section>
 
-      {/* 7. Student Spotlight & Success Quote Card (Sophisticated Navy Glass & Gold Accent) */}
+      {/* 7. Student Spotlight & Success Quote Card (Apple Charcoal & Blue Accent) */}
       <section className="w-full fluid-container">
-        <div className="p-8 sm:p-12 rounded-3xl glass-navy text-white space-y-6 relative overflow-hidden shadow-2xl border border-white/15">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#407E8C]/20 blur-3xl rounded-full pointer-events-none" />
+        <div className="p-8 sm:p-12 rounded-3xl bg-[#1D1D1F] text-[#F5F5F7] space-y-6 relative overflow-hidden shadow-2xl border border-[#AAAAAA]/30">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#007AFF]/15 blur-3xl rounded-full pointer-events-none" />
           
           <div className="max-w-2xl space-y-4 relative z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg glass-gold text-xs font-mono font-semibold">
-              <Sparkles className="w-3.5 h-3.5 text-[#A58D66] dark:text-[#C5AF88]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-[#007AFF]/10 text-[#007AFF] text-xs font-mono font-semibold border border-[#007AFF]/25">
+              <Sparkles className="w-3.5 h-3.5 text-[#007AFF]" />
               <span>National Cohort Benchmark</span>
             </div>
-            <blockquote className="text-lg sm:text-2xl font-normal leading-relaxed text-[#E5E1DD]">
+            <blockquote className="text-lg sm:text-2xl font-normal leading-relaxed text-[#F5F5F7]">
               "We finally moved past unorganized YouTube playlists and last-night panic. Having the exact step-marked PYQs and YouTube links matched to my syllabus helped me score 9.42 SGPA in MAKAUT CSE."
             </blockquote>
             <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <div className="font-bold text-sm text-white">Aryan Shaw</div>
-                <div className="text-xs text-[#E5E1DD]/70 font-mono">B.Tech Computer Science & Engineering • 4th Semester</div>
+                <div className="text-xs text-[#AAAAAA] font-mono">B.Tech Computer Science & Engineering • 4th Semester</div>
               </div>
               <Button
-                variant="accent"
+                variant="primary"
                 size="sm"
                 onClick={() => setActiveTab('studyHub')}
-                className="bg-[#A58D66] text-white hover:bg-[#8D7652] border-none shadow-sm"
+                className="bg-[#007AFF] text-white hover:bg-[#0062CC] border-none shadow-md shadow-[#007AFF]/30"
               >
                 Join Cohort Free
               </Button>

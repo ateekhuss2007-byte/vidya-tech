@@ -70,10 +70,10 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
     <div className="w-full space-y-6 animate-fade-in">
       
       {/* 1. Track Overview Card with Change Track Action */}
-      <div className="p-6 sm:p-7 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="p-6 sm:p-7 rounded-2xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="space-y-2 max-w-2xl">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-3 py-1 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 text-xs font-mono font-bold">
+            <span className="px-3 py-1 rounded-full bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30 text-xs font-mono font-bold">
               {streamData.boardOrAuthority}
             </span>
             <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[11px] font-mono">
@@ -91,7 +91,7 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
 
           <div className="flex flex-wrap items-center gap-4 pt-2 text-xs font-mono text-neutral-300">
             <div className="flex items-center gap-1.5">
-              <Award className="w-4 h-4 text-[#00F59B]" />
+              <Award className="w-4 h-4 text-[#007AFF]" />
               <span><strong>Total:</strong> {streamData.totalMarks} Marks</span>
             </div>
             <div className="flex items-center gap-1.5">
@@ -110,7 +110,7 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
           <button
             type="button"
             onClick={onChangeTrack}
-            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#21262D] hover:bg-[#30363D] text-white text-xs font-mono font-bold border border-[#30363D] transition-all cursor-pointer shadow-sm"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.06] hover:bg-[#30363D] text-white text-xs font-mono font-bold border border-[#AAAAAA]/30 dark:border-white/[0.08] transition-all cursor-pointer shadow-sm"
           >
             <span>🔄 Change Exam Track</span>
           </button>
@@ -118,7 +118,7 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
           <button
             type="button"
             onClick={() => handleLaunchPractice(activeSubject.name)}
-            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#00F59B] text-[#07090D] hover:bg-[#00E58D] text-xs font-mono font-bold transition-all cursor-pointer shadow-glow-green"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#007AFF] text-white hover:bg-[#00E58D] text-xs font-mono font-bold transition-all cursor-pointer shadow-md shadow-[#007AFF]/25"
           >
             <Flame className="w-4 h-4" />
             <span>Launch Mock Test</span>
@@ -127,13 +127,13 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
       </div>
 
       {/* 2. Mode Switcher Tabs */}
-      <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-xl bg-[#161B22] border border-[#30363D]">
+      <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08]">
         <button
           type="button"
           onClick={() => setActiveViewMode('blueprint')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
             activeViewMode === 'blueprint'
-              ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green'
+              ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25'
               : 'text-neutral-400 hover:text-white'
           }`}
         >
@@ -146,7 +146,7 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
           onClick={() => setActiveViewMode('pyqs')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
             activeViewMode === 'pyqs'
-              ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green'
+              ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25'
               : 'text-neutral-400 hover:text-white'
           }`}
         >
@@ -159,7 +159,7 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
           onClick={() => setActiveViewMode('formulas')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
             activeViewMode === 'formulas'
-              ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green'
+              ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25'
               : 'text-neutral-400 hover:text-white'
           }`}
         >
@@ -172,7 +172,7 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
           onClick={() => setActiveViewMode('strategy')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
             activeViewMode === 'strategy'
-              ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green'
+              ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25'
               : 'text-neutral-400 hover:text-white'
           }`}
         >
@@ -193,8 +193,8 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
                 onClick={() => setActiveSubjectId(sub.id)}
                 className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold whitespace-nowrap transition-all cursor-pointer border ${
                   activeSubjectId === sub.id
-                    ? 'bg-[#00F59B] text-[#07090D] border-[#00F59B] shadow-glow-green'
-                    : 'bg-[#161B22] text-neutral-300 border-[#30363D] hover:border-neutral-500'
+                    ? 'bg-[#007AFF] text-white border-[#007AFF] shadow-md shadow-[#007AFF]/25'
+                    : 'bg-[#F5F5F7] dark:bg-white/[0.04] text-neutral-300 border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-neutral-500'
                 }`}
               >
                 {sub.name}
@@ -204,10 +204,10 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
 
           {/* Active Subject Detail Card */}
           {activeSubject && (
-            <div className="p-6 rounded-2xl bg-[#0D1117] border border-[#30363D] space-y-6 shadow-sm">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#30363D]">
+            <div className="p-6 rounded-2xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] space-y-6 shadow-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#AAAAAA]/30 dark:border-white/[0.08]">
                 <div>
-                  <div className="text-[11px] font-mono text-[#00F59B] font-bold uppercase tracking-wider">
+                  <div className="text-[11px] font-mono text-[#007AFF] font-bold uppercase tracking-wider">
                     {activeSubject.category} • {activeSubject.code || 'Official Course Code'}
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold font-display text-white mt-1">
@@ -221,7 +221,7 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
                 <button
                   type="button"
                   onClick={() => handleLaunchPractice(activeSubject.name)}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-mono font-bold transition-all cursor-pointer self-start sm:self-auto"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white text-xs font-mono font-bold transition-all cursor-pointer self-start sm:self-auto"
                 >
                   <span>Practice Subject Test</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -255,7 +255,7 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <h4 className="text-sm font-bold font-mono text-white flex items-center gap-2">
-                    <Layers className="w-4 h-4 text-[#00F59B]" />
+                    <Layers className="w-4 h-4 text-[#007AFF]" />
                     <span>Complete Chapters & Curriculum Breakdown ({activeSubject.modules.length} Modules)</span>
                   </h4>
                   <span className="text-[11px] font-mono text-neutral-400">Click any topic to explore notes</span>
@@ -266,10 +266,10 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
                     <div
                       key={idx}
                       onClick={() => handleExploreTopic(mod)}
-                      className="p-3.5 rounded-xl bg-[#161B22] border border-[#30363D] hover:border-[#00F59B]/50 hover:bg-[#1C2128] transition-all flex items-start justify-between gap-4 cursor-pointer group"
+                      className="p-3.5 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF]/50 hover:bg-[#1C2128] transition-all flex items-start justify-between gap-4 cursor-pointer group"
                     >
                       <div className="flex items-start gap-3">
-                        <span className="w-6 h-6 rounded-full bg-[#21262D] border border-[#30363D] text-[11px] font-mono font-bold text-[#00F59B] flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-[#00F59B] group-hover:text-[#07090D] transition-colors">
+                        <span className="w-6 h-6 rounded-full bg-[#F5F5F7] dark:bg-white/[0.06] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-[11px] font-mono font-bold text-[#007AFF] flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-[#007AFF] group-hover:text-white transition-colors">
                           {idx + 1}
                         </span>
                         <div>
@@ -279,7 +279,7 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
                         </div>
                       </div>
 
-                      <span className="text-xs font-mono text-[#00F59B] opacity-0 group-hover:opacity-100 transition-opacity shrink-0 flex items-center gap-1">
+                      <span className="text-xs font-mono text-[#007AFF] opacity-0 group-hover:opacity-100 transition-opacity shrink-0 flex items-center gap-1">
                         Explore →
                       </span>
                     </div>
@@ -294,11 +294,11 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
       {/* VIEW 2: TOP REPEATED PYQS */}
       {activeViewMode === 'pyqs' && (
         <div className="space-y-4">
-          <div className="p-4 rounded-xl bg-[#161B22] border border-[#30363D] flex items-center justify-between">
+          <div className="p-4 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center justify-between">
             <span className="text-xs font-mono text-neutral-300">
               High-Frequency Questions asked repeatedly in past {streamData.title} board/competitive exams.
             </span>
-            <span className="text-xs font-mono font-bold text-[#00F59B]">
+            <span className="text-xs font-mono font-bold text-[#007AFF]">
               Step-Marking Verified
             </span>
           </div>
@@ -307,9 +307,9 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
             {streamData.topRepeatedPYQs.map((pyq) => (
               <div
                 key={pyq.id}
-                className="p-5 rounded-xl bg-[#0D1117] border border-[#30363D] space-y-3"
+                className="p-5 rounded-xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] space-y-3"
               >
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[#30363D]">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[#AAAAAA]/30 dark:border-white/[0.08]">
                   <div className="flex items-center gap-2">
                     <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[11px] font-mono font-bold">
                       {pyq.subject}
@@ -327,8 +327,8 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
                   {pyq.question}
                 </p>
 
-                <div className="p-3.5 rounded-lg bg-[#161B22] border border-[#30363D] space-y-1">
-                  <div className="text-[11px] font-mono text-[#00F59B] font-bold uppercase tracking-wider">
+                <div className="p-3.5 rounded-lg bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] space-y-1">
+                  <div className="text-[11px] font-mono text-[#007AFF] font-bold uppercase tracking-wider">
                     Expected Step-by-Step Marking Answer Structure:
                   </div>
                   <p className="text-xs text-neutral-300 font-mono leading-relaxed">
@@ -344,24 +344,24 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
       {/* VIEW 3: FORMULA & SHORTCUT MATRIX */}
       {activeViewMode === 'formulas' && (
         <div className="space-y-4">
-          <div className="p-4 rounded-xl bg-[#161B22] border border-[#30363D] flex items-center justify-between">
+          <div className="p-4 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center justify-between">
             <span className="text-xs font-mono text-neutral-300">
               Exam-day formula cheat sheet and numerical shortcuts for {streamData.title}.
             </span>
-            <span className="text-xs font-mono text-[#00F59B]">1-Click Copy Supported</span>
+            <span className="text-xs font-mono text-[#007AFF]">1-Click Copy Supported</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {streamData.formulaMatrix.map((item, idx) => (
               <div
                 key={idx}
-                className="p-4 rounded-xl bg-[#0D1117] border border-[#30363D] hover:border-neutral-500 transition-all flex flex-col justify-between gap-3 group"
+                className="p-4 rounded-xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-neutral-500 transition-all flex flex-col justify-between gap-3 group"
               >
                 <div className="space-y-1.5">
-                  <div className="text-[11px] font-mono font-bold text-[#00F59B] uppercase tracking-wider">
+                  <div className="text-[11px] font-mono font-bold text-[#007AFF] uppercase tracking-wider">
                     {item.topic}
                   </div>
-                  <p className="text-xs font-mono text-white bg-[#161B22] p-3 rounded-lg border border-[#30363D] leading-relaxed break-words">
+                  <p className="text-xs font-mono text-white bg-[#F5F5F7] dark:bg-white/[0.04] p-3 rounded-lg border border-[#AAAAAA]/30 dark:border-white/[0.08] leading-relaxed break-words">
                     {item.formula}
                   </p>
                 </div>
@@ -370,12 +370,12 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
                   <button
                     type="button"
                     onClick={() => handleCopyFormula(item.formula, idx)}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#21262D] hover:bg-[#30363D] text-xs font-mono text-neutral-200 transition-all cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#F5F5F7] dark:bg-white/[0.06] hover:bg-[#30363D] text-xs font-mono text-neutral-200 transition-all cursor-pointer"
                   >
                     {copiedFormulaIndex === idx ? (
                       <>
-                        <Check className="w-3.5 h-3.5 text-[#00F59B]" />
-                        <span className="text-[#00F59B] font-bold">Copied!</span>
+                        <Check className="w-3.5 h-3.5 text-[#007AFF]" />
+                        <span className="text-[#007AFF] font-bold">Copied!</span>
                       </>
                     ) : (
                       <>
@@ -394,7 +394,7 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
       {/* VIEW 4: 30-DAY STRATEGY */}
       {activeViewMode === 'strategy' && (
         <div className="space-y-4">
-          <div className="p-4 rounded-xl bg-[#161B22] border border-[#30363D] flex items-center justify-between">
+          <div className="p-4 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center justify-between">
             <span className="text-xs font-mono text-neutral-300">
               High-yield 30-day revision roadmap designed to maximize marks with minimum stress.
             </span>
@@ -405,9 +405,9 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
             {streamData.thirtyDayPassStrategy.map((step, idx) => (
               <div
                 key={idx}
-                className="p-5 rounded-xl bg-[#0D1117] border border-[#30363D] space-y-2 relative overflow-hidden"
+                className="p-5 rounded-xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] space-y-2 relative overflow-hidden"
               >
-                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 text-xs font-mono font-bold">
+                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30 text-xs font-mono font-bold">
                   <span>{step.week}</span>
                 </div>
                 <p className="text-xs sm:text-sm text-neutral-200 font-sans leading-relaxed pt-1">

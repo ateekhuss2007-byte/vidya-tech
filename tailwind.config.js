@@ -8,6 +8,29 @@ export default {
   theme: {
     extend: {
       colors: {
+        apple: {
+          canvas: '#F5F5F7',
+          dark: '#1D1D1F',
+          gray: {
+            DEFAULT: '#AAAAAA',
+            muted: '#86868B',
+            border: 'rgba(170, 170, 170, 0.3)',
+            light: '#D2D2D7',
+          },
+          blue: {
+            DEFAULT: '#007AFF',
+            50: '#EBF5FF',
+            100: '#E1EFFF',
+            200: '#C3E0FF',
+            300: '#94C7FF',
+            400: '#4DA4FF',
+            500: '#007AFF',
+            600: '#0062CC',
+            700: '#0051A8',
+            800: '#004285',
+            900: '#003366',
+          }
+        },
         brand: {
           sage: {
             50: '#FAFAF9',
@@ -94,6 +117,19 @@ export default {
             900: '#0A2B1F',
             950: '#061812',
             DEFAULT: '#0A2B1F',
+          },
+          orange: {
+            50: '#FFF7ED',
+            100: '#FFEDD5',
+            200: '#FED7AA',
+            300: '#FDBA74',
+            400: '#FB923C',
+            500: '#FF6B00',
+            600: '#EA580C',
+            700: '#C2410C',
+            800: '#9A3412',
+            900: '#7C2D12',
+            DEFAULT: '#FF6B00',
           }
         },
         sand: {

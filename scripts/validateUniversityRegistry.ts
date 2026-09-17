@@ -22,7 +22,7 @@ if (!result.isValid) {
   result.errors.forEach((err, idx) => console.error(`  ${idx + 1}. ${err}`));
   process.exit(1);
 } else {
-  console.log('\n✅ ALL 35 INSTITUTIONS PASSED SCHEMA & FIELD VALIDATION!');
+  console.log(`\n✅ ALL ${PAN_INDIA_UNIVERSITIES.length} INSTITUTIONS PASSED SCHEMA & FIELD VALIDATION!`);
   
   if (result.warnings.length > 0) {
     console.log('\n⚠️  Warnings:');

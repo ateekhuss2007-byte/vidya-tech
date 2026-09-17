@@ -129,11 +129,11 @@ export const CommandPalette = ({
     <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md animate-fade-in" />
-        <Dialog.Content className="fixed top-[15%] left-1/2 -translate-x-1/2 z-50 w-[95vw] max-w-2xl rounded-2xl bg-[#161B22] border border-[#30363D] shadow-2xl shadow-black/80 overflow-hidden text-neutral-200 outline-none animate-scale-in">
+        <Dialog.Content className="fixed top-[15%] left-1/2 -translate-x-1/2 z-50 w-[95vw] max-w-2xl rounded-2xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-2xl shadow-black/80 overflow-hidden text-neutral-200 outline-none animate-scale-in">
           
           {/* Search Header Input */}
-          <div className="p-4 border-b border-[#30363D] flex items-center gap-3 bg-[#0D1117]">
-            <Search className="w-5 h-5 text-[#00F59B] shrink-0" />
+          <div className="p-4 border-b border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center gap-3 bg-white dark:bg-[#1D1D1F]">
+            <Search className="w-5 h-5 text-[#007AFF] shrink-0" />
             <input
               ref={inputRef}
               type="text"
@@ -146,7 +146,7 @@ export const CommandPalette = ({
               placeholder="Search B.Tech Semesters, GATE Papers, Mock Tests, or Topics..."
               className="w-full bg-transparent text-sm sm:text-base text-white placeholder:text-neutral-500 focus:outline-none font-sans"
             />
-            <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-[#21262D] text-[10px] font-mono text-neutral-400 border border-white/5">
+            <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-[#F5F5F7] dark:bg-white/[0.06] text-[10px] font-mono text-neutral-400 border border-white/5">
               <kbd>ESC</kbd>
             </span>
           </div>
@@ -169,27 +169,27 @@ export const CommandPalette = ({
                     onMouseEnter={() => setSelectedIndex(idx)}
                     className={`p-3 rounded-xl flex items-center justify-between gap-3 text-xs transition-all cursor-pointer select-none ${
                       isSelected
-                        ? 'bg-[#00F59B]/15 text-white font-semibold border border-[#00F59B]/40 shadow-glow-green'
+                        ? 'bg-[#007AFF]/15 text-white font-semibold border border-[#007AFF]/40 shadow-md shadow-[#007AFF]/25'
                         : 'text-neutral-300 hover:bg-white/5 border border-transparent'
                     }`}
                   >
                     <div className="flex items-center gap-3 truncate">
                       <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
                         isSelected 
-                          ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green font-bold' 
-                          : 'bg-[#21262D] text-neutral-400'
+                          ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25 font-bold' 
+                          : 'bg-[#F5F5F7] dark:bg-white/[0.06] text-neutral-400'
                       }`}>
                         <Icon className="w-4 h-4" />
                       </div>
                       <div className="truncate">
                         <div className="truncate font-medium text-white">{item.title}</div>
-                        <div className="text-[10px] font-mono text-[#00F59B] uppercase tracking-wider">{item.category}</div>
+                        <div className="text-[10px] font-mono text-[#007AFF] uppercase tracking-wider">{item.category}</div>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-2 shrink-0">
                       {isSelected && (
-                        <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono text-[#00F59B]">
+                        <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono text-[#007AFF]">
                           <span>Select</span>
                           <ArrowRight className="w-3 h-3" />
                         </span>
@@ -202,7 +202,7 @@ export const CommandPalette = ({
           </div>
 
           {/* Footer Quick Keys Help */}
-          <div className="p-3 border-t border-[#30363D] bg-[#0D1117] flex items-center justify-between text-[11px] font-mono text-neutral-400 px-4">
+          <div className="p-3 border-t border-[#AAAAAA]/30 dark:border-white/[0.08] bg-white dark:bg-[#1D1D1F] flex items-center justify-between text-[11px] font-mono text-neutral-400 px-4">
             <div className="flex items-center gap-4">
               <span>↑↓ Navigate</span>
               <span>↵ Open</span>
@@ -211,9 +211,9 @@ export const CommandPalette = ({
             {setIsDark && (
               <button
                 onClick={() => setIsDark(!isDark)}
-                className="hover:text-[#00F59B] text-neutral-400 flex items-center gap-1 cursor-pointer transition-colors"
+                className="hover:text-[#007AFF] text-neutral-400 flex items-center gap-1 cursor-pointer transition-colors"
               >
-                {isDark ? <Sun className="w-3.5 h-3.5 text-[#00F59B]" /> : <Moon className="w-3.5 h-3.5 text-[#00F59B]" />}
+                {isDark ? <Sun className="w-3.5 h-3.5 text-[#007AFF]" /> : <Moon className="w-3.5 h-3.5 text-[#007AFF]" />}
                 <span>Toggle Theme</span>
               </button>
             )}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
 import { 
   Sparkles, 
   ArrowRight, 
@@ -16,8 +16,72 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { toast } from 'sonner';
+import { PAN_INDIA_UNIVERSITIES } from '../../data/panIndiaUniversitiesData';
+
+const BTECH_SEMESTER_SUBJECTS = {
+  1: [
+    { code: 'BS-M101', name: 'Mathematics-I (Calculus & Linear Algebra)', tag: 'Calculus, Eigenvalues' },
+    { code: 'BS-PH101', name: 'Engineering Physics', tag: 'Quantum & Optics' },
+    { code: 'ES-EE101', name: 'Basic Electrical Engineering', tag: 'AC Circuits, Transformers' },
+    { code: 'ES-CS101', name: 'Programming for Problem Solving (C)', tag: 'Pointers, Arrays, Structs' }
+  ],
+  2: [
+    { code: 'BS-M201', name: 'Mathematics-II (ODE & Complex Variables)', tag: 'Laplace & Fourier' },
+    { code: 'BS-CH201', name: 'Engineering Chemistry', tag: 'Polymers & Thermodynamics' },
+    { code: 'ES-EC201', name: 'Basic Electronics Engineering', tag: 'Diodes, BJTs, Op-Amps' },
+    { code: 'ES-CS201', name: 'Data Structures & Algorithms', tag: 'Stacks, Queues, Linked Lists' }
+  ],
+  3: [
+    { code: 'PCC-CS301', name: 'Data Structures & Algorithms', tag: 'Trees, Graphs, Sorting, Hash' },
+    { code: 'ESC-CS301', name: 'Digital Logic & Circuit Design', tag: 'Boolean Algebra, K-Maps, MUX' },
+    { code: 'PCC-CS302', name: 'Computer Organization & Architecture', tag: 'Pipelines, Cache, Control Unit' },
+    { code: 'BSC-CS301', name: 'Discrete Mathematics', tag: 'Graph Theory, Relations, Sets' }
+  ],
+  4: [
+    { code: 'PCC-CS401', name: 'Design & Analysis of Algorithms', tag: 'Greedy, DP, Divide & Conquer' },
+    { code: 'PCC-CS402', name: 'Operating Systems', tag: 'Paging, Deadlocks, Scheduling' },
+    { code: 'PCC-CS403', name: 'Database Management Systems', tag: 'SQL, Normalization, ACID' },
+    { code: 'PCC-CS404', name: 'Formal Language & Automata Theory', tag: 'DFA, NFA, Turing Machines' }
+  ],
+  5: [
+    { code: 'PCC-CS501', name: 'Compiler Design', tag: 'Lexical, Parsing, Code Gen' },
+    { code: 'PCC-CS502', name: 'Computer Networks', tag: 'OSI, TCP/IP, Subnetting, DNS' },
+    { code: 'PCC-CS503', name: 'Software Engineering', tag: 'Agile, SDLC, UML Diagrams' },
+    { code: 'PCC-CS504', name: 'Object Oriented Programming (Java/C++)', tag: 'Inheritance, Polymorphism' }
+  ],
+  6: [
+    { code: 'PEC-CS601', name: 'Machine Learning', tag: 'Supervised, Clustering, Neural Nets' },
+    { code: 'PEC-CS602', name: 'Cloud Computing & DevOps', tag: 'AWS, Virtualization, Containers' },
+    { code: 'PCC-CS601', name: 'Web Technologies & Full Stack', tag: 'REST APIs, React, Node' },
+    { code: 'PEC-CS603', name: 'Artificial Intelligence', tag: 'A* Search, Knowledge Rep' }
+  ],
+  7: [
+    { code: 'PEC-CS701', name: 'Deep Learning', tag: 'CNN, RNN, Transformers, PyTorch' },
+    { code: 'PEC-CS702', name: 'Cryptography & Network Security', tag: 'RSA, AES, Digital Signatures' },
+    { code: 'PEC-CS703', name: 'Distributed Systems', tag: 'Raft, Paxos, Microservices' },
+    { code: 'OEC-CS701', name: 'Internet of Things (IoT)', tag: 'Embedded C, MQTT, Sensors' }
+  ],
+  8: [
+    { code: 'PEC-CS801', name: 'High Performance Computing', tag: 'CUDA, MPI, OpenMP' },
+    { code: 'PEC-CS802', name: 'Big Data Analytics', tag: 'Spark, Hadoop, MapReduce' },
+    { code: 'PROJ-CS801', name: 'Capstone Project & Grand Viva', tag: 'Defense, Rubric Evaluation' },
+    { code: 'OEC-CS802', name: 'Cyber Security & Forensics', tag: 'Penetration Testing, Auditing' }
+  ]
+};
 
 export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
+  const containerRef = React.useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end start']
+  });
+
+  const smoothScroll = useSpring(scrollYProgress, { stiffness: 300, damping: 30 });
+  const bgY = useTransform(smoothScroll, [0, 1], ['0%', '25%']);
+  const bgScale = useTransform(smoothScroll, [0, 1], [1, 1.05]);
+  const textY = useTransform(smoothScroll, [0, 1], ['0%', '10%']);
+  const heroOpacity = useTransform(smoothScroll, [0, 0.85, 1], [1, 0.95, 0.7]);
+
   const [isWizardOpen, setIsWizardOpen] = useState(false);
   
   // Guided Onboarding Steps: 1: Target Stream, 2: Semester/Branch/Subject, 3: Goal/Need
@@ -203,55 +267,158 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
   const currentGoals = getGoalsForStream();
 
   return (
-    <section className="relative w-full min-h-[76vh] flex flex-col items-center justify-center pt-18 sm:pt-24 lg:pt-28 pb-18 sm:pb-24 px-4 sm:px-8 lg:px-12 xl:px-16 text-center space-y-9 w-full max-w-7xl 2xl:max-w-[1500px] mx-auto">
+    <section 
+      id="hero-section"
+      ref={containerRef}
+      className="relative w-full flex flex-col items-center justify-center pt-2 sm:pt-4 md:pt-6 pb-6 sm:pb-10 px-4 sm:px-8 lg:px-12 xl:px-16 text-center space-y-5 sm:space-y-6 w-full max-w-7xl 2xl:max-w-[1500px] mx-auto overflow-visible"
+    >
       
-      {/* Ambient Light Glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] sm:w-[1200px] lg:w-[1440px] h-[540px] bg-gradient-to-tr from-sky-400/22 via-blue-500/18 to-cyan-300/22 blur-[140px] pointer-events-none -z-10 rounded-full" />
-      <div className="absolute top-1/3 -left-28 w-[420px] h-[420px] bg-sky-400/15 blur-[120px] pointer-events-none -z-10 rounded-full" />
-      <div className="absolute top-1/3 -right-28 w-[420px] h-[420px] bg-blue-500/15 blur-[120px] pointer-events-none -z-10 rounded-full" />
-
-      {/* Hero Typography */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.08 }}
-        className="space-y-6 w-full"
+      {/* Background Atmospheric Layer */}
+      <motion.div 
+        style={{ y: bgY, scale: bgScale }}
+        className="absolute inset-0 pointer-events-none -z-10 scroll-gpu flex items-center justify-center"
       >
-        <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[96px] xl:text-[110px] tracking-tight leading-[1.04] select-none">
-          <span className="font-montserrat font-black text-slate-900 dark:text-[#F8FAFC] block">
-            Understanding changes everything.
+        <div className="w-[850px] sm:w-[1150px] lg:w-[1350px] h-[480px] bg-gradient-to-tr from-[#007AFF]/18 via-[#5AC8FA]/12 to-[#007AFF]/15 blur-[130px] rounded-full" />
+        <div className="absolute top-1/4 -left-20 w-[380px] h-[380px] bg-[#007AFF]/10 blur-[110px] rounded-full" />
+        <div className="absolute top-1/4 -right-20 w-[380px] h-[380px] bg-[#5AC8FA]/10 blur-[110px] rounded-full" />
+        <div className="absolute inset-0 opacity-[0.025] dark:opacity-[0.045] bg-[radial-gradient(#007AFF_1px,transparent_1px)] [background-size:24px_24px]" />
+      </motion.div>
+
+      {/* High-Utility Top Academic Track Selector Bar (Uses the top space purposefully) */}
+      <motion.div
+        initial={{ opacity: 0, y: -6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35 }}
+        className="w-full max-w-4xl mx-auto"
+      >
+        <div className="inline-flex flex-wrap items-center justify-center gap-1.5 p-1 rounded-2xl bg-white/90 dark:bg-[#252528]/90 border border-[#AAAAAA]/30 dark:border-white/[0.1] shadow-sm backdrop-blur-md">
+          <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#AAAAAA] px-2.5 py-1 hidden sm:inline">
+            Target Track:
           </span>
-        </h1>
+          {streams.map((s) => {
+            const isSelected = selectedStream === s.id;
+            return (
+              <button
+                key={s.id}
+                type="button"
+                onClick={() => {
+                  setSelectedStream(s.id);
+                  setIsWizardOpen(true);
+                  setWizardStep(2);
+                }}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+                  isSelected
+                    ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/30 font-semibold'
+                    : 'text-[#1D1D1F] dark:text-[#F5F5F7] hover:bg-black/5 dark:hover:bg-white/10'
+                }`}
+              >
+                <span>{s.icon}</span>
+                <span>{s.name.split(' (')[0]}</span>
+              </button>
+            );
+          })}
+        </div>
+      </motion.div>
 
-        <p className="text-lg sm:text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl sm:max-w-4xl mx-auto font-normal font-sans pt-2">
-          Turn any syllabus into a perfect score with AI precision, authentic exam simulators, 
-          spaced repetition, and 24/7 step-by-step doubt derivations.
-        </p>
+      {/* Main Subject Plane (Headline, Subtitle, Primary CTA) */}
+      <motion.div 
+        style={{ y: textY, opacity: heroOpacity }}
+        className="space-y-4 sm:space-y-5 w-full scroll-gpu"
+      >
+        {/* Hero Headline & Subtitle */}
+        <div className="space-y-3 w-full">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-black tracking-tight leading-[1.08] select-none font-display">
+            <span className="text-[#1D1D1F] dark:text-[#F5F5F7] block">
+              The Official AI Academic
+            </span>
+            <span className="block bg-gradient-to-r from-[#007AFF] via-[#3395FF] to-[#5AC8FA] bg-clip-text text-transparent">
+              Intelligence Platform
+            </span>
+          </h1>
 
-        {/* Action Buttons: Start Learning & 3-Step Wizard */}
-        <div className="pt-4 flex items-center justify-center gap-4 sm:gap-5 flex-wrap">
-          <button
-            type="button"
-            onClick={() => setActiveTab('studyHub')}
-            className="px-9 py-4 sm:py-4.5 rounded-full liquid-glass-button font-bold text-base sm:text-lg flex items-center justify-center gap-3 cursor-pointer group shadow-[0_10px_35px_rgba(14,165,233,0.4)] hover:shadow-[0_14px_45px_rgba(56,189,248,0.6)] select-none hover:-translate-y-0.5 transition-all"
-          >
-            <span>Start Learning</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
-          </button>
-          
+          <p className="text-base sm:text-lg md:text-xl text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-3xl sm:max-w-4xl mx-auto font-normal font-sans pt-0.5">
+            Verbatim syllabus extraction, authentic non-fabricated PYQ vaults, and adaptive exam readiness engines engineered for university students and educators across India.
+          </p>
+        </div>
+
+        {/* Primary Call-to-Action */}
+        <div className="pt-2 flex flex-col items-center justify-center gap-3">
           <button
             type="button"
             onClick={() => {
-              setWizardStep(1);
-              setIsWizardOpen(true);
+              confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
+              if (onOpenSemester) {
+                onOpenSemester(3, 'studyHub');
+              } else {
+                setActiveTab('studyHub');
+              }
             }}
-            className="px-8 py-4 sm:py-4.5 rounded-full liquid-glass border border-slate-200/90 dark:border-sky-500/30 text-slate-700 dark:text-sky-200 hover:border-sky-400 text-base sm:text-lg font-semibold cursor-pointer transition-all hover:scale-[1.02] flex items-center gap-2"
+            className="group relative inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-3.5 sm:py-4 rounded-full bg-[#007AFF] hover:bg-[#0062CC] text-white font-display font-bold text-base sm:text-lg shadow-xl shadow-[#007AFF]/30 hover:shadow-[#007AFF]/50 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
           >
-            <Sparkles className="w-4 h-4 text-sky-500 dark:text-sky-400" />
-            <span>3-Step Wizard</span>
+            <Sparkles className="w-5 h-5 text-white/90 group-hover:rotate-12 transition-transform duration-300" />
+            <span>Let's Get Started</span>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
           </button>
+
+          {/* Trust Points */}
+          <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] font-mono text-neutral-500 dark:text-neutral-400 pt-1">
+            <span className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+              <span>Verbatim BoS Syllabi</span>
+            </span>
+            <span className="hidden sm:inline text-neutral-300 dark:text-neutral-700">•</span>
+            <span className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+              <span>100% Non-Fabricated PYQs</span>
+            </span>
+            <span className="hidden sm:inline text-neutral-300 dark:text-neutral-700">•</span>
+            <span className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+              <span>Adaptive Retention</span>
+            </span>
+          </div>
         </div>
       </motion.div>
+
+      {/* 4. Pan-India Audited Universities Continuous Marquee Ticker */}
+      <div className="w-full max-w-6xl xl:max-w-7xl mx-auto pt-2 overflow-hidden">
+        <div className="text-center mb-3">
+          <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#1D1D1F]/70 dark:text-[#AAAAAA] inline-flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#007AFF] animate-pulse" />
+            <span>Audited Across 36 Premier Pan-India Technical Universities & Authorities</span>
+            <span className="px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF] text-[10px] font-bold border border-[#007AFF]/25">
+              100% Verifiable Source URLs
+            </span>
+          </span>
+        </div>
+
+        <div className="relative w-full overflow-hidden mask-fade-edges py-2">
+          <div className="animate-marquee gap-3">
+            {PAN_INDIA_UNIVERSITIES.concat(PAN_INDIA_UNIVERSITIES).map((u, idx) => (
+              <button
+                key={`${u.id}-${idx}`}
+                type="button"
+                onClick={() => {
+                  setActiveTab('collegeHub');
+                  toast.info(`Inspecting ${u.shortName}`, { description: `${u.officialName} • ${u.state}` });
+                }}
+                className="flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-white/95 dark:bg-[#1D1D1F]/90 border border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF] hover:shadow-md hover:shadow-[#007AFF]/10 transition-all cursor-pointer shrink-0 text-left backdrop-blur-md group"
+              >
+                <span className="text-base">{u.icon || '🏛️'}</span>
+                <div>
+                  <div className="text-xs font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors whitespace-nowrap">
+                    {u.shortName}
+                  </div>
+                  <div className="text-[10px] font-mono text-[#AAAAAA] whitespace-nowrap">
+                    {u.state} • {u.authorityLabel || 'Autonomous'}
+                  </div>
+                </div>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#007AFF] shrink-0 ml-1.5" />
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* 5. Guided Step-by-Step Preparation Modal (Adaptive to Stream) */}
       {isWizardOpen && (
@@ -261,15 +428,15 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
             if (e.target === e.currentTarget) setIsWizardOpen(false);
           }}
         >
-          <div className="relative w-full max-w-xl max-h-[90vh] rounded-3xl bg-[#0D1117] border border-[#30363D] shadow-2xl p-6 sm:p-8 space-y-6 text-left overflow-y-auto animate-scale-in my-8 text-white">
+          <div className="relative w-full max-w-xl max-h-[90vh] rounded-3xl bg-[#1D1D1F] border border-[#AAAAAA]/30 shadow-2xl p-6 sm:p-8 space-y-6 text-left overflow-y-auto animate-scale-in my-8 text-[#F5F5F7]">
             
             {/* Header & Step Indicator */}
-            <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#AAAAAA]/20">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30">
+                <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#007AFF]/15 text-[#007AFF] border border-[#007AFF]/30">
                   Step {wizardStep} of 3
                 </span>
-                <span className="text-xs font-mono text-neutral-400">
+                <span className="text-xs font-mono text-[#AAAAAA]">
                   {wizardStep === 1 && 'Select Target Exam'}
                   {wizardStep === 2 && (
                     selectedStream === 'btech' ? 'Select Semester' :
@@ -286,7 +453,7 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
               <button 
                 type="button"
                 onClick={() => setIsWizardOpen(false)}
-                className="p-1.5 rounded-lg bg-[#21262D] hover:bg-[#30363D] text-neutral-400 hover:text-white transition-all cursor-pointer border border-[#30363D]"
+                className="p-1.5 rounded-lg bg-[#2C2C2E] hover:bg-[#3A3A3C] text-[#AAAAAA] hover:text-[#F5F5F7] transition-all cursor-pointer border border-[#AAAAAA]/30"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -296,10 +463,10 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
             {wizardStep === 1 && (
               <div className="space-y-4 animate-fade-in">
                 <div className="space-y-1">
-                  <h3 className="text-xl font-bold font-display text-[#083A4F] dark:text-[#FAF9F8]">
+                  <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
                     What are you preparing for?
                   </h3>
-                  <p className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
+                  <p className="text-xs text-[#AAAAAA]">
                     VIDYA AI will customize the question paper pattern, syllabus, and PYQ blueprints.
                   </p>
                 </div>
@@ -311,24 +478,24 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                       onClick={() => setSelectedStream(s.id)}
                       className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
                         selectedStream === s.id
-                          ? 'glass-teal shadow-xs border-[#407E8C]'
-                          : 'glass-surface hover:border-[#407E8C]/40'
+                          ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
+                          : 'bg-white/[0.03] border-white/[0.08] hover:border-[#007AFF]/40'
                       }`}
                     >
                       <div className="flex items-center gap-3">
                         <span className="text-2xl">{s.icon}</span>
                         <div>
-                          <div className="text-sm font-bold text-[#083A4F] dark:text-white font-display">
+                          <div className="text-sm font-bold text-[#F5F5F7] font-display">
                             {s.name}
                           </div>
-                          <div className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70 font-sans">
+                          <div className="text-xs text-[#AAAAAA] font-sans">
                             {s.desc}
                           </div>
                         </div>
                       </div>
 
                       {selectedStream === s.id && (
-                        <CheckCircle2 className="w-5 h-5 text-[#407E8C] shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-[#007AFF] shrink-0" />
                       )}
                     </div>
                   ))}
@@ -337,7 +504,7 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                 <button
                   type="button"
                   onClick={() => setWizardStep(2)}
-                  className="w-full py-3 rounded-xl bg-[#407E8C] text-white hover:bg-[#336570] font-bold text-sm shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer mt-4"
+                  className="w-full py-3 rounded-xl bg-[#007AFF] text-white hover:bg-[#0062CC] font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer mt-4"
                 >
                   <span>{getStep1ButtonText()}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -353,10 +520,10 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                 {selectedStream === 'btech' && (
                   <>
                     <div className="space-y-1">
-                      <h3 className="text-xl font-bold font-display text-[#083A4F] dark:text-[#FAF9F8]">
+                      <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
                         Which semester are you in?
                       </h3>
-                      <p className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
+                      <p className="text-xs text-[#AAAAAA]">
                         We will load the exact MAKAUT / University curriculum for this semester.
                       </p>
                     </div>
@@ -369,8 +536,8 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                           onClick={() => setSelectedSem(sem)}
                           className={`p-3.5 rounded-xl text-xs font-mono font-bold transition-all text-center cursor-pointer ${
                             selectedSem === sem
-                              ? 'bg-[#407E8C] text-white shadow-sm border border-[#407E8C]'
-                              : 'glass-surface text-[#083A4F] dark:text-[#E5E1DD] hover:bg-[#E5E1DD]/30'
+                              ? 'bg-[#007AFF] text-white shadow-md border border-[#007AFF]'
+                              : 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] hover:border-[#007AFF]/40'
                           }`}
                         >
                           Sem {sem}
@@ -378,7 +545,7 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                       ))}
                     </div>
 
-                    <div className="p-3.5 rounded-xl glass-teal text-xs font-mono">
+                    <div className="p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] text-xs font-mono">
                       Selected: <strong>Semester {selectedSem} B.Tech</strong> (Includes all core theory subjects, lab viva guides & repeated questions).
                     </div>
                   </>
@@ -388,10 +555,10 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                 {selectedStream === 'cbse_12' && (
                   <>
                     <div className="space-y-1">
-                      <h3 className="text-xl font-bold font-display text-[#083A4F] dark:text-[#FAF9F8]">
+                      <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
                         Select your Class 12 Focus Track
                       </h3>
-                      <p className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
+                      <p className="text-xs text-[#AAAAAA]">
                         CBSE 80/70-mark official board pattern with step-by-step marking rubrics.
                       </p>
                     </div>
@@ -403,26 +570,26 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                           onClick={() => setSelectedCbse12Track(t.id)}
                           className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
                             selectedCbse12Track === t.id
-                              ? 'glass-teal shadow-xs border-[#407E8C]'
-                              : 'glass-surface hover:border-[#407E8C]/40'
+                              ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
+                              : 'bg-white/[0.03] border-white/[0.08] hover:border-[#007AFF]/40'
                           }`}
                         >
                           <div>
-                            <div className="text-sm font-bold text-[#083A4F] dark:text-white font-display">
+                            <div className="text-sm font-bold text-[#F5F5F7] font-display">
                               {t.name}
                             </div>
-                            <div className="text-[11px] text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
+                            <div className="text-[11px] text-[#AAAAAA]">
                               {t.desc}
                             </div>
                           </div>
                           {selectedCbse12Track === t.id && (
-                            <CheckCircle2 className="w-4 h-4 text-[#407E8C] shrink-0" />
+                            <CheckCircle2 className="w-4 h-4 text-[#007AFF] shrink-0" />
                           )}
                         </div>
                       ))}
                     </div>
 
-                    <div className="p-3.5 rounded-xl glass-teal text-xs font-mono">
+                    <div className="p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] text-xs font-mono">
                       Selected: <strong>{cbse12Tracks.find(t => t.id === selectedCbse12Track)?.name}</strong>.
                     </div>
                   </>
@@ -432,10 +599,10 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                 {selectedStream === 'cbse_10' && (
                   <>
                     <div className="space-y-1">
-                      <h3 className="text-xl font-bold font-display text-[#083A4F] dark:text-[#FAF9F8]">
+                      <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
                         Select your Class 10 Subject Focus
                       </h3>
-                      <p className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
+                      <p className="text-xs text-[#AAAAAA]">
                         CBSE 80-mark board model papers, NCERT proofs, and formula sheets.
                       </p>
                     </div>
@@ -447,40 +614,40 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                           onClick={() => setSelectedCbse10Subject(s.id)}
                           className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
                             selectedCbse10Subject === s.id
-                              ? 'glass-teal shadow-xs border-[#407E8C]'
-                              : 'glass-surface hover:border-[#407E8C]/40'
+                              ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
+                              : 'bg-white/[0.03] border-white/[0.08] hover:border-[#007AFF]/40'
                           }`}
                         >
                           <div>
-                            <div className="text-sm font-bold text-[#083A4F] dark:text-white font-display">
+                            <div className="text-sm font-bold text-[#F5F5F7] font-display">
                               {s.name}
                             </div>
-                            <div className="text-[11px] text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
+                            <div className="text-[11px] text-[#AAAAAA]">
                               {s.desc}
                             </div>
                           </div>
                           {selectedCbse10Subject === s.id && (
-                            <CheckCircle2 className="w-4 h-4 text-[#407E8C] shrink-0" />
+                            <CheckCircle2 className="w-4 h-4 text-[#007AFF] shrink-0" />
                           )}
                         </div>
                       ))}
                     </div>
 
-                    <div className="p-3.5 rounded-xl glass-teal text-xs font-mono">
+                    <div className="p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] text-xs font-mono">
                       Selected: <strong>{cbse10Subjects.find(s => s.id === selectedCbse10Subject)?.name}</strong>.
                     </div>
                   </>
                 )}
 
-                {/* 2D. GATE 2027 Papers */}
+                {/* 2D. GATE Papers */}
                 {selectedStream === 'gate' && (
                   <>
                     <div className="space-y-1">
-                      <h3 className="text-xl font-bold font-display text-[#083A4F] dark:text-[#FAF9F8]">
-                        Select your GATE 2027 Paper
+                      <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
+                        Select your GATE Engineering Discipline
                       </h3>
-                      <p className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
-                        IIT Madras official 100-mark pattern (65 Questions: GA + Engg Math + Core).
+                      <p className="text-xs text-[#AAAAAA]">
+                        IIT Madras 100-mark paper pattern with MCQs, MSQs & NAT numericals.
                       </p>
                     </div>
 
@@ -491,71 +658,71 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                           onClick={() => setSelectedGatePaper(p.id)}
                           className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
                             selectedGatePaper === p.id
-                              ? 'glass-teal shadow-xs border-[#407E8C]'
-                              : 'glass-surface hover:border-[#407E8C]/40'
+                              ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
+                              : 'bg-white/[0.03] border-white/[0.08] hover:border-[#007AFF]/40'
                           }`}
                         >
                           <div>
-                            <div className="text-sm font-bold text-[#083A4F] dark:text-white font-display">
+                            <div className="text-sm font-bold text-[#F5F5F7] font-display">
                               {p.name}
                             </div>
-                            <div className="text-[11px] text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
+                            <div className="text-[11px] text-[#AAAAAA]">
                               {p.desc}
                             </div>
                           </div>
                           {selectedGatePaper === p.id && (
-                            <CheckCircle2 className="w-4 h-4 text-[#407E8C] shrink-0" />
+                            <CheckCircle2 className="w-4 h-4 text-[#007AFF] shrink-0" />
                           )}
                         </div>
                       ))}
                     </div>
 
-                    <div className="p-3.5 rounded-xl glass-teal text-xs font-mono">
-                      Selected: <strong>GATE 2027 ({selectedGatePaper})</strong> — IIT Madras 100-Mark official pattern.
+                    <div className="p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] text-xs font-mono">
+                      Selected: <strong>{gatePapers.find(p => p.id === selectedGatePaper)?.name}</strong>.
                     </div>
                   </>
                 )}
 
-                {/* 2E. JEE Focus Tracks */}
+                {/* 2E. JEE Main Tracks */}
                 {selectedStream === 'jee' && (
                   <>
                     <div className="space-y-1">
-                      <h3 className="text-xl font-bold font-display text-[#083A4F] dark:text-[#FAF9F8]">
-                        Select your JEE Focus Track
+                      <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
+                        Select your JEE Main & Advanced Track
                       </h3>
-                      <p className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
-                        NTA official 300-mark CBT simulator (Physics, Chemistry & Mathematics).
+                      <p className="text-xs text-[#AAAAAA]">
+                        NTA CBT Pattern (300 Marks) with +4 / -1 marking and integer numericals.
                       </p>
                     </div>
 
                     <div className="space-y-2 pt-1 max-h-[280px] overflow-y-auto">
-                      {jeeTracks.map((t) => (
+                      {jeeTracks.map((j) => (
                         <div
-                          key={t.id}
-                          onClick={() => setSelectedJeeTrack(t.id)}
+                          key={j.id}
+                          onClick={() => setSelectedJeeTrack(j.id)}
                           className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                            selectedJeeTrack === t.id
-                              ? 'glass-teal shadow-xs border-[#407E8C]'
-                              : 'glass-surface hover:border-[#407E8C]/40'
+                            selectedJeeTrack === j.id
+                              ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
+                              : 'bg-white/[0.03] border-white/[0.08] hover:border-[#007AFF]/40'
                           }`}
                         >
                           <div>
-                            <div className="text-sm font-bold text-[#083A4F] dark:text-white font-display">
-                              {t.name}
+                            <div className="text-sm font-bold text-[#F5F5F7] font-display">
+                              {j.name}
                             </div>
-                            <div className="text-[11px] text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
-                              {t.desc}
+                            <div className="text-[11px] text-[#AAAAAA]">
+                              {j.desc}
                             </div>
                           </div>
-                          {selectedJeeTrack === t.id && (
-                            <CheckCircle2 className="w-4 h-4 text-[#407E8C] shrink-0" />
+                          {selectedJeeTrack === j.id && (
+                            <CheckCircle2 className="w-4 h-4 text-[#007AFF] shrink-0" />
                           )}
                         </div>
                       ))}
                     </div>
 
-                    <div className="p-3.5 rounded-xl glass-teal text-xs font-mono">
-                      Selected: <strong>{jeeTracks.find(t => t.id === selectedJeeTrack)?.name}</strong>.
+                    <div className="p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] text-xs font-mono">
+                      Selected: <strong>{jeeTracks.find(j => j.id === selectedJeeTrack)?.name}</strong>.
                     </div>
                   </>
                 )}
@@ -564,41 +731,41 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                 {selectedStream === 'ssc' && (
                   <>
                     <div className="space-y-1">
-                      <h3 className="text-xl font-bold font-display text-[#083A4F] dark:text-[#FAF9F8]">
-                        Select your Govt Exam Focus
+                      <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
+                        Select your SSC CGL Section Focus
                       </h3>
-                      <p className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
-                        Choose a full-length speed mock or focus on specific test sections.
+                      <p className="text-xs text-[#AAAAAA]">
+                        Tier-1 & Tier-2 speed test format with 0.50 negative marking and shortcuts.
                       </p>
                     </div>
 
                     <div className="space-y-2 pt-1 max-h-[280px] overflow-y-auto">
-                      {sscSections.map((sec) => (
+                      {sscSections.map((s) => (
                         <div
-                          key={sec.id}
-                          onClick={() => setSelectedSscSection(sec.id)}
+                          key={s.id}
+                          onClick={() => setSelectedSscSection(s.id)}
                           className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                            selectedSscSection === sec.id
-                              ? 'glass-teal shadow-xs border-[#407E8C]'
-                              : 'glass-surface hover:border-[#407E8C]/40'
+                            selectedSscSection === s.id
+                              ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
+                              : 'bg-white/[0.03] border-white/[0.08] hover:border-[#007AFF]/40'
                           }`}
                         >
                           <div>
-                            <div className="text-sm font-bold text-[#083A4F] dark:text-white font-display">
-                              {sec.name}
+                            <div className="text-sm font-bold text-[#F5F5F7] font-display">
+                              {s.name}
                             </div>
-                            <div className="text-[11px] text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
-                              {sec.desc}
+                            <div className="text-[11px] text-[#AAAAAA]">
+                              {s.desc}
                             </div>
                           </div>
-                          {selectedSscSection === sec.id && (
-                            <CheckCircle2 className="w-4 h-4 text-[#407E8C] shrink-0" />
+                          {selectedSscSection === s.id && (
+                            <CheckCircle2 className="w-4 h-4 text-[#007AFF] shrink-0" />
                           )}
                         </div>
                       ))}
                     </div>
 
-                    <div className="p-3.5 rounded-xl glass-teal text-xs font-mono">
+                    <div className="p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] text-xs font-mono">
                       Selected: <strong>{sscSections.find(s => s.id === selectedSscSection)?.name}</strong>.
                     </div>
                   </>
@@ -608,10 +775,10 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                 {selectedStream === 'bca' && (
                   <>
                     <div className="space-y-1">
-                      <h3 className="text-xl font-bold font-display text-[#083A4F] dark:text-[#FAF9F8]">
+                      <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
                         Which BCA / MCA Semester are you in?
                       </h3>
-                      <p className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
+                      <p className="text-xs text-[#AAAAAA]">
                         University 70-mark pattern covering C, Python, Java, DBMS & Web Tech.
                       </p>
                     </div>
@@ -624,8 +791,8 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                           onClick={() => setSelectedBcaSem(sem)}
                           className={`p-3.5 rounded-xl text-xs font-mono font-bold transition-all text-center cursor-pointer ${
                             selectedBcaSem === sem
-                              ? 'bg-[#407E8C] text-white shadow-sm border border-[#407E8C]'
-                              : 'glass-surface text-[#083A4F] dark:text-[#E5E1DD] hover:bg-[#E5E1DD]/30'
+                              ? 'bg-[#007AFF] text-white shadow-md border border-[#007AFF]'
+                              : 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] hover:border-[#007AFF]/40'
                           }`}
                         >
                           Semester {sem}
@@ -633,7 +800,7 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                       ))}
                     </div>
 
-                    <div className="p-3.5 rounded-xl glass-teal text-xs font-mono">
+                    <div className="p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] text-xs font-mono">
                       Selected: <strong>Semester {selectedBcaSem} BCA / MCA</strong>.
                     </div>
                   </>
@@ -644,7 +811,7 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                   <button
                     type="button"
                     onClick={() => setWizardStep(1)}
-                    className="py-3 px-5 rounded-xl glass-button-secondary text-xs font-mono font-medium transition-all cursor-pointer flex items-center gap-1"
+                    className="py-3 px-5 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-mono font-medium transition-all cursor-pointer flex items-center gap-1 border border-[#AAAAAA]/30"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back</span>
@@ -653,7 +820,7 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                   <button
                     type="button"
                     onClick={() => setWizardStep(3)}
-                    className="flex-grow py-3 rounded-xl bg-[#407E8C] text-white hover:bg-[#336570] font-bold text-sm shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    className="flex-grow py-3 rounded-xl bg-[#007AFF] text-white hover:bg-[#0062CC] font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Next: Select Goal</span>
                     <ArrowRight className="w-4 h-4" />
@@ -666,10 +833,10 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
             {wizardStep === 3 && (
               <div className="space-y-4 animate-fade-in">
                 <div className="space-y-1">
-                  <h3 className="text-xl font-bold font-display text-[#083A4F] dark:text-[#FAF9F8]">
+                  <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
                     What do you need right now?
                   </h3>
-                  <p className="text-xs text-[#083A4F]/65 dark:text-[#CBDCE3]/70">
+                  <p className="text-xs text-[#AAAAAA]">
                     Choose what you want VIDYA AI to generate for your preparation.
                   </p>
                 </div>
@@ -681,28 +848,28 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                       onClick={() => setSelectedGoal(g.id)}
                       className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
                         selectedGoal === g.id
-                          ? 'glass-teal shadow-xs border-[#407E8C]'
-                          : 'glass-surface hover:border-[#407E8C]/40'
+                          ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
+                          : 'bg-white/[0.03] border-white/[0.08] hover:border-[#007AFF]/40'
                       }`}
                     >
                       <div className="flex items-center gap-3">
                         <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
-                          selectedGoal === g.id ? 'bg-[#407E8C] text-white' : 'bg-[#083A4F]/5 dark:bg-white/10 text-[#083A4F] dark:text-[#E5E1DD]'
+                          selectedGoal === g.id ? 'bg-[#007AFF] text-white' : 'bg-white/10 text-neutral-300'
                         }`}>
                           <g.icon className="w-4 h-4" />
                         </div>
                         <div>
-                          <div className="text-xs sm:text-sm font-bold text-[#083A4F] dark:text-white font-display">
+                          <div className="text-xs sm:text-sm font-bold text-[#F5F5F7] font-display">
                             {g.label}
                           </div>
-                          <div className="text-[11px] text-[#083A4F]/65 dark:text-[#CBDCE3]/70 font-sans">
+                          <div className="text-[11px] text-[#AAAAAA] font-sans">
                             {g.desc}
                           </div>
                         </div>
                       </div>
 
                       {selectedGoal === g.id && (
-                        <CheckCircle2 className="w-5 h-5 text-[#407E8C] shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-[#007AFF] shrink-0" />
                       )}
                     </div>
                   ))}
@@ -712,7 +879,7 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                   <button
                     type="button"
                     onClick={() => setWizardStep(2)}
-                    className="py-3 px-5 rounded-xl glass-button-secondary text-xs font-mono font-medium transition-all cursor-pointer flex items-center gap-1"
+                    className="py-3 px-5 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-mono font-medium transition-all cursor-pointer flex items-center gap-1 border border-[#AAAAAA]/30"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back</span>
@@ -721,9 +888,9 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                   <button
                     type="button"
                     onClick={handleFinishWizard}
-                    className="flex-grow py-3 rounded-xl bg-[#407E8C] text-white hover:bg-[#336570] font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer font-mono"
+                    className="flex-grow py-3 rounded-xl bg-[#007AFF] text-white hover:bg-[#0062CC] font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer font-mono"
                   >
-                    <Sparkles className="w-4 h-4 text-[#E5E1DD]" />
+                    <Sparkles className="w-4 h-4 text-white" />
                     <span>Generate My Study Plan →</span>
                   </button>
                 </div>

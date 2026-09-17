@@ -73,12 +73,12 @@ export const DeckStudio = () => {
       <motion.div 
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-2xl p-6 sm:p-8 bg-[#0D1117] border border-[#30363D] shadow-xl mb-8 relative overflow-hidden"
+        className="rounded-2xl p-6 sm:p-8 bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-xl mb-8 relative overflow-hidden"
       >
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#00F59B]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#007AFF]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 text-xs font-bold mb-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30 text-xs font-bold mb-2">
               <Presentation className="w-3.5 h-3.5" />
               <span>Executive Pitch Deck Studio</span>
             </div>
@@ -93,9 +93,9 @@ export const DeckStudio = () => {
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={() => setShowSpeakerNotes(!showSpeakerNotes)}
-              className="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-[#161B22] text-slate-700 dark:text-[#F0F6FC] hover:dark:bg-[#21262D] text-xs font-bold border border-slate-200 dark:border-[#30363D] flex items-center gap-1.5 transition-all"
+              className="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-[#F5F5F7] dark:bg-white/[0.04] text-slate-700 dark:text-[#F0F6FC] hover:dark:bg-[#F5F5F7] dark:bg-white/[0.06] text-xs font-bold border border-slate-200 dark:border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center gap-1.5 transition-all"
             >
-              <FileText className="w-4 h-4 text-[#00F59B]" />
+              <FileText className="w-4 h-4 text-[#007AFF]" />
               <span>{showSpeakerNotes ? 'Hide Speaker Notes' : 'Show Speaker Notes'}</span>
             </button>
 
@@ -104,7 +104,7 @@ export const DeckStudio = () => {
               whileTap={{ scale: 0.97 }}
               onClick={handleDownloadPptx}
               disabled={isGeneratingPptx}
-              className="px-4 py-2 rounded-xl bg-[#00F59B] hover:bg-[#5EFCC2] text-[#07090D] font-bold text-xs sm:text-sm shadow-md shadow-[#00F59B]/20 flex items-center gap-2 transition-all"
+              className="px-4 py-2 rounded-xl bg-[#007AFF] hover:bg-[#5EFCC2] text-white font-bold text-xs sm:text-sm shadow-md shadow-[#007AFF]/20 flex items-center gap-2 transition-all"
             >
               <Download className="w-4 h-4" />
               <span>{isGeneratingPptx ? 'Generating PPTX...' : 'Export PPTX Deck'}</span>
@@ -128,8 +128,8 @@ export const DeckStudio = () => {
               onClick={() => setCurrentSlideIndex(idx)}
               className={`w-full p-3 rounded-xl text-left border transition-all ${
                 currentSlideIndex === idx
-                  ? 'bg-[#00F59B]/10 border-[#00F59B] text-[#00F59B] shadow-sm'
-                  : 'bg-white dark:bg-[#0D1117] border-slate-200 dark:border-[#30363D] text-slate-600 dark:text-[#8B949E] hover:dark:border-[#00F59B]/50'
+                  ? 'bg-[#007AFF]/10 border-[#007AFF] text-[#007AFF] shadow-sm'
+                  : 'bg-white dark:bg-white dark:bg-[#1D1D1F] border-slate-200 dark:border-[#AAAAAA]/30 dark:border-white/[0.08] text-slate-600 dark:text-[#8B949E] hover:dark:border-[#007AFF]/50'
               }`}
             >
               <div className="flex items-center justify-between text-[10px] font-mono mb-1">
@@ -145,7 +145,7 @@ export const DeckStudio = () => {
         <div className="lg:col-span-9 space-y-6">
           
           {/* Slide Stage with Framer Motion Animated Slide Transition */}
-          <div className="rounded-2xl p-8 sm:p-12 border border-slate-200 dark:border-[#30363D] shadow-xl min-h-[460px] flex flex-col justify-between relative overflow-hidden bg-white dark:bg-[#0D1117]">
+          <div className="rounded-2xl p-8 sm:p-12 border border-slate-200 dark:border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-xl min-h-[460px] flex flex-col justify-between relative overflow-hidden bg-white dark:bg-white dark:bg-[#1D1D1F]">
             
             <AnimatePresence mode="wait">
               <motion.div
@@ -156,8 +156,8 @@ export const DeckStudio = () => {
                 transition={{ duration: 0.25, ease: 'easeOut' }}
               >
                 {/* Slide Category & Number */}
-                <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-200 dark:border-[#30363D] font-mono text-xs text-slate-400 dark:text-[#8B949E]">
-                  <span className="px-2.5 py-0.5 rounded bg-[#00F59B]/10 text-[#00F59B] font-bold border border-[#00F59B]/30">
+                <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-200 dark:border-[#AAAAAA]/30 dark:border-white/[0.08] font-mono text-xs text-slate-400 dark:text-[#8B949E]">
+                  <span className="px-2.5 py-0.5 rounded bg-[#007AFF]/10 text-[#007AFF] font-bold border border-[#007AFF]/30">
                     {currentSlide.category}
                   </span>
                   <span>Slide {currentSlideIndex + 1} of {pitchDeckSlides.length}</span>
@@ -167,7 +167,7 @@ export const DeckStudio = () => {
                 <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 dark:text-[#F0F6FC] leading-tight mb-2">
                   {currentSlide.title}
                 </h2>
-                <p className="text-sm font-semibold text-[#00F59B] mb-8 font-sans">
+                <p className="text-sm font-semibold text-[#007AFF] mb-8 font-sans">
                   {currentSlide.subtitle}
                 </p>
 
@@ -181,7 +181,7 @@ export const DeckStudio = () => {
                       transition={{ delay: pIdx * 0.05 }}
                       className="flex items-start gap-3 text-xs sm:text-sm text-slate-700 dark:text-[#F0F6FC] leading-relaxed"
                     >
-                      <span className="w-5 h-5 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 flex items-center justify-center shrink-0 font-bold text-xs mt-0.5">
+                      <span className="w-5 h-5 rounded-full bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30 flex items-center justify-center shrink-0 font-bold text-xs mt-0.5">
                         ✓
                       </span>
                       <span>{point}</span>
@@ -191,11 +191,11 @@ export const DeckStudio = () => {
 
                 {/* Metrics Callout Row */}
                 {currentSlide.metrics && (
-                  <div className="grid grid-cols-2 gap-4 pt-6 border-t border-slate-200 dark:border-[#30363D]">
+                  <div className="grid grid-cols-2 gap-4 pt-6 border-t border-slate-200 dark:border-[#AAAAAA]/30 dark:border-white/[0.08]">
                     {currentSlide.metrics.map((m, mIdx) => (
-                      <div key={mIdx} className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#161B22] border border-slate-200 dark:border-[#30363D]">
+                      <div key={mIdx} className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#F5F5F7] dark:bg-white/[0.04] border border-slate-200 dark:border-[#AAAAAA]/30 dark:border-white/[0.08]">
                         <div className="text-[10px] uppercase font-mono text-slate-400 dark:text-[#8B949E]">{m.label}</div>
-                        <div className="text-lg sm:text-xl font-bold font-display text-slate-900 dark:text-[#00F59B] mt-0.5">{m.value}</div>
+                        <div className="text-lg sm:text-xl font-bold font-display text-slate-900 dark:text-[#007AFF] mt-0.5">{m.value}</div>
                       </div>
                     ))}
                   </div>
@@ -204,11 +204,11 @@ export const DeckStudio = () => {
             </AnimatePresence>
 
             {/* Navigation Buttons on Stage */}
-            <div className="flex items-center justify-between pt-6 mt-6 border-t border-slate-200 dark:border-[#30363D]">
+            <div className="flex items-center justify-between pt-6 mt-6 border-t border-slate-200 dark:border-[#AAAAAA]/30 dark:border-white/[0.08]">
               <button
                 disabled={currentSlideIndex === 0}
                 onClick={() => setCurrentSlideIndex(prev => prev - 1)}
-                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-[#161B22] text-slate-700 dark:text-[#F0F6FC] text-xs font-bold disabled:opacity-30 flex items-center gap-1.5 hover:dark:bg-[#21262D]"
+                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-[#F5F5F7] dark:bg-white/[0.04] text-slate-700 dark:text-[#F0F6FC] text-xs font-bold disabled:opacity-30 flex items-center gap-1.5 hover:dark:bg-[#F5F5F7] dark:bg-white/[0.06]"
               >
                 <ChevronLeft className="w-4 h-4" /> Previous
               </button>
@@ -220,7 +220,7 @@ export const DeckStudio = () => {
               <button
                 disabled={currentSlideIndex === pitchDeckSlides.length - 1}
                 onClick={() => setCurrentSlideIndex(prev => prev + 1)}
-                className="px-4 py-2 rounded-xl bg-[#00F59B] hover:bg-[#5EFCC2] text-[#07090D] text-xs font-bold disabled:opacity-30 flex items-center gap-1.5 shadow-sm"
+                className="px-4 py-2 rounded-xl bg-[#007AFF] hover:bg-[#5EFCC2] text-white text-xs font-bold disabled:opacity-30 flex items-center gap-1.5 shadow-sm"
               >
                 Next <ChevronRight className="w-4 h-4" />
               </button>
@@ -233,13 +233,13 @@ export const DeckStudio = () => {
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="rounded-2xl p-5 border border-slate-200 dark:border-[#30363D] bg-white dark:bg-[#0D1117]"
+              className="rounded-2xl p-5 border border-slate-200 dark:border-[#AAAAAA]/30 dark:border-white/[0.08] bg-white dark:bg-white dark:bg-[#1D1D1F]"
             >
               <div className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-[#F0F6FC] mb-2 font-display">
-                <Volume2 className="w-4 h-4 text-[#00F59B]" />
+                <Volume2 className="w-4 h-4 text-[#007AFF]" />
                 <span>Executive Speaker Script (Slide {currentSlideIndex + 1}):</span>
               </div>
-              <p className="text-xs text-slate-600 dark:text-[#8B949E] leading-relaxed italic font-mono bg-slate-50 dark:bg-[#161B22] p-3.5 rounded-xl border border-slate-200 dark:border-[#30363D]">
+              <p className="text-xs text-slate-600 dark:text-[#8B949E] leading-relaxed italic font-mono bg-slate-50 dark:bg-[#F5F5F7] dark:bg-white/[0.04] p-3.5 rounded-xl border border-slate-200 dark:border-[#AAAAAA]/30 dark:border-white/[0.08]">
                 "{currentSlide.speakerNotes}"
               </p>
             </motion.div>

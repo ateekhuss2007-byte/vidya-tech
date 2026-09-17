@@ -127,19 +127,19 @@ export const UniversalSyllabusUploaderModal: React.FC<UniversalSyllabusUploaderM
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-2xl bg-[#0D1117] border border-[#30363D] rounded-2xl shadow-2xl p-6 overflow-hidden max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-2xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] rounded-2xl shadow-2xl p-6 overflow-hidden max-h-[90vh] overflow-y-auto">
         {/* Glow ambient background */}
-        <div className="absolute top-0 right-0 w-72 h-72 bg-[#00F59B]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+        <div className="absolute top-0 right-0 w-72 h-72 bg-[#007AFF]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
 
         {/* Modal Header */}
         <div className="flex items-center justify-between pb-4 border-b border-[#21262D]">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#00F59B]/10 border border-[#00F59B]/30 flex items-center justify-center text-[#00F59B]">
+            <div className="w-9 h-9 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/30 flex items-center justify-center text-[#007AFF]">
               <FileUp className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-[10px] font-mono font-bold text-[#00F59B]">UNIVERSAL AI INGESTER</div>
-              <h3 className="text-base sm:text-lg font-bold text-[#F0F6FC] font-display">
+              <div className="text-[10px] font-mono font-bold text-[#007AFF]">UNIVERSAL AI INGESTER</div>
+              <h3 className="text-base sm:text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7] font-display">
                 Upload Custom University Syllabus PDF
               </h3>
             </div>
@@ -147,14 +147,14 @@ export const UniversalSyllabusUploaderModal: React.FC<UniversalSyllabusUploaderM
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-[#161B22] border border-[#30363D] text-[#8B949E] hover:text-[#F0F6FC] transition-all cursor-pointer"
+            className="p-1.5 rounded-lg bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#1D1D1F] dark:text-[#F5F5F7] transition-all cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Description */}
-        <p className="text-xs text-[#8B949E] mt-3">
+        <p className="text-xs text-[#1D1D1F]/70 dark:text-[#AAAAAA] mt-3">
           Upload any official university, autonomous college, or department syllabus document (PDF/DOC/TXT). 
           VIDYA AI’s NLP engine extracts the 5 module units, credits, learning objectives, and auto-assembles a personalized remediation roadmap.
         </p>
@@ -167,8 +167,8 @@ export const UniversalSyllabusUploaderModal: React.FC<UniversalSyllabusUploaderM
           onDrop={handleDrop}
           className={`mt-4 p-6 sm:p-8 rounded-2xl border-2 border-dashed transition-all text-center flex flex-col items-center justify-center gap-3 cursor-pointer ${
             dragActive
-              ? 'border-[#00F59B] bg-[#00F59B]/5'
-              : 'border-[#30363D] bg-[#161B22]/50 hover:border-[#8B949E] hover:bg-[#161B22]'
+              ? 'border-[#007AFF] bg-[#007AFF]/5'
+              : 'border-[#AAAAAA]/30 dark:border-white/[0.08] bg-[#F5F5F7] dark:bg-white/[0.04]/50 hover:border-[#8B949E] hover:bg-[#F5F5F7] dark:bg-white/[0.04]'
           }`}
           onClick={() => document.getElementById('syllabus-file-input')?.click()}
         >
@@ -180,71 +180,71 @@ export const UniversalSyllabusUploaderModal: React.FC<UniversalSyllabusUploaderM
             className="hidden"
           />
 
-          <div className="w-12 h-12 rounded-2xl bg-[#21262D] border border-[#30363D] flex items-center justify-center text-[#00F59B]">
+          <div className="w-12 h-12 rounded-2xl bg-[#F5F5F7] dark:bg-white/[0.06] border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center justify-center text-[#007AFF]">
             <FileText className="w-6 h-6" />
           </div>
 
           <div>
-            <div className="text-sm font-bold text-[#F0F6FC]">
+            <div className="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">
               {selectedFile ? selectedFile.name : 'Drag & Drop Official Syllabus PDF'}
             </div>
-            <div className="text-xs text-[#8B949E] mt-0.5">
+            <div className="text-xs text-[#1D1D1F]/70 dark:text-[#AAAAAA] mt-0.5">
               Supports PDF, Word (.docx) or plain text course handbooks up to 25MB
             </div>
           </div>
 
           <button
             type="button"
-            className="px-4 py-1.5 rounded-xl bg-[#00F59B] text-[#07090D] font-bold text-xs shadow-sm hover:bg-[#5EFCC2] transition-all"
+            className="px-4 py-1.5 rounded-xl bg-[#007AFF] text-white font-bold text-xs shadow-sm hover:bg-[#5EFCC2] transition-all"
           >
             Browse Local File
           </button>
         </div>
 
         {/* 1-Click Quick Demo Presets for Judges */}
-        <div className="mt-4 p-3.5 rounded-xl bg-[#161B22] border border-[#30363D]">
-          <div className="text-[11px] font-mono text-[#8B949E] mb-2 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-[#00F59B]" />
+        <div className="mt-4 p-3.5 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08]">
+          <div className="text-[11px] font-mono text-[#1D1D1F]/70 dark:text-[#AAAAAA] mb-2 flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-[#007AFF]" />
             <span>Judge Demo Presets (1-Click Instant AI Extraction):</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <button
               onClick={() => handleLoadSample('AKTU Lucknow', 'KCS-301 Data Structures')}
-              className="px-2.5 py-1.5 rounded-lg bg-[#21262D] hover:bg-[#30363D] text-left text-xs text-[#C9D1D9] transition-all border border-[#30363D] flex items-center justify-between"
+              className="px-2.5 py-1.5 rounded-lg bg-[#F5F5F7] dark:bg-white/[0.06] hover:bg-[#30363D] text-left text-xs text-[#1D1D1F] dark:text-[#F5F5F7] transition-all border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center justify-between"
             >
               <span className="font-semibold truncate">AKTU KCS-301 Syllabus</span>
-              <span className="text-[10px] font-mono text-[#00F59B]">Sample 1</span>
+              <span className="text-[10px] font-mono text-[#007AFF]">Sample 1</span>
             </button>
             <button
               onClick={() => handleLoadSample('VTU Belagavi', '21CS32 Data Structures & Apps')}
-              className="px-2.5 py-1.5 rounded-lg bg-[#21262D] hover:bg-[#30363D] text-left text-xs text-[#C9D1D9] transition-all border border-[#30363D] flex items-center justify-between"
+              className="px-2.5 py-1.5 rounded-lg bg-[#F5F5F7] dark:bg-white/[0.06] hover:bg-[#30363D] text-left text-xs text-[#1D1D1F] dark:text-[#F5F5F7] transition-all border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center justify-between"
             >
               <span className="font-semibold truncate">VTU 21CS32 Syllabus</span>
-              <span className="text-[10px] font-mono text-[#00F59B]">Sample 2</span>
+              <span className="text-[10px] font-mono text-[#007AFF]">Sample 2</span>
             </button>
             <button
               onClick={() => handleLoadSample('Anna Univ', 'CS3391 OOP & Java Systems')}
-              className="px-2.5 py-1.5 rounded-lg bg-[#21262D] hover:bg-[#30363D] text-left text-xs text-[#C9D1D9] transition-all border border-[#30363D] flex items-center justify-between"
+              className="px-2.5 py-1.5 rounded-lg bg-[#F5F5F7] dark:bg-white/[0.06] hover:bg-[#30363D] text-left text-xs text-[#1D1D1F] dark:text-[#F5F5F7] transition-all border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center justify-between"
             >
               <span className="font-semibold truncate">Anna Univ CS3391 Syllabus</span>
-              <span className="text-[10px] font-mono text-[#00F59B]">Sample 3</span>
+              <span className="text-[10px] font-mono text-[#007AFF]">Sample 3</span>
             </button>
             <button
               onClick={() => handleLoadSample('JNTU Hyderabad', 'CS301PC C++ Data Structures')}
-              className="px-2.5 py-1.5 rounded-lg bg-[#21262D] hover:bg-[#30363D] text-left text-xs text-[#C9D1D9] transition-all border border-[#30363D] flex items-center justify-between"
+              className="px-2.5 py-1.5 rounded-lg bg-[#F5F5F7] dark:bg-white/[0.06] hover:bg-[#30363D] text-left text-xs text-[#1D1D1F] dark:text-[#F5F5F7] transition-all border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center justify-between"
             >
               <span className="font-semibold truncate">JNTUH R22 Syllabus</span>
-              <span className="text-[10px] font-mono text-[#00F59B]">Sample 4</span>
+              <span className="text-[10px] font-mono text-[#007AFF]">Sample 4</span>
             </button>
           </div>
         </div>
 
         {/* Loading Spinner */}
         {isParsing && (
-          <div className="mt-4 p-6 rounded-xl bg-[#161B22] border border-[#30363D] text-center space-y-3">
-            <div className="inline-block w-8 h-8 border-3 border-[#00F59B] border-t-transparent rounded-full animate-spin" />
-            <div className="text-xs font-mono text-[#00F59B] font-bold">
+          <div className="mt-4 p-6 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-center space-y-3">
+            <div className="inline-block w-8 h-8 border-3 border-[#007AFF] border-t-transparent rounded-full animate-spin" />
+            <div className="text-xs font-mono text-[#007AFF] font-bold">
               Extracting course modules, credit matrices & learning outcomes...
             </div>
           </div>
@@ -252,49 +252,49 @@ export const UniversalSyllabusUploaderModal: React.FC<UniversalSyllabusUploaderM
 
         {/* Parsed Result Preview */}
         {parsedResult && !isParsing && (
-          <div className="mt-4 p-4 rounded-xl bg-[#161B22] border border-[#00F59B]/40 space-y-3 animate-fade-in">
+          <div className="mt-4 p-4 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#007AFF]/40 space-y-3 animate-fade-in">
             <div className="flex items-center justify-between pb-2 border-b border-[#21262D]">
               <div>
-                <div className="text-[10px] font-mono font-bold text-[#00F59B] flex items-center gap-1">
+                <div className="text-[10px] font-mono font-bold text-[#007AFF] flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>AI PARSING COMPLETE</span>
                 </div>
-                <h4 className="text-sm font-bold text-[#F0F6FC] font-display">
+                <h4 className="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] font-display">
                   {parsedResult.title}
                 </h4>
               </div>
               <div className="text-right">
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30">
                   {parsedResult.credits} Credits • Sem {parsedResult.semester}
                 </span>
               </div>
             </div>
 
             <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono py-1">
-              <div className="p-2 rounded-lg bg-[#0D1117] border border-[#30363D]">
-                <div className="text-[10px] text-[#8B949E]">MODULES</div>
-                <div className="font-bold text-[#00F59B]">{parsedResult.totalModules} Units</div>
+              <div className="p-2 rounded-lg bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08]">
+                <div className="text-[10px] text-[#1D1D1F]/70 dark:text-[#AAAAAA]">MODULES</div>
+                <div className="font-bold text-[#007AFF]">{parsedResult.totalModules} Units</div>
               </div>
-              <div className="p-2 rounded-lg bg-[#0D1117] border border-[#30363D]">
-                <div className="text-[10px] text-[#8B949E]">HOURS</div>
+              <div className="p-2 rounded-lg bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08]">
+                <div className="text-[10px] text-[#1D1D1F]/70 dark:text-[#AAAAAA]">HOURS</div>
                 <div className="font-bold text-sky-400">{parsedResult.estimatedHours} Hours</div>
               </div>
-              <div className="p-2 rounded-lg bg-[#0D1117] border border-[#30363D]">
-                <div className="text-[10px] text-[#8B949E]">GENERATED Qs</div>
+              <div className="p-2 rounded-lg bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08]">
+                <div className="text-[10px] text-[#1D1D1F]/70 dark:text-[#AAAAAA]">GENERATED Qs</div>
                 <div className="font-bold text-amber-400">{parsedResult.generatedQuestionsCount} Questions</div>
               </div>
             </div>
 
             <div className="space-y-1.5 max-h-44 overflow-y-auto pr-1">
               {parsedResult.modules.map((m: any, idx: number) => (
-                <div key={idx} className="p-2 rounded-lg bg-[#0D1117] border border-[#30363D] text-xs">
-                  <div className="font-bold text-[#F0F6FC] flex items-center gap-1.5">
-                    <span className="w-4 h-4 rounded-full bg-[#00F59B]/20 text-[#00F59B] text-[10px] flex items-center justify-center font-mono">
+                <div key={idx} className="p-2 rounded-lg bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-xs">
+                  <div className="font-bold text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-1.5">
+                    <span className="w-4 h-4 rounded-full bg-[#007AFF]/20 text-[#007AFF] text-[10px] flex items-center justify-center font-mono">
                       {m.num}
                     </span>
                     <span>{m.name}</span>
                   </div>
-                  <div className="text-[11px] text-[#8B949E] mt-1 line-clamp-1">
+                  <div className="text-[11px] text-[#1D1D1F]/70 dark:text-[#AAAAAA] mt-1 line-clamp-1">
                     Topics: {m.topics.join(' • ')}
                   </div>
                 </div>
@@ -303,7 +303,7 @@ export const UniversalSyllabusUploaderModal: React.FC<UniversalSyllabusUploaderM
 
             <button
               onClick={handleApplyToStudyRoom}
-              className="w-full py-2.5 rounded-xl bg-[#00F59B] hover:bg-[#5EFCC2] text-[#07090D] font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+              className="w-full py-2.5 rounded-xl bg-[#007AFF] hover:bg-[#5EFCC2] text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
             >
               <span>Ingest & Assemble Study Room & Mock Papers</span>
               <ArrowRight className="w-4 h-4" />

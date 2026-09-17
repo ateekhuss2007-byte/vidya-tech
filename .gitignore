@@ -35,3 +35,10 @@ cloudflared*
 
 # Scratch temporary files
 scratch/
+
+# Personal Identity Documents (Privacy Protection)
+EAadhaar*
+
+# Python Cache
+__pycache__/
+*.pyc

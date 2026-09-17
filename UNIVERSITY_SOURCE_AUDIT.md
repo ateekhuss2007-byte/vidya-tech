@@ -1,6 +1,6 @@
 # VIDYA AI — PAN-INDIA UNIVERSITY SOURCE AUDIT REGISTRY
 **Problem Statement SIH26043** | Academic Integrity & Official Data Provenance Audit  
-**Registry Scope**: 35 Target Institutions Across 4 Authority Tiers  
+**Registry Scope**: 36 Target Institutions Across 4 Authority Tiers  
 **Audit Standard**: Official-Source-First (Institutional Domains & Regulatory Portals Only)  
 **Last Comprehensive Audit**: 2026-09-15  
 
@@ -617,7 +617,24 @@
 
 ---
 
-## 5. AUDIT SUMMARY TABLE ACROSS ALL 35 INSTITUTIONS
+### 36. University of Calcutta — West Bengal
+- **University**: University of Calcutta (CU)
+- **Official Name**: University of Calcutta (Faculty of Engineering & Technology)
+- **Official Website**: https://www.caluniv.ac.in
+- **Primary Source**: https://www.caluniv.ac.in
+- **Academic Source**: https://www.caluniv.ac.in/academic/academic.html
+- **Affiliation Source**: N/A (State Research University with in-house B.Tech under Faculty of Engineering & Technology)
+- **Examination Source**: https://www.caluniv.ac.in/examination/examination.html
+- **Current Regulation Source**: https://www.caluniv.ac.in/academic/ChemTech/BTech-Regulation-New.pdf
+- **Verified Fields**: `officialName`, `shortName`, `state` (West Bengal), `city` (Kolkata), `officialWebsite`, `establishedYear` (1857), `authorityType` (`state_autonomous`), `autonomous` (true), `gradingSystem` (10-Point Letter Grade Scale: O, A+, A, B+, B, C, P, F with SGPA/CGPA), `blueprintPattern` (Mid-Term Assessment 30% + End-Semester Theory Examination 70%), `regulationCode` (CU 4-Year B.Tech Regulations AY 2024-25 / CBCS)
+- **Missing Fields**: `affiliatedCollegesCount` (Engineering B.Tech is conducted in-house on Rajabazar Science College / Technology Campus; external engineering affiliation null by design)
+- **Conflicting Sources**: Historical Act II of 1857; updated under Calcutta University Act 1979 / 2011 amendments. Official domain `caluniv.ac.in` verified.
+- **Verification Status**: VERIFIED
+- **Last Verified**: 2026-09-15
+
+---
+
+## 5. AUDIT SUMMARY TABLE ACROSS ALL 36 INSTITUTIONS
 
 | # | University | Authority Category | State | Official Website | Verification Status | Source Traceability |
 |---|---|---|---|---|---|---|
@@ -656,3 +673,5 @@
 | 33 | DTU | State Autonomous | Delhi | https://www.dtu.ac.in | VERIFIED | 100% Traceable |
 | 34 | COEP Tech | State Autonomous | Maharashtra | https://www.coep.org.in | VERIFIED | 100% Traceable |
 | 35 | VJTI | State Autonomous | Maharashtra | https://vjti.ac.in | VERIFIED | 100% Traceable |
+| 36 | University of Calcutta | State Autonomous | West Bengal | https://www.caluniv.ac.in | VERIFIED | 100% Traceable |
+

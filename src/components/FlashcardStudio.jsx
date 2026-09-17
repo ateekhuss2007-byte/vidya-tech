@@ -112,11 +112,11 @@ export const FlashcardStudio = () => {
     <div className="w-full fluid-container py-6 sm:py-8 animate-fade-in space-y-6">
       
       {/* Header Banner */}
-      <div className="rounded-3xl p-6 sm:p-8 bg-[#0D1117] text-white border border-[#30363D] shadow-xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#00F59B]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="rounded-3xl p-6 sm:p-8 bg-white dark:bg-[#1D1D1F] text-white border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#007AFF]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-2xl space-y-2 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#00F59B]/10 border border-[#00F59B]/30 text-xs font-mono font-bold text-[#00F59B] shadow-glow-green">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#007AFF]/10 border border-[#007AFF]/30 text-xs font-mono font-bold text-[#007AFF] shadow-md shadow-[#007AFF]/25">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Anki-Style SM-2 Spaced Repetition Decks</span>
           </div>
@@ -128,8 +128,8 @@ export const FlashcardStudio = () => {
           </p>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#161B22] border border-[#00F59B]/30 text-center relative z-10 shrink-0">
-          <div className="text-[10px] text-[#00F59B] font-mono">CARDS REVIEWED</div>
+        <div className="p-4 rounded-2xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#007AFF]/30 text-center relative z-10 shrink-0">
+          <div className="text-[10px] text-[#007AFF] font-mono">CARDS REVIEWED</div>
           <div className="text-2xl font-bold text-white font-display">{reviewedCount} Cards</div>
         </div>
       </div>
@@ -146,13 +146,13 @@ export const FlashcardStudio = () => {
             }}
             className={`px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
               selectedDeckId === deck.id
-                ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green scale-[1.02]'
-                : 'bg-[#0D1117] border border-[#30363D] text-neutral-300 hover:bg-[#161B22] hover:text-white'
+                ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25 scale-[1.02]'
+                : 'bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-neutral-300 hover:bg-[#F5F5F7] dark:bg-white/[0.04] hover:text-white'
             }`}
           >
             <span>{deck.icon}</span>
             <span>{deck.name}</span>
-            <span className="px-1.5 py-0.5 rounded bg-[#161B22] text-[10px] font-mono border border-white/5">{deck.cards.length}</span>
+            <span className="px-1.5 py-0.5 rounded bg-[#F5F5F7] dark:bg-white/[0.04] text-[10px] font-mono border border-white/5">{deck.cards.length}</span>
           </button>
         ))}
       </div>
@@ -172,18 +172,18 @@ export const FlashcardStudio = () => {
           whileTap={{ scale: 0.99 }}
           className={`min-h-[300px] sm:min-h-[340px] p-8 rounded-3xl cursor-pointer transition-all duration-300 flex flex-col justify-between border shadow-2xl relative select-none ${
             isFlipped
-              ? 'bg-[#161B22] text-white border-[#00F59B]/50 shadow-glow-green'
-              : 'bg-[#0D1117] text-white border-[#30363D]'
+              ? 'bg-[#F5F5F7] dark:bg-white/[0.04] text-white border-[#007AFF]/50 shadow-md shadow-[#007AFF]/25'
+              : 'bg-white dark:bg-[#1D1D1F] text-white border-[#AAAAAA]/30 dark:border-white/[0.08]'
           }`}
         >
           <div className="flex items-center justify-between text-xs">
             <span className={`px-2.5 py-1 rounded-lg font-mono font-bold text-[10px] ${
-              isFlipped ? 'bg-[#00F59B]/20 text-[#00F59B] border border-[#00F59B]/30' : 'bg-[#161B22] text-neutral-300 border border-[#30363D]'
+              isFlipped ? 'bg-[#007AFF]/20 text-[#007AFF] border border-[#007AFF]/30' : 'bg-[#F5F5F7] dark:bg-white/[0.04] text-neutral-300 border border-[#AAAAAA]/30 dark:border-white/[0.08]'
             }`}>
               {isFlipped ? 'ANSWER / FORMULA' : 'QUESTION / PROMPT'}
             </span>
             <span className="text-xs text-neutral-400 flex items-center gap-1 font-mono">
-              <RotateCw className="w-3.5 h-3.5 text-[#00F59B]" />
+              <RotateCw className="w-3.5 h-3.5 text-[#007AFF]" />
               <span>{isFlipped ? 'Click to show front' : 'Click to flip'}</span>
             </span>
           </div>
@@ -234,7 +234,7 @@ export const FlashcardStudio = () => {
 
             <button
               onClick={() => handleRate('Easy (12d)')}
-              className="p-3 rounded-2xl bg-[#00F59B]/15 border border-[#00F59B]/40 text-[#00F59B] text-xs font-bold hover:bg-[#00F59B]/25 transition-all text-center shadow-glow-green cursor-pointer"
+              className="p-3 rounded-2xl bg-[#007AFF]/15 border border-[#007AFF]/40 text-[#007AFF] text-xs font-bold hover:bg-[#007AFF]/25 transition-all text-center shadow-md shadow-[#007AFF]/25 cursor-pointer"
             >
               <div>Easy</div>
               <div className="text-[10px] font-mono opacity-80">12 days</div>

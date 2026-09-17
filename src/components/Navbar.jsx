@@ -112,8 +112,8 @@ export const Navbar = ({
     <>
       <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/90 dark:bg-[#060B14]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 shadow-[0_2px_15px_rgba(0,0,0,0.04)]'
-          : 'bg-white dark:bg-[#060B14] border-b border-slate-200/50 dark:border-slate-800/50'
+          ? 'bg-[#F5F5F7]/90 dark:bg-[#1D1D1F]/90 backdrop-blur-xl border-b border-[#AAAAAA]/30 dark:border-[#AAAAAA]/20 shadow-[0_2px_15px_rgba(0,0,0,0.04)]'
+          : 'bg-[#F5F5F7] dark:bg-[#1D1D1F] border-b border-[#AAAAAA]/20 dark:border-[#AAAAAA]/15'
       }`}>
         <div className="w-full px-5 sm:px-8 md:px-12 lg:px-16 flex items-center justify-between h-16 sm:h-17">
           
@@ -125,7 +125,7 @@ export const Navbar = ({
               className="flex items-center gap-2.5 text-left group cursor-pointer focus:outline-none"
             >
               <NotebookArchesIcon />
-              <span className="font-sans font-medium text-[17px] sm:text-[18px] tracking-tight text-slate-900 dark:text-white">
+              <span className="font-sans font-medium text-[17px] sm:text-[18px] tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">
                 Vidya AI
               </span>
             </button>
@@ -146,8 +146,8 @@ export const Navbar = ({
                     onClick={() => setActiveTab(link.id)}
                     className={`relative text-[14px] transition-colors cursor-pointer py-1 ${
                       isActive
-                        ? 'text-slate-900 dark:text-white font-medium border-b-2 border-slate-900 dark:border-white'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-normal'
+                        ? 'text-[#007AFF] font-medium border-b-2 border-[#007AFF]'
+                        : 'text-neutral-600 dark:text-neutral-300 hover:text-[#007AFF] dark:hover:text-[#007AFF] font-normal'
                     }`}
                   >
                     {link.label}
@@ -156,44 +156,13 @@ export const Navbar = ({
               })}
             </nav>
 
-            {/* Social Icons (Discord, Reddit, X) */}
-            <div className="hidden lg:flex items-center gap-3.5 text-slate-700 dark:text-slate-300 pl-1 border-l border-slate-200 dark:border-slate-800">
-              <a 
-                href="https://discord.com" 
-                target="_blank" 
-                rel="noreferrer" 
-                aria-label="Discord Community"
-                className="p-1 hover:text-sky-500 transition-colors"
-              >
-                <DiscordIcon />
-              </a>
-              <a 
-                href="https://reddit.com" 
-                target="_blank" 
-                rel="noreferrer" 
-                aria-label="Reddit Community"
-                className="p-1 hover:text-sky-500 transition-colors"
-              >
-                <RedditIcon />
-              </a>
-              <a 
-                href="https://x.com" 
-                target="_blank" 
-                rel="noreferrer" 
-                aria-label="X (Twitter)"
-                className="p-1 hover:text-sky-500 transition-colors"
-              >
-                <XIcon />
-              </a>
-            </div>
-
             {/* Utility Search & Theme Toggle */}
-            <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
+            <div className="flex items-center gap-1.5 text-neutral-600 dark:text-neutral-400">
               <button
                 type="button"
                 onClick={onOpenSearch}
                 aria-label="Search"
-                className="p-1.5 rounded-lg hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer"
+                className="p-1.5 rounded-lg hover:text-[#1D1D1F] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer"
               >
                 <Search className="w-4 h-4" />
               </button>
@@ -202,12 +171,12 @@ export const Navbar = ({
                 type="button"
                 onClick={() => setIsDark(!isDark)}
                 aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                className="p-1.5 rounded-lg hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer"
+                className="p-1.5 rounded-lg hover:text-[#1D1D1F] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer"
               >
                 {isDark ? (
-                  <Sun className="w-4 h-4 text-sky-400" />
+                  <Sun className="w-4 h-4 text-[#007AFF]" />
                 ) : (
-                  <Moon className="w-4 h-4 text-slate-700" />
+                  <Moon className="w-4 h-4 text-[#1D1D1F]" />
                 )}
               </button>
             </div>
@@ -218,11 +187,11 @@ export const Navbar = ({
                 <DropdownMenuTrigger asChild>
                   <button 
                     type="button"
-                    className="flex items-center gap-2 p-0.5 rounded-full hover:ring-2 hover:ring-sky-400 transition-all cursor-pointer focus:outline-none shrink-0"
+                    className="flex items-center gap-2 p-0.5 rounded-full hover:ring-2 hover:ring-[#007AFF] transition-all cursor-pointer focus:outline-none shrink-0"
                   >
-                    <Avatar className="w-8 h-8 border border-slate-200 dark:border-slate-700">
+                    <Avatar className="w-8 h-8 border border-[#AAAAAA]/30">
                       <AvatarImage src={user.avatar} alt={user.name} />
-                      <AvatarFallback className="bg-sky-500 text-white font-medium text-xs">
+                      <AvatarFallback className="bg-[#007AFF] text-white font-medium text-xs">
                         {user.name ? user.name.slice(0, 2).toUpperCase() : 'AK'}
                       </AvatarFallback>
                     </Avatar>
@@ -232,18 +201,18 @@ export const Navbar = ({
                 <DropdownMenuContent
                   side="bottom"
                   align="end"
-                  className="z-50 min-w-[220px] p-2 rounded-2xl bg-white/95 dark:bg-[#0B132B]/95 backdrop-blur-2xl border border-slate-200 dark:border-slate-800 shadow-xl text-xs space-y-1"
+                  className="z-50 min-w-[220px] p-2 rounded-2xl bg-[#F5F5F7]/95 dark:bg-[#1D1D1F]/95 backdrop-blur-2xl border border-[#AAAAAA]/30 shadow-xl text-xs space-y-1 text-[#1D1D1F] dark:text-[#F5F5F7]"
                 >
-                  <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800">
-                    <div className="font-semibold text-slate-900 dark:text-white text-sm truncate">{user.name}</div>
-                    <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono truncate">{user.email}</div>
+                  <div className="px-3 py-2 border-b border-[#AAAAAA]/20">
+                    <div className="font-semibold text-sm truncate">{user.name}</div>
+                    <div className="text-[11px] text-neutral-500 font-mono truncate">{user.email}</div>
                   </div>
 
                   <DropdownMenuItem
                     onClick={() => setActiveTab('dashboard')}
-                    className="px-3 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2.5 cursor-pointer font-medium text-slate-700 dark:text-slate-200"
+                    className="px-3 py-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 flex items-center gap-2.5 cursor-pointer font-medium"
                   >
-                    <LayoutDashboard className="w-3.5 h-3.5 text-sky-500" />
+                    <LayoutDashboard className="w-3.5 h-3.5 text-[#007AFF]" />
                     <span>Dashboard</span>
                   </DropdownMenuItem>
 
@@ -263,14 +232,14 @@ export const Navbar = ({
                 <button
                   type="button"
                   onClick={() => setActiveTab('studyHub')}
-                  className="hidden sm:inline-block text-[14px] font-normal text-slate-900 dark:text-white hover:text-sky-500 transition-colors cursor-pointer"
+                  className="hidden sm:inline-block text-[14px] font-normal text-[#1D1D1F] dark:text-[#F5F5F7] hover:text-[#007AFF] transition-colors cursor-pointer"
                 >
                   Get the app
                 </button>
                 <button
                   type="button"
                   onClick={() => setAuthModalOpen(true)}
-                  className="text-[13px] font-medium px-4 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 transition-all cursor-pointer shadow-xs"
+                  className="text-[13px] font-medium px-4 py-1.5 rounded-full bg-[#007AFF] hover:bg-[#0062CC] text-white shadow-sm shadow-[#007AFF]/25 transition-all cursor-pointer"
                 >
                   Sign In
                 </button>

@@ -132,17 +132,17 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
     <div className="space-y-6">
       
       {/* Search & Topic Generator Header */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1326] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-5">
+      <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm space-y-5">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60 text-xs font-mono font-bold">
-              <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30 text-xs font-mono font-bold">
+              <Sparkles className="w-3.5 h-3.5 text-[#007AFF]" />
               <span>AI Study Room • Topic-to-Notes Engine</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-2 font-display">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mt-2 font-display">
               Type Any Topic to Get Complete Notes & Best YouTube Video Links
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-2xl">
+            <p className="text-xs sm:text-sm text-[#1D1D1F]/70 dark:text-[#AAAAAA] mt-1 max-w-2xl">
               Instant syllabus notes, intuition, formulas, 10-mark solved numericals, and direct links to the highest-rated YouTube video lectures (3Blue1Brown, Dr. Gajendra Purohit, Gate Smashers, Khan Academy).
             </p>
           </div>
@@ -151,19 +151,19 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
         {/* Search Input Form */}
         <form onSubmit={handleSearchSubmit} className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-grow">
-            <Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+            <Search className="w-5 h-5 text-[#AAAAAA] absolute left-4 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Enter ANY topic (e.g. Maths Matrix, Eigenvalues, Normalization, Banker's Algorithm, Calculus)..."
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              className="w-full pl-12 pr-4 py-3.5 text-sm rounded-2xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-12 pr-4 py-3.5 text-sm rounded-2xl bg-slate-50 dark:bg-slate-900/80 border border-[#AAAAAA]/30 dark:border-white/[0.08] text-[#1D1D1F] dark:text-[#F5F5F7] placeholder:text-[#AAAAAA] focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <button
             type="submit"
             disabled={isLoading}
-            className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold shadow-sm transition-all disabled:opacity-50 shrink-0 cursor-pointer"
+            className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-[#007AFF] hover:bg-[#0062CC] text-white shadow-md shadow-[#007AFF]/25 text-sm font-bold shadow-sm transition-all disabled:opacity-50 shrink-0 cursor-pointer"
           >
             {isLoading ? (
               <>
@@ -181,7 +181,7 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
 
         {/* Quick Suggestion Chips */}
         <div className="flex flex-wrap items-center gap-2 pt-1">
-          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Quick Topics:</span>
+          <span className="text-xs text-[#1D1D1F]/70 dark:text-[#AAAAAA] font-medium">Quick Topics:</span>
           {POPULAR_TOPICS.map((topic) => (
             <button
               key={topic}
@@ -190,7 +190,7 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
                 setSearchInput(topic);
                 setQuery(topic);
               }}
-              className="px-3 py-1 rounded-xl text-xs bg-slate-100 dark:bg-slate-800/80 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-all font-mono cursor-pointer"
+              className="px-3 py-1 rounded-xl text-xs bg-[#F5F5F7] dark:bg-white/[0.04] hover:bg-[#007AFF]/10 hover:text-[#007AFF] text-[#1D1D1F] dark:text-[#F5F5F7] border border-[#AAAAAA]/30 dark:border-white/[0.08] transition-all font-mono cursor-pointer"
             >
               {topic}
             </button>
@@ -201,20 +201,20 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
 
       {/* Generated Topic Deep Notes View */}
       {note && (
-        <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0D1326] border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-8">
+        <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm space-y-8">
           
           {/* Header Action Bar */}
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-[#AAAAAA]/30 dark:border-white/[0.08]">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60">
+                <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30">
                   {note.subject}
                 </span>
-                <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                <span className="text-xs text-[#1D1D1F]/70 dark:text-[#AAAAAA] font-medium">
                   {note.semester}
                 </span>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-display">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] font-display">
                 {note.topicName}
               </h3>
             </div>
@@ -222,14 +222,14 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
             <div className="flex items-center gap-2.5 flex-wrap">
               <button
                 onClick={handleCopyAllNotes}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all border border-slate-200 dark:border-slate-700 cursor-pointer"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all border border-[#AAAAAA]/30 dark:border-white/[0.08] cursor-pointer"
               >
                 <Copy className="w-3.5 h-3.5" />
                 <span>Copy Full Notes</span>
               </button>
               <button
                 onClick={handleDownloadPDF}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-sm transition-all cursor-pointer"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white shadow-md shadow-[#007AFF]/25 text-xs font-bold shadow-sm transition-all cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Download / Print Notes</span>
@@ -238,7 +238,7 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
           </div>
 
           {/* Section Filter Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-200 dark:border-slate-800">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-[#AAAAAA]/30 dark:border-white/[0.08]">
             {[
               { id: 'all', label: '📑 All Comprehensive Notes' },
               { id: 'youtube', label: `📺 YouTube Lectures (${note.youtubeLectures.length})` },
@@ -251,8 +251,8 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
                   activeTab === tab.id
-                    ? 'bg-blue-600 text-white shadow-sm'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+                    ? 'bg-[#007AFF] text-white shadow-sm'
+                    : 'text-slate-600 dark:text-[#AAAAAA] hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
                 }`}
               >
                 {tab.label}
@@ -265,15 +265,15 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 font-display">
+                  <h4 className="text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2 font-display">
                     <Video className="w-5 h-5 text-red-600" />
                     <span>Best YouTube Video Lectures & Tutorials</span>
                   </h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-xs text-[#1D1D1F]/70 dark:text-[#AAAAAA]">
                     Curated top-rated educator lectures for maximum output and conceptual clarity.
                   </p>
                 </div>
-                <span className="text-xs text-slate-500 dark:text-slate-400 font-mono hidden sm:inline">Direct Redirects Ready</span>
+                <span className="text-xs text-[#1D1D1F]/70 dark:text-[#AAAAAA] font-mono hidden sm:inline">Direct Redirects Ready</span>
               </div>
 
               {/* Embedded Player (if active) */}
@@ -286,7 +286,7 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
                     </span>
                     <button 
                       onClick={() => setActiveEmbedId(null)}
-                      className="text-slate-400 hover:text-white flex items-center gap-1 cursor-pointer"
+                      className="text-[#AAAAAA] hover:text-white flex items-center gap-1 cursor-pointer"
                     >
                       <X className="w-4 h-4" /> Close Player
                     </button>
@@ -307,7 +307,7 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
                 {note.youtubeLectures.map((vid, idx) => (
                   <div
                     key={idx}
-                    className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 hover:border-blue-400 transition-all flex flex-col justify-between group shadow-sm"
+                    className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-blue-400 transition-all flex flex-col justify-between group shadow-sm"
                   >
                     <div>
                       <div className="flex items-center justify-between mb-2.5">
@@ -319,19 +319,19 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
                         </span>
                       </div>
 
-                      <h5 className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-1.5 line-clamp-2">
+                      <h5 className="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] dark:group-hover:text-blue-400 transition-colors mb-1.5 line-clamp-2">
                         {vid.title}
                       </h5>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mb-4">
+                      <p className="text-xs text-[#1D1D1F]/70 dark:text-[#AAAAAA] font-mono mb-4">
                         Channel: <strong>{vid.channel}</strong>
                       </p>
                     </div>
 
-                    <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+                    <div className="space-y-2 pt-2 border-t border-[#AAAAAA]/30 dark:border-white/[0.08]">
                       {vid.embedId && (
                         <button
                           onClick={() => setActiveEmbedId(vid.embedId || null)}
-                          className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all cursor-pointer"
+                          className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-[#1D1D1F] dark:text-[#F5F5F7] text-xs font-bold transition-all cursor-pointer"
                         >
                           <Play className="w-3.5 h-3.5 fill-current" />
                           <span>Watch Here</span>
@@ -369,11 +369,11 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
               </div>
 
               {/* Formal Academic Definition */}
-              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 space-y-2">
-                <strong className="text-blue-600 dark:text-blue-400 text-xs block uppercase font-mono tracking-wider">
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-[#AAAAAA]/30 dark:border-white/[0.08] space-y-2">
+                <strong className="text-[#007AFF] text-xs block uppercase font-mono tracking-wider">
                   Formal Definition & Academic Overview:
                 </strong>
-                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#1D1D1F]/80 dark:text-[#AAAAAA] leading-relaxed">
                   {note.overview}
                 </p>
               </div>
@@ -384,8 +384,8 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
           {/* 2. Core Theory Modules */}
           {(activeTab === 'all' || activeTab === 'theory') && (
             <div className="space-y-4">
-              <h4 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 font-display">
-                <BookOpen className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              <h4 className="text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2 font-display">
+                <BookOpen className="w-5 h-5 text-[#007AFF]" />
                 <span>Comprehensive Theory & Key Concepts</span>
               </h4>
 
@@ -393,15 +393,15 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
                 {note.coreTheory.map((item, idx) => (
                   <div
                     key={idx}
-                    className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 space-y-3"
+                    className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-[#AAAAAA]/30 dark:border-white/[0.08] space-y-3"
                   >
-                    <h5 className="text-sm font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">
+                    <h5 className="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] border-b border-[#AAAAAA]/30 dark:border-white/[0.08] pb-2">
                       {item.heading}
                     </h5>
-                    <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
+                    <ul className="space-y-2 text-xs text-[#1D1D1F]/80 dark:text-[#AAAAAA]">
                       {item.points.map((p, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#007AFF] shrink-0 mt-0.5" />
                           <span>{p}</span>
                         </li>
                       ))}
@@ -416,7 +416,7 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
           {(activeTab === 'all' || activeTab === 'example') && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h4 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 font-display">
+                <h4 className="text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2 font-display">
                   <Award className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   <span>Step-by-Step Solved University Exam Problem</span>
                 </h4>
@@ -425,8 +425,8 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
                 </span>
               </div>
 
-              <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 space-y-4">
-                <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-800 dark:text-slate-200">
+              <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-[#AAAAAA]/30 dark:border-white/[0.08] space-y-4">
+                <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-[#AAAAAA]/30 dark:border-white/[0.08] text-xs text-[#1D1D1F] dark:text-[#F5F5F7]">
                   <strong className="text-amber-700 dark:text-amber-300 block mb-1">Problem Statement:</strong>
                   {note.stepByStepSolvedExample.problemStatement}
                 </div>
@@ -434,7 +434,7 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
                 <div className="space-y-2.5">
                   <span className="text-xs font-bold text-slate-500 font-mono">Step-by-Step Working:</span>
                   {note.stepByStepSolvedExample.steps.map((step, i) => (
-                    <div key={i} className="p-3.5 rounded-xl bg-white dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 text-xs text-slate-800 dark:text-slate-300 font-mono whitespace-pre-wrap leading-relaxed">
+                    <div key={i} className="p-3.5 rounded-xl bg-white dark:bg-slate-900/80 border border-[#AAAAAA]/30 dark:border-white/[0.08] text-xs text-slate-800 dark:text-slate-300 font-mono whitespace-pre-wrap leading-relaxed">
                       {step}
                     </div>
                   ))}
@@ -453,14 +453,14 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
               {/* Key Formulas */}
-              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 space-y-3">
-                <h5 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-[#AAAAAA]/30 dark:border-white/[0.08] space-y-3">
+                <h5 className="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-[#007AFF]" />
                   <span>Important Formulas & Recurrences</span>
                 </h5>
                 <div className="space-y-2 font-mono text-xs">
                   {note.formulasAndRules.map((f, i) => (
-                    <div key={i} className="p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300">
+                    <div key={i} className="p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-[#AAAAAA]/30 dark:border-white/[0.08] text-slate-800 dark:text-slate-300">
                       {f}
                     </div>
                   ))}
@@ -468,12 +468,12 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
               </div>
 
               {/* Examiner's Tips */}
-              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 space-y-3">
-                <h5 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-[#AAAAAA]/30 dark:border-white/[0.08] space-y-3">
+                <h5 className="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2">
                   <Award className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <span>Examiner's Scoring Strategy</span>
                 </h5>
-                <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
+                <ul className="space-y-2 text-xs text-[#1D1D1F]/80 dark:text-[#AAAAAA]">
                   {note.universityExamTips.map((tip, i) => (
                     <li key={i} className="flex items-start gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 mt-1.5" />
@@ -489,7 +489,7 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
           {/* 5. Lab Viva Questions */}
           {(activeTab === 'all' || activeTab === 'viva') && (
             <div className="space-y-4">
-              <h4 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 font-display">
+              <h4 className="text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2 font-display">
                 <HelpCircle className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                 <span>Lab Viva & Technical Interview Questions</span>
               </h4>
@@ -498,13 +498,13 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
                 {note.vivaQuestions.map((viva, idx) => (
                   <div
                     key={idx}
-                    className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 space-y-2"
+                    className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-[#AAAAAA]/30 dark:border-white/[0.08] space-y-2"
                   >
                     <div className="flex items-start gap-2 text-xs font-bold text-purple-700 dark:text-purple-300">
                       <span className="font-mono">Q{idx + 1}:</span>
                       <span>{viva.q}</span>
                     </div>
-                    <p className="text-xs text-slate-700 dark:text-slate-300 pl-6 leading-relaxed">
+                    <p className="text-xs text-[#1D1D1F]/80 dark:text-[#AAAAAA] pl-6 leading-relaxed">
                       <strong>Answer: </strong>{viva.a}
                     </p>
                   </div>
@@ -514,9 +514,9 @@ ${note.vivaQuestions.map(v => `Q: ${v.q}\nA: ${v.a}`).join('\n\n')}
           )}
 
           {/* Recommended Standard Books */}
-          <div className="p-5 rounded-2xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+          <div className="p-5 rounded-2xl bg-slate-100 dark:bg-slate-800/50 border border-[#AAAAAA]/30 dark:border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
             <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
-              <GraduationCap className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
+              <GraduationCap className="w-4 h-4 text-[#007AFF] shrink-0" />
               <span>Recommended Standard Reference Books: <strong>{note.standardBooks.join(' • ')}</strong></span>
             </div>
           </div>

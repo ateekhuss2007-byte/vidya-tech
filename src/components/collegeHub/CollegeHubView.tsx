@@ -89,30 +89,30 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
       />
 
       {/* Header Banner */}
-      <div className="rounded-2xl p-6 sm:p-8 bg-[#0D1117] border border-[#30363D] mb-8 relative overflow-hidden shadow-xl">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#00F59B]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+      <div className="rounded-2xl p-6 sm:p-8 bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] mb-8 relative overflow-hidden shadow-xl">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#007AFF]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 text-xs font-bold mb-2">
-              <GraduationCap className="w-3.5 h-3.5 text-[#00F59B]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30 text-xs font-bold mb-2">
+              <GraduationCap className="w-3.5 h-3.5 text-[#007AFF]" />
               <span>Pan-India Technical University Academic Intelligence Hub</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-[#F0F6FC]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight leading-tight">
               B.Tech & Technical University Engine
             </h1>
-            <p className="text-xs sm:text-sm text-[#8B949E] mt-1">
+            <p className="text-sm sm:text-base text-[#1D1D1F]/70 dark:text-[#AAAAAA] mt-2 max-w-3xl leading-relaxed font-sans">
               Curricula across 35 institutions (MAKAUT, AKTU, VTU, Anna Univ, JNTU, IITs, NITs), topic-accredited teachers, official blueprints, and recurring PYQs.
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full sm:w-auto p-1.5 rounded-2xl bg-[#161B22] border border-[#30363D]">
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full sm:w-auto p-1.5 rounded-2xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08]">
             <button
               onClick={() => setActiveTabLocal('semesterAnalyzer')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'semesterAnalyzer'
-                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
-                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
+                  ? 'bg-[#007AFF] text-white shadow-sm'
+                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               <GraduationCap className="w-3.5 h-3.5" />
@@ -122,8 +122,8 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               onClick={() => setActiveTabLocal('facultyFinder')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'facultyFinder'
-                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
-                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
+                  ? 'bg-[#007AFF] text-white shadow-sm'
+                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               <Users className="w-3.5 h-3.5" />
@@ -133,8 +133,8 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               onClick={() => setActiveTabLocal('blueprint')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'blueprint'
-                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
-                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
+                  ? 'bg-[#007AFF] text-white shadow-sm'
+                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               <FileCheck className="w-3.5 h-3.5" />
@@ -144,8 +144,8 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               onClick={() => setActiveTabLocal('pyqVault')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'pyqVault'
-                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
-                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
+                  ? 'bg-[#007AFF] text-white shadow-sm'
+                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               <Flame className="w-3.5 h-3.5" />
@@ -155,8 +155,8 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               onClick={() => setActiveTabLocal('deepDive')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'deepDive'
-                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
-                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
+                  ? 'bg-[#007AFF] text-white shadow-sm'
+                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               <Sparkles className="w-3.5 h-3.5" />
@@ -166,8 +166,8 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               onClick={() => setActiveTabLocal('materials')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'materials'
-                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
-                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
+                  ? 'bg-[#007AFF] text-white shadow-sm'
+                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               📚 Subject Materials
@@ -176,8 +176,8 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               onClick={() => setActiveTabLocal('viva')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'viva'
-                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
-                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
+                  ? 'bg-[#007AFF] text-white shadow-sm'
+                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               🎤 Lab Viva Trainer
@@ -186,8 +186,8 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               onClick={() => setActiveTabLocal('pyq')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'pyq'
-                  ? 'bg-[#00F59B] text-[#07090D] shadow-sm'
-                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
+                  ? 'bg-[#007AFF] text-white shadow-sm'
+                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               🔥 PYQ Heatmap
@@ -197,7 +197,7 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'cram'
                   ? 'bg-rose-500 text-white shadow-sm'
-                  : 'text-[#8B949E] hover:text-[#F0F6FC]'
+                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               ⚡ 1-Night Emergency

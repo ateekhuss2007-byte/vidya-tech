@@ -38,7 +38,7 @@ export const PublicApiHub = () => {
       {/* Friendly Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 border border-[#00F59B]/30 text-[#00F59B] text-xs font-bold mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/10 border border-[#007AFF]/30 text-[#007AFF] text-xs font-bold mb-2">
             <Globe className="w-3.5 h-3.5" />
             <span>Open Academic Library</span>
           </div>
@@ -52,7 +52,7 @@ export const PublicApiHub = () => {
       </div>
 
       {/* Clean Search & Filters */}
-      <div className="p-4 rounded-2xl bg-white dark:bg-[#0D1117] border border-slate-200/80 dark:border-[#30363D] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="p-4 rounded-2xl bg-white dark:bg-white dark:bg-[#1D1D1F] border border-slate-200/80 dark:border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         
         <div className="relative w-full md:w-80">
           <Search className="w-4 h-4 text-slate-400 dark:text-[#8B949E] absolute left-3 top-1/2 -translate-y-1/2" />
@@ -61,7 +61,7 @@ export const PublicApiHub = () => {
             placeholder="Search papers, textbooks, code..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-xs rounded-xl bg-slate-50 dark:bg-[#161B22] border border-slate-200 dark:border-[#30363D] text-slate-800 dark:text-[#F0F6FC] placeholder:text-[#8B949E] focus:outline-none focus:border-[#00F59B] focus:ring-1 focus:ring-[#00F59B]"
+            className="w-full pl-9 pr-4 py-2 text-xs rounded-xl bg-slate-50 dark:bg-[#F5F5F7] dark:bg-white/[0.04] border border-slate-200 dark:border-[#AAAAAA]/30 dark:border-white/[0.08] text-slate-800 dark:text-[#F0F6FC] placeholder:text-[#8B949E] focus:outline-none focus:border-[#007AFF] focus:ring-1 focus:ring-[#007AFF]"
           />
         </div>
 
@@ -72,8 +72,8 @@ export const PublicApiHub = () => {
               onClick={() => setActiveFilter(src)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
                 activeFilter === src
-                  ? 'bg-[#00F59B] text-[#07090D] font-bold shadow-sm'
-                  : 'bg-slate-100 dark:bg-[#161B22] text-slate-600 dark:text-[#8B949E] hover:bg-slate-200 dark:hover:bg-[#21262D]'
+                  ? 'bg-[#007AFF] text-white font-bold shadow-sm'
+                  : 'bg-slate-100 dark:bg-[#F5F5F7] dark:bg-white/[0.04] text-slate-600 dark:text-[#8B949E] hover:bg-slate-200 dark:hover:bg-[#F5F5F7] dark:bg-white/[0.06]'
               }`}
             >
               {src}
@@ -91,19 +91,19 @@ export const PublicApiHub = () => {
           return (
             <div
               key={res.id}
-              className="p-6 rounded-2xl bg-white dark:bg-[#0D1117] border border-slate-200/80 dark:border-[#30363D] shadow-sm flex flex-col justify-between hover:border-[#00F59B] transition-all group"
+              className="p-6 rounded-2xl bg-white dark:bg-white dark:bg-[#1D1D1F] border border-slate-200/80 dark:border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm flex flex-col justify-between hover:border-[#007AFF] transition-all group"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono bg-slate-100 dark:bg-[#161B22] text-slate-700 dark:text-[#8B949E] border border-[#30363D]">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono bg-slate-100 dark:bg-[#F5F5F7] dark:bg-white/[0.04] text-slate-700 dark:text-[#8B949E] border border-[#AAAAAA]/30 dark:border-white/[0.08]">
                     {res.source}
                   </span>
-                  <span className="text-xs font-semibold text-[#00F59B] font-mono">
+                  <span className="text-xs font-semibold text-[#007AFF] font-mono">
                     {res.relevance}
                   </span>
                 </div>
 
-                <h3 className="font-bold text-base font-display text-slate-900 dark:text-[#F0F6FC] mb-2 group-hover:text-[#00F59B] transition-colors">
+                <h3 className="font-bold text-base font-display text-slate-900 dark:text-[#F0F6FC] mb-2 group-hover:text-[#007AFF] transition-colors">
                   {res.title}
                 </h3>
 
@@ -119,7 +119,7 @@ export const PublicApiHub = () => {
                     href={res.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2 rounded-xl text-slate-400 dark:text-[#8B949E] hover:text-slate-700 dark:hover:text-[#F0F6FC] hover:bg-slate-100 dark:hover:bg-[#161B22] transition-colors"
+                    className="p-2 rounded-xl text-slate-400 dark:text-[#8B949E] hover:text-slate-700 dark:hover:text-[#F0F6FC] hover:bg-slate-100 dark:hover:bg-[#F5F5F7] dark:bg-white/[0.04] transition-colors"
                   >
                     <ExternalLink className="w-4 h-4" />
                   </a>
@@ -127,8 +127,8 @@ export const PublicApiHub = () => {
                     onClick={() => handleSave(res)}
                     className={`px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
                       isSaved
-                        ? 'bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30'
-                        : 'bg-[#00F59B] hover:bg-[#5EFCC2] text-[#07090D] shadow-sm'
+                        ? 'bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30'
+                        : 'bg-[#007AFF] hover:bg-[#5EFCC2] text-white shadow-sm'
                     }`}
                   >
                     {isSaved ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}

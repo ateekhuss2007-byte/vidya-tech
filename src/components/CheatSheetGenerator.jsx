@@ -119,7 +119,7 @@ export const CheatSheetGenerator = () => {
         <style>
           @page { size: A4; margin: 15mm; }
           body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #111; line-height: 1.4; padding: 10px; }
-          .header { text-align: center; border-bottom: 2px solid #00F59B; padding-bottom: 8px; margin-bottom: 12px; }
+          .header { text-align: center; border-bottom: 2px solid #007AFF; padding-bottom: 8px; margin-bottom: 12px; }
           .title { font-size: 18px; font-weight: bold; margin: 0; color: #0a0a0a; }
           .category { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; margin-top: 2px; }
           .grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
@@ -169,8 +169,8 @@ export const CheatSheetGenerator = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30 text-xs font-mono font-bold mb-2 shadow-glow-green">
-            <FileText className="w-3.5 h-3.5 text-[#00F59B]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30 text-xs font-mono font-bold mb-2 shadow-md shadow-[#007AFF]/25">
+            <FileText className="w-3.5 h-3.5 text-[#007AFF]" />
             <span>High-Yield 1-Page Formula & Revision Sheets</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-white">
@@ -183,7 +183,7 @@ export const CheatSheetGenerator = () => {
 
         <button
           onClick={handlePrintPDF}
-          className="px-5 py-2.5 rounded-xl bg-[#00F59B] hover:bg-[#1AFFB2] text-[#07090D] font-bold text-xs shadow-glow-green flex items-center gap-2 cursor-pointer transition-all"
+          className="px-5 py-2.5 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white font-bold text-xs shadow-md shadow-[#007AFF]/25 flex items-center gap-2 cursor-pointer transition-all"
         >
           <Printer className="w-4 h-4" />
           <span>Download Printable PDF</span>
@@ -191,15 +191,15 @@ export const CheatSheetGenerator = () => {
       </div>
 
       {/* Sheet Tabs */}
-      <div className="p-2 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm flex flex-wrap gap-2">
+      <div className="p-2 rounded-2xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm flex flex-wrap gap-2">
         {cheatSheetsData.map((sheet) => (
           <button
             key={sheet.id}
             onClick={() => setSelectedSheetId(sheet.id)}
             className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               selectedSheetId === sheet.id
-                ? 'bg-[#00F59B] text-[#07090D] shadow-glow-green scale-[1.02]'
-                : 'text-neutral-400 hover:text-white hover:bg-[#161B22]'
+                ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25 scale-[1.02]'
+                : 'text-neutral-400 hover:text-white hover:bg-[#F5F5F7] dark:bg-white/[0.04]'
             }`}
           >
             {sheet.title.split(':')[0]}
@@ -208,19 +208,19 @@ export const CheatSheetGenerator = () => {
       </div>
 
       {/* Active Cheat Sheet Card */}
-      <div className="p-6 sm:p-7 rounded-2xl bg-[#0D1117] border border-[#30363D] shadow-sm space-y-6">
+      <div className="p-6 sm:p-7 rounded-2xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm space-y-6">
         
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
           <div>
-            <div className="text-[11px] font-mono text-[#00F59B] font-bold uppercase">{activeSheet.category}</div>
+            <div className="text-[11px] font-mono text-[#007AFF] font-bold uppercase">{activeSheet.category}</div>
             <h2 className="text-base sm:text-lg font-bold text-white font-display mt-0.5">{activeSheet.title}</h2>
           </div>
 
           <button
             onClick={handlePrintPDF}
-            className="px-4 py-2 rounded-xl bg-[#161B22] hover:bg-[#21262D] text-white border border-[#30363D] hover:border-[#00F59B]/40 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] hover:bg-[#F5F5F7] dark:bg-white/[0.06] text-white border border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF]/40 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
           >
-            <Download className="w-3.5 h-3.5 text-[#00F59B]" />
+            <Download className="w-3.5 h-3.5 text-[#007AFF]" />
             <span>Export 1-Page PDF</span>
           </button>
         </div>
@@ -229,19 +229,19 @@ export const CheatSheetGenerator = () => {
           {activeSheet.sections.map((sec, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-xl bg-[#161B22] border border-[#30363D] space-y-3 relative group"
+              className="p-5 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] space-y-3 relative group"
             >
               <div className="flex items-center justify-between">
                 <h3 className="font-bold text-xs sm:text-sm text-white font-mono flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#00F59B]"></span>
+                  <span className="w-2 h-2 rounded-full bg-[#007AFF]"></span>
                   <span>{sec.heading}</span>
                 </h3>
 
                 <button
                   onClick={() => handleCopy(sec.content, idx)}
-                  className="p-1.5 rounded-lg bg-[#0D1117] border border-[#30363D] text-neutral-400 hover:text-[#00F59B] transition-all text-xs flex items-center gap-1 cursor-pointer"
+                  className="p-1.5 rounded-lg bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-neutral-400 hover:text-[#007AFF] transition-all text-xs flex items-center gap-1 cursor-pointer"
                 >
-                  {copiedSection === idx ? <Check className="w-3 h-3 text-[#00F59B]" /> : <Copy className="w-3 h-3" />}
+                  {copiedSection === idx ? <Check className="w-3 h-3 text-[#007AFF]" /> : <Copy className="w-3 h-3" />}
                   <span className="text-[10px]">{copiedSection === idx ? 'Copied' : 'Copy'}</span>
                 </button>
               </div>

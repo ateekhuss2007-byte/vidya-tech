@@ -11,6 +11,7 @@ import {
   VerificationStatus, 
   AcademicVersionIdentifier, 
   VerifiedPreviousYearQuestion,
+  QuestionPaper,
   VerifiedUniversityRecord,
   VerifiedSyllabusCourse,
   VerifiedUniversityCurriculum
@@ -128,7 +129,7 @@ export const validateAcademicVersion = (version: AcademicVersionIdentifier): Val
 };
 
 /**
- * Validates a Previous Year Question (PYQ) record
+ * Validates a Previous Year Question (PYQ) record (Prompt 4 Compliant)
  */
 export const validatePYQRecord = (pyq: Partial<VerifiedPreviousYearQuestion>): ValidationResult => {
   const errors: string[] = [];
@@ -136,21 +137,35 @@ export const validatePYQRecord = (pyq: Partial<VerifiedPreviousYearQuestion>): V
 
   if (!pyq.id) errors.push('PYQ id is missing');
   if (!pyq.universityId) errors.push('PYQ universityId is missing');
+  if (!pyq.courseCode) errors.push('PYQ courseCode is missing');
+  if (!pyq.paperId) errors.push('PYQ paperId is missing');
+  if (!pyq.questionNumber) errors.push('PYQ questionNumber is missing');
+
   if (!pyq.questionText || pyq.questionText.trim().length < 5) {
     errors.push('PYQ questionText is missing or too short to be authentic');
   }
-  if (!pyq.examYear) {
-    errors.push('PYQ examYear is missing');
-  } else {
-    const yearNum = parseInt(pyq.examYear, 10);
-    if (isNaN(yearNum) || yearNum < 1990 || yearNum > 2030) {
-      errors.push(`Impossible examYear: '${pyq.examYear}'`);
+
+  const year = pyq.examinationYear ?? (pyq.examYear ? parseInt(pyq.examYear, 10) : null);
+  if (year !== null) {
+    if (isNaN(year) || year < 1990 || year > 2030) {
+      errors.push(`Impossible examinationYear: '${year}'`);
+    }
+  } else if (pyq.source?.verificationStatus === 'VERIFIED') {
+    errors.push('VERIFIED PYQ must have an authentic examinationYear');
+  }
+
+  if (pyq.marks !== null && pyq.marks !== undefined) {
+    if (pyq.marks <= 0 || pyq.marks > 100) {
+      errors.push(`Invalid marks allocation: ${pyq.marks}`);
     }
   }
 
-  if (pyq.marks !== undefined) {
-    if (pyq.marks <= 0 || pyq.marks > 100) {
-      errors.push(`Invalid marks allocation: ${pyq.marks}`);
+  // Topic mapping validation
+  if (!pyq.topicMapping) {
+    errors.push('PYQ topicMapping is missing');
+  } else {
+    if (!['EXPLICIT', 'AI_DERIVED', 'UNCERTAIN'].includes(pyq.topicMapping.mappingType)) {
+      errors.push(`Invalid topic mappingType: '${pyq.topicMapping.mappingType}'`);
     }
   }
 
@@ -159,13 +174,135 @@ export const validatePYQRecord = (pyq: Partial<VerifiedPreviousYearQuestion>): V
   errors.push(...sourceValidation.errors);
   warnings.push(...sourceValidation.warnings);
 
-  // If marked VERIFIED, it must be supported by an authentic paper
-  if (pyq.source?.verificationStatus === 'VERIFIED' && !pyq.isVerbatimArchiveScan) {
-    warnings.push('PYQ marked VERIFIED but isVerbatimArchiveScan is false (may be model reconstruction)');
+  // If marked VERIFIED, it must be supported by an authentic source URL
+  if (pyq.source?.verificationStatus === 'VERIFIED') {
+    if (!pyq.source.sourceUrl || !pyq.source.sourceUrl.startsWith('http')) {
+      errors.push('VERIFIED PYQ must have a valid official sourceUrl');
+    }
   }
 
   return {
     isValid: errors.length === 0,
+    errors,
+    warnings
+  };
+};
+
+/**
+ * Validates a QuestionPaper record (Prompt 4 Section 10)
+ */
+export const validateQuestionPaper = (paper: Partial<QuestionPaper>): ValidationResult => {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+
+  if (!paper.id) errors.push('QuestionPaper id is missing');
+  if (!paper.universityId) errors.push('QuestionPaper universityId is missing');
+  if (!paper.courseCode) errors.push('QuestionPaper courseCode is missing');
+
+  if (paper.status === 'NOT_AVAILABLE') {
+    // Explicit unavailable record
+    return { isValid: true, errors: [], warnings: [] };
+  }
+
+  const year = paper.examinationYear;
+  if (year !== null && year !== undefined) {
+    if (isNaN(year) || year < 1990 || year > 2030) {
+      errors.push(`Impossible examinationYear on paper: '${year}'`);
+    }
+  }
+
+  const sourceValidation = validateSourceMetadata(paper.source);
+  errors.push(...sourceValidation.errors);
+  warnings.push(...sourceValidation.warnings);
+
+  if (paper.source?.verificationStatus === 'VERIFIED') {
+    if (!paper.source.sourceUrl || !paper.source.sourceUrl.startsWith('http')) {
+      errors.push(`QuestionPaper ${paper.id} is marked VERIFIED but lacks a valid sourceUrl`);
+    }
+    if (!paper.questions || paper.questions.length === 0) {
+      warnings.push(`QuestionPaper ${paper.id} has 0 linked questions`);
+    }
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+    warnings
+  };
+};
+
+/**
+ * Validates the entire official PYQ registry
+ */
+export const validatePyqRegistry = (
+  papers: QuestionPaper[],
+  questions: VerifiedPreviousYearQuestion[]
+): {
+  isValid: boolean;
+  totalPapers: number;
+  totalQuestions: number;
+  verifiedPapersCount: number;
+  unavailableCount: number;
+  errors: { id: string; errors: string[] }[];
+  warnings: { id: string; warnings: string[] }[];
+} => {
+  const errors: { id: string; errors: string[] }[] = [];
+  const warnings: { id: string; warnings: string[] }[] = [];
+  let verifiedPapersCount = 0;
+  let unavailableCount = 0;
+
+  const paperIds = new Set<string>();
+  const questionIds = new Set<string>();
+
+  // Validate Papers
+  for (const paper of papers) {
+    if (paperIds.has(paper.id)) {
+      errors.push({ id: paper.id, errors: [`Duplicate paper id: ${paper.id}`] });
+    }
+    paperIds.add(paper.id);
+
+    if (paper.status === 'NOT_AVAILABLE') {
+      unavailableCount++;
+    } else if (paper.source?.verificationStatus === 'VERIFIED') {
+      verifiedPapersCount++;
+    }
+
+    const res = validateQuestionPaper(paper);
+    if (!res.isValid) {
+      errors.push({ id: paper.id, errors: res.errors });
+    }
+    if (res.warnings.length > 0) {
+      warnings.push({ id: paper.id, warnings: res.warnings });
+    }
+  }
+
+  // Validate Questions
+  for (const q of questions) {
+    if (questionIds.has(q.id)) {
+      errors.push({ id: q.id, errors: [`Duplicate question id: ${q.id}`] });
+    }
+    questionIds.add(q.id);
+
+    // Linkage check
+    if (!paperIds.has(q.paperId)) {
+      errors.push({ id: q.id, errors: [`Orphan question: paperId '${q.paperId}' does not exist in papers`] });
+    }
+
+    const res = validatePYQRecord(q);
+    if (!res.isValid) {
+      errors.push({ id: q.id, errors: res.errors });
+    }
+    if (res.warnings.length > 0) {
+      warnings.push({ id: q.id, warnings: res.warnings });
+    }
+  }
+
+  return {
+    isValid: errors.length === 0,
+    totalPapers: papers.length,
+    totalQuestions: questions.length,
+    verifiedPapersCount,
+    unavailableCount,
     errors,
     warnings
   };
@@ -407,7 +544,15 @@ export const validateSyllabusCourse = (course: VerifiedSyllabusCourse): Validati
     if (!srcRes.isValid) {
       errors.push(...srcRes.errors);
     }
-    if (course.verificationStatus === 'VERIFIED' && course.source.sourceType !== 'OFFICIAL_UNIVERSITY') {
+    const isAuthoritativeSource = 
+      course.source.sourceType === 'OFFICIAL_UNIVERSITY' ||
+      course.source.sourceType === 'OFFICIAL_GOVERNMENT' ||
+      course.source.sourceType === 'OFFICIAL_DEPARTMENT' ||
+      course.source.sourceType === 'OFFICIAL_EXAM_PORTAL' ||
+      course.source.sourceType === 'OFFICIAL_PDF' ||
+      course.source.sourceType === 'OFFICIAL_INSTITUTIONAL_REPOSITORY';
+
+    if (course.verificationStatus === 'VERIFIED' && !isAuthoritativeSource) {
       warnings.push(`Course ${course.courseCode} is marked VERIFIED but sourceType is '${course.source.sourceType}'`);
     }
   }

@@ -55,13 +55,13 @@ export const TopHeader = ({ activeTab, setActiveTab, setMobileOpen, user }) => {
   };
 
   return (
-    <header className="sticky top-0 z-30 h-16 w-full bg-[#07090D]/90 backdrop-blur-md border-b border-[#30363D] px-4 sm:px-8 flex items-center justify-between gap-4 transition-colors">
+    <header className="sticky top-0 z-30 h-16 w-full bg-[#07090D]/90 backdrop-blur-md border-b border-[#AAAAAA]/30 dark:border-white/[0.08] px-4 sm:px-8 flex items-center justify-between gap-4 transition-colors">
       
       {/* 1. Left: Mobile Menu Toggle + Breadcrumbs Title */}
       <div className="flex items-center gap-3 min-w-0">
         <button
           onClick={() => setMobileOpen(true)}
-          className="lg:hidden p-2 rounded-xl text-neutral-400 hover:text-white hover:bg-[#161B22] focus:outline-none"
+          className="lg:hidden p-2 rounded-xl text-neutral-400 hover:text-white hover:bg-[#F5F5F7] dark:bg-white/[0.04] focus:outline-none"
         >
           <Menu className="w-5 h-5" />
         </button>
@@ -79,11 +79,11 @@ export const TopHeader = ({ activeTab, setActiveTab, setMobileOpen, user }) => {
       {/* 2. Center: Minimal AI Search Capsule (⌘K) */}
       <button
         onClick={() => setActiveTab('doubtSolver')}
-        className="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[#0D1117] border border-[#30363D] text-xs text-neutral-400 hover:border-[#00F59B]/50 hover:text-white transition-all cursor-pointer"
+        className="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-xs text-neutral-400 hover:border-[#007AFF]/50 hover:text-white transition-all cursor-pointer"
       >
-        <Search className="w-3.5 h-3.5 text-[#00F59B]" />
+        <Search className="w-3.5 h-3.5 text-[#007AFF]" />
         <span>Ask AI or search topic...</span>
-        <kbd className="px-1.5 py-0.5 rounded bg-[#161B22] border border-[#30363D] text-[10px] font-mono text-neutral-400">
+        <kbd className="px-1.5 py-0.5 rounded bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-[10px] font-mono text-neutral-400">
           ⌘K
         </kbd>
       </button>
@@ -92,15 +92,15 @@ export const TopHeader = ({ activeTab, setActiveTab, setMobileOpen, user }) => {
       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         
         {/* Streak Pill */}
-        <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0D1117] border border-[#30363D] text-xs font-mono font-bold text-neutral-300">
-          <Flame className="w-3.5 h-3.5 text-[#00F59B]" />
+        <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-xs font-mono font-bold text-neutral-300">
+          <Flame className="w-3.5 h-3.5 text-[#007AFF]" />
           <span>{user?.currentStreak || 14}d Streak</span>
         </div>
 
         {/* 1-Click Exam Target Switcher Pill */}
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
-            <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0D1117] hover:bg-[#161B22] text-xs font-bold text-white border border-[#30363D] hover:border-[#00F59B]/40 transition-all cursor-pointer">
+            <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#1D1D1F] hover:bg-[#F5F5F7] dark:bg-white/[0.04] text-xs font-bold text-white border border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF]/40 transition-all cursor-pointer">
               <span>{currentCourse.boardLogo}</span>
               <span className="hidden sm:inline truncate max-w-[120px]">{currentCourse.name.split('(')[0]}</span>
               <ChevronDown className="w-3.5 h-3.5 text-neutral-400" />
@@ -111,7 +111,7 @@ export const TopHeader = ({ activeTab, setActiveTab, setMobileOpen, user }) => {
             <DropdownMenu.Content
               side="bottom"
               align="end"
-              className="z-50 min-w-[240px] p-1.5 rounded-2xl bg-[#161B22] border border-[#30363D] shadow-2xl text-xs space-y-1 animate-scale-in"
+              className="z-50 min-w-[240px] p-1.5 rounded-2xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-2xl text-xs space-y-1 animate-scale-in"
             >
               <div className="px-3 py-2 border-b border-white/10 text-[10px] font-mono text-neutral-400 font-bold uppercase">
                 Active Curriculum Target
@@ -122,7 +122,7 @@ export const TopHeader = ({ activeTab, setActiveTab, setMobileOpen, user }) => {
                   onClick={() => handleSelectStream(course)}
                   className={`px-3 py-2 rounded-xl flex items-center justify-between cursor-pointer ${
                     selectedExamId === course.id
-                      ? 'bg-[#00F59B]/15 text-[#00F59B] font-bold border border-[#00F59B]/30'
+                      ? 'bg-[#007AFF]/15 text-[#007AFF] font-bold border border-[#007AFF]/30'
                       : 'text-neutral-300 hover:text-white hover:bg-white/5'
                   }`}
                 >
@@ -130,7 +130,7 @@ export const TopHeader = ({ activeTab, setActiveTab, setMobileOpen, user }) => {
                     <span>{course.boardLogo}</span>
                     <span>{course.name}</span>
                   </div>
-                  {selectedExamId === course.id && <CheckCircle2 className="w-3.5 h-3.5 text-[#00F59B]" />}
+                  {selectedExamId === course.id && <CheckCircle2 className="w-3.5 h-3.5 text-[#007AFF]" />}
                 </DropdownMenu.Item>
               ))}
             </DropdownMenu.Content>

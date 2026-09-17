@@ -49,7 +49,7 @@ export const ConceptGraph = () => {
   const getStatusBadge = (status) => {
     switch (status) {
       case 'mastered':
-        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30">✅ Mastered</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30">✅ Mastered</span>;
       case 'learning':
         return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/30">⏳ In Progress</span>;
       case 'at_risk':
@@ -57,7 +57,7 @@ export const ConceptGraph = () => {
       case 'blocking':
         return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/30 animate-pulse">🚫 Prerequisite Blocker</span>;
       case 'recommended':
-        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#00F59B]/10 text-[#00F59B] border border-[#00F59B]/30">⭐ Up Next</span>;
+        return <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30">⭐ Up Next</span>;
       default:
         return null;
     }
@@ -69,7 +69,7 @@ export const ConceptGraph = () => {
       {/* Friendly Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F59B]/10 border border-[#00F59B]/30 text-[#00F59B] text-xs font-bold mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/10 border border-[#007AFF]/30 text-[#007AFF] text-xs font-bold mb-2">
             <Network className="w-3.5 h-3.5" />
             <span>Interactive Study Roadmap</span>
           </div>
@@ -93,7 +93,7 @@ export const ConceptGraph = () => {
       </div>
 
       {/* Filter & Search Bar */}
-      <div className="p-4 rounded-2xl bg-white dark:bg-[#0D1117] border border-slate-200/80 dark:border-[#30363D] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="p-4 rounded-2xl bg-white dark:bg-white dark:bg-[#1D1D1F] border border-slate-200/80 dark:border-[#AAAAAA]/30 dark:border-white/[0.08] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         
         {/* Category Pills */}
         <div className="flex flex-wrap items-center gap-1.5">
@@ -103,8 +103,8 @@ export const ConceptGraph = () => {
               onClick={() => setActiveCategory(cat)}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
                 activeCategory === cat
-                  ? 'bg-[#00F59B] text-[#07090D] font-bold shadow-sm'
-                  : 'bg-slate-100 dark:bg-[#161B22] text-slate-600 dark:text-[#8B949E] hover:bg-slate-200 dark:hover:bg-[#21262D]'
+                  ? 'bg-[#007AFF] text-white font-bold shadow-sm'
+                  : 'bg-slate-100 dark:bg-[#F5F5F7] dark:bg-white/[0.04] text-slate-600 dark:text-[#8B949E] hover:bg-slate-200 dark:hover:bg-[#F5F5F7] dark:bg-white/[0.06]'
               }`}
             >
               {cat}
@@ -120,7 +120,7 @@ export const ConceptGraph = () => {
             placeholder="Search any chapter or topic..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-xs rounded-xl bg-slate-50 dark:bg-[#161B22] border border-slate-200 dark:border-[#30363D] text-slate-800 dark:text-[#F0F6FC] placeholder:text-slate-400 dark:placeholder:text-[#8B949E] focus:outline-none focus:border-[#00F59B] focus:ring-1 focus:ring-[#00F59B]"
+            className="w-full pl-9 pr-4 py-2 text-xs rounded-xl bg-slate-50 dark:bg-[#F5F5F7] dark:bg-white/[0.04] border border-slate-200 dark:border-[#AAAAAA]/30 dark:border-white/[0.08] text-slate-800 dark:text-[#F0F6FC] placeholder:text-slate-400 dark:placeholder:text-[#8B949E] focus:outline-none focus:border-[#007AFF] focus:ring-1 focus:ring-[#007AFF]"
           />
         </div>
 
@@ -136,10 +136,10 @@ export const ConceptGraph = () => {
               key={node.id}
               whileHover={{ y: -3 }}
               onClick={() => setSelectedNode(node)}
-              className={`p-5 rounded-2xl bg-white dark:bg-[#0D1117] border cursor-pointer transition-all shadow-sm flex flex-col justify-between ${
+              className={`p-5 rounded-2xl bg-white dark:bg-white dark:bg-[#1D1D1F] border cursor-pointer transition-all shadow-sm flex flex-col justify-between ${
                 isHighlighted 
                   ? 'border-rose-500 ring-2 ring-rose-500/30' 
-                  : 'border-slate-200/80 dark:border-[#30363D] hover:border-[#00F59B]'
+                  : 'border-slate-200/80 dark:border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF]'
               }`}
             >
               <div>
@@ -152,10 +152,10 @@ export const ConceptGraph = () => {
                   {node.name}
                 </h3>
 
-                <div className="w-full bg-slate-100 dark:bg-[#161B22] h-1.5 rounded-full overflow-hidden my-3">
+                <div className="w-full bg-slate-100 dark:bg-[#F5F5F7] dark:bg-white/[0.04] h-1.5 rounded-full overflow-hidden my-3">
                   <div 
                     className={`h-full rounded-full ${
-                      node.mastery > 80 ? 'bg-[#00F59B]' : node.mastery > 50 ? 'bg-sky-400' : 'bg-amber-400'
+                      node.mastery > 80 ? 'bg-[#007AFF]' : node.mastery > 50 ? 'bg-sky-400' : 'bg-amber-400'
                     }`}
                     style={{ width: `${node.mastery}%` }}
                   ></div>
@@ -163,8 +163,8 @@ export const ConceptGraph = () => {
               </div>
 
               <div className="flex items-center justify-between text-xs text-slate-400 dark:text-[#8B949E] pt-3 border-t border-slate-100 dark:border-[#21262D]">
-                <span>Mastery: <strong className="text-slate-700 dark:text-[#00F59B] font-mono">{node.mastery}%</strong></span>
-                <span className="text-[#00F59B] font-semibold">View Details →</span>
+                <span>Mastery: <strong className="text-slate-700 dark:text-[#007AFF] font-mono">{node.mastery}%</strong></span>
+                <span className="text-[#007AFF] font-semibold">View Details →</span>
               </div>
             </motion.div>
           );
@@ -175,10 +175,10 @@ export const ConceptGraph = () => {
       <Dialog.Root open={!!selectedNode} onOpenChange={(open) => !open && setSelectedNode(null)}>
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm animate-fade-in" />
-          <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md rounded-2xl bg-white dark:bg-[#0D1117] border border-slate-200 dark:border-[#30363D] p-6 sm:p-8 shadow-2xl animate-fade-in">
+          <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md rounded-2xl bg-white dark:bg-white dark:bg-[#1D1D1F] border border-slate-200 dark:border-[#AAAAAA]/30 dark:border-white/[0.08] p-6 sm:p-8 shadow-2xl animate-fade-in">
             {selectedNode && (
               <div>
-                <div className="flex items-start justify-between pb-3 border-b border-slate-100 dark:border-[#30363D]">
+                <div className="flex items-start justify-between pb-3 border-b border-slate-100 dark:border-[#AAAAAA]/30 dark:border-white/[0.08]">
                   <div>
                     <div className="text-xs font-mono text-slate-400 dark:text-[#8B949E] mb-1">{selectedNode.domain}</div>
                     <Dialog.Title className="text-lg font-bold font-display text-slate-900 dark:text-[#F0F6FC]">
@@ -193,13 +193,13 @@ export const ConceptGraph = () => {
                 </div>
 
                 <div className="my-5 space-y-4 text-xs">
-                  <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-[#161B22] border border-slate-100 dark:border-[#30363D]">
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-[#F5F5F7] dark:bg-white/[0.04] border border-slate-100 dark:border-[#AAAAAA]/30 dark:border-white/[0.08]">
                     <span className="text-slate-500 dark:text-[#8B949E]">Mastery Score</span>
-                    <span className="font-bold text-sm text-slate-900 dark:text-[#00F59B] font-mono">{selectedNode.mastery}%</span>
+                    <span className="font-bold text-sm text-slate-900 dark:text-[#007AFF] font-mono">{selectedNode.mastery}%</span>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-emerald-50 dark:bg-[#00F59B]/5 border border-emerald-100 dark:border-[#00F59B]/20 text-slate-700 dark:text-[#F0F6FC]">
-                    <div className="font-bold text-emerald-900 dark:text-[#00F59B] mb-1 font-display">
+                  <div className="p-4 rounded-xl bg-emerald-50 dark:bg-[#007AFF]/5 border border-emerald-100 dark:border-[#007AFF]/20 text-slate-700 dark:text-[#F0F6FC]">
+                    <div className="font-bold text-emerald-900 dark:text-[#007AFF] mb-1 font-display">
                       💡 Simple Explanation:
                     </div>
                     {selectedNode.status === 'blocking'
@@ -208,9 +208,9 @@ export const ConceptGraph = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 pt-3 border-t border-slate-100 dark:border-[#30363D]">
+                <div className="flex items-center gap-3 pt-3 border-t border-slate-100 dark:border-[#AAAAAA]/30 dark:border-white/[0.08]">
                   <Dialog.Close asChild>
-                    <button className="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-[#161B22] hover:bg-slate-200 dark:hover:bg-[#21262D] text-slate-700 dark:text-[#F0F6FC] font-bold text-xs">
+                    <button className="flex-1 py-2.5 rounded-xl bg-slate-100 dark:bg-[#F5F5F7] dark:bg-white/[0.04] hover:bg-slate-200 dark:hover:bg-[#F5F5F7] dark:bg-white/[0.06] text-slate-700 dark:text-[#F0F6FC] font-bold text-xs">
                       Close
                     </button>
                   </Dialog.Close>
@@ -219,7 +219,7 @@ export const ConceptGraph = () => {
                       toast.success(`Starting quick practice for ${selectedNode.name}`);
                       setSelectedNode(null);
                     }}
-                    className="flex-1 py-2.5 rounded-xl bg-[#00F59B] hover:bg-[#5EFCC2] text-[#07090D] font-bold text-xs shadow-sm"
+                    className="flex-1 py-2.5 rounded-xl bg-[#007AFF] hover:bg-[#5EFCC2] text-white font-bold text-xs shadow-sm"
                   >
                     Start Practice
                   </button>

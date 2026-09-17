@@ -19,6 +19,7 @@ export type SourceType =
   | 'OFFICIAL_GOVERNMENT'
   | 'OFFICIAL_DEPARTMENT'
   | 'OFFICIAL_EXAM_PORTAL'
+  | 'OFFICIAL_INSTITUTIONAL_REPOSITORY'
   | 'OFFICIAL_PDF'
   | 'TRUSTED_SECONDARY'
   | 'COMMUNITY'
@@ -54,25 +55,80 @@ export interface AcademicVersionIdentifier {
   courseCode?: string;
 }
 
+export interface TopicMapping {
+  officialTopic: string | null;
+  microTopics: string[];
+  mappingType: 'EXPLICIT' | 'AI_DERIVED' | 'UNCERTAIN';
+}
+
 /**
- * Strict Previous Year Question Model with Source Verification
+ * Strict Previous Year Question Model with Source Verification (Prompt 4 Compliant)
  */
 export interface VerifiedPreviousYearQuestion {
   id: string;
+
   universityId: string;
-  courseId?: string;
-  courseCode?: string;
-  examYear: string;
-  examSession?: 'Winter' | 'Summer' | 'Odd Sem' | 'Even Sem' | 'Annual' | 'Supplementary';
-  questionNumber?: string;
+  regulation: string | null;
+  academicYear: string | null;
+
+  examinationYear: number | null;
+  examYear?: string; // Compatibility alias
+  examinationSession: string | null;
+  examSession?: string; // Compatibility alias
+
+  degree: string;
+  branch: string | null;
+  semester: number | string | null;
+
+  courseCode: string;
+  courseTitle: string;
+
+  paperId: string;
+
+  questionNumber: string;
   questionText: string;
-  marks?: number;
-  section?: string;
-  moduleId?: string;
-  topicId?: string;
-  microTopicId?: string;
+
+  marks: number | null;
+
+  section: string | null;
+  subQuestion: string | null;
+
   source: SourceMetadata;
-  isVerbatimArchiveScan: boolean;
+
+  topicMapping: TopicMapping;
+
+  isVerbatimArchiveScan?: boolean;
+  extractionConfidence?: 'HIGH' | 'MEDIUM' | 'LOW';
+}
+
+/**
+ * Paper-level verified question paper record (Prompt 4 Section 10)
+ */
+export interface QuestionPaper {
+  id: string;
+
+  universityId: string;
+
+  regulation: string | null;
+  academicYear: string | null;
+
+  examinationYear: number | null;
+  examinationSession: string | null;
+
+  degree: string;
+  branch: string | null;
+  semester: string | null;
+
+  courseCode: string;
+  courseTitle: string;
+
+  totalMarks: number | null;
+  duration: string | null;
+
+  source: SourceMetadata;
+
+  questions: string[]; // Question IDs associated with this paper
+  status?: 'FOUND' | 'NOT_AVAILABLE';
 }
 
 /**

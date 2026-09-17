@@ -203,10 +203,10 @@
 
 ## 4. STATISTICAL QUALITY & INTEGRITY METRICS
 
-* **Total Verified Courses**: 10
-* **Total Official Modules / Units Extracted**: 50
-* **Total Official Syllabus Topics**: 63
-* **Total AI-Derived Micro-Topics**: 101 (All explicitly tagged `sourceType: 'AI_DERIVED'`)
+* **Total Verified Courses**: 18
+* **Total Official Modules / Units Extracted**: 87
+* **Total Official Syllabus Topics**: 100
+* **Total AI-Derived Micro-Topics**: 174 (All explicitly tagged `sourceType: 'AI_DERIVED'`)
 * **Official Source Coverage**: 100.0%
 * **Course Verification Coverage**: 100.0%
 * **Topic Traceability Coverage**: 100.0%
@@ -222,3 +222,66 @@
 > 3. No previous year questions (PYQs) or exam blueprints were fabricated in this task.
 > 4. No faculty records, ratings, or teacher-matching scores were generated or fabricated.
 > 5. All micro-topic breakdowns are explicitly labelled `sourceType: 'AI_DERIVED'` to preserve academic integrity.
+
+---
+
+## 6. USER-UPLOADED OFFICIAL SYLLABUS ARCHIVES & VERIFIED EXTRACTIONS
+
+The following official institutional syllabus documents were uploaded directly into the project workspace and processed through the VIDYA AI Academic Extraction Engine:
+
+### 1. `ANNA BE CSE.pdf` (1.1 MB, 81 Pages)
+* **Institution**: Anna University, Chennai (Non-Autonomous Affiliated Institutions)
+* **Degree & Branch**: B.E. Computer Science and Engineering
+* **Regulations**: **Regulations: 2025 (R2025)**
+* **Extracted Courses**:
+  - `CS25C08` Data Structures (Semester 3, 5 Credits, 7 Contact Hours, Continuous Assessment 50% / End Sem Theory 50%, Units I–V verbatim, Textbooks: Gilberg & Forouzan 2023, Mark Allen Weiss 2014, Aho Hopcroft Ullman 2001, D.S. Malik 2012).
+* **Provenance**: Official BoS curriculum gazette approved for affiliated engineering colleges across Tamil Nadu.
+
+### 2. `JNTUH R25B.Tech.CSEIIIYearSyllabus.pdf` (1.3 MB, 70 Pages)
+* **Institution**: Jawaharlal Nehru Technological University Hyderabad (JNTUH)
+* **Degree & Branch**: B.Tech. in Computer Science and Engineering
+* **Regulations**: **R-25 Regulations (Applicable from AY 2025-2026 Batch)**
+* **Extracted Courses**:
+  - `CS205ES` Data Structures (Semester 2, 3 Credits, 3 Contact Hours, Internal 40 / External 60, Units I–V verbatim, Textbooks: Gilberg & Forouzan 2nd Ed, Reema Thareja 3rd Ed, Tanenbaum).
+  - Complete 4-year curriculum roadmap (Semesters I–VIII, Professional Electives, Open Electives, and Skill Development courses including `Prompt Engineering CS608SD` and `UI Design CS508SD`).
+* **Provenance**: Official JNTUH Board of Studies Ordinance for R-25 B.Tech CSE.
+
+### 3. `BTECH.pdf` (581 KB, 49 Pages)
+* **Institution**: Maulana Abul Kalam Azad University of Technology (MAKAUT, West Bengal)
+* **Programme**: 1st Year B.Tech in Engineering & Technology
+* **Regulations**: AICTE CBCS Scheme (Applicable from 2018–2019 session)
+* **Extracted Courses**:
+  - `ES-CS201` Programming for Problem Solving (Semester 2, 3 Credits, 3 Contact Hours, Units 1–5 on Computer Components, Arithmetic Precedence, Conditionals & Loops, Arrays & Basic Algorithms, Functions & Recursion & Pointers, Textbooks: Balaguruswamy, Kernighan & Ritchie).
+* **Provenance**: Official MAKAUT 1st-year curriculum framework (Page 28–30).
+
+### 4. `APM.pdf` (61 KB, 6 Pages)
+* **Institution**: Maulana Abul Kalam Azad University of Technology (MAKAUT, West Bengal)
+* **Programme**: B.Tech in Apparel Production Management (APM)
+* **Regulations**: AICTE CBCS Scheme (Applicable from 2018–2019 session)
+* **Extracted Courses**:
+  - `PC APM 302` Apparel Production – I: Basic Pattern Making (Semester 3, 3 Credits, 3 Contact Hours, Anthropometry, Dart Manipulation, Bodice/Sleeve/Skirt Drafting, Textbooks: Helen Joseph-Armstrong, Winifred Aldrich).
+* **Provenance**: Official MAKAUT APM Board of Studies syllabus document (Page 1–3).
+
+### 5. `BCA25.pdf` (2.6 MB, 141 Pages)
+* **Regulatory Body**: All India Council for Technical Education (AICTE), New Delhi
+* **Programme**: Bachelor in Computer Applications (BCA / BCA Honours / BCA Honours with Research)
+* **Regulations**: Draft Model Curriculum for UG Degree in BCA (2024–2025)
+* **Extracted Courses**:
+  - `SEC101` Problem Solving Techniques (Semester 1, 5 Credits, 7 Contact Hours [3L:0T:4P], Internal 40 / External 60, Units I–IV verbatim on Problem-Solving Steps, Structured Programming & C, Problems on Numbers & Sentinel Reductions, Modular Programming & Recursion & Arrays, Textbooks: Venkatesh & Nagaraju 2024, AICTE Prescribed PPS 2024, Deitel & Deitel 9th Ed, Kernighan & Ritchie 2nd Ed).
+* **Provenance**: Official AICTE National Model Curriculum committee recommendations (Pages 19, 30–36).
+
+### 6. `list of engineering and medical college.pdf` (12 Pages)
+* **Content**: Pan-India master listing of premier Engineering and Medical colleges (IIT Madras, IIT Delhi, IIT Bombay, IIT Kanpur, IIT Kharagpur, IIT Roorkee, IIT Guwahati, IIT Hyderabad, NIT Trichy, NIT Surathkal, etc., along with top medical institutes).
+* **Provenance**: Official institutional roster used to cross-reference university identity records and state affiliations in the Master Registry.
+
+### 7. `University_of_Calcutta_BTech_CSE_Sem1-8_Module_Wise.pdf` (9 Pages)
+* **Institution**: University of Calcutta (Faculty of Engineering & Technology)
+* **Degree & Branch**: B.Tech in Computer Science and Engineering (Degree Code 401)
+* **Regulations**: **4-Year/8-Semester B.Tech Regulations (effective from AY 2024–25 / CBCS)**
+* **Extracted Courses**:
+  - `CS201` Data Structures & Programming (Semester 2, 4 Credits, 4 Contact Hours, Internal 30 / External 70, Modules 1–5 verbatim covering Programming Foundations, Linear Structures, Stacks & Queues, Searching & Sorting, Trees & Graphs, Textbooks: Gilberg & Forouzan 2nd Ed, Kernighan & Ritchie 2nd Ed).
+  - `CS401` Design & Analysis of Algorithms (Semester 4, 4 Credits, 4 Contact Hours, Internal 30 / External 70, Modules 1–5 verbatim covering Algorithm Analysis, Divide-and-Conquer, Greedy Algorithms, Dynamic Programming, Backtracking & Branch-and-Bound, Textbooks: Cormen Leiserson Rivest Stein 3rd Ed, Sara Baase).
+  - `CS402` Operating Systems (Semester 4, 4 Credits, 4 Contact Hours, Internal 30 / External 70, Modules 1–5 verbatim covering OS Structure & Threads, CPU Scheduling & Synchronization, Deadlocks, Memory Management & Virtual Memory, File Systems & Protection, Textbooks: Silberschatz Galvin Gagne 9th Ed, Tanenbaum Bos 4th Ed).
+* **Provenance**: Official University of Calcutta B.Tech CSE Board of Studies curriculum gazette (`https://www.caluniv.ac.in/cbcs-ug/ug-files/B.Tech-15-1-19.pdf` and `BTech-Regulation-New.pdf`).
+
+
