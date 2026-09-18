@@ -21,12 +21,12 @@ export const ModernHero = ({ setActiveTab, onOpenAuth, user, onExploreMore }) =>
   };
 
   return (
-    <section id="hero" className="w-full bg-[#EAF8FD] py-6 sm:py-10 md:py-14 px-3 sm:px-6 lg:px-10 xl:px-12">
-      {/* Outer White Rounded Container (Expanded width, enhanced border and generous padding) */}
-      <div className="w-full max-w-[1480px] 2xl:max-w-[1560px] mx-auto bg-[#FFFFFF] rounded-[38px] sm:rounded-[48px] shadow-[0_30px_80px_rgba(69,181,229,0.16)] border-2 border-[#DCE4EC] overflow-hidden relative p-8 sm:p-12 lg:p-16 xl:p-20">
+    <section id="hero" className="w-full bg-[#EAF8FD] py-6 sm:py-10 md:py-16 px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10">
+      {/* Outer White Rounded Container (Maximum expanded width, prominent thick border, and ultra generous padding) */}
+      <div className="w-full max-w-[96vw] xl:max-w-[1680px] 2xl:max-w-[1780px] mx-auto bg-[#FFFFFF] rounded-[42px] sm:rounded-[56px] shadow-[0_35px_90px_rgba(69,181,229,0.18)] border-[3px] sm:border-[4px] border-[#CBD5E1] overflow-hidden relative p-8 sm:p-12 md:p-16 lg:p-20 xl:p-24">
         
         {/* Hero Main Content (Two-Column Layout) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 xl:gap-14 items-center relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 xl:gap-16 items-center relative z-10">
           
           {/* Left Column (Text & CTAs) */}
           <div className="lg:col-span-6 xl:col-span-7 space-y-6 sm:space-y-8 text-left">
@@ -36,7 +36,7 @@ export const ModernHero = ({ setActiveTab, onOpenAuth, user, onExploreMore }) =>
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="font-display font-extrabold text-4xl sm:text-5xl lg:text-[62px] text-[#111111] leading-[1.08] tracking-tight"
+              className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl xl:text-[68px] text-[#111111] leading-[1.06] tracking-tight"
             >
               Smart Solutions.<br />
               Designed for Better{' '}
@@ -146,7 +146,7 @@ export const ModernHero = ({ setActiveTab, onOpenAuth, user, onExploreMore }) =>
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-              className="relative w-full max-w-[580px] xl:max-w-[640px] rounded-[32px] sm:rounded-[40px] overflow-hidden border border-[#E5E5E5] bg-white shadow-[0_25px_60px_rgba(69,181,229,0.2)] group"
+              className="relative w-full max-w-[620px] xl:max-w-[720px] 2xl:max-w-[780px] rounded-[36px] sm:rounded-[46px] overflow-hidden border border-[#E5E5E5] bg-white shadow-[0_30px_70px_rgba(69,181,229,0.24)] group"
             >
               <img
                 src="/images/agency_hero_visual.jpg"
