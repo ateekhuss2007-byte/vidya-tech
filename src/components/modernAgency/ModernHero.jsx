@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, CheckCircle2, TrendingUp, Zap } from 'lucide-react';
+import { ArrowRight, Sparkles, TrendingUp, Zap } from 'lucide-react';
 
 export const ModernHero = ({ setActiveTab, onOpenAuth, user, onExploreMore }) => {
   const handlePrimaryClick = () => {
@@ -96,28 +96,6 @@ export const ModernHero = ({ setActiveTab, onOpenAuth, user, onExploreMore }) =>
                 <span>Explore More</span>
               </button>
             </motion.div>
-
-            {/* Micro Trust Points */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="pt-3 flex flex-wrap items-center gap-y-2 gap-x-5 text-xs sm:text-sm text-[#777777] font-medium"
-            >
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-[#45B5E5]" />
-                <span>Verbatim BoS Syllabi</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-[#45B5E5]" />
-                <span>100% Non-Fabricated PYQs</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-[#45B5E5]" />
-                <span>Adaptive Retention Twin</span>
-              </span>
-            </motion.div>
-
           </div>
 
           {/* Right Column (Visual + Organic Blob + Image + Floating Badges) */}
