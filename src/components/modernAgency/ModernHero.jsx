@@ -22,8 +22,8 @@ export const ModernHero = ({ setActiveTab, onOpenAuth, user, onExploreMore }) =>
 
   return (
     <section id="hero" className="w-full bg-[#EAF8FD] py-6 sm:py-10 md:py-16 px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10">
-      {/* Outer White Rounded Container (Maximum expanded width, prominent thick border, and ultra generous padding) */}
-      <div className="w-full max-w-[96vw] xl:max-w-[1680px] 2xl:max-w-[1780px] mx-auto bg-[#FFFFFF] rounded-[42px] sm:rounded-[56px] shadow-[0_35px_90px_rgba(69,181,229,0.18)] border-[3px] sm:border-[4px] border-[#CBD5E1] overflow-hidden relative p-8 sm:p-12 md:p-16 lg:p-20 xl:p-24">
+      {/* Outer White Rounded Container (Expanded width with ultra-light, subtle, elegant border) */}
+      <div className="w-full max-w-[96vw] xl:max-w-[1680px] 2xl:max-w-[1780px] mx-auto bg-[#FFFFFF] rounded-[42px] sm:rounded-[56px] shadow-[0_20px_60px_rgba(69,181,229,0.08)] border border-slate-200/50 dark:border-white/10 overflow-hidden relative p-8 sm:p-12 md:p-16 lg:p-20 xl:p-24">
         
         {/* Hero Main Content (Two-Column Layout) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 xl:gap-16 items-center relative z-10">

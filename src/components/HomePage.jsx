@@ -72,7 +72,7 @@ export const HomePage = ({
       {/* 2. Quick Concept & Syllabus Search Studio (Seamlessly Integrated) */}
       <section className="w-full bg-[#EAF8FD] pb-12 sm:pb-16 px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10 -mt-2">
         <div className="w-full max-w-[96vw] xl:max-w-[1680px] 2xl:max-w-[1780px] mx-auto">
-          <div className="bg-[#FFFFFF] rounded-[32px] sm:rounded-[42px] p-6 sm:p-10 border-[3px] border-[#CBD5E1] shadow-[0_15px_40px_rgba(69,181,229,0.1)]">
+          <div className="bg-[#FFFFFF] rounded-[32px] sm:rounded-[42px] p-6 sm:p-10 border border-slate-200/50 dark:border-white/10 shadow-[0_12px_35px_rgba(69,181,229,0.06)]">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
               
               <div className="space-y-1.5 max-w-xl text-left">
