@@ -306,7 +306,9 @@ export const Sidebar = ({
       {/* Auth Modal */}
       <AuthModal
         isOpen={authModalOpen}
+        setIsOpen={setAuthModalOpen}
         onClose={() => setAuthModalOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
         onSuccess={handleLoginSuccess}
       />
     </div>

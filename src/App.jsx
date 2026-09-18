@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Toaster } from 'sonner';
+import { Toaster, toast } from 'sonner';
 import { Navbar } from './components/Navbar';
 import { HomePage } from './components/HomePage';
 import { Dashboard } from './components/Dashboard';
@@ -77,21 +77,41 @@ export const App = () => {
   const [selectedMockSubject, setSelectedMockSubject] = useState(null);
   const [selectedSemester, setSelectedSemester] = useState(3);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('vidya_user');
-    return saved ? JSON.parse(saved) : {
-      name: 'Aryan Kumar Shaw',
-      email: 'aryan@vidya.ai',
-      plan: 'Pro Scholar',
-      currentStreak: 14,
-      targetExam: 'B.Tech CSE (MAKAUT)'
-    };
+    try {
+      const saved = localStorage.getItem('vidya_user');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Ensure legacy hardcoded user "Aryan" is purged so visitors start as guest
+        if (parsed?.name?.includes('Aryan') || parsed?.email?.includes('aryan')) {
+          localStorage.removeItem('vidya_user');
+          return null;
+        }
+        return parsed;
+      }
+      return null;
+    } catch {
+      return null;
+    }
   });
+
+  const handleOpenAuth = useCallback(() => {
+    setAuthModalOpen(true);
+  }, []);
 
   // Synchronize Tab with browser URL & history
   const setActiveTab = useCallback((tab, options = {}) => {
     if (!VALID_TABS.includes(tab)) return;
     
+    // Gate personalized tabs behind login
+    const PERSONALIZED_TABS = ['dashboard', 'digitalTwin', 'learningPath', 'analytics', 'educatorInsights'];
+    if (!user && PERSONALIZED_TABS.includes(tab)) {
+      setAuthModalOpen(true);
+      toast.info('Sign in / Let\'s Get Started to unlock your personalized learning data & cognitive twin!');
+      return;
+    }
+
     setActiveTabState(tab);
 
     if (options.subject) {
@@ -105,7 +125,7 @@ export const App = () => {
     if (window.location.pathname !== targetPath) {
       window.history.pushState({ tab }, '', targetPath);
     }
-  }, []);
+  }, [user]);
 
   // Listen to browser Back/Forward buttons
   useEffect(() => {
@@ -184,8 +204,26 @@ export const App = () => {
         setIsDark={setIsDark} 
         user={user}
         setUser={setUser}
+        authModalOpen={authModalOpen}
+        setAuthModalOpen={setAuthModalOpen}
         onOpenSearch={() => setSearchModalOpen(true)}
       />
+
+      {/* Guest Welcome & Sign-In Callout (Only shown when not logged in) */}
+      {!user && (
+        <div className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white py-2.5 px-4 text-xs font-medium shadow-sm transition-all animate-fade-in flex flex-col sm:flex-row items-center justify-center gap-2 text-center">
+          <span>
+            🎓 <strong>Welcome Learner!</strong> Sign in to access all university syllabus notes, step-marked PYQs, and your cognitive memory twin.
+          </span>
+          <button
+            type="button"
+            onClick={handleOpenAuth}
+            className="px-3 py-1 rounded-full bg-white text-blue-700 font-bold hover:bg-blue-50 transition-all shadow-sm shrink-0 cursor-pointer"
+          >
+            Let's Get Started / Sign In →
+          </button>
+        </div>
+      )}
 
       {/* Main View Container */}
       <main className="flex-1 w-full relative z-10">
@@ -210,6 +248,7 @@ export const App = () => {
                     onOpenTopic={handleOpenTopic} 
                     onOpenSemester={handleOpenSemester} 
                     user={user} 
+                    onOpenAuth={handleOpenAuth}
                   />
                 )}
                 {activeTab === 'studyHub' && (

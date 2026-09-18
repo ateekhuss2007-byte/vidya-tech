@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Sparkles, Calendar, Zap, ShieldCheck } from 'lucide-react';
 
 export const DashboardHeader = ({ user, aiStatus, upcomingExam }) => {
-  const userName = user?.name ? user.name.split(' ')[0] : 'Aryan';
+  const userName = user?.name ? user.name.split(' ')[0] : 'Scholar';
   const greeting = user?.greeting || 'Good morning';
 
   return (

@@ -74,10 +74,14 @@ export const Navbar = ({
   setUser, 
   isDark, 
   setIsDark,
-  onOpenSearch
+  onOpenSearch,
+  authModalOpen: externalAuthModalOpen,
+  setAuthModalOpen: externalSetAuthModalOpen
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [internalAuthModalOpen, setInternalAuthModalOpen] = useState(false);
+  const authModalOpen = externalAuthModalOpen !== undefined ? externalAuthModalOpen : internalAuthModalOpen;
+  const setAuthModalOpen = externalSetAuthModalOpen || setInternalAuthModalOpen;
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -226,9 +230,10 @@ export const Navbar = ({
                 <button
                   type="button"
                   onClick={() => setAuthModalOpen(true)}
-                  className="text-[13px] font-medium px-4 py-1.5 rounded-full bg-[#007AFF] hover:bg-[#0062CC] text-white shadow-sm shadow-[#007AFF]/25 transition-all cursor-pointer"
+                  className="text-[13px] font-bold px-4 py-1.5 rounded-full bg-[#007AFF] hover:bg-[#0062CC] text-white shadow-sm shadow-[#007AFF]/25 transition-all cursor-pointer flex items-center gap-1.5"
                 >
-                  Sign In
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Get Started</span>
                 </button>
               </div>
             )}
@@ -348,7 +353,9 @@ export const Navbar = ({
       {/* Auth Modal */}
       <AuthModal
         isOpen={authModalOpen}
+        setIsOpen={setAuthModalOpen}
         onClose={() => setAuthModalOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
         onSuccess={handleLoginSuccess}
       />
     </>

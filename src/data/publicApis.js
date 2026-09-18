@@ -64,7 +64,7 @@ export const publicApiResources = [
 export const educatorStudentsMock = [
   {
     id: 'stu-101',
-    name: 'Aryan Sharma',
+    name: 'Rohit Sharma',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
     week1: 92,
     week2: 88,

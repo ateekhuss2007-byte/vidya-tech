@@ -1,6 +1,6 @@
 export const studentData = {
   id: 'stu_vidya_9921',
-  name: 'Aryan Sharma',
+  name: 'Scholar Student',
   cohort: 'Computer Science & AI • Year 3',
   avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
   metrics: {

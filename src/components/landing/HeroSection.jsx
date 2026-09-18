@@ -69,7 +69,7 @@ const BTECH_SEMESTER_SUBJECTS = {
   ]
 };
 
-export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
+export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester, user, onOpenAuth }) => {
   const containerRef = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -364,8 +364,12 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
           <button
             type="button"
             onClick={() => {
-              setWizardStep(1);
-              setIsWizardOpen(true);
+              if (!user && onOpenAuth) {
+                onOpenAuth();
+              } else {
+                setWizardStep(1);
+                setIsWizardOpen(true);
+              }
             }}
             className="group relative inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-3.5 sm:py-4 rounded-full bg-[#007AFF] hover:bg-[#0062CC] text-white font-display font-bold text-base sm:text-lg shadow-xl shadow-[#007AFF]/30 hover:shadow-[#007AFF]/50 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
           >

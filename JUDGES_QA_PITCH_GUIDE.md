@@ -63,11 +63,12 @@
 ---
 
 ### Q6: "What is your Business Model & Monetization Strategy?"
-* **Core Difference:** High-margin B2C freemium + B2B institutional SaaS for tier-2/3 colleges.
+* **Core Difference:** High-margin B2C freemium + B2B institutional SaaS anchored to NBA/NAAC Accreditation compliance.
 * **Winning Answer:**
-  > *"We operate a hybrid model:
-  > 1. **B2C Freemium (Students)**: Core notes, video search, and mock tests are free. The Pro Tier (₹299/month) unlocks unlimited AI Viva voice evaluations, step-marked exam grading, and personalized Memory Twin analytics.
-  > 2. **B2B Institutional SaaS (Colleges & Coaching Centers)**: Tier-2 and Tier-3 engineering colleges have high student-to-faculty ratios. We license our **Educator Radar & Diagnostic Dashboard** at ₹1,500/student/year, allowing deans and HODs to predict who is at risk of semester backlogs before exams occur."*
+  > *"We operate a pragmatic two-tier model:
+  > 1. **B2C Freemium (Direct-to-Student)**: Core notes, curated YouTube roadmaps, and basic mock tests are free. The Pro Tier (₹199/month) unlocks unlimited AI Viva voice evaluations, step-marked exam grading, and personalized Memory Twin analytics.
+  > 2. **B2B Institutional SaaS (NBA / NAAC Accreditation Compliance)**: Rather than trying to sell directly to students through slow college procurement, we sell to Deans and HODs as an **Outcome-Based Education (OBE) & Remedial Teaching Engine** (priced at ₹1.5L to ₹2.5L / institution / year). 
+  > Under NAAC Criterion 2 (Teaching-Learning & Evaluation) and NBA criteria, colleges are mandated to show documented proof of identifying slow learners and providing continuous remedial action. VIDYA AI automates this audit trail with zero faculty overhead."*
 
 ---
 
@@ -78,7 +79,7 @@
   > - Knowledge graphs, SM-2 retention curves, and flashcards execute **entirely client-side**.
   > - Common core topics (Matrices, Normalization, Paging) are pre-compiled and served via CDN with **zero LLM cost**.
   > - LLM inference is only invoked for personalized diagnostic evaluations and custom dynamic topic requests.
-  > - This keeps our cost-per-active-student below **₹3 to ₹5 per month**, delivering over **85% gross margins** at ₹299/month."*
+  > - This keeps our cost-per-active-student below **₹3 to ₹5 per month**, delivering over **85% gross margins** at ₹199/month."*
 
 ---
 
@@ -91,14 +92,15 @@
 
 ---
 
-### Q9: "What is the purpose of the AI Agents Swarm?"
-* **Core Difference:** Separation of concerns—one agent diagnoses, one teaches, one examines.
+### Q9: "What is the purpose of the 5 Cognitive Pipeline Stages?"
+* **Core Difference:** Decoupled deterministic algorithms + specialized evaluation pipelines.
 * **Winning Answer:**
-  > *"A single LLM prompt cannot simultaneously teach patiently and grade strictly. We decouple these roles:
-  > - **Diagnostic Agent**: Analyzes test mistakes and pinpoints the exact prerequisite knowledge gap.
-  > - **Pedagogical Agent**: Explains concepts using adaptive analogies.
-  > - **Examiner Agent**: Enforces strict step-marking criteria without leniency.
-  > This separation prevents cognitive bias and ensures authentic academic rigor."*
+  > *"We do not rely on an opaque, hallucination-prone LLM to manage student schedules. We decouple the cognitive workload into 5 specialized deterministic stages:
+  > 1. **Diagnostic Profiler**: Employs topological DAG sorting to isolate upstream prerequisite gaps (e.g. Matrix Rank before PCA).
+  > 2. **SM-2 Memory Twin**: Uses Ebbinghaus exponential decay $R(t) = \exp(-t/S)$ to calculate precise active-recall review windows.
+  > 3. **Timetable Optimizer**: Algorithmic load balancing that redistributes missed lecture hours (+25 min/day) to prevent burnout.
+  > 4. **Academic Risk Guard**: Statistical semester failure index modeling to alert students 3 weeks before finals.
+  > 5. **Resource Curator**: Strict grounding with verified university reference textbooks (B.S. Grewal, Galvin, Korth) and NPTEL lectures."*
 
 ---
 
@@ -106,7 +108,7 @@
 * **Winning Answer:**
   > *"Our phased development roadmap:
   > - **Q1**: Vernacular Voice Tutor (Hindi, Bengali, Tamil, Telugu) for students who grasp concepts better in their native language.
-  > - **Q2**: LMS Integrations (Canvas / Moodle) for direct university assignment grading and auto-generated remedial study paths.
+  > - **Q2**: LMS Integrations (Canvas / Moodle / TCS iON) for direct university assignment grading and auto-generated remedial study paths.
   > - **Q3**: Offline-first Mobile PWA with local vector search for low-bandwidth rural college environments."*
 
 ---
@@ -115,8 +117,11 @@
 
 | Trap Question | Weak Answer ❌ | Winning Defense ✅ |
 | :--- | :--- | :--- |
+| *"Why is your Gemini API key in the client / localStorage? Isn't that insecure?"* | *"We will add backend later."* | *"For our hackathon prototype and zero-data-retention compliance, we built a privacy-first BYOK (Bring-Your-Own-Key) architecture so student academic evaluations are never harvested or stored by an intermediary. For enterprise campus deployments, we provide an authenticated backend proxy with KMS encryption and support for self-hosted local inference (vLLM / Ollama)."* |
+| *"Can students game your offline step-marking rubric by typing gibberish or long text?"* | *"Our AI is very smart."* | *"No. Our deterministic rubric engine uses a 3-factor composite evaluator: Syllabus Concept-Token Coverage (45%), Step-marking and Derivation Markers (35%), and Lexical Diversity (20%). If someone repeats identical words or pastes nonsense, lexical diversity drops below 0.35 and awards minimal/zero marks with explicit academic warnings."* |
+| *"How do you prevent hallucinations in non-math subjects like OS or DBMS?"* | *"We use good prompts."* | *"Dual-grounding: We cross-reference generated answers against structured syllabus ontologies and standard university textbook index keys (Galvin for OS, Korth for DBMS). Our step-marking rubric enforces factual keywords, dependency order, and university syllabus learning outcome (CO) attainment criteria."* |
 | *"Won't students just use this to cheat on their homework?"* | *"We tell them not to cheat."* | *"VIDYA AI does not give copy-paste homework answers. Our AI Viva Examiner and step-by-step solver require verbal explanation and conceptual follow-up probing, which actually exposes cheating."* |
-| *"What if Google or OpenAI launches this natively?"* | *"Our UI is nicer."* | *"Foundational model providers build horizontal general-purpose models. They do not build localized university syllabus graphs, MAKAUT/CBSE step-marking rubrics, or institutional attendance/backlog radar. We are the verticalized academic operating layer."* |
+| *"What if Google or OpenAI launches this natively?"* | *"Our UI is nicer."* | *"Foundational model providers build horizontal general-purpose models. They do not build localized university syllabus graphs, MAKAUT/CBSE step-marking rubrics, or institutional NBA/NAAC accreditation remedial tracking. We are the verticalized academic operating layer."* |
 | *"Have real students actually tested this?"* | *"Not yet, we just finished."* | *"Yes! We validated the syllabus modules against actual MAKAUT CSE PYQs and CBSE board papers, testing eigenvalue calculations and normalization proofs against university answer keys with 100% step-marking alignment."* |
 
 ---

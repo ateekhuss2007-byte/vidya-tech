@@ -23,7 +23,7 @@ export const AiAssistant = ({ setActiveTab }) => {
   const [conversation, setConversation] = useState([
     {
       role: 'assistant',
-      text: `Hello ${studentData.name ? studentData.name.split(' ')[0] : 'Aryan'}! I am your VIDYA Cognitive Co-Pilot. I've analyzed your Cognitive Learning Twin: Readiness is at 87% (optimal), but I've detected a high-priority prerequisite gap in Eigenvalues (#BLK-01) that is currently blocking Principal Component Analysis.`
+      text: `Hello ${studentData.name ? studentData.name.split(' ')[0] : 'Scholar'}! I am your VIDYA Cognitive Co-Pilot. I've analyzed your Cognitive Learning Twin: Readiness is at 87% (optimal), but I've detected a high-priority prerequisite gap in Eigenvalues (#BLK-01) that is currently blocking Principal Component Analysis.`
     }
   ]);
   const [isThinking, setIsThinking] = useState(false);

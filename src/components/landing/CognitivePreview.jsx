@@ -43,7 +43,7 @@ export const CognitivePreview = ({ setActiveTab, onOpenTopic, user }) => {
               <span className="w-2.5 h-2.5 rounded-full bg-black/15 dark:bg-white/20" />
             </div>
             <span className="text-[11px] font-mono text-[#AAAAAA] ml-2 hidden sm:inline">
-              vidya-ai / cognitive-twin / {user?.name ? user.name.toLowerCase().replace(' ', '_') : 'aryan_shaw'}.synced
+              vidya-ai / cognitive-twin / {user?.name ? user.name.toLowerCase().replace(' ', '_') : 'guest_learner'}.synced
             </span>
           </div>
 
@@ -71,7 +71,7 @@ export const CognitivePreview = ({ setActiveTab, onOpenTopic, user }) => {
                 <span className="w-1.5 h-1.5 rounded-full bg-[#007AFF] animate-pulse" />
               </div>
               <div className="text-sm sm:text-base font-bold text-[#1D1D1F] dark:text-[#F5F5F7] font-display">
-                Good morning, {user?.name ? user.name.split(' ')[0] : 'Aryan'}
+                Good morning, {user?.name ? user.name.split(' ')[0] : 'Scholar'}
               </div>
             </div>
           </div>

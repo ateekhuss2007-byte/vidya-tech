@@ -62,7 +62,7 @@ const LEADERBOARD_DATA = [
   { rank: 1, name: 'Ananya Sharma', city: 'Kolkata, WB', score: '98.5/100', percentile: '99.99%', time: '112 mins', accuracy: '98%' },
   { rank: 2, name: 'Rohan Deshmukh', city: 'Pune, MH', score: '96.0/100', percentile: '99.94%', time: '124 mins', accuracy: '96%' },
   { rank: 3, name: 'Karthik Raja', city: 'Chennai, TN', score: '94.5/100', percentile: '99.88%', time: '130 mins', accuracy: '95%' },
-  { rank: 4, name: 'Aryan Shaw (You)', city: 'West Bengal', score: '91.0/100', percentile: '99.12%', time: '142 mins', accuracy: '89%', isUser: true },
+  { rank: 4, name: 'You (Scholar Profile)', city: 'West Bengal', score: '91.0/100', percentile: '99.12%', time: '142 mins', accuracy: '89%', isUser: true },
   { rank: 5, name: 'Sneha Patel', city: 'Ahmedabad, GJ', score: '89.5/100', percentile: '98.85%', time: '138 mins', accuracy: '88%' },
   { rank: 6, name: 'Aditya Verma', city: 'Lucknow, UP', score: '88.0/100', percentile: '98.40%', time: '145 mins', accuracy: '87%' },
   { rank: 7, name: 'Pooja Iyer', city: 'Bengaluru, KA', score: '86.5/100', percentile: '97.90%', time: '150 mins', accuracy: '86%' }

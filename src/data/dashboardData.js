@@ -7,13 +7,13 @@
 
 export const defaultDashboardData = {
   user: {
-    name: 'Aryan Shaw',
-    firstName: 'Aryan',
+    name: 'Scholar Student',
+    firstName: 'Scholar',
     greeting: 'Good morning',
     streak: 12,
     level: 'Cognitive Learner',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-    email: 'aryan@vidya.ai',
+    email: 'scholar@vidya.ai',
     examTarget: 'B.Tech 3rd Year CSE & GATE 2027'
   },
   aiStatus: {
