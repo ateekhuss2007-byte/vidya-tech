@@ -39,10 +39,10 @@ import { examStreams } from '../data/examPatterns';
 
 // Concentric arches icon inspired by Gemini Notebook
 const NotebookArchesIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5.5 h-5.5 shrink-0">
-    <path d="M3.5 19.5C3.5 10.94 10.44 4 19 4" stroke="#38BDF8" strokeWidth="2.5" strokeLinecap="round"/>
-    <path d="M3.5 19.5C3.5 13.98 7.98 9.5 13.5 9.5C16.26 9.5 18.76 10.62 20.56 12.44" stroke="#0EA5E9" strokeWidth="2.2" strokeLinecap="round"/>
-    <path d="M3.5 19.5C3.5 16.46 5.96 14 9 14C10.52 14 11.9 14.62 12.89 15.61" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round"/>
+  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[34px] h-[34px] shrink-0 drop-shadow-[0_0_6px_rgba(56,189,248,0.5)]">
+    <path d="M3.5 19.5C3.5 10.94 10.44 4 19 4" stroke="#38BDF8" strokeWidth="2.8" strokeLinecap="round"/>
+    <path d="M3.5 19.5C3.5 13.98 7.98 9.5 13.5 9.5C16.26 9.5 18.76 10.62 20.56 12.44" stroke="#0EA5E9" strokeWidth="2.5" strokeLinecap="round"/>
+    <path d="M3.5 19.5C3.5 16.46 5.96 14 9 14C10.52 14 11.9 14.62 12.89 15.61" stroke="#60A5FA" strokeWidth="2.2" strokeLinecap="round"/>
   </svg>
 );
 
@@ -126,10 +126,10 @@ export const Navbar = ({
             <button 
               type="button"
               onClick={() => setActiveTab('home')} 
-              className="flex items-center gap-2.5 text-left group cursor-pointer focus:outline-none"
+              className="flex items-center gap-3 text-left group cursor-pointer focus:outline-none"
             >
               <NotebookArchesIcon />
-              <span className="font-sans font-medium text-[17px] sm:text-[18px] tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">
+              <span className="font-sans font-bold text-[19px] sm:text-[21px] tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#0EA5E9] dark:group-hover:text-[#38BDF8] transition-colors duration-200">
                 Vidya AI
               </span>
             </button>

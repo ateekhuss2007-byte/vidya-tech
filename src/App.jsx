@@ -6,6 +6,7 @@ import { HomePage } from './components/HomePage';
 import { Dashboard } from './components/Dashboard';
 import { CommandPalette } from './components/CommandPalette';
 import { AiAssistant } from './components/AiAssistant';
+import { StudentChatbot } from './components/StudentChatbot';
 import { Footer } from './components/Footer';
 import { DashboardSkeleton } from './components/dashboard/DashboardSkeleton';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
@@ -315,6 +316,9 @@ export const App = () => {
 
       {/* Persistent Floating AI Assistant */}
       <AiAssistant setActiveTab={setActiveTab} />
+
+      {/* Premium Student Chatbot */}
+      <StudentChatbot />
 
       {/* Modern SaaS Footer */}
       <Footer setActiveTab={setActiveTab} />

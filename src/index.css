@@ -1115,3 +1115,946 @@
   mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   TRANSITIONS.DEV — 32 Free Transitions installed via transitions-dev
+   Source: https://transitions.dev  |  github.com/Jakubantalik/transitions.dev
+   Each block is self-contained: custom props in :root, t-* classes,
+   and @media (prefers-reduced-motion: reduce) guard.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Shared easing tokens ── */
+  --t-spring:       cubic-bezier(0.22, 1, 0.36, 1);
+  --t-spring-pop:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  --t-snappy:       cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Card resize ── */
+  --card-resize-dur:  350ms;
+  --card-resize-ease: var(--t-spring);
+
+  /* ── Card tilt ── */
+  --tilt-max: 8deg;
+  --tilt-dur: 400ms;
+  --tilt-ease: var(--t-spring);
+
+  /* ── Notification badge ── */
+  --badge-in-dur: 350ms;
+  --badge-in-ease: var(--t-spring-pop);
+  --badge-slide-x: 4px;
+  --badge-slide-y: -4px;
+
+  /* ── Number pop-in ── */
+  --digit-dur: 500ms;
+  --digit-distance: 8px;
+  --digit-stagger: 70ms;
+  --digit-blur: 2px;
+  --digit-ease: cubic-bezier(0.34, 1.45, 0.64, 1);
+  --digit-dir-x: 0;
+  --digit-dir-y: 1;
+
+  /* ── Text states swap ── */
+  --swap-dur: 220ms;
+  --swap-blur: 4px;
+  --swap-ease: ease-in-out;
+
+  /* ── Menu dropdown ── */
+  --dropdown-open-dur: 250ms;
+  --dropdown-close-dur: 150ms;
+  --dropdown-pre-scale: 0.97;
+  --dropdown-closing-scale: 0.99;
+  --dropdown-ease: var(--t-spring);
+
+  /* ── Modal ── */
+  --modal-in-dur:    350ms;
+  --modal-out-dur:   200ms;
+  --modal-scale-in:  0.96;
+  --modal-scale-out: 0.98;
+  --modal-ease:      var(--t-spring);
+
+  /* ── Panel reveal ── */
+  --panel-in-dur:  320ms;
+  --panel-out-dur: 200ms;
+  --panel-ease:    var(--t-spring);
+
+  /* ── Page side-by-side ── */
+  --page-dur:  380ms;
+  --page-dist: 32px;
+  --page-ease: var(--t-spring);
+
+  /* ── Icon swap ── */
+  --icon-swap-dur:  220ms;
+  --icon-swap-blur: 3px;
+  --icon-swap-scale: 0.8;
+  --icon-swap-ease:  ease-in-out;
+
+  /* ── Success check ── */
+  --check-dur:    500ms;
+  --check-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── Avatar group hover ── */
+  --av-lift: -10px;
+  --av-dur: 300ms;
+  --av-falloff: 4px;
+  --av-ease: var(--t-spring);
+
+  /* ── Error shake ── */
+  --shake-dur: 400ms;
+  --shake-dist: 6px;
+  --shake-overshoot: 2px;
+  --shake-ease: ease-in-out;
+
+  /* ── Accordion ── */
+  --acc-expand: 250ms;
+  --acc-collapse: 250ms;
+  --acc-chevron: 250ms;
+  --acc-ease: var(--t-spring);
+
+  /* ── Tooltip ── */
+  --tt-in-dur: 150ms;
+  --tt-out-dur: 50ms;
+  --tt-scale: 0.98;
+  --tt-delay: 80ms;
+  --tt-in-ease: ease-out;
+  --tt-out-ease: ease-out;
+  --tt-bg: #ffffff;
+  --tt-fg: #2f2f2f;
+
+  /* ── Like button ── */
+  --like-color: #f40051;
+  --like-fill: 150ms;
+  --like-pop: 350ms;
+  --like-pop-ease: cubic-bezier(0.34, 1.96, 0.64, 1);
+  --like-particle-dur: 600ms;
+  --like-particle-dist: 20px;
+  --like-particle-size: 2.5px;
+  --like-ease: var(--t-spring);
+
+  /* ── Tabs sliding ── */
+  --tabs-dur: 250ms;
+  --tabs-ease: var(--t-spring);
+
+  /* ── Toggle ── */
+  --toggle-dur: 250ms;
+  --toggle-ease: var(--t-spring);
+
+  /* ── Toast ── */
+  --toast-in-dur:  350ms;
+  --toast-out-dur: 200ms;
+  --toast-ease:    var(--t-spring);
+  --toast-dist:    20px;
+
+  /* ── Shimmer text ── */
+  --shimmer-dur: 2s;
+  --shimmer-color: #007AFF;
+  --shimmer-bg: currentColor;
+
+  /* ── Text reveal (stagger) ── */
+  --stagger-dur: 500ms;
+  --stagger-distance: 12px;
+  --stagger-stagger: 40ms;
+  --stagger-blur: 3px;
+  --stagger-ease: var(--t-spring);
+
+  /* ── Skeleton reveal ── */
+  --pulse-dur: 1000ms;
+  --pulse-count: infinite;
+  --pulse-min: 0.5;
+  --reveal-dur: 400ms;
+  --reveal-blur: 2px;
+  --reveal-ease: ease-in-out;
+
+  /* ── Checkbox ── */
+  --cb-dur: 250ms;
+  --cb-ease: var(--t-spring);
+
+  /* ── Spinning counter ── */
+  --counter-dur: 400ms;
+  --counter-ease: cubic-bezier(0.34, 1.45, 0.64, 1);
+
+  /* ── Streaming / thinking ── */
+  --stream-blink: 0.9s;
+}
+
+/* ────────────────────────────────────────────
+   1. CARD RESIZE
+   ──────────────────────────────────────────── */
+.t-card-resize {
+  transition:
+    width  var(--card-resize-dur) var(--card-resize-ease),
+    height var(--card-resize-dur) var(--card-resize-ease),
+    max-width var(--card-resize-dur) var(--card-resize-ease),
+    border-radius var(--card-resize-dur) var(--card-resize-ease);
+  will-change: width, height;
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-card-resize { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   2. CARD TILT (JS-driven via inline CSS vars)
+   ──────────────────────────────────────────── */
+.t-tilt {
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform var(--tilt-dur) var(--tilt-ease), box-shadow var(--tilt-dur) var(--tilt-ease);
+  will-change: transform;
+}
+.t-tilt:hover { box-shadow: 0 20px 60px -10px rgba(0, 122, 255, 0.2); }
+.t-tilt-reset {
+  transform: perspective(800px) rotateX(0deg) rotateY(0deg);
+  transition: transform var(--tilt-dur) var(--tilt-ease);
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-tilt, .t-tilt-reset { transform: none !important; transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   3. NOTIFICATION BADGE
+   ──────────────────────────────────────────── */
+@keyframes t-badge-pop {
+  0%   { transform: translate(var(--badge-slide-x), var(--badge-slide-y)) scale(0); opacity: 0; }
+  60%  { transform: translate(0, 0) scale(1.15); opacity: 1; }
+  100% { transform: translate(0, 0) scale(1); opacity: 1; }
+}
+.t-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: t-badge-pop var(--badge-in-dur) var(--badge-in-ease) both;
+}
+.t-badge.is-hidden { opacity: 0; transform: scale(0); transition: opacity 150ms ease, transform 150ms ease; }
+@media (prefers-reduced-motion: reduce) {
+  .t-badge { animation: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   4. NUMBER POP-IN
+   ──────────────────────────────────────────── */
+@keyframes t-digit-pop-in {
+  0%   { transform: translate(calc(var(--digit-distance) * var(--digit-dir-x)), calc(var(--digit-distance) * var(--digit-dir-y))); opacity: 0; filter: blur(var(--digit-blur)); }
+  100% { transform: translate(0, 0); opacity: 1; filter: blur(0); }
+}
+.t-digit-group { display: inline-flex; align-items: baseline; }
+.t-digit { display: inline-block; will-change: transform, opacity, filter; }
+.t-digit-group.is-animating .t-digit {
+  animation: t-digit-pop-in var(--digit-dur) var(--digit-ease) both;
+}
+.t-digit-group.is-animating .t-digit[data-stagger="1"] { animation-delay: var(--digit-stagger); }
+.t-digit-group.is-animating .t-digit[data-stagger="2"] { animation-delay: calc(var(--digit-stagger) * 2); }
+@media (prefers-reduced-motion: reduce) {
+  .t-digit-group .t-digit { animation: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   5. TEXT STATES SWAP (blur crossfade)
+   ──────────────────────────────────────────── */
+.t-swap { position: relative; display: inline-grid; }
+.t-swap-a, .t-swap-b {
+  grid-area: 1/1;
+  transition: opacity var(--swap-dur) var(--swap-ease), filter var(--swap-dur) var(--swap-ease);
+}
+.t-swap[data-state="a"] .t-swap-a { opacity: 1; filter: blur(0); }
+.t-swap[data-state="a"] .t-swap-b { opacity: 0; filter: blur(var(--swap-blur)); }
+.t-swap[data-state="b"] .t-swap-a { opacity: 0; filter: blur(var(--swap-blur)); }
+.t-swap[data-state="b"] .t-swap-b { opacity: 1; filter: blur(0); }
+@media (prefers-reduced-motion: reduce) {
+  .t-swap-a, .t-swap-b { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   6. MENU DROPDOWN (origin-aware)
+   ──────────────────────────────────────────── */
+.t-dropdown {
+  transform-origin: top left;
+  transform: scale(var(--dropdown-pre-scale));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--dropdown-open-dur) var(--dropdown-ease),
+    opacity   var(--dropdown-open-dur) var(--dropdown-ease);
+  will-change: transform, opacity;
+}
+.t-dropdown[data-origin="top-right"]     { transform-origin: top right; }
+.t-dropdown[data-origin="top-center"]    { transform-origin: top center; }
+.t-dropdown[data-origin="bottom-left"]   { transform-origin: bottom left; }
+.t-dropdown[data-origin="bottom-center"] { transform-origin: bottom center; }
+.t-dropdown[data-origin="bottom-right"]  { transform-origin: bottom right; }
+.t-dropdown.is-open { transform: scale(1); opacity: 1; pointer-events: auto; }
+.t-dropdown.is-closing {
+  transform: scale(var(--dropdown-closing-scale));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--dropdown-close-dur) var(--dropdown-ease),
+    opacity   var(--dropdown-close-dur) var(--dropdown-ease);
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-dropdown { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   7. MODAL (scale + fade)
+   ──────────────────────────────────────────── */
+.t-modal-overlay {
+  opacity: 0;
+  transition: opacity var(--modal-in-dur) var(--modal-ease);
+}
+.t-modal-overlay.is-open { opacity: 1; }
+.t-modal-overlay.is-closing { opacity: 0; transition-duration: var(--modal-out-dur); }
+
+.t-modal {
+  transform: scale(var(--modal-scale-in));
+  opacity: 0;
+  transition:
+    transform var(--modal-in-dur) var(--modal-ease),
+    opacity   var(--modal-in-dur) var(--modal-ease);
+  will-change: transform, opacity;
+}
+.t-modal.is-open { transform: scale(1); opacity: 1; }
+.t-modal.is-closing {
+  transform: scale(var(--modal-scale-out));
+  opacity: 0;
+  transition-duration: var(--modal-out-dur);
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-modal, .t-modal-overlay { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   8. PANEL REVEAL (slide + fade)
+   ──────────────────────────────────────────── */
+.t-panel {
+  transform: translateX(100%);
+  opacity: 0;
+  transition:
+    transform var(--panel-in-dur) var(--panel-ease),
+    opacity   var(--panel-in-dur) var(--panel-ease);
+  will-change: transform, opacity;
+}
+.t-panel.is-open { transform: translateX(0); opacity: 1; }
+.t-panel.is-closing {
+  transform: translateX(100%);
+  opacity: 0;
+  transition-duration: var(--panel-out-dur);
+}
+.t-panel[data-dir="left"] { transform: translateX(-100%); }
+.t-panel[data-dir="left"].is-open { transform: translateX(0); }
+.t-panel[data-dir="left"].is-closing { transform: translateX(-100%); }
+.t-panel[data-dir="bottom"] { transform: translateY(100%); }
+.t-panel[data-dir="bottom"].is-open { transform: translateY(0); }
+.t-panel[data-dir="bottom"].is-closing { transform: translateY(100%); }
+@media (prefers-reduced-motion: reduce) {
+  .t-panel { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   9. PAGE SIDE-BY-SIDE (forward/back)
+   ──────────────────────────────────────────── */
+.t-page {
+  opacity: 0;
+  transform: translateX(var(--page-dist));
+  transition:
+    opacity   var(--page-dur) var(--page-ease),
+    transform var(--page-dur) var(--page-ease);
+  will-change: transform, opacity;
+}
+.t-page[data-dir="back"] { transform: translateX(calc(var(--page-dist) * -1)); }
+.t-page.is-active { opacity: 1; transform: translateX(0); }
+.t-page.is-exiting {
+  opacity: 0;
+  transform: translateX(calc(var(--page-dist) * -1));
+  transition-duration: calc(var(--page-dur) * 0.7);
+}
+.t-page[data-dir="back"].is-exiting { transform: translateX(var(--page-dist)); }
+@media (prefers-reduced-motion: reduce) {
+  .t-page { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   10. ICON SWAP (scale + blur crossfade)
+   ──────────────────────────────────────────── */
+.t-icon-wrap { display: inline-grid; }
+.t-icon-a, .t-icon-b {
+  grid-area: 1/1;
+  transition:
+    opacity   var(--icon-swap-dur) var(--icon-swap-ease),
+    transform var(--icon-swap-dur) var(--icon-swap-ease),
+    filter    var(--icon-swap-dur) var(--icon-swap-ease);
+}
+.t-icon-wrap[data-icon="a"] .t-icon-a { opacity: 1; transform: scale(1);                        filter: blur(0); }
+.t-icon-wrap[data-icon="a"] .t-icon-b { opacity: 0; transform: scale(var(--icon-swap-scale));   filter: blur(var(--icon-swap-blur)); }
+.t-icon-wrap[data-icon="b"] .t-icon-a { opacity: 0; transform: scale(var(--icon-swap-scale));   filter: blur(var(--icon-swap-blur)); }
+.t-icon-wrap[data-icon="b"] .t-icon-b { opacity: 1; transform: scale(1);                        filter: blur(0); }
+@media (prefers-reduced-motion: reduce) {
+  .t-icon-a, .t-icon-b { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   11. SUCCESS CHECK (fade + scale + SVG draw)
+   ──────────────────────────────────────────── */
+@keyframes t-check-appear {
+  0%   { opacity: 0; transform: scale(0.7) rotate(-10deg); }
+  60%  { opacity: 1; transform: scale(1.05) rotate(2deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+@keyframes t-check-draw {
+  from { stroke-dashoffset: 100; }
+  to   { stroke-dashoffset: 0; }
+}
+.t-check-wrap {
+  opacity: 0;
+  transform: scale(0.7);
+}
+.t-check-wrap.is-shown {
+  animation: t-check-appear var(--check-dur) var(--check-bounce) both;
+}
+.t-check-path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+.t-check-wrap.is-shown .t-check-path {
+  animation: t-check-draw var(--check-dur) var(--check-bounce) both;
+  animation-delay: 80ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-check-wrap, .t-check-path { animation: none !important; }
+  .t-check-wrap.is-shown { opacity: 1; transform: scale(1); }
+  .t-check-wrap.is-shown .t-check-path { stroke-dashoffset: 0; }
+}
+
+/* ────────────────────────────────────────────
+   12. AVATAR GROUP HOVER (spring lift + falloff)
+   ──────────────────────────────────────────── */
+.t-av-group { display: flex; }
+.t-av-item {
+  transition: transform var(--av-dur) var(--av-ease), z-index 0s;
+  cursor: pointer;
+}
+.t-av-group:hover .t-av-item:hover            { transform: translateY(var(--av-lift)) scale(1.08); z-index: 10; }
+.t-av-group:hover .t-av-item:hover + .t-av-item { transform: translateY(calc(var(--av-lift) * 0.4)); }
+.t-av-group:hover .t-av-item:hover + .t-av-item + .t-av-item { transform: translateY(calc(var(--av-lift) * 0.15)); }
+@media (prefers-reduced-motion: reduce) {
+  .t-av-item { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   13. ERROR STATE SHAKE
+   ──────────────────────────────────────────── */
+@keyframes t-shake {
+  0%, 100% { transform: translateX(0); }
+  15%  { transform: translateX(calc(var(--shake-dist) * -1)); animation-timing-function: var(--shake-ease); }
+  30%  { transform: translateX(var(--shake-dist));            animation-timing-function: var(--shake-ease); }
+  45%  { transform: translateX(calc(var(--shake-dist) * -0.75)); animation-timing-function: var(--shake-ease); }
+  60%  { transform: translateX(calc(var(--shake-dist) * 0.5));   animation-timing-function: var(--shake-ease); }
+  75%  { transform: translateX(calc(var(--shake-dist) * -0.25)); animation-timing-function: var(--shake-ease); }
+  88%  { transform: translateX(var(--shake-overshoot));           animation-timing-function: var(--shake-ease); }
+}
+.t-input.has-error {
+  animation: t-shake var(--shake-dur) var(--shake-ease);
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-input { animation: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   14. ACCORDION (grid-template-rows trick)
+   ──────────────────────────────────────────── */
+.t-acc-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--acc-collapse) var(--acc-ease);
+}
+.t-acc[data-open="true"] .t-acc-panel {
+  grid-template-rows: 1fr;
+  transition: grid-template-rows var(--acc-expand) var(--acc-ease);
+}
+.t-acc-panel-inner {
+  overflow: hidden;
+  opacity: 0;
+  filter: blur(2px);
+  transition: opacity var(--acc-collapse) var(--acc-ease), filter var(--acc-collapse) var(--acc-ease);
+}
+.t-acc[data-open="true"] .t-acc-panel-inner {
+  opacity: 1;
+  filter: blur(0);
+  transition: opacity var(--acc-expand) var(--acc-ease), filter var(--acc-expand) var(--acc-ease);
+}
+.t-acc-chevron {
+  display: inline-flex;
+  transform: scaleY(1);
+  transform-origin: center;
+  transition: transform var(--acc-chevron) var(--acc-ease);
+}
+.t-acc[data-open="true"] .t-acc-chevron { transform: scaleY(-1); }
+@media (prefers-reduced-motion: reduce) {
+  .t-acc-panel, .t-acc-panel-inner, .t-acc-chevron { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   15. TOOLTIP
+   ──────────────────────────────────────────── */
+.t-tt-wrap { position: relative; display: inline-block; }
+.t-tt {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translate(-50%, 0) scale(var(--tt-scale));
+  transform-origin: 50% 100%;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--tt-bg);
+  color: var(--tt-fg);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--tt-out-dur) var(--tt-out-ease), transform var(--tt-out-dur) var(--tt-out-ease);
+  z-index: 100;
+}
+.t-tt-wrap:hover .t-tt,
+.t-tt-trigger:focus-visible + .t-tt {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+  transition-duration: var(--tt-in-dur);
+  transition-timing-function: var(--tt-in-ease);
+  transition-delay: var(--tt-delay);
+}
+.dark .t-tt { --tt-bg: #1c1c2e; --tt-fg: #e8e8ed; }
+@media (prefers-reduced-motion: reduce) {
+  .t-tt { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   16. LIKE BUTTON (heart fill + particle burst)
+   ──────────────────────────────────────────── */
+.t-like-heart { color: currentColor; transition: color var(--like-fill) var(--like-ease); }
+.t-like-heart path { fill: transparent; stroke: currentColor; transition: fill var(--like-fill) var(--like-ease), stroke var(--like-fill) var(--like-ease); }
+.t-like[data-liked="true"] .t-like-heart { color: var(--like-color); }
+.t-like[data-liked="true"] .t-like-heart path { fill: currentColor; }
+.t-like[data-liked="true"] .t-like-icon { animation: t-like-pop var(--like-pop) var(--like-pop-ease); }
+@keyframes t-like-pop { 0% { transform: scale(1); } 30% { transform: scale(0.82); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .t-like-icon { animation: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   17. TABS SLIDING (indicator underline)
+   ──────────────────────────────────────────── */
+.t-tabs { position: relative; }
+.t-tab-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: #007AFF;
+  border-radius: 2px;
+  transition: left var(--tabs-dur) var(--tabs-ease), width var(--tabs-dur) var(--tabs-ease);
+  will-change: left, width;
+}
+.t-tab-btn {
+  position: relative;
+  transition: color var(--tabs-dur) ease, opacity var(--tabs-dur) ease;
+}
+.t-tab-btn[aria-selected="true"] { color: #007AFF; }
+.t-tab-btn[aria-selected="false"] { opacity: 0.6; }
+@media (prefers-reduced-motion: reduce) {
+  .t-tab-indicator, .t-tab-btn { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   18. TOGGLE (thumb slide)
+   ──────────────────────────────────────────── */
+.t-toggle {
+  display: inline-flex;
+  align-items: center;
+  width: 44px;
+  height: 26px;
+  border-radius: 13px;
+  background: #D1D5DB;
+  padding: 3px;
+  cursor: pointer;
+  transition: background var(--toggle-dur) var(--toggle-ease);
+}
+.t-toggle[aria-checked="true"] { background: #007AFF; }
+.t-toggle-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transform: translateX(0);
+  transition: transform var(--toggle-dur) var(--toggle-ease);
+  will-change: transform;
+}
+.t-toggle[aria-checked="true"] .t-toggle-thumb { transform: translateX(18px); }
+@media (prefers-reduced-motion: reduce) {
+  .t-toggle, .t-toggle-thumb { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   19. TOAST (slide up + fade)
+   ──────────────────────────────────────────── */
+@keyframes t-toast-in {
+  from { opacity: 0; transform: translateY(var(--toast-dist)) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes t-toast-out {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 0; transform: translateY(calc(var(--toast-dist) * 0.5)) scale(0.97); }
+}
+.t-toast {
+  animation: t-toast-in var(--toast-in-dur) var(--toast-ease) both;
+}
+.t-toast.is-dismissing {
+  animation: t-toast-out var(--toast-out-dur) var(--toast-ease) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-toast, .t-toast.is-dismissing { animation: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   20. SHIMMER TEXT (animated gradient sweep)
+   ──────────────────────────────────────────── */
+@keyframes t-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.t-shimmer-text {
+  background: linear-gradient(
+    90deg,
+    var(--shimmer-bg) 0%,
+    var(--shimmer-color) 40%,
+    #38BFFF 50%,
+    var(--shimmer-color) 60%,
+    var(--shimmer-bg) 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: t-shimmer var(--shimmer-dur) linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-shimmer-text { animation: none !important; -webkit-text-fill-color: initial; }
+}
+
+/* ────────────────────────────────────────────
+   21. TEXTS REVEAL (staggered blur + slide up)
+   ──────────────────────────────────────────── */
+.t-stagger-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(var(--stagger-distance));
+  filter: blur(var(--stagger-blur));
+  transition:
+    opacity   var(--stagger-dur) var(--stagger-ease),
+    transform var(--stagger-dur) var(--stagger-ease),
+    filter    var(--stagger-dur) var(--stagger-ease);
+  will-change: transform, opacity, filter;
+}
+.t-stagger-line--2 { transition-delay: var(--stagger-stagger); }
+.t-stagger-line--3 { transition-delay: calc(var(--stagger-stagger) * 2); }
+.t-stagger-line--4 { transition-delay: calc(var(--stagger-stagger) * 3); }
+.t-stagger.is-shown .t-stagger-line { opacity: 1; transform: translateY(0); filter: blur(0); }
+.t-stagger.is-hiding .t-stagger-line {
+  opacity: 0;
+  transform: translateY(0);
+  filter: blur(0);
+  transition: opacity 200ms ease, transform 0s linear, filter 0s linear;
+  transition-delay: 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-stagger-line { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   22. SKELETON LOADER + REVEAL
+   ──────────────────────────────────────────── */
+.t-skel { position: relative; }
+.t-skel-skeleton, .t-skel-content { position: absolute; inset: 0; }
+.t-skel-skeleton {
+  z-index: 1; opacity: 1; filter: blur(0);
+  transition: opacity var(--reveal-dur) var(--reveal-ease), filter var(--reveal-dur) var(--reveal-ease);
+}
+.t-skel-content {
+  z-index: 2; opacity: 0; filter: blur(var(--reveal-blur));
+  transition: opacity var(--reveal-dur) var(--reveal-ease), filter var(--reveal-dur) var(--reveal-ease);
+}
+.t-skel.is-revealed .t-skel-skeleton { opacity: 0; filter: blur(var(--reveal-blur)); }
+.t-skel.is-revealed .t-skel-content  { opacity: 1; filter: blur(0); }
+.t-skel.is-resetting .t-skel-skeleton,
+.t-skel.is-resetting .t-skel-content { transition: none !important; }
+.t-skel-skeleton.is-pulsing > * { animation: t-skel-pulse var(--pulse-dur) ease-in-out var(--pulse-count); }
+@keyframes t-skel-pulse { 0%, 100% { opacity: 1; } 50% { opacity: var(--pulse-min); } }
+@media (prefers-reduced-motion: reduce) {
+  .t-skel-skeleton, .t-skel-content { transition: none !important; }
+  .t-skel-skeleton.is-pulsing > * { animation: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   23. CHECKBOX CHECK
+   ──────────────────────────────────────────── */
+.t-cb-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #D1D5DB;
+  border-radius: 6px;
+  background: transparent;
+  transition: background var(--cb-dur) var(--cb-ease), border-color var(--cb-dur) var(--cb-ease), transform var(--cb-dur) var(--cb-ease);
+  cursor: pointer;
+}
+.t-cb-box[aria-checked="true"] { background: #007AFF; border-color: #007AFF; transform: scale(1.05); }
+.t-cb-path {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  transition: stroke-dashoffset var(--cb-dur) var(--cb-ease);
+}
+.t-cb-box[aria-checked="true"] .t-cb-path { stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .t-cb-box, .t-cb-path { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   24. SPINNING COUNTER (digit slot-machine)
+   ──────────────────────────────────────────── */
+.t-counter { display: inline-flex; overflow: hidden; }
+.t-counter-digit { display: inline-flex; flex-direction: column; }
+@keyframes t-counter-spin-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+@keyframes t-counter-spin-down {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+.t-counter-digit.is-spinning-up   { animation: t-counter-spin-up   var(--counter-dur) var(--counter-ease) both; }
+.t-counter-digit.is-spinning-down { animation: t-counter-spin-down var(--counter-dur) var(--counter-ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  .t-counter-digit { animation: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   25. THINKING STATES (animated dots)
+   ──────────────────────────────────────────── */
+@keyframes t-think-blink {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50%       { opacity: 1;   transform: scale(1); }
+}
+.t-thinking-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: t-think-blink var(--stream-blink) ease-in-out infinite;
+}
+.t-thinking-dot:nth-child(2) { animation-delay: 0.2s; }
+.t-thinking-dot:nth-child(3) { animation-delay: 0.4s; }
+@media (prefers-reduced-motion: reduce) {
+  .t-thinking-dot { animation: none !important; opacity: 1; }
+}
+
+/* ────────────────────────────────────────────
+   26. STREAMING TEXT (cursor blink)
+   ──────────────────────────────────────────── */
+@keyframes t-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.t-stream-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: currentColor;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: t-cursor-blink var(--stream-blink) step-end infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-stream-cursor { animation: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   27. INPUT CLEAR DISSOLVE (blur + fade)
+   ──────────────────────────────────────────── */
+.t-input-clear {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+  transition:
+    opacity 180ms ease,
+    filter 180ms ease,
+    transform 180ms var(--t-spring);
+}
+.t-input-clear.is-clearing {
+  opacity: 0;
+  filter: blur(3px);
+  transform: scale(0.96);
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-input-clear { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   28. CARD HOVER LIFT (premium box-shadow pop)
+   ──────────────────────────────────────────── */
+.t-card-lift {
+  transition:
+    transform 280ms var(--t-spring),
+    box-shadow 280ms var(--t-spring);
+  will-change: transform, box-shadow;
+}
+.t-card-lift:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 20px 60px -10px rgba(0, 122, 255, 0.18), 0 8px 20px -5px rgba(0,0,0,0.08);
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-card-lift { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   29. LEARN MORE HOVER (arrow slide)
+   ──────────────────────────────────────────── */
+.t-learn-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.t-learn-more-arrow {
+  transition: transform 220ms var(--t-spring);
+  display: inline-block;
+}
+.t-learn-more:hover .t-learn-more-arrow {
+  transform: translateX(5px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-learn-more-arrow { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   30. BANNER STACKING (layered cards)
+   ──────────────────────────────────────────── */
+.t-banner-stack { position: relative; }
+.t-banner-item {
+  transition: transform 300ms var(--t-spring), opacity 300ms ease;
+  will-change: transform, opacity;
+}
+.t-banner-stack:hover .t-banner-item:nth-child(2) { transform: translateY(-6px) scale(0.98); opacity: 0.7; }
+.t-banner-stack:hover .t-banner-item:nth-child(3) { transform: translateY(-10px) scale(0.96); opacity: 0.5; }
+@media (prefers-reduced-motion: reduce) {
+  .t-banner-item { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   31. PLUS → MENU MORPH (rotation morph)
+   ──────────────────────────────────────────── */
+.t-plus-btn {
+  transition: transform 280ms var(--t-spring), background 250ms ease;
+}
+.t-plus-btn.is-open {
+  transform: rotate(45deg);
+  background: #ef4444;
+}
+.t-plus-btn .t-plus-line {
+  transition: transform 250ms var(--t-spring), opacity 200ms ease;
+  transform-origin: center;
+}
+.t-plus-btn.is-open .t-plus-line-v { transform: rotate(90deg); opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .t-plus-btn, .t-plus-line { transition: none !important; }
+}
+
+/* ────────────────────────────────────────────
+   32. MATRIX DOT LOADER
+   ──────────────────────────────────────────── */
+@keyframes t-matrix-dot {
+  0%, 100% { opacity: 0.1; transform: scale(0.7); }
+  50%       { opacity: 1;   transform: scale(1); }
+}
+.t-matrix-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 2px;
+  background: currentColor;
+  animation: t-matrix-dot 1.4s ease-in-out infinite;
+}
+.t-matrix-dot:nth-child(2) { animation-delay: 0.1s; }
+.t-matrix-dot:nth-child(3) { animation-delay: 0.2s; }
+.t-matrix-dot:nth-child(4) { animation-delay: 0.3s; }
+.t-matrix-dot:nth-child(5) { animation-delay: 0.4s; }
+.t-matrix-dot:nth-child(6) { animation-delay: 0.5s; }
+.t-matrix-dot:nth-child(7) { animation-delay: 0.6s; }
+.t-matrix-dot:nth-child(8) { animation-delay: 0.7s; }
+.t-matrix-dot:nth-child(9) { animation-delay: 0.8s; }
+@media (prefers-reduced-motion: reduce) {
+  .t-matrix-dot { animation: none !important; opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VIDYA AI — Sitewide Transition Applications
+   Applies transitions.dev t-* classes to existing VIDYA AI components
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Navbar logo text shimmer on hover */
+.group:hover .navbar-logo-text {
+  background: linear-gradient(90deg, #007AFF 0%, #38BFFF 50%, #007AFF 100%);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: t-shimmer 1.5s linear infinite;
+}
+
+/* All cards get lift */
+.card, [class*="rounded-2xl"], [class*="rounded-3xl"] {
+  transition: transform 280ms var(--t-spring), box-shadow 280ms var(--t-spring);
+}
+
+/* Page-level fade-in on tab switch (already have animate-fade-in, enhance it) */
+.animate-fade-in {
+  animation: t-page-fade-in 400ms var(--t-spring) both;
+}
+@keyframes t-page-fade-in {
+  from { opacity: 0; transform: translateY(10px); filter: blur(2px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+/* Stagger children inside sections */
+.t-stagger-children > * {
+  opacity: 0;
+  transform: translateY(16px);
+  filter: blur(2px);
+  transition:
+    opacity 500ms var(--t-spring),
+    transform 500ms var(--t-spring),
+    filter 500ms var(--t-spring);
+}
+.t-stagger-children.is-shown > *:nth-child(1) { opacity: 1; transform: none; filter: none; transition-delay: 0ms; }
+.t-stagger-children.is-shown > *:nth-child(2) { opacity: 1; transform: none; filter: none; transition-delay: 60ms; }
+.t-stagger-children.is-shown > *:nth-child(3) { opacity: 1; transform: none; filter: none; transition-delay: 120ms; }
+.t-stagger-children.is-shown > *:nth-child(4) { opacity: 1; transform: none; filter: none; transition-delay: 180ms; }
+.t-stagger-children.is-shown > *:nth-child(5) { opacity: 1; transform: none; filter: none; transition-delay: 240ms; }
+.t-stagger-children.is-shown > *:nth-child(n+6) { opacity: 1; transform: none; filter: none; transition-delay: 300ms; }
+
+/* Buttons: micro-press feedback */
+button, [role="button"] {
+  transition: transform 120ms ease, opacity 120ms ease;
+}
+button:active:not(:disabled), [role="button"]:active {
+  transform: scale(0.97);
+}
+
+/* Focus rings: smooth reveal */
+:focus-visible {
+  outline: 2px solid #007AFF;
+  outline-offset: 3px;
+  transition: outline-offset 100ms ease;
+}
+

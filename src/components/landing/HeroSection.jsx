@@ -4,6 +4,10 @@ import {
   Sparkles, 
   ArrowRight, 
   ChevronRight, 
+  ChevronDown,
+  Play,
+  Database,
+  Check,
   GraduationCap, 
   FileCheck, 
   CheckCircle2, 
@@ -69,7 +73,7 @@ const BTECH_SEMESTER_SUBJECTS = {
   ]
 };
 
-export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester, user, onOpenAuth }) => {
+export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
   const containerRef = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -83,6 +87,7 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester, user, o
   const heroOpacity = useTransform(smoothScroll, [0, 0.85, 1], [1, 0.95, 0.7]);
 
   const [isWizardOpen, setIsWizardOpen] = useState(false);
+  const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
   
   // Guided Diagnostic Session States
   const [wizardStep, setWizardStep] = useState(1);
@@ -324,91 +329,394 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester, user, o
     <section 
       id="hero-section"
       ref={containerRef}
-      className="relative w-full flex flex-col items-center justify-center pt-2 sm:pt-4 md:pt-6 pb-6 sm:pb-10 px-4 sm:px-8 lg:px-12 xl:px-16 text-center space-y-5 sm:space-y-6 w-full max-w-7xl 2xl:max-w-[1500px] mx-auto overflow-visible"
+      className="relative w-full flex flex-col items-center justify-center pt-6 sm:pt-10 md:pt-14 pb-8 sm:pb-14 px-4 sm:px-8 lg:px-12 xl:px-16 text-center w-full max-w-7xl 2xl:max-w-[1500px] mx-auto overflow-visible"
     >
       
-      {/* Background Atmospheric Layer */}
-      <motion.div 
-        style={{ y: bgY, scale: bgScale }}
-        className="absolute inset-0 pointer-events-none -z-10 scroll-gpu flex items-center justify-center"
-      >
-        <div className="w-[850px] sm:w-[1150px] lg:w-[1350px] h-[480px] bg-gradient-to-tr from-[#007AFF]/18 via-[#5AC8FA]/12 to-[#007AFF]/15 blur-[130px] rounded-full" />
-        <div className="absolute top-1/4 -left-20 w-[380px] h-[380px] bg-[#007AFF]/10 blur-[110px] rounded-full" />
-        <div className="absolute top-1/4 -right-20 w-[380px] h-[380px] bg-[#5AC8FA]/10 blur-[110px] rounded-full" />
-        <div className="absolute inset-0 opacity-[0.025] dark:opacity-[0.045] bg-[radial-gradient(#007AFF_1px,transparent_1px)] [background-size:24px_24px]" />
-      </motion.div>
-
-      {/* Main Subject Plane (Headline, Subtitle, Primary CTA) */}
-      <motion.div 
-        style={{ y: textY, opacity: heroOpacity }}
-        className="space-y-4 sm:space-y-5 w-full scroll-gpu pt-2 sm:pt-4"
-      >
-        {/* Hero Headline & Subtitle */}
-        <div className="space-y-3 w-full">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-black tracking-tight leading-[1.08] select-none font-display">
-            <span className="text-[#1D1D1F] dark:text-[#F5F5F7] block">
-              The Official AI Academic
-            </span>
-            <span className="block bg-gradient-to-r from-[#007AFF] via-[#3395FF] to-[#5AC8FA] bg-clip-text text-transparent">
-              Intelligence Platform
-            </span>
-          </h1>
-
-          <p className="text-base sm:text-lg md:text-xl text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-3xl sm:max-w-4xl mx-auto font-normal font-sans pt-0.5">
-            Verbatim syllabus extraction, authentic non-fabricated PYQ vaults, and adaptive exam readiness engines engineered for university students and educators across India.
-          </p>
+      {/* Team Header Section (Galilee Style) */}
+      <div className="w-full max-w-[1360px] mx-auto px-4 sm:px-6 mb-7 flex flex-col md:flex-row md:items-end justify-between gap-4 text-left">
+        <div>
+          <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 font-bold">TEAM</span>
+          <h2 className="text-2xl sm:text-3xl font-black text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight font-display mt-1">
+            Built by a world-class team of AI experts
+          </h2>
         </div>
+        <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 max-w-md font-sans leading-relaxed">
+          The Vidya AI team comprises over 20 machine learning scientists, engineers and curriculum researchers, continuously optimizing the platform's academic experience through cutting-edge research.
+        </p>
+      </div>
 
-        {/* Primary Call-to-Action */}
-        <div className="pt-2 flex flex-col items-center justify-center gap-3">
-          <button
-            type="button"
-            onClick={() => {
-              if (!user && onOpenAuth) {
-                onOpenAuth();
-              } else {
+      {/* Main Galilee-style Hero Card with Nature Background */}
+      <div className="w-full max-w-[1360px] mx-auto rounded-[32px] sm:rounded-[44px] overflow-hidden relative shadow-[0_30px_90px_rgba(0,0,0,0.15)] border border-black/[0.08] dark:border-white/[0.12] bg-[#E8EFE9] text-left">
+        {/* Serene Nature Background Image */}
+        <img 
+          src="/images/galilee_hero_bg.jpg" 
+          alt="Serene Galilee Style Landscape" 
+          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
+        />
+        
+        {/* Atmospheric Gradient Layer */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/20 to-black/30 pointer-events-none" />
+
+        {/* Content Container Inside Hero */}
+        <div className="relative z-10 flex flex-col justify-between min-h-[640px] sm:min-h-[740px] pt-6 sm:pt-8 px-4 sm:px-8 md:px-12">
+          
+          {/* Top Bar Inside Hero (Galilee Style) */}
+          <div className="w-full flex items-center justify-between pb-6 sm:pb-8 border-b border-black/[0.06]">
+            {/* Left: Product Links */}
+            <div className="hidden md:flex items-center gap-6 text-[12px] font-bold text-neutral-800 tracking-wider uppercase font-sans">
+              <button 
+                type="button" 
+                onClick={() => setActiveTab('studyHub')}
+                className="flex items-center gap-1 hover:text-black transition-colors cursor-pointer"
+              >
+                <span>PRODUCT</span>
+                <ChevronDown className="w-3.5 h-3.5 opacity-60" />
+              </button>
+              <button 
+                type="button" 
+                onClick={() => setActiveTab('collegeHub')}
+                className="hover:text-black transition-colors cursor-pointer"
+              >
+                STANDARDS
+              </button>
+              <button 
+                type="button" 
+                onClick={() => setActiveTab('mockTests')}
+                className="hover:text-black transition-colors cursor-pointer"
+              >
+                PRICING
+              </button>
+              <button 
+                type="button" 
+                onClick={() => setActiveTab('doubtSolver')}
+                className="hover:text-black transition-colors cursor-pointer"
+              >
+                FAQ
+              </button>
+            </div>
+
+            {/* Center: Brand Name "Vidya." */}
+            <div className="text-2xl sm:text-3xl font-black tracking-tight text-[#111827] font-display select-none">
+              <span>Vidya</span>
+              <span className="text-[#007AFF]">.</span>
+            </div>
+
+            {/* Right: Pill Actions */}
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setIsDemoModalOpen(true)}
+                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/75 hover:bg-white text-neutral-900 text-[11px] font-bold uppercase tracking-wider backdrop-blur-md border border-white/80 shadow-sm transition-all hover:scale-105 active:scale-95 cursor-pointer"
+              >
+                <span>WATCH DEMO</span>
+                <Play className="w-2.5 h-2.5 fill-current" />
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setWizardStep(1);
+                  setIsWizardOpen(true);
+                }}
+                className="px-5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-[#111827] hover:bg-black text-white text-[11px] sm:text-[12px] font-bold uppercase tracking-wider shadow-md hover:shadow-xl transition-all hover:scale-105 active:scale-95 cursor-pointer"
+              >
+                GET STARTED
+              </button>
+            </div>
+          </div>
+
+          {/* Center: Headline & Capsule Badge */}
+          <div className="my-auto py-10 sm:py-14 text-center max-w-3xl mx-auto space-y-5">
+            {/* Capsule Badge */}
+            <motion.div 
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="inline-flex items-center gap-2.5 px-1.5 py-1 pr-3.5 rounded-full bg-white/60 backdrop-blur-md border border-white/70 shadow-sm cursor-pointer hover:bg-white/85 transition-all"
+              onClick={() => {
                 setWizardStep(1);
                 setIsWizardOpen(true);
-              }
-            }}
-            className="group relative inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-3.5 sm:py-4 rounded-full bg-[#007AFF] hover:bg-[#0062CC] text-white font-display font-bold text-base sm:text-lg shadow-xl shadow-[#007AFF]/30 hover:shadow-[#007AFF]/50 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
-          >
-            <Sparkles className="w-5 h-5 text-white/90 group-hover:rotate-12 transition-transform duration-300" />
-            <span>Let's Get Started</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
-          </button>
+              }}
+            >
+              <span className="px-3 py-0.5 rounded-full bg-[#F3EAD8] text-[#8C6934] text-[10px] sm:text-[11px] font-bold tracking-wider uppercase">
+                FALL RELEASE
+              </span>
+              <span className="text-xs sm:text-[13px] font-semibold text-neutral-800 flex items-center gap-1">
+                See what's new <ArrowRight className="w-3.5 h-3.5 ml-0.5" />
+              </span>
+            </motion.div>
 
-          {/* Trust Points */}
-          <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] font-mono text-neutral-500 dark:text-neutral-400 pt-1">
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-              <span>Verbatim BoS Syllabi</span>
-            </span>
-            <span className="hidden sm:inline text-neutral-300 dark:text-neutral-700">•</span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-              <span>100% Non-Fabricated PYQs</span>
-            </span>
-            <span className="hidden sm:inline text-neutral-300 dark:text-neutral-700">•</span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-              <span>Adaptive Retention</span>
-            </span>
+            {/* Display Headline */}
+            <motion.h1 
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-[-0.035em] leading-[1.08] text-[#111827] font-display"
+            >
+              Turn AI insights into actions that matter.
+            </motion.h1>
+
+            {/* Pill Buttons */}
+            <motion.div 
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="flex flex-wrap items-center justify-center gap-3.5 pt-2"
+            >
+              <button
+                type="button"
+                onClick={() => {
+                  setWizardStep(1);
+                  setIsWizardOpen(true);
+                }}
+                className="px-7 sm:px-9 py-3 sm:py-3.5 rounded-full bg-[#111827] hover:bg-black text-white text-[12px] sm:text-[13px] font-bold tracking-wider uppercase shadow-xl hover:shadow-2xl hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
+              >
+                GET STARTED
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('studyHub')}
+                className="px-7 sm:px-9 py-3 sm:py-3.5 rounded-full bg-white/75 hover:bg-white text-neutral-900 text-[12px] sm:text-[13px] font-bold tracking-wider uppercase backdrop-blur-md border border-white/80 shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
+              >
+                REQUEST A DEMO
+              </button>
+            </motion.div>
+          </div>
+
+          {/* Bottom 4 Frosted Glass Floating Cards (01, 02, 03, 04) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 pb-8 sm:pb-10 pt-4">
+            
+            {/* Card 01: Data Secured */}
+            <motion.div 
+              whileHover={{ y: -6 }}
+              className="rounded-3xl p-5 bg-white/40 backdrop-blur-2xl border border-white/60 shadow-xl flex flex-col justify-between text-left transition-all duration-300 group cursor-pointer"
+              onClick={() => setActiveTab('pyqVault')}
+            >
+              <div className="text-xs font-mono font-bold text-neutral-600 mb-8">01.</div>
+              <div className="bg-white rounded-2xl p-4 shadow-sm border border-white/90 space-y-2.5">
+                <div className="flex items-center justify-between text-xs py-1 px-1 border-b border-neutral-100">
+                  <div className="flex items-center gap-2 font-bold text-neutral-800">
+                    <div className="w-4 h-4 rounded bg-neutral-100 flex items-center justify-center">
+                      <Database className="w-3 h-3 text-neutral-600" />
+                    </div>
+                    <span>Data #1</span>
+                  </div>
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-600 border border-neutral-200">
+                    Secured
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-xs py-1 px-1 border-b border-neutral-100">
+                  <div className="flex items-center gap-2 font-bold text-neutral-800">
+                    <div className="w-4 h-4 rounded bg-neutral-100 flex items-center justify-center">
+                      <Database className="w-3 h-3 text-neutral-600" />
+                    </div>
+                    <span>Data #2</span>
+                  </div>
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-600 border border-neutral-200">
+                    Secured
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-xs py-1 px-1">
+                  <div className="flex items-center gap-2 font-bold text-neutral-800">
+                    <div className="w-4 h-4 rounded bg-neutral-100 flex items-center justify-center">
+                      <Database className="w-3 h-3 text-neutral-600" />
+                    </div>
+                    <span>Data #3</span>
+                  </div>
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-600 border border-neutral-200">
+                    Secured
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Card 02: Drag & Drop Reusable Components */}
+            <motion.div 
+              whileHover={{ y: -6 }}
+              className="rounded-3xl p-5 bg-white/40 backdrop-blur-2xl border border-white/60 shadow-xl flex flex-col justify-between text-left transition-all duration-300 group cursor-pointer"
+              onClick={() => setActiveTab('studyHub')}
+            >
+              <div className="text-xs font-mono font-bold text-neutral-600 mb-8">02.</div>
+              <div className="bg-white rounded-2xl p-4 shadow-sm border border-white/90 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-[10px] text-neutral-400 font-mono">Drag & Drop</div>
+                    <div className="text-xs font-bold text-neutral-800">Reusable Components</div>
+                  </div>
+                  <div className="flex -space-x-1.5">
+                    <div className="w-5 h-5 rounded-full bg-amber-400 border border-white text-[9px] flex items-center justify-center font-bold text-white">A</div>
+                    <div className="w-5 h-5 rounded-full bg-indigo-500 border border-white text-[9px] flex items-center justify-center font-bold text-white">S</div>
+                    <div className="w-5 h-5 rounded-full bg-emerald-500 border border-white text-[9px] flex items-center justify-center font-bold text-white">R</div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-1.5 pt-1">
+                  <div className="h-10 rounded-lg bg-neutral-100/90 border border-neutral-200/60" />
+                  <div className="h-10 rounded-lg bg-neutral-100/90 border border-neutral-200/60" />
+                  <div className="h-10 rounded-lg bg-neutral-100/90 border border-neutral-200/60" />
+                </div>
+                <div className="space-y-1 pt-0.5">
+                  <div className="w-3/4 h-1.5 rounded-full bg-neutral-100" />
+                  <div className="w-1/2 h-1.5 rounded-full bg-neutral-100" />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Card 03: Automation */}
+            <motion.div 
+              whileHover={{ y: -6 }}
+              className="rounded-3xl p-5 bg-white/40 backdrop-blur-2xl border border-white/60 shadow-xl flex flex-col justify-between text-left transition-all duration-300 group cursor-pointer"
+              onClick={() => setActiveTab('mockTests')}
+            >
+              <div className="text-xs font-mono font-bold text-neutral-600 mb-8">03.</div>
+              <div className="bg-white rounded-2xl p-4 shadow-sm border border-white/90 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-neutral-800">
+                    <Zap className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                    <span>Automation</span>
+                  </div>
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-600 border border-neutral-200">
+                    Analyse Risks
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="h-12 rounded-xl bg-neutral-100/80 p-2 flex flex-col justify-between">
+                    <div className="w-8 h-1.5 bg-neutral-300 rounded-full" />
+                    <div className="text-[11px] font-bold text-neutral-700">94.8% Hit</div>
+                  </div>
+                  <div className="h-12 rounded-xl bg-neutral-100/80 p-2 flex flex-col justify-between">
+                    <div className="w-10 h-1.5 bg-neutral-300 rounded-full" />
+                    <div className="text-[11px] font-bold text-neutral-700">3 Flagged</div>
+                  </div>
+                </div>
+                <div className="text-[10px] text-neutral-400 font-sans truncate">
+                  Insights - Automated By a Vidya
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Card 04: Reports */}
+            <motion.div 
+              whileHover={{ y: -6 }}
+              className="rounded-3xl p-5 bg-white/40 backdrop-blur-2xl border border-white/60 shadow-xl flex flex-col justify-between text-left transition-all duration-300 group cursor-pointer"
+              onClick={() => setActiveTab('dashboard')}
+            >
+              <div className="text-xs font-mono font-bold text-neutral-600 mb-8">04.</div>
+              <div className="bg-white rounded-2xl p-4 shadow-sm border border-white/90 space-y-2.5">
+                <div className="text-xs font-bold text-neutral-800">Reports</div>
+                <div className="flex items-center gap-3">
+                  <div className="space-y-1.5 text-[11px] text-neutral-500">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
+                      <div className="w-12 h-1.5 bg-neutral-100 rounded-full" />
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
+                      <div className="w-10 h-1.5 bg-neutral-100 rounded-full" />
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
+                      <div className="w-14 h-1.5 bg-neutral-100 rounded-full" />
+                    </div>
+                  </div>
+                  
+                  {/* Spline Chart */}
+                  <div className="ml-auto w-24 h-10">
+                    <svg viewBox="0 0 100 40" className="w-full h-full overflow-visible">
+                      <path 
+                        d="M0 32 Q 20 20, 35 28 T 60 18 T 85 24 T 100 8" 
+                        fill="none" 
+                        stroke="#14B8A6" 
+                        strokeWidth="2.5" 
+                        strokeLinecap="round" 
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Subtitle & Learn More CTA Underneath Hero Card */}
+      <div className="w-full max-w-2xl mx-auto mt-10 text-center space-y-4">
+        <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 font-sans leading-relaxed">
+          Skip one-off rebuilds. Vidya standardizes AI delivery so teams move faster with less risk.
+        </p>
+        <div>
+          <button
+            type="button"
+            onClick={() => setActiveTab('studyHub')}
+            className="px-6 py-2.5 rounded-full bg-[#111827] hover:bg-black text-white text-[11px] font-bold uppercase tracking-wider shadow-md hover:shadow-lg transition-all cursor-pointer hover:scale-105 active:scale-95"
+          >
+            LEARN MORE
+          </button>
+        </div>
+      </div>
+
+      {/* Interactive Watch Demo Modal */}
+      {isDemoModalOpen && (
+        <div 
+          className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsDemoModalOpen(false);
+          }}
+        >
+          <div className="relative w-full max-w-3xl rounded-3xl bg-[#111827] text-white p-6 sm:p-8 shadow-2xl border border-white/10 space-y-5 animate-scale-in">
+            <div className="flex items-center justify-between pb-4 border-b border-white/10">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
+                <h3 className="font-display font-bold text-lg text-white">Vidya AI — Platform Interactive Walkthrough</h3>
+              </div>
+              <button 
+                type="button" 
+                onClick={() => setIsDemoModalOpen(false)}
+                className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white transition-all cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            
+            <div className="aspect-video w-full rounded-2xl overflow-hidden bg-black/50 border border-white/10 relative flex items-center justify-center group">
+              <img 
+                src="/images/galilee_hero_bg.jpg" 
+                alt="Demo Preview" 
+                className="absolute inset-0 w-full h-full object-cover opacity-60"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+              <div className="relative z-10 text-center space-y-3 px-6">
+                <div className="w-16 h-16 rounded-full bg-[#007AFF] text-white flex items-center justify-center mx-auto shadow-2xl group-hover:scale-110 transition-transform cursor-pointer">
+                  <Play className="w-6 h-6 fill-current ml-1" />
+                </div>
+                <div className="text-base font-bold">Watch Vidya AI in 90 Seconds</div>
+                <p className="text-xs text-neutral-300 max-w-md mx-auto">
+                  From verbatim university syllabus extraction to automated PYQ prediction and adaptive mock tests.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between pt-2">
+              <div className="text-xs text-neutral-400 font-mono">
+                Official Engine • Release 2026
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsDemoModalOpen(false);
+                  setWizardStep(1);
+                  setIsWizardOpen(true);
+                }}
+                className="px-5 py-2 rounded-full bg-[#007AFF] hover:bg-[#0062CC] text-white text-xs font-bold transition-all cursor-pointer"
+              >
+                Launch Setup Wizard
+              </button>
+            </div>
           </div>
         </div>
-      </motion.div>
+      )}
 
       {/* 4. Pan-India Audited Universities Continuous Marquee Ticker (Premier Institutes Upfront, Larger & Smooth) */}
       <div className="w-full max-w-7xl mx-auto pt-6 overflow-hidden">
-        <div className="text-center mb-4">
-          <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[#1D1D1F]/70 dark:text-[#AAAAAA] inline-flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#007AFF] animate-pulse" />
-            <span>Audited Across 36 Premier Pan-India Technical Universities & Authorities</span>
-            <span className="px-2.5 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF] text-[11px] font-bold border border-[#007AFF]/25">
-              100% Verifiable Source URLs
-            </span>
-          </span>
-        </div>
+
 
         <div className="relative w-full overflow-hidden mask-fade-edges py-3">
           <div className="animate-marquee-premium gap-4 sm:gap-5 py-2">
