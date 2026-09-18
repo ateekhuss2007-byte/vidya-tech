@@ -37,9 +37,9 @@ export const StudyRoomView = ({
   initialSemester = 3,
   onSelectSemester
 }) => {
-  // Track selection state: check localStorage or prompt first
+  // Track selection state: check localStorage or default to ssc_cgl
   const [selectedTrack, setSelectedTrack] = useState(() => {
-    return localStorage.getItem('vidya_target_track') || null;
+    return localStorage.getItem('vidya_target_track') || 'ssc_cgl';
   });
   const [showTrackModal, setShowTrackModal] = useState(false);
 
@@ -65,9 +65,9 @@ export const StudyRoomView = ({
   };
 
   const currentTrackMeta = TARGET_TRACK_OPTIONS.find(t => t.id === selectedTrack) || {
-    id: 'btech',
-    title: 'B.Tech Engineering (All 8 Semesters)',
-    icon: '🎓'
+    id: 'ssc_cgl',
+    title: 'SSC CGL (Tier-1 & Tier-2)',
+    icon: '🎯'
   };
 
   const yearCategories = [
@@ -143,7 +143,7 @@ export const StudyRoomView = ({
   }
 
   return (
-    <div className="w-full fluid-container py-6 sm:py-8 animate-fade-in space-y-6">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 animate-fade-in space-y-4">
       
       {/* Target Track Switcher Modal if opened */}
       {showTrackModal && (
@@ -155,34 +155,34 @@ export const StudyRoomView = ({
         />
       )}
 
-      {/* Persistent Active Goal Bar across all streams */}
-      <div className="px-5 py-3 rounded-2xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
-        <div className="flex items-center gap-2.5">
-          <span className="text-xl">{currentTrackMeta.icon}</span>
-          <div>
-            <div className="text-[10px] font-mono text-[#AAAAAA] uppercase tracking-wider">
-              Selected Preparation Track:
-            </div>
-            <div className="text-xs sm:text-sm font-bold font-mono text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2">
-              <span>{currentTrackMeta.title}</span>
-              {selectedTrack === 'btech' && (
+      {/* Persistent Active Goal Bar ONLY for B.Tech engineering */}
+      {selectedTrack === 'btech' && (
+        <div className="px-5 py-3 rounded-2xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+          <div className="flex items-center gap-2.5">
+            <span className="text-xl">{currentTrackMeta.icon}</span>
+            <div>
+              <div className="text-[10px] font-mono text-[#AAAAAA] uppercase tracking-wider">
+                Selected Preparation Track:
+              </div>
+              <div className="text-xs sm:text-sm font-bold font-mono text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center gap-2">
+                <span>{currentTrackMeta.title}</span>
                 <span className="px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30 text-[10px] font-bold">
                   Semester {activeSem}
                 </span>
-              )}
+              </div>
             </div>
           </div>
-        </div>
 
-        <button
-          type="button"
-          onClick={() => setShowTrackModal(true)}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.06] hover:bg-[#007AFF]/10 text-[#007AFF] text-xs font-mono font-bold border border-[#AAAAAA]/30 dark:border-white/[0.1] hover:border-[#007AFF] transition-all cursor-pointer self-stretch sm:self-auto justify-center"
-        >
-          <RotateCcw className="w-3.5 h-3.5" />
-          <span>Change Track (B.Tech / 10th / 12th / SSC / JEE / GATE)</span>
-        </button>
-      </div>
+          <button
+            type="button"
+            onClick={() => setShowTrackModal(true)}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.06] hover:bg-[#007AFF]/10 text-[#007AFF] text-xs font-mono font-bold border border-[#AAAAAA]/30 dark:border-white/[0.1] hover:border-[#007AFF] transition-all cursor-pointer self-stretch sm:self-auto justify-center"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Change Track (B.Tech / 10th / 12th / SSC / JEE / GATE)</span>
+          </button>
+        </div>
+      )}
 
       {/* =========================================================================
           CASE A: USER SELECTED B.TECH ENGINEERING
