@@ -92,13 +92,13 @@ export const Navbar = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Clean Reference Navigation Links
+  // Clean Reference Navigation Links with Icons
   const navLinks = [
-    { id: 'home', label: 'Overview' },
-    { id: 'studyHub', label: 'Study Room' },
-    { id: 'collegeHub', label: 'Curriculum' },
-    { id: 'mockTests', label: 'Mock Tests' },
-    { id: 'dashboard', label: 'Dashboard' }
+    { id: 'home', label: 'Overview', icon: Home },
+    { id: 'studyHub', label: 'Study Room', icon: BookOpen },
+    { id: 'collegeHub', label: 'Curriculum', icon: Layers },
+    { id: 'mockTests', label: 'Mock Tests', icon: FileCheck },
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard }
   ];
 
   const handleLogout = () => {
@@ -116,63 +116,107 @@ export const Navbar = ({
     <>
       <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#F5F5F7]/90 dark:bg-[#1D1D1F]/90 backdrop-blur-xl border-b border-[#AAAAAA]/30 dark:border-[#AAAAAA]/20 shadow-[0_2px_15px_rgba(0,0,0,0.04)]'
-          : 'bg-[#F5F5F7] dark:bg-[#1D1D1F] border-b border-[#AAAAAA]/20 dark:border-[#AAAAAA]/15'
+          ? 'bg-white/90 dark:bg-[#0A0E1A]/90 backdrop-blur-2xl border-b border-slate-200/90 dark:border-white/10 shadow-[0_10px_30px_-10px_rgba(0,122,255,0.08)]'
+          : 'bg-white/75 dark:bg-[#0A0E1A]/75 backdrop-blur-xl border-b border-slate-200/60 dark:border-white/[0.08]'
       }`}>
-        <div className="w-full px-5 sm:px-8 md:px-12 lg:px-16 flex items-center justify-between h-16 sm:h-17">
+        {/* Glowing atmospheric accent line under navbar */}
+        <div className="absolute bottom-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#007AFF]/40 dark:via-[#38BDF8]/40 to-transparent pointer-events-none" />
+
+        <div className="w-full max-w-[1560px] mx-auto px-4 sm:px-6 md:px-10 lg:px-12 flex items-center justify-between h-16 sm:h-18">
           
-          {/* 1. Left: Gemini Notebook-style Logo (Blue Arches + Vidya AI) */}
-          <div className="flex items-center shrink-0">
+          {/* 1. Left: Distinctive Vidya AI Logo with Glass Shield Badge */}
+          <div className="flex items-center gap-3 shrink-0">
             <button 
               type="button"
               onClick={() => setActiveTab('home')} 
               className="flex items-center gap-3 text-left group cursor-pointer focus:outline-none"
             >
-              <NotebookArchesIcon />
-              <span className="font-sans font-bold text-[19px] sm:text-[21px] tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#0EA5E9] dark:group-hover:text-[#38BDF8] transition-colors duration-200">
-                Vidya AI
-              </span>
+              <div className="p-1 rounded-xl bg-sky-500/10 dark:bg-sky-400/10 border border-sky-400/25 group-hover:border-sky-400/60 group-hover:shadow-[0_0_15px_rgba(56,189,248,0.35)] transition-all duration-300">
+                <NotebookArchesIcon />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="font-sans font-extrabold text-[20px] sm:text-[22px] tracking-tight text-slate-900 dark:text-white group-hover:text-[#0EA5E9] dark:group-hover:text-[#38BDF8] transition-colors duration-200">
+                  Vidya AI
+                </span>
+                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#38BDF8]/15 dark:text-[#38BDF8] border border-[#007AFF]/20 shadow-xs">
+                  2.0
+                </span>
+              </div>
             </button>
           </div>
 
-          {/* 2. Right: Overview (underlined) + Links + Discord/Reddit/X + Get the App */}
-          <div className="flex items-center gap-5 sm:gap-6 lg:gap-7">
+          {/* 2. Center: Distinctive Segmented Capsule Navigation Dock */}
+          <nav className="hidden md:flex items-center p-1 rounded-full bg-slate-100/90 dark:bg-white/[0.06] border border-slate-200/90 dark:border-white/10 shadow-[inset_0_1px_3px_rgba(0,0,0,0.06)] gap-1">
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+              const isActive = activeTab === link.id;
+
+              return (
+                <button
+                  key={link.id}
+                  type="button"
+                  onClick={() => setActiveTab(link.id)}
+                  className={`relative px-3.5 sm:px-4 py-1.5 rounded-full text-xs sm:text-[13px] font-medium transition-all duration-200 cursor-pointer flex items-center gap-1.5 z-10 ${
+                    isActive
+                      ? 'text-[#007AFF] dark:text-white font-bold'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5'
+                  }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeNavHighlight"
+                      className="absolute inset-0 rounded-full bg-white dark:bg-gradient-to-r dark:from-[#007AFF] dark:to-[#0284C7] shadow-sm shadow-blue-500/20 border border-black/5 dark:border-white/15"
+                      transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center gap-1.5">
+                    <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#007AFF] dark:text-white' : 'opacity-70'}`} />
+                    <span>{link.label}</span>
+                  </span>
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* 3. Right: Search + Theme Toggle + User Actions */}
+          <div className="flex items-center gap-2 sm:gap-3">
             
-            {/* Primary Nav Links */}
-            <nav className="hidden md:flex items-center gap-5 lg:gap-6">
-              {navLinks.map((link) => {
-                const isActive = activeTab === link.id;
+            {/* Quick Cmd+K Search Capsule */}
+            <button
+              type="button"
+              onClick={onOpenSearch}
+              aria-label="Search"
+              className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100/90 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 text-xs text-slate-500 dark:text-slate-400 hover:border-[#007AFF]/40 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer shadow-2xs"
+            >
+              <Search className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+              <span className="text-[11px] font-medium">Search</span>
+              <kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-black/40 border border-slate-200 dark:border-white/10 text-[9px] font-mono font-bold text-slate-400">⌘K</kbd>
+            </button>
 
-                return (
-                  <button
-                    key={link.id}
-                    type="button"
-                    onClick={() => setActiveTab(link.id)}
-                    className={`relative text-[14px] transition-colors cursor-pointer py-1 ${
-                      isActive
-                        ? 'text-[#007AFF] font-medium border-b-2 border-[#007AFF]'
-                        : 'text-neutral-600 dark:text-neutral-300 hover:text-[#007AFF] dark:hover:text-[#007AFF] font-normal'
-                    }`}
-                  >
-                    {link.label}
-                  </button>
-                );
-              })}
-            </nav>
+            {/* Mobile / Tablet search icon */}
+            <button
+              type="button"
+              onClick={onOpenSearch}
+              aria-label="Search"
+              className="lg:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer"
+            >
+              <Search className="w-4 h-4" />
+            </button>
 
-            {/* Utility Search */}
-            <div className="flex items-center gap-1.5 text-neutral-600 dark:text-neutral-400">
+            {/* Theme Toggle Button */}
+            {setIsDark && (
               <button
                 type="button"
-                onClick={onOpenSearch}
-                aria-label="Search"
-                className="p-1.5 rounded-lg hover:text-[#1D1D1F] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer"
+                onClick={() => setIsDark(!isDark)}
+                aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer"
+                title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
               >
-                <Search className="w-4 h-4" />
+                {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
               </button>
-            </div>
+            )}
 
-            {/* Rightmost Action: "Get the app" and User Profile / Sign In */}
+            {/* User Profile Dropdown or Sign In */}
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -180,9 +224,9 @@ export const Navbar = ({
                     type="button"
                     className="flex items-center gap-2 p-0.5 rounded-full hover:ring-2 hover:ring-[#007AFF] transition-all cursor-pointer focus:outline-none shrink-0"
                   >
-                    <Avatar className="w-8 h-8 border border-[#AAAAAA]/30">
+                    <Avatar className="w-8 h-8 border border-slate-200 dark:border-white/15">
                       <AvatarImage src={user.avatar} alt={user.name} />
-                      <AvatarFallback className="bg-[#007AFF] text-white font-medium text-xs">
+                      <AvatarFallback className="bg-[#007AFF] text-white font-bold text-xs">
                         {user.name ? user.name.slice(0, 2).toUpperCase() : 'AK'}
                       </AvatarFallback>
                     </Avatar>
@@ -192,9 +236,9 @@ export const Navbar = ({
                 <DropdownMenuContent
                   side="bottom"
                   align="end"
-                  className="z-50 min-w-[220px] p-2 rounded-2xl bg-[#F5F5F7]/95 dark:bg-[#1D1D1F]/95 backdrop-blur-2xl border border-[#AAAAAA]/30 shadow-xl text-xs space-y-1 text-[#1D1D1F] dark:text-[#F5F5F7]"
+                  className="z-50 min-w-[220px] p-2 rounded-2xl bg-white/95 dark:bg-[#0A0E1A]/95 backdrop-blur-2xl border border-slate-200 dark:border-white/15 shadow-xl text-xs space-y-1 text-slate-900 dark:text-white"
                 >
-                  <div className="px-3 py-2 border-b border-[#AAAAAA]/20">
+                  <div className="px-3 py-2 border-b border-slate-200 dark:border-white/10">
                     <div className="font-semibold text-sm truncate">{user.name}</div>
                     <div className="text-[11px] text-neutral-500 font-mono truncate">{user.email}</div>
                   </div>
@@ -219,18 +263,11 @@ export const Navbar = ({
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <div className="flex items-center gap-4">
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('studyHub')}
-                  className="hidden sm:inline-block text-[14px] font-normal text-[#1D1D1F] dark:text-[#F5F5F7] hover:text-[#007AFF] transition-colors cursor-pointer"
-                >
-                  Get the app
-                </button>
+              <div className="flex items-center gap-2 sm:gap-3">
                 <button
                   type="button"
                   onClick={() => setAuthModalOpen(true)}
-                  className="text-[13px] font-bold px-4 py-1.5 rounded-full bg-[#007AFF] hover:bg-[#0062CC] text-white shadow-sm shadow-[#007AFF]/25 transition-all cursor-pointer flex items-center gap-1.5"
+                  className="px-4 sm:px-5 py-2 rounded-full bg-gradient-to-r from-[#007AFF] via-[#0EA5E9] to-[#0284C7] hover:brightness-110 text-white font-bold text-xs shadow-md shadow-[#007AFF]/25 hover:shadow-lg hover:shadow-[#007AFF]/40 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer flex items-center gap-1.5"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Get Started</span>
