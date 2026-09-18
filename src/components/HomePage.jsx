@@ -70,9 +70,9 @@ export const HomePage = ({
       />
 
       {/* 2. Quick Concept & Syllabus Search Studio (Seamlessly Integrated) */}
-      <section className="w-full bg-[#EAF8FD] pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 -mt-2">
-        <div className="max-w-[1320px] mx-auto">
-          <div className="bg-[#FFFFFF] rounded-[28px] sm:rounded-[36px] p-6 sm:p-8 border border-[#E5E5E5] shadow-[0_12px_35px_rgba(69,181,229,0.08)]">
+      <section className="w-full bg-[#EAF8FD] pb-12 sm:pb-16 px-3 sm:px-6 lg:px-10 xl:px-12 -mt-2">
+        <div className="w-full max-w-[1480px] 2xl:max-w-[1560px] mx-auto">
+          <div className="bg-[#FFFFFF] rounded-[28px] sm:rounded-[36px] p-6 sm:p-8 border-2 border-[#DCE4EC] shadow-[0_12px_35px_rgba(69,181,229,0.08)]">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
               
               <div className="space-y-1.5 max-w-xl text-left">

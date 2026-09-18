@@ -21,15 +21,15 @@ export const ModernHero = ({ setActiveTab, onOpenAuth, user, onExploreMore }) =>
   };
 
   return (
-    <section id="hero" className="w-full bg-[#EAF8FD] py-6 sm:py-10 md:py-12 px-4 sm:px-6 lg:px-8">
-      {/* Outer White Rounded Container (35-45px radius, centered, max-w 1320px) */}
-      <div className="max-w-[1320px] mx-auto bg-[#FFFFFF] rounded-[35px] sm:rounded-[45px] shadow-[0_25px_70px_rgba(69,181,229,0.14)] border border-[#E5E5E5]/80 overflow-hidden relative p-8 sm:p-12 lg:p-16">
+    <section id="hero" className="w-full bg-[#EAF8FD] py-6 sm:py-10 md:py-14 px-3 sm:px-6 lg:px-10 xl:px-12">
+      {/* Outer White Rounded Container (Expanded width, enhanced border and generous padding) */}
+      <div className="w-full max-w-[1480px] 2xl:max-w-[1560px] mx-auto bg-[#FFFFFF] rounded-[38px] sm:rounded-[48px] shadow-[0_30px_80px_rgba(69,181,229,0.16)] border-2 border-[#DCE4EC] overflow-hidden relative p-8 sm:p-12 lg:p-16 xl:p-20">
         
         {/* Hero Main Content (Two-Column Layout) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 xl:gap-14 items-center relative z-10">
           
           {/* Left Column (Text & CTAs) */}
-          <div className="lg:col-span-6 space-y-6 sm:space-y-8 text-left">
+          <div className="lg:col-span-6 xl:col-span-7 space-y-6 sm:space-y-8 text-left">
             
             {/* Headline */}
             <motion.h1
@@ -121,7 +121,7 @@ export const ModernHero = ({ setActiveTab, onOpenAuth, user, onExploreMore }) =>
           </div>
 
           {/* Right Column (Visual + Organic Blob + Image + Floating Badges) */}
-          <div className="lg:col-span-6 relative flex items-center justify-center">
+          <div className="lg:col-span-6 xl:col-span-5 relative flex items-center justify-center">
             
             {/* Organic Blue Decorative Blob sitting partially behind the image */}
             <div className="absolute -inset-4 sm:-inset-8 pointer-events-none flex items-center justify-center">
@@ -146,7 +146,7 @@ export const ModernHero = ({ setActiveTab, onOpenAuth, user, onExploreMore }) =>
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-              className="relative w-full max-w-[540px] rounded-[30px] sm:rounded-[36px] overflow-hidden border border-[#E5E5E5] bg-white shadow-[0_20px_50px_rgba(69,181,229,0.2)] group"
+              className="relative w-full max-w-[580px] xl:max-w-[640px] rounded-[32px] sm:rounded-[40px] overflow-hidden border border-[#E5E5E5] bg-white shadow-[0_25px_60px_rgba(69,181,229,0.2)] group"
             >
               <img
                 src="/images/agency_hero_visual.jpg"
