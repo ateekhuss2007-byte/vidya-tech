@@ -1084,8 +1084,8 @@
 
 /* Linear/Stripe-tier Smooth Marquee & Edge Gradient Mask */
 @keyframes continuousMarquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 
 .animate-marquee {
@@ -1099,7 +1099,19 @@
   animation-play-state: paused;
 }
 
+/* Premium Slow High-Legibility University Marquee */
+.animate-marquee-premium {
+  display: flex;
+  width: max-content;
+  animation: continuousMarquee 115s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-premium:hover {
+  animation-play-state: paused;
+}
+
 .mask-fade-edges {
-  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }

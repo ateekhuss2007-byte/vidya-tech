@@ -84,21 +84,75 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
 
   const [isWizardOpen, setIsWizardOpen] = useState(false);
   
-  // Guided Onboarding Steps: 1: Target Stream, 2: Semester/Branch/Subject, 3: Goal/Need
+  // Guided Diagnostic Session States
   const [wizardStep, setWizardStep] = useState(1);
   const [selectedStream, setSelectedStream] = useState('btech');
-  
-  // Stream-specific sub-selection
+  const [selectedUniversity, setSelectedUniversity] = useState('makaut');
   const [selectedSem, setSelectedSem] = useState(3);
+  const [selectedBranch, setSelectedBranch] = useState('Computer Science & Engineering (CSE)');
+
+  // Baseline Foundation Check (10th, 12th, CGPA & Basics)
+  const [tenthScore, setTenthScore] = useState('80% - 90%');
+  const [twelfthScore, setTwelfthScore] = useState('75% - 85%');
+  const [prevCgpa, setPrevCgpa] = useState('7.5 - 8.5');
+  const [backlogStatus, setBacklogStatus] = useState('clean'); // 'clean' | 'one_two' | 'critical'
+  const [mathConfidence, setMathConfidence] = useState(3);
+  const [codingConfidence, setCodingConfidence] = useState(4);
+  const [theoryConfidence, setTheoryConfidence] = useState(4);
+
+  // Timeline & Target Goal
+  const [examDaysLeft, setExamDaysLeft] = useState(25);
+  const [targetGoal, setTargetGoal] = useState('solid'); // 'pass' | 'solid' | 'topper'
+
+  // Daily Bandwidth & Study Style
+  const [dailyHours, setDailyHours] = useState('2.5');
+  const [peakTime, setPeakTime] = useState('night'); // 'morning' | 'evening' | 'night'
+  const [studyStyle, setStudyStyle] = useState('pyq_cheatsheets'); // 'pyq_cheatsheets' | 'detailed_notes' | 'timed_mocks'
+
+  // Stream-specific sub-selection
   const [selectedBcaSem, setSelectedBcaSem] = useState(2);
   const [selectedGatePaper, setSelectedGatePaper] = useState('CS');
   const [selectedJeeTrack, setSelectedJeeTrack] = useState('jee_main');
   const [selectedSscSection, setSelectedSscSection] = useState('ssc_full');
   const [selectedCbse12Track, setSelectedCbse12Track] = useState('cbse12_pcm_cs');
   const [selectedCbse10Subject, setSelectedCbse10Subject] = useState('cbse10_math');
-  
-  const [selectedGoal, setSelectedGoal] = useState('blueprint');
+
   const [heroTopic, setHeroTopic] = useState('');
+
+  // Prioritize premier national institutions (IIT Madras, IIT Kanpur, IIT Bombay, etc.) followed by affiliating state boards
+  const prioritizedUniversities = React.useMemo(() => {
+    const premierPriorityIds = [
+      'iit_madras', 
+      'iit_kanpur', 
+      'iit_bombay', 
+      'iit_delhi', 
+      'iit_kharagpur', 
+      'bits_pilani', 
+      'nit_trichy', 
+      'makaut', 
+      'aktu', 
+      'vtu', 
+      'anna_univ', 
+      'mumbai_univ',
+      'dtu_delhi',
+      'jadavpur'
+    ];
+
+    const premierList = [];
+    const otherList = [];
+
+    PAN_INDIA_UNIVERSITIES.forEach((u) => {
+      const idx = premierPriorityIds.indexOf(u.id);
+      if (idx !== -1) {
+        premierList.push({ u, order: idx });
+      } else {
+        otherList.push(u);
+      }
+    });
+
+    premierList.sort((a, b) => a.order - b.order);
+    return [...premierList.map(item => item.u), ...otherList];
+  }, []);
 
   const streams = [
     { id: 'btech', name: 'B.Tech Engineering', desc: 'Semester 1 to 8 (MAKAUT & Autonomous)', icon: '🎓' },
@@ -284,46 +338,10 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
         <div className="absolute inset-0 opacity-[0.025] dark:opacity-[0.045] bg-[radial-gradient(#007AFF_1px,transparent_1px)] [background-size:24px_24px]" />
       </motion.div>
 
-      {/* High-Utility Top Academic Track Selector Bar (Uses the top space purposefully) */}
-      <motion.div
-        initial={{ opacity: 0, y: -6 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35 }}
-        className="w-full max-w-4xl mx-auto"
-      >
-        <div className="inline-flex flex-wrap items-center justify-center gap-1.5 p-1 rounded-2xl bg-white/90 dark:bg-[#252528]/90 border border-[#AAAAAA]/30 dark:border-white/[0.1] shadow-sm backdrop-blur-md">
-          <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#AAAAAA] px-2.5 py-1 hidden sm:inline">
-            Target Track:
-          </span>
-          {streams.map((s) => {
-            const isSelected = selectedStream === s.id;
-            return (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => {
-                  setSelectedStream(s.id);
-                  setIsWizardOpen(true);
-                  setWizardStep(2);
-                }}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-medium transition-all cursor-pointer ${
-                  isSelected
-                    ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/30 font-semibold'
-                    : 'text-[#1D1D1F] dark:text-[#F5F5F7] hover:bg-black/5 dark:hover:bg-white/10'
-                }`}
-              >
-                <span>{s.icon}</span>
-                <span>{s.name.split(' (')[0]}</span>
-              </button>
-            );
-          })}
-        </div>
-      </motion.div>
-
       {/* Main Subject Plane (Headline, Subtitle, Primary CTA) */}
       <motion.div 
         style={{ y: textY, opacity: heroOpacity }}
-        className="space-y-4 sm:space-y-5 w-full scroll-gpu"
+        className="space-y-4 sm:space-y-5 w-full scroll-gpu pt-2 sm:pt-4"
       >
         {/* Hero Headline & Subtitle */}
         <div className="space-y-3 w-full">
@@ -346,12 +364,8 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
           <button
             type="button"
             onClick={() => {
-              confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
-              if (onOpenSemester) {
-                onOpenSemester(3, 'studyHub');
-              } else {
-                setActiveTab('studyHub');
-              }
+              setWizardStep(1);
+              setIsWizardOpen(true);
             }}
             className="group relative inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-3.5 sm:py-4 rounded-full bg-[#007AFF] hover:bg-[#0062CC] text-white font-display font-bold text-base sm:text-lg shadow-xl shadow-[#007AFF]/30 hover:shadow-[#007AFF]/50 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
           >
@@ -380,21 +394,21 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
         </div>
       </motion.div>
 
-      {/* 4. Pan-India Audited Universities Continuous Marquee Ticker */}
-      <div className="w-full max-w-6xl xl:max-w-7xl mx-auto pt-2 overflow-hidden">
-        <div className="text-center mb-3">
-          <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#1D1D1F]/70 dark:text-[#AAAAAA] inline-flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#007AFF] animate-pulse" />
+      {/* 4. Pan-India Audited Universities Continuous Marquee Ticker (Premier Institutes Upfront, Larger & Smooth) */}
+      <div className="w-full max-w-7xl mx-auto pt-6 overflow-hidden">
+        <div className="text-center mb-4">
+          <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[#1D1D1F]/70 dark:text-[#AAAAAA] inline-flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#007AFF] animate-pulse" />
             <span>Audited Across 36 Premier Pan-India Technical Universities & Authorities</span>
-            <span className="px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF] text-[10px] font-bold border border-[#007AFF]/25">
+            <span className="px-2.5 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF] text-[11px] font-bold border border-[#007AFF]/25">
               100% Verifiable Source URLs
             </span>
           </span>
         </div>
 
-        <div className="relative w-full overflow-hidden mask-fade-edges py-2">
-          <div className="animate-marquee gap-3">
-            {PAN_INDIA_UNIVERSITIES.concat(PAN_INDIA_UNIVERSITIES).map((u, idx) => (
+        <div className="relative w-full overflow-hidden mask-fade-edges py-3">
+          <div className="animate-marquee-premium gap-4 sm:gap-5 py-2">
+            {prioritizedUniversities.concat(prioritizedUniversities).map((u, idx) => (
               <button
                 key={`${u.id}-${idx}`}
                 type="button"
@@ -402,416 +416,370 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                   setActiveTab('collegeHub');
                   toast.info(`Inspecting ${u.shortName}`, { description: `${u.officialName} • ${u.state}` });
                 }}
-                className="flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-white/95 dark:bg-[#1D1D1F]/90 border border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF] hover:shadow-md hover:shadow-[#007AFF]/10 transition-all cursor-pointer shrink-0 text-left backdrop-blur-md group"
+                className="flex items-center gap-3.5 px-5 py-3.5 sm:px-6 sm:py-4 rounded-2xl bg-white/95 dark:bg-[#1D1D1F]/90 border border-black/[0.08] dark:border-white/[0.12] hover:border-[#007AFF] shadow-sm hover:shadow-xl hover:shadow-[#007AFF]/15 hover:-translate-y-1 transition-all duration-300 cursor-pointer shrink-0 text-left backdrop-blur-xl group min-w-[270px] sm:min-w-[310px]"
               >
-                <span className="text-base">{u.icon || '🏛️'}</span>
-                <div>
-                  <div className="text-xs font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors whitespace-nowrap">
-                    {u.shortName}
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-[#007AFF]/12 to-[#5AC8FA]/15 dark:from-[#007AFF]/25 dark:to-[#5AC8FA]/10 border border-[#007AFF]/25 flex items-center justify-center text-xl sm:text-2xl shadow-inner shrink-0 group-hover:scale-105 transition-transform duration-300">
+                  <span>{u.icon || '🏛️'}</span>
+                </div>
+                <div className="space-y-0.5">
+                  <div className="text-sm sm:text-base font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors whitespace-nowrap tracking-tight flex items-center gap-1.5">
+                    <span>{u.shortName}</span>
+                    {u.autonomous && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" title="Autonomous Institute" />
+                    )}
                   </div>
-                  <div className="text-[10px] font-mono text-[#AAAAAA] whitespace-nowrap">
-                    {u.state} • {u.authorityLabel || 'Autonomous'}
+                  <div className="text-[11px] sm:text-xs font-mono text-[#8E8E93] dark:text-[#CBDCD3] whitespace-nowrap flex items-center gap-1.5">
+                    <span>{u.state}</span>
+                    <span>•</span>
+                    <span className="text-[#007AFF] font-medium">{u.authorityLabel || 'Autonomous'}</span>
                   </div>
                 </div>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#007AFF] shrink-0 ml-1.5" />
+                <div className="ml-auto pl-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ArrowRight className="w-4 h-4 text-[#007AFF]" />
+                </div>
               </button>
             ))}
           </div>
         </div>
       </div>
 
-      {/* 5. Guided Step-by-Step Preparation Modal (Adaptive to Stream) */}
+      {/* 5. Guided Step-by-Step AI Diagnostic & Onboarding Session (English • Light Mode) */}
       {isWizardOpen && (
         <div 
-          className="fixed inset-0 z-[9999] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-fade-in"
+          className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-fade-in"
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsWizardOpen(false);
           }}
         >
-          <div className="relative w-full max-w-xl max-h-[90vh] rounded-3xl bg-[#1D1D1F] border border-[#AAAAAA]/30 shadow-2xl p-6 sm:p-8 space-y-6 text-left overflow-y-auto animate-scale-in my-8 text-[#F5F5F7]">
+          <div className="relative w-full max-w-2xl max-h-[92vh] rounded-3xl bg-white border border-slate-200 shadow-2xl p-6 sm:p-8 space-y-6 text-left overflow-y-auto animate-scale-in my-8 text-[#1D1D1F]">
             
             {/* Header & Step Indicator */}
-            <div className="flex items-center justify-between pb-3 border-b border-[#AAAAAA]/20">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#007AFF]/15 text-[#007AFF] border border-[#007AFF]/30">
-                  Step {wizardStep} of 3
-                </span>
-                <span className="text-xs font-mono text-[#AAAAAA]">
-                  {wizardStep === 1 && 'Select Target Exam'}
-                  {wizardStep === 2 && (
-                    selectedStream === 'btech' ? 'Select Semester' :
-                    selectedStream === 'cbse_12' ? 'Select Focus Track' :
-                    selectedStream === 'cbse_10' ? 'Select Focus Subject' :
-                    selectedStream === 'gate' ? 'Select Paper' :
-                    selectedStream === 'jee' ? 'Select JEE Track' :
-                    selectedStream === 'bca' ? 'Select Semester' : 'Select Section'
-                  )}
-                  {wizardStep === 3 && 'Choose Goal'}
-                </span>
+            <div className="space-y-3 pb-3 border-b border-slate-100">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/25">
+                    {wizardStep <= 4 ? `Step ${wizardStep} of 4` : 'Diagnostic Summary'}
+                  </span>
+                  <span className="text-xs font-mono text-[#8E8E93] font-semibold">
+                    {wizardStep === 1 && 'Academic Identity & University'}
+                    {wizardStep === 2 && 'Prior Academics & Foundation Check'}
+                    {wizardStep === 3 && 'Exam Timeline & Target Goal'}
+                    {wizardStep === 4 && 'Daily Bandwidth & Study Style'}
+                    {wizardStep === 5 && 'AI Roadmap & Readiness Level'}
+                  </span>
+                </div>
+
+                <button 
+                  type="button"
+                  onClick={() => setIsWizardOpen(false)}
+                  className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-[#8E8E93] hover:text-[#1D1D1F] transition-all cursor-pointer border border-slate-200"
+                >
+                  <X className="w-4 h-4" />
+                </button>
               </div>
 
-              <button 
-                type="button"
-                onClick={() => setIsWizardOpen(false)}
-                className="p-1.5 rounded-lg bg-[#2C2C2E] hover:bg-[#3A3A3C] text-[#AAAAAA] hover:text-[#F5F5F7] transition-all cursor-pointer border border-[#AAAAAA]/30"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              {/* Progress Bar */}
+              <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-r from-[#007AFF] to-[#5AC8FA] transition-all duration-300 rounded-full"
+                  style={{ 
+                    width: wizardStep === 1 ? '25%' : wizardStep === 2 ? '50%' : wizardStep === 3 ? '75%' : '100%' 
+                  }}
+                />
+              </div>
             </div>
 
-            {/* STEP 1: What are you preparing for? */}
+            {/* STEP 1: Academic Identity & University */}
             {wizardStep === 1 && (
-              <div className="space-y-4 animate-fade-in">
+              <div className="space-y-5 animate-fade-in">
                 <div className="space-y-1">
-                  <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
+                  <h3 className="text-xl sm:text-2xl font-bold font-display text-[#1D1D1F]">
                     What are you preparing for?
                   </h3>
-                  <p className="text-xs text-[#AAAAAA]">
-                    VIDYA AI will customize the question paper pattern, syllabus, and PYQ blueprints.
+                  <p className="text-xs sm:text-sm text-[#64748B]">
+                    Select your degree or target examination to lock your official BoS syllabus.
                   </p>
                 </div>
 
-                <div className="space-y-2 pt-1 max-h-[360px] overflow-y-auto pr-1">
+                {/* Target Stream Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[220px] overflow-y-auto pr-1">
                   {streams.map((s) => (
                     <div
                       key={s.id}
                       onClick={() => setSelectedStream(s.id)}
-                      className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                      className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2.5 ${
                         selectedStream === s.id
                           ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
-                          : 'bg-white/[0.03] border-white/[0.08] hover:border-[#007AFF]/40'
+                          : 'bg-slate-50 border-slate-200 hover:border-[#007AFF]/50 hover:bg-[#007AFF]/5'
                       }`}
                     >
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2.5">
                         <span className="text-2xl">{s.icon}</span>
                         <div>
-                          <div className="text-sm font-bold text-[#F5F5F7] font-display">
+                          <div className="text-xs sm:text-sm font-bold text-[#1D1D1F] font-display">
                             {s.name}
                           </div>
-                          <div className="text-xs text-[#AAAAAA] font-sans">
+                          <div className="text-[11px] text-[#64748B] font-sans line-clamp-1">
                             {s.desc}
                           </div>
                         </div>
                       </div>
-
                       {selectedStream === s.id && (
-                        <CheckCircle2 className="w-5 h-5 text-[#007AFF] shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-[#007AFF] shrink-0" />
                       )}
                     </div>
                   ))}
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => setWizardStep(2)}
-                  className="w-full py-3 rounded-xl bg-[#007AFF] text-white hover:bg-[#0062CC] font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer mt-4"
-                >
-                  <span>{getStep1ButtonText()}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-            )}
+                {/* University / Board Affiliation Selection */}
+                <div className="space-y-2 pt-1">
+                  <label className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] flex items-center gap-1.5">
+                    <span>University or Affiliating Technical Board:</span>
+                  </label>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {[
+                      { id: 'makaut', name: 'MAKAUT (WBUT)', state: 'West Bengal' },
+                      { id: 'aktu', name: 'AKTU (UPTU)', state: 'Uttar Pradesh' },
+                      { id: 'vtu', name: 'VTU Belagavi', state: 'Karnataka' },
+                      { id: 'mumbai', name: 'Mumbai Univ', state: 'Maharashtra' },
+                      { id: 'anna', name: 'Anna University', state: 'Tamil Nadu' },
+                      { id: 'iit_madras', name: 'IIT Madras', state: 'National (INI)' },
+                      { id: 'cbse', name: 'CBSE Board', state: 'All-India' },
+                      { id: 'other', name: 'Autonomous / Other', state: 'Pan-India' }
+                    ].map((univ) => (
+                      <button
+                        key={univ.id}
+                        type="button"
+                        onClick={() => setSelectedUniversity(univ.name)}
+                        className={`p-2.5 rounded-xl text-left border transition-all cursor-pointer ${
+                          selectedUniversity === univ.name
+                            ? 'bg-[#007AFF] text-white border-[#007AFF] shadow-sm'
+                            : 'bg-slate-50 text-[#1D1D1F] border-slate-200 hover:border-[#007AFF]'
+                        }`}
+                      >
+                        <div className="text-xs font-bold leading-tight line-clamp-1">{univ.name}</div>
+                        <div className={`text-[10px] font-mono mt-0.5 ${selectedUniversity === univ.name ? 'text-white/80' : 'text-[#8E8E93]'}`}>
+                          {univ.state}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-            {/* STEP 2: Stream-Specific Sub-Selection */}
-            {wizardStep === 2 && (
-              <div className="space-y-4 animate-fade-in">
-                
-                {/* 2A. B.Tech Semesters (1 to 8) */}
-                {selectedStream === 'btech' && (
-                  <>
-                    <div className="space-y-1">
-                      <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
-                        Which semester are you in?
-                      </h3>
-                      <p className="text-xs text-[#AAAAAA]">
-                        We will load the exact MAKAUT / University curriculum for this semester.
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-4 gap-2 pt-2">
+                {/* Semester / Year Selector for B.Tech & BCA */}
+                {(selectedStream === 'btech' || selectedStream === 'bca') && (
+                  <div className="space-y-2 pt-1">
+                    <label className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B]">
+                      Current Semester:
+                    </label>
+                    <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
                       {[1, 2, 3, 4, 5, 6, 7, 8].map((sem) => (
                         <button
                           key={sem}
                           type="button"
                           onClick={() => setSelectedSem(sem)}
-                          className={`p-3.5 rounded-xl text-xs font-mono font-bold transition-all text-center cursor-pointer ${
+                          className={`py-2 rounded-xl text-xs font-mono font-bold transition-all text-center cursor-pointer border ${
                             selectedSem === sem
-                              ? 'bg-[#007AFF] text-white shadow-md border border-[#007AFF]'
-                              : 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] hover:border-[#007AFF]/40'
+                              ? 'bg-[#007AFF] text-white border-[#007AFF] shadow-sm'
+                              : 'bg-slate-50 text-[#1D1D1F] border-slate-200 hover:border-[#007AFF]'
                           }`}
                         >
                           Sem {sem}
                         </button>
                       ))}
                     </div>
-
-                    <div className="p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] text-xs font-mono">
-                      Selected: <strong>Semester {selectedSem} B.Tech</strong> (Includes all core theory subjects, lab viva guides & repeated questions).
-                    </div>
-                  </>
+                  </div>
                 )}
 
-                {/* 2B. CBSE Class 12 Tracks */}
-                {selectedStream === 'cbse_12' && (
-                  <>
-                    <div className="space-y-1">
-                      <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
-                        Select your Class 12 Focus Track
-                      </h3>
-                      <p className="text-xs text-[#AAAAAA]">
-                        CBSE 80/70-mark official board pattern with step-by-step marking rubrics.
-                      </p>
+                <button
+                  type="button"
+                  onClick={() => setWizardStep(2)}
+                  className="w-full py-3.5 rounded-xl bg-[#007AFF] text-white hover:bg-[#0062CC] font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer mt-3"
+                >
+                  <span>Next: Prior Academics & Foundation Check</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+
+            {/* STEP 2: Prior Academics & Foundation Diagnostic */}
+            {wizardStep === 2 && (
+              <div className="space-y-5 animate-fade-in">
+                <div className="space-y-1">
+                  <h3 className="text-xl sm:text-2xl font-bold font-display text-[#1D1D1F]">
+                    Prior Academics & Foundation Check
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#64748B]">
+                    Helps the AI determine if you need foundational revision capsules or direct high-level PYQ problem solving.
+                  </p>
+                </div>
+
+                {/* Past Academic Milestones (10th, 12th, Previous CGPA) */}
+                <div className="space-y-3 pt-1">
+                  <label className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B]">
+                    Academic Baseline (Past Scores):
+                  </label>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {/* 10th Percentage */}
+                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                      <div className="text-xs font-bold text-[#1D1D1F]">10th Board Score</div>
+                      <div className="grid grid-cols-2 gap-1.5">
+                        {['70-80%', '80-90%', '90-95%', '95%+'].map(val => (
+                          <button
+                            key={val}
+                            type="button"
+                            onClick={() => setTenthScore(val)}
+                            className={`py-1 text-[11px] rounded-lg font-mono font-semibold transition-all ${
+                              tenthScore === val ? 'bg-[#007AFF] text-white' : 'bg-white text-[#1D1D1F] border border-slate-200'
+                            }`}
+                          >
+                            {val}
+                          </button>
+                        ))}
+                      </div>
                     </div>
 
-                    <div className="space-y-2 pt-1 max-h-[280px] overflow-y-auto">
-                      {cbse12Tracks.map((t) => (
-                        <div
-                          key={t.id}
-                          onClick={() => setSelectedCbse12Track(t.id)}
-                          className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                            selectedCbse12Track === t.id
-                              ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
-                              : 'bg-white/[0.03] border-white/[0.08] hover:border-[#007AFF]/40'
-                          }`}
-                        >
-                          <div>
-                            <div className="text-sm font-bold text-[#F5F5F7] font-display">
-                              {t.name}
-                            </div>
-                            <div className="text-[11px] text-[#AAAAAA]">
-                              {t.desc}
-                            </div>
-                          </div>
-                          {selectedCbse12Track === t.id && (
-                            <CheckCircle2 className="w-4 h-4 text-[#007AFF] shrink-0" />
-                          )}
-                        </div>
-                      ))}
+                    {/* 12th Percentage */}
+                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                      <div className="text-xs font-bold text-[#1D1D1F]">12th Board Score</div>
+                      <div className="grid grid-cols-2 gap-1.5">
+                        {['65-75%', '75-85%', '85-92%', '92%+'].map(val => (
+                          <button
+                            key={val}
+                            type="button"
+                            onClick={() => setTwelfthScore(val)}
+                            className={`py-1 text-[11px] rounded-lg font-mono font-semibold transition-all ${
+                              twelfthScore === val ? 'bg-[#007AFF] text-white' : 'bg-white text-[#1D1D1F] border border-slate-200'
+                            }`}
+                          >
+                            {val}
+                          </button>
+                        ))}
+                      </div>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] text-xs font-mono">
-                      Selected: <strong>{cbse12Tracks.find(t => t.id === selectedCbse12Track)?.name}</strong>.
+                    {/* Previous Sem CGPA */}
+                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+                      <div className="text-xs font-bold text-[#1D1D1F]">Previous Sem CGPA</div>
+                      <div className="grid grid-cols-2 gap-1.5">
+                        {['6.0 - 7.0', '7.0 - 8.0', '8.0 - 9.0', '9.0+'].map(val => (
+                          <button
+                            key={val}
+                            type="button"
+                            onClick={() => setPrevCgpa(val)}
+                            className={`py-1 text-[11px] rounded-lg font-mono font-semibold transition-all ${
+                              prevCgpa === val ? 'bg-[#007AFF] text-white' : 'bg-white text-[#1D1D1F] border border-slate-200'
+                            }`}
+                          >
+                            {val}
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </>
-                )}
+                  </div>
+                </div>
 
-                {/* 2C. CBSE Class 10 Subjects */}
-                {selectedStream === 'cbse_10' && (
-                  <>
-                    <div className="space-y-1">
-                      <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
-                        Select your Class 10 Subject Focus
-                      </h3>
-                      <p className="text-xs text-[#AAAAAA]">
-                        CBSE 80-mark board model papers, NCERT proofs, and formula sheets.
-                      </p>
-                    </div>
+                {/* Backlog / Arrear Status */}
+                <div className="space-y-2 pt-1">
+                  <label className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B]">
+                    Active Backlog / Supplementary Arrear Status:
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    {[
+                      { id: 'clean', label: 'Clean Record', desc: 'Zero pending backlogs' },
+                      { id: 'one_two', label: '1 - 2 Backlogs', desc: 'Need backlog clearing priority' },
+                      { id: 'critical', label: '3+ Backlogs', desc: 'Emergency passing focus' }
+                    ].map(b => (
+                      <button
+                        key={b.id}
+                        type="button"
+                        onClick={() => setBacklogStatus(b.id)}
+                        className={`p-3 rounded-xl text-left border transition-all cursor-pointer ${
+                          backlogStatus === b.id
+                            ? 'bg-[#007AFF]/10 border-[#007AFF] text-[#007AFF]'
+                            : 'bg-slate-50 border-slate-200 text-[#1D1D1F] hover:border-[#007AFF]/50'
+                        }`}
+                      >
+                        <div className="text-xs font-bold font-display">{b.label}</div>
+                        <div className="text-[10px] text-[#8E8E93] mt-0.5">{b.desc}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-                    <div className="space-y-2 pt-1 max-h-[280px] overflow-y-auto">
-                      {cbse10Subjects.map((s) => (
-                        <div
-                          key={s.id}
-                          onClick={() => setSelectedCbse10Subject(s.id)}
-                          className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                            selectedCbse10Subject === s.id
-                              ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
-                              : 'bg-white/[0.03] border-white/[0.08] hover:border-[#007AFF]/40'
-                          }`}
-                        >
-                          <div>
-                            <div className="text-sm font-bold text-[#F5F5F7] font-display">
-                              {s.name}
-                            </div>
-                            <div className="text-[11px] text-[#AAAAAA]">
-                              {s.desc}
-                            </div>
-                          </div>
-                          {selectedCbse10Subject === s.id && (
-                            <CheckCircle2 className="w-4 h-4 text-[#007AFF] shrink-0" />
-                          )}
-                        </div>
-                      ))}
-                    </div>
+                {/* Self-Rating: Confidence in Core Fundamentals */}
+                <div className="space-y-2.5 pt-1">
+                  <label className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B]">
+                    Rate Your Current Baseline Confidence (1 to 5):
+                  </label>
 
-                    <div className="p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] text-xs font-mono">
-                      Selected: <strong>{cbse10Subjects.find(s => s.id === selectedCbse10Subject)?.name}</strong>.
-                    </div>
-                  </>
-                )}
-
-                {/* 2D. GATE Papers */}
-                {selectedStream === 'gate' && (
-                  <>
-                    <div className="space-y-1">
-                      <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
-                        Select your GATE Engineering Discipline
-                      </h3>
-                      <p className="text-xs text-[#AAAAAA]">
-                        IIT Madras 100-mark paper pattern with MCQs, MSQs & NAT numericals.
-                      </p>
-                    </div>
-
-                    <div className="space-y-2 pt-1 max-h-[280px] overflow-y-auto">
-                      {gatePapers.map((p) => (
-                        <div
-                          key={p.id}
-                          onClick={() => setSelectedGatePaper(p.id)}
-                          className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                            selectedGatePaper === p.id
-                              ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
-                              : 'bg-white/[0.03] border-white/[0.08] hover:border-[#007AFF]/40'
-                          }`}
-                        >
-                          <div>
-                            <div className="text-sm font-bold text-[#F5F5F7] font-display">
-                              {p.name}
-                            </div>
-                            <div className="text-[11px] text-[#AAAAAA]">
-                              {p.desc}
-                            </div>
-                          </div>
-                          {selectedGatePaper === p.id && (
-                            <CheckCircle2 className="w-4 h-4 text-[#007AFF] shrink-0" />
-                          )}
-                        </div>
-                      ))}
+                  <div className="space-y-2 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                    {/* Math */}
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-semibold text-[#1D1D1F]">Mathematics & Formula Derivations:</span>
+                      <div className="flex gap-1.5">
+                        {[1, 2, 3, 4, 5].map(star => (
+                          <button
+                            key={star}
+                            type="button"
+                            onClick={() => setMathConfidence(star)}
+                            className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
+                              mathConfidence >= star ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-white border border-slate-200 text-[#8E8E93]'
+                            }`}
+                          >
+                            {star}
+                          </button>
+                        ))}
+                      </div>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] text-xs font-mono">
-                      Selected: <strong>{gatePapers.find(p => p.id === selectedGatePaper)?.name}</strong>.
-                    </div>
-                  </>
-                )}
-
-                {/* 2E. JEE Main Tracks */}
-                {selectedStream === 'jee' && (
-                  <>
-                    <div className="space-y-1">
-                      <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
-                        Select your JEE Main & Advanced Track
-                      </h3>
-                      <p className="text-xs text-[#AAAAAA]">
-                        NTA CBT Pattern (300 Marks) with +4 / -1 marking and integer numericals.
-                      </p>
-                    </div>
-
-                    <div className="space-y-2 pt-1 max-h-[280px] overflow-y-auto">
-                      {jeeTracks.map((j) => (
-                        <div
-                          key={j.id}
-                          onClick={() => setSelectedJeeTrack(j.id)}
-                          className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                            selectedJeeTrack === j.id
-                              ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
-                              : 'bg-white/[0.03] border-white/[0.08] hover:border-[#007AFF]/40'
-                          }`}
-                        >
-                          <div>
-                            <div className="text-sm font-bold text-[#F5F5F7] font-display">
-                              {j.name}
-                            </div>
-                            <div className="text-[11px] text-[#AAAAAA]">
-                              {j.desc}
-                            </div>
-                          </div>
-                          {selectedJeeTrack === j.id && (
-                            <CheckCircle2 className="w-4 h-4 text-[#007AFF] shrink-0" />
-                          )}
-                        </div>
-                      ))}
+                    {/* Coding */}
+                    <div className="flex items-center justify-between text-xs pt-1 border-t border-slate-200/60">
+                      <span className="font-semibold text-[#1D1D1F]">Programming & Algorithmic Logic:</span>
+                      <div className="flex gap-1.5">
+                        {[1, 2, 3, 4, 5].map(star => (
+                          <button
+                            key={star}
+                            type="button"
+                            onClick={() => setCodingConfidence(star)}
+                            className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
+                              codingConfidence >= star ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-white border border-slate-200 text-[#8E8E93]'
+                            }`}
+                          >
+                            {star}
+                          </button>
+                        ))}
+                      </div>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] text-xs font-mono">
-                      Selected: <strong>{jeeTracks.find(j => j.id === selectedJeeTrack)?.name}</strong>.
+                    {/* Theory */}
+                    <div className="flex items-center justify-between text-xs pt-1 border-t border-slate-200/60">
+                      <span className="font-semibold text-[#1D1D1F]">Theoretical Concepts & Long Answers:</span>
+                      <div className="flex gap-1.5">
+                        {[1, 2, 3, 4, 5].map(star => (
+                          <button
+                            key={star}
+                            type="button"
+                            onClick={() => setTheoryConfidence(star)}
+                            className={`w-7 h-7 rounded-lg text-xs font-bold transition-all ${
+                              theoryConfidence >= star ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-white border border-slate-200 text-[#8E8E93]'
+                            }`}
+                          >
+                            {star}
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </>
-                )}
+                  </div>
+                </div>
 
-                {/* 2F. SSC CGL Sections */}
-                {selectedStream === 'ssc' && (
-                  <>
-                    <div className="space-y-1">
-                      <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
-                        Select your SSC CGL Section Focus
-                      </h3>
-                      <p className="text-xs text-[#AAAAAA]">
-                        Tier-1 & Tier-2 speed test format with 0.50 negative marking and shortcuts.
-                      </p>
-                    </div>
-
-                    <div className="space-y-2 pt-1 max-h-[280px] overflow-y-auto">
-                      {sscSections.map((s) => (
-                        <div
-                          key={s.id}
-                          onClick={() => setSelectedSscSection(s.id)}
-                          className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                            selectedSscSection === s.id
-                              ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
-                              : 'bg-white/[0.03] border-white/[0.08] hover:border-[#007AFF]/40'
-                          }`}
-                        >
-                          <div>
-                            <div className="text-sm font-bold text-[#F5F5F7] font-display">
-                              {s.name}
-                            </div>
-                            <div className="text-[11px] text-[#AAAAAA]">
-                              {s.desc}
-                            </div>
-                          </div>
-                          {selectedSscSection === s.id && (
-                            <CheckCircle2 className="w-4 h-4 text-[#007AFF] shrink-0" />
-                          )}
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] text-xs font-mono">
-                      Selected: <strong>{sscSections.find(s => s.id === selectedSscSection)?.name}</strong>.
-                    </div>
-                  </>
-                )}
-
-                {/* 2G. BCA / MCA Semesters (1 to 6) */}
-                {selectedStream === 'bca' && (
-                  <>
-                    <div className="space-y-1">
-                      <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
-                        Which BCA / MCA Semester are you in?
-                      </h3>
-                      <p className="text-xs text-[#AAAAAA]">
-                        University 70-mark pattern covering C, Python, Java, DBMS & Web Tech.
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-2.5 pt-2">
-                      {[1, 2, 3, 4, 5, 6].map((sem) => (
-                        <button
-                          key={sem}
-                          type="button"
-                          onClick={() => setSelectedBcaSem(sem)}
-                          className={`p-3.5 rounded-xl text-xs font-mono font-bold transition-all text-center cursor-pointer ${
-                            selectedBcaSem === sem
-                              ? 'bg-[#007AFF] text-white shadow-md border border-[#007AFF]'
-                              : 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] hover:border-[#007AFF]/40'
-                          }`}
-                        >
-                          Semester {sem}
-                        </button>
-                      ))}
-                    </div>
-
-                    <div className="p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] text-xs font-mono">
-                      Selected: <strong>Semester {selectedBcaSem} BCA / MCA</strong>.
-                    </div>
-                  </>
-                )}
-
-                {/* Back / Next Buttons for Step 2 */}
+                {/* Navigation Buttons */}
                 <div className="flex items-center gap-2 pt-2">
                   <button
                     type="button"
                     onClick={() => setWizardStep(1)}
-                    className="py-3 px-5 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-mono font-medium transition-all cursor-pointer flex items-center gap-1 border border-[#AAAAAA]/30"
+                    className="py-3 px-5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#1D1D1F] text-xs font-mono font-medium transition-all cursor-pointer flex items-center gap-1 border border-slate-200"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back</span>
@@ -822,64 +790,119 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
                     onClick={() => setWizardStep(3)}
                     className="flex-grow py-3 rounded-xl bg-[#007AFF] text-white hover:bg-[#0062CC] font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <span>Next: Select Goal</span>
+                    <span>Next: Exam Timeline & Target Outcome</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
             )}
 
-            {/* STEP 3: Dynamic Goals based on Stream */}
+            {/* STEP 3: Exam Timeline & Target Outcome */}
             {wizardStep === 3 && (
-              <div className="space-y-4 animate-fade-in">
+              <div className="space-y-5 animate-fade-in">
                 <div className="space-y-1">
-                  <h3 className="text-xl font-bold font-display text-[#F5F5F7]">
-                    What do you need right now?
+                  <h3 className="text-xl sm:text-2xl font-bold font-display text-[#1D1D1F]">
+                    Exam Timeline & Target Outcome
                   </h3>
-                  <p className="text-xs text-[#AAAAAA]">
-                    Choose what you want VIDYA AI to generate for your preparation.
+                  <p className="text-xs sm:text-sm text-[#64748B]">
+                    Specifying your countdown allows the dynamic engine to divide remaining syllabus chapters into realistic daily sprints.
                   </p>
                 </div>
 
+                {/* Days Remaining Countdown */}
                 <div className="space-y-2 pt-1">
-                  {currentGoals.map((g) => (
-                    <div
-                      key={g.id}
-                      onClick={() => setSelectedGoal(g.id)}
-                      className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                        selectedGoal === g.id
-                          ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
-                          : 'bg-white/[0.03] border-white/[0.08] hover:border-[#007AFF]/40'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
-                          selectedGoal === g.id ? 'bg-[#007AFF] text-white' : 'bg-white/10 text-neutral-300'
-                        }`}>
-                          <g.icon className="w-4 h-4" />
+                  <label className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B] flex items-center justify-between">
+                    <span>How many days until your examination begins?</span>
+                    <span className="text-[#007AFF] font-bold">{examDaysLeft} Days Left</span>
+                  </label>
+                  
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {[
+                      { days: 12, label: '12 Days', sub: 'Emergency Cram' },
+                      { days: 25, label: '25 Days', sub: 'Fast-Track Sprint' },
+                      { days: 45, label: '45 Days', sub: 'Standard Cadence' },
+                      { days: 75, label: '75+ Days', sub: 'Full Comprehensive' }
+                    ].map(opt => (
+                      <button
+                        key={opt.days}
+                        type="button"
+                        onClick={() => setExamDaysLeft(opt.days)}
+                        className={`p-3 rounded-xl text-center border transition-all cursor-pointer ${
+                          examDaysLeft === opt.days
+                            ? 'bg-[#007AFF] text-white border-[#007AFF] shadow-sm'
+                            : 'bg-slate-50 border-slate-200 text-[#1D1D1F] hover:border-[#007AFF]'
+                        }`}
+                      >
+                        <div className="text-sm font-bold font-mono">{opt.label}</div>
+                        <div className={`text-[10px] mt-0.5 ${examDaysLeft === opt.days ? 'text-white/80' : 'text-[#8E8E93]'}`}>
+                          {opt.sub}
                         </div>
-                        <div>
-                          <div className="text-xs sm:text-sm font-bold text-[#F5F5F7] font-display">
-                            {g.label}
-                          </div>
-                          <div className="text-[11px] text-[#AAAAAA] font-sans">
-                            {g.desc}
-                          </div>
-                        </div>
-                      </div>
-
-                      {selectedGoal === g.id && (
-                        <CheckCircle2 className="w-5 h-5 text-[#007AFF] shrink-0" />
-                      )}
-                    </div>
-                  ))}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
+                {/* Target Outcome Goals */}
+                <div className="space-y-2.5 pt-1">
+                  <label className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B]">
+                    What is your target academic outcome?
+                  </label>
+
+                  <div className="space-y-2.5">
+                    {[
+                      { 
+                        id: 'pass', 
+                        title: 'Safe Passing Margin (6.5+ CGPA)', 
+                        badge: 'High-Yield Only',
+                        desc: 'Filters out 60% low-weightage theory. Isolates top 10-mark repeated questions to guarantee passing with safe margin.' 
+                      },
+                      { 
+                        id: 'solid', 
+                        title: 'Strong Distinction (8.0+ CGPA)', 
+                        badge: 'Balanced Roadmap',
+                        desc: 'Complete coverage of core modules, standard derivations, solved numericals, and mid-semester mock tests.' 
+                      },
+                      { 
+                        id: 'topper', 
+                        title: 'Class Topper & Placement Ready (9.2+ CGPA)', 
+                        badge: 'Exhaustive Depth',
+                        desc: 'Comprehensive mastery of tough edge cases, full syllabus derivations, and timed negative-marking simulations.' 
+                      }
+                    ].map(goal => (
+                      <div
+                        key={goal.id}
+                        onClick={() => setTargetGoal(goal.id)}
+                        className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                          targetGoal === goal.id
+                            ? 'bg-[#007AFF]/10 border-[#007AFF] shadow-sm'
+                            : 'bg-slate-50 border-slate-200 hover:border-[#007AFF]/50'
+                        }`}
+                      >
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-bold text-[#1D1D1F] font-display">{goal.title}</span>
+                            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/25">
+                              {goal.badge}
+                            </span>
+                          </div>
+                          <p className="text-xs text-[#64748B] leading-relaxed">
+                            {goal.desc}
+                          </p>
+                        </div>
+                        {targetGoal === goal.id && (
+                          <CheckCircle2 className="w-5 h-5 text-[#007AFF] shrink-0" />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Navigation Buttons */}
                 <div className="flex items-center gap-2 pt-2">
                   <button
                     type="button"
                     onClick={() => setWizardStep(2)}
-                    className="py-3 px-5 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-white text-xs font-mono font-medium transition-all cursor-pointer flex items-center gap-1 border border-[#AAAAAA]/30"
+                    className="py-3 px-5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#1D1D1F] text-xs font-mono font-medium transition-all cursor-pointer flex items-center gap-1 border border-slate-200"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back</span>
@@ -887,13 +910,241 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester }) => {
 
                   <button
                     type="button"
-                    onClick={handleFinishWizard}
-                    className="flex-grow py-3 rounded-xl bg-[#007AFF] text-white hover:bg-[#0062CC] font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer font-mono"
+                    onClick={() => setWizardStep(4)}
+                    className="flex-grow py-3 rounded-xl bg-[#007AFF] text-white hover:bg-[#0062CC] font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <Sparkles className="w-4 h-4 text-white" />
-                    <span>Generate My Study Plan →</span>
+                    <span>Next: Daily Bandwidth & Study Style</span>
+                    <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
+              </div>
+            )}
+
+            {/* STEP 4: Daily Bandwidth & Learning Style */}
+            {wizardStep === 4 && (
+              <div className="space-y-5 animate-fade-in">
+                <div className="space-y-1">
+                  <h3 className="text-xl sm:text-2xl font-bold font-display text-[#1D1D1F]">
+                    Daily Reality & Study Preferences
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#64748B]">
+                    Prevents burnout by constructing realistic study blocks tailored to your college schedule and attention span.
+                  </p>
+                </div>
+
+                {/* Daily Hours Commitment */}
+                <div className="space-y-2 pt-1">
+                  <label className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B]">
+                    Realistic daily study availability:
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                    {[
+                      { val: '1.5', label: '1.5 - 2 Hours / Day', sub: 'After college classes & commute' },
+                      { val: '3.0', label: '3 - 4 Hours / Day', sub: 'Balanced study session' },
+                      { val: '6.0', label: '5+ Hours / Day', sub: 'Dedicated exam leave study' }
+                    ].map(h => (
+                      <button
+                        key={h.val}
+                        type="button"
+                        onClick={() => setDailyHours(h.val)}
+                        className={`p-3 rounded-xl text-left border transition-all cursor-pointer ${
+                          dailyHours === h.val
+                            ? 'bg-[#007AFF]/10 border-[#007AFF] text-[#007AFF]'
+                            : 'bg-slate-50 border-slate-200 text-[#1D1D1F] hover:border-[#007AFF]/50'
+                        }`}
+                      >
+                        <div className="text-xs font-bold font-display">{h.label}</div>
+                        <div className="text-[10px] text-[#8E8E93] mt-0.5">{h.sub}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Peak Focus Window */}
+                <div className="space-y-2 pt-1">
+                  <label className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B]">
+                    Peak Mental Focus Window:
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    {[
+                      { id: 'morning', label: 'Early Morning', time: '5:00 AM – 8:30 AM' },
+                      { id: 'evening', label: 'Evening', time: '4:00 PM – 7:30 PM' },
+                      { id: 'night', label: 'Night Owl', time: '9:30 PM – 2:00 AM' }
+                    ].map(p => (
+                      <button
+                        key={p.id}
+                        type="button"
+                        onClick={() => setPeakTime(p.id)}
+                        className={`p-3 rounded-xl text-left border transition-all cursor-pointer ${
+                          peakTime === p.id
+                            ? 'bg-[#007AFF]/10 border-[#007AFF] text-[#007AFF]'
+                            : 'bg-slate-50 border-slate-200 text-[#1D1D1F] hover:border-[#007AFF]/50'
+                        }`}
+                      >
+                        <div className="text-xs font-bold font-display">{p.label}</div>
+                        <div className="text-[10px] text-[#8E8E93] mt-0.5">{p.time}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Preferred Study Format */}
+                <div className="space-y-2 pt-1">
+                  <label className="text-xs font-mono font-bold uppercase tracking-wider text-[#64748B]">
+                    Preferred Study Material Format:
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    {[
+                      { id: 'pyq_cheatsheets', label: '1-Page Cheatsheets & PYQs', sub: 'Fastest revision for exams' },
+                      { id: 'detailed_notes', label: 'Step-by-Step Solved Numericals', sub: 'Visual step marked answers' },
+                      { id: 'timed_mocks', label: 'Active Recall Mock Tests', sub: 'Simulate negative marking' }
+                    ].map(f => (
+                      <button
+                        key={f.id}
+                        type="button"
+                        onClick={() => setStudyStyle(f.id)}
+                        className={`p-3 rounded-xl text-left border transition-all cursor-pointer ${
+                          studyStyle === f.id
+                            ? 'bg-[#007AFF]/10 border-[#007AFF] text-[#007AFF]'
+                            : 'bg-slate-50 border-slate-200 text-[#1D1D1F] hover:border-[#007AFF]/50'
+                        }`}
+                      >
+                        <div className="text-xs font-bold font-display">{f.label}</div>
+                        <div className="text-[10px] text-[#8E8E93] mt-0.5">{f.sub}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Navigation Buttons */}
+                <div className="flex items-center gap-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setWizardStep(3)}
+                    className="py-3 px-5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#1D1D1F] text-xs font-mono font-medium transition-all cursor-pointer flex items-center gap-1 border border-slate-200"
+                  >
+                    <ArrowLeft className="w-3.5 h-3.5" />
+                    <span>Back</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setWizardStep(5)}
+                    className="flex-grow py-3.5 rounded-xl bg-[#007AFF] text-white hover:bg-[#0062CC] font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer font-mono"
+                  >
+                    <Sparkles className="w-4 h-4 text-white" />
+                    <span>Analyze Diagnostic & Generate Roadmap →</span>
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* STEP 5: Diagnostic Readiness Profile & Roadmap Launch */}
+            {wizardStep === 5 && (
+              <div className="space-y-6 animate-fade-in text-center">
+                <div className="space-y-1">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/25 text-xs font-mono font-bold mx-auto">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                    <span>AI Diagnostic Baseline Calculated</span>
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-bold font-display text-[#1D1D1F]">
+                    Your Personalized Study Gameplan is Ready
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#64748B] max-w-md mx-auto">
+                    We've mapped your university syllabus and past academic baseline into an actionable day-by-day roadmap.
+                  </p>
+                </div>
+
+                {/* Diagnostic Summary Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
+                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                    <div className="text-[10px] font-mono uppercase text-[#8E8E93] font-bold">Estimated Baseline</div>
+                    <div className="text-2xl sm:text-3xl font-black text-[#007AFF] font-mono">
+                      {targetGoal === 'topper' ? '62%' : targetGoal === 'solid' ? '54%' : '46%'}
+                    </div>
+                    <div className="text-[11px] text-[#64748B]">Readiness Index to Target</div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                    <div className="text-[10px] font-mono uppercase text-[#8E8E93] font-bold">Target Trajectory</div>
+                    <div className="text-2xl sm:text-3xl font-black text-emerald-600 font-mono">
+                      {targetGoal === 'topper' ? '9.4 CGPA' : targetGoal === 'solid' ? '8.2 CGPA' : '6.8 CGPA'}
+                    </div>
+                    <div className="text-[11px] text-[#64748B]">Realistic exam score goal</div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                    <div className="text-[10px] font-mono uppercase text-[#8E8E93] font-bold">Daily Study Bite</div>
+                    <div className="text-2xl sm:text-3xl font-black text-[#1D1D1F] font-mono">
+                      {dailyHours} Hrs/Day
+                    </div>
+                    <div className="text-[11px] text-[#64748B]">Balanced daily target</div>
+                  </div>
+                </div>
+
+                {/* Strategy Highlights */}
+                <div className="p-4 rounded-2xl bg-[#007AFF]/5 border border-[#007AFF]/20 text-left space-y-2">
+                  <div className="text-xs font-bold text-[#007AFF] font-mono uppercase flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Target Strategy for {selectedUniversity}:</span>
+                  </div>
+                  <ul className="text-xs text-[#64748B] space-y-1.5 list-disc list-inside">
+                    <li>Syllabus mapped for <strong>{selectedUniversity} Semester {selectedSem}</strong>.</li>
+                    <li>
+                      Prioritizing <strong>80% high-yield recurring question patterns</strong> based on 10-year examination records.
+                    </li>
+                    <li>
+                      <strong>Zero-Guilt Dynamic Rebalancing:</strong> If college fests or illness cause missed days, schedule smoothly adapts.
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Final Launch Action */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsWizardOpen(false);
+                    confetti({ particleCount: 70, spread: 70, origin: { y: 0.6 } });
+                    
+                    const diagnosticProfile = {
+                      stream: selectedStream,
+                      university: selectedUniversity,
+                      semester: selectedSem,
+                      branch: selectedBranch,
+                      tenthScore,
+                      twelfthScore,
+                      prevCgpa,
+                      backlogStatus,
+                      confidence: { math: mathConfidence, coding: codingConfidence, theory: theoryConfidence },
+                      daysLeft: examDaysLeft,
+                      targetGoal,
+                      dailyHours,
+                      peakTime,
+                      studyStyle,
+                      initialReadinessScore: targetGoal === 'topper' ? 62 : targetGoal === 'solid' ? 54 : 46,
+                      completedAt: new Date().toISOString()
+                    };
+
+                    localStorage.setItem('vidya_diagnostic_profile', JSON.stringify(diagnosticProfile));
+                    localStorage.setItem('vidya_target_track', selectedStream);
+                    localStorage.setItem('vidya_target_university', selectedUniversity);
+                    localStorage.setItem('vidya_selected_sem', String(selectedSem));
+
+                    toast.success("AI Diagnostic Assessment Complete!", {
+                      description: `Generated custom ${dailyHours}h/day roadmap for ${selectedUniversity} Semester ${selectedSem}.`
+                    });
+
+                    if (onOpenSemester) {
+                      onOpenSemester(selectedSem, 'studyHub');
+                    } else {
+                      setActiveTab('studyHub');
+                    }
+                  }}
+                  className="w-full py-4 rounded-2xl bg-[#007AFF] hover:bg-[#0062CC] text-white font-bold text-base shadow-xl shadow-[#007AFF]/30 transition-all flex items-center justify-center gap-2 cursor-pointer font-display"
+                >
+                  <Sparkles className="w-5 h-5 text-white" />
+                  <span>Launch My Personalized AI Study Roadmap →</span>
+                </button>
               </div>
             )}
 

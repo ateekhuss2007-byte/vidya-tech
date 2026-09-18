@@ -72,7 +72,7 @@ const getInitialTabFromUrl = () => {
 
 export const App = () => {
   const [activeTab, setActiveTabState] = useState(getInitialTabFromUrl);
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false);
   const [studyTopic, setStudyTopic] = useState('Data Structures & Algorithms (DSA)');
   const [selectedMockSubject, setSelectedMockSubject] = useState(null);
   const [selectedSemester, setSelectedSemester] = useState(3);
@@ -121,13 +121,15 @@ export const App = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  // Dark mode effect on <html> root element
+  // Light mode enforcement on <html> root element
   useEffect(() => {
     const root = document.documentElement;
-    if (isDark) {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
+    root.classList.remove('dark');
+    root.classList.add('light');
+    try {
+      localStorage.setItem('theme', 'light');
+    } catch {
+      // ignore
     }
   }, [isDark]);
 

@@ -156,7 +156,7 @@ export const Navbar = ({
               })}
             </nav>
 
-            {/* Utility Search & Theme Toggle */}
+            {/* Utility Search */}
             <div className="flex items-center gap-1.5 text-neutral-600 dark:text-neutral-400">
               <button
                 type="button"
@@ -165,19 +165,6 @@ export const Navbar = ({
                 className="p-1.5 rounded-lg hover:text-[#1D1D1F] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer"
               >
                 <Search className="w-4 h-4" />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setIsDark(!isDark)}
-                aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                className="p-1.5 rounded-lg hover:text-[#1D1D1F] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer"
-              >
-                {isDark ? (
-                  <Sun className="w-4 h-4 text-[#007AFF]" />
-                ) : (
-                  <Moon className="w-4 h-4 text-[#1D1D1F]" />
-                )}
               </button>
             </div>
 
