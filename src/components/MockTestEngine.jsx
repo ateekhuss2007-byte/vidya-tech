@@ -921,7 +921,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                       Standard {currentCourse.defaultMarks} Marks ({currentCourse.defaultDuration} Mins) with Group A (MCQs), Group B (Short), and Group C (Long).
                     </p>
                   </div>
-                  <div className="text-[11px] font-mono text-neutral-300 bg-[#F5F5F7] dark:bg-white/[0.06] px-2.5 py-1 rounded-lg">
+                  <div className="text-[11px] font-mono font-semibold text-slate-800 dark:text-neutral-200 bg-[#F5F5F7] dark:bg-white/[0.06] px-2.5 py-1 rounded-lg">
                     Full Sem / Board Exam
                   </div>
                 </div>
@@ -945,7 +945,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                       30 Marks (60 Mins). Includes 10 MCQs (10m) + 4 Analytical Descriptive questions (20m).
                     </p>
                   </div>
-                  <div className="text-[11px] font-mono text-neutral-300 bg-[#F5F5F7] dark:bg-white/[0.06] px-2.5 py-1 rounded-lg">
+                  <div className="text-[11px] font-mono font-semibold text-slate-800 dark:text-neutral-200 bg-[#F5F5F7] dark:bg-white/[0.06] px-2.5 py-1 rounded-lg">
                     Class Test & Mid-Sem
                   </div>
                 </div>
@@ -969,7 +969,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                       15 Marks (20 Mins). 15 Fast Concept Diagnostic MCQs for quick revision and recall.
                     </p>
                   </div>
-                  <div className="text-[11px] font-mono text-neutral-300 bg-[#F5F5F7] dark:bg-white/[0.06] px-2.5 py-1 rounded-lg">
+                  <div className="text-[11px] font-mono font-semibold text-slate-800 dark:text-neutral-200 bg-[#F5F5F7] dark:bg-white/[0.06] px-2.5 py-1 rounded-lg">
                     Daily 20-Min Drill
                   </div>
                 </div>
@@ -993,7 +993,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
                       Specify your own custom Total Marks and Exam Duration.
                     </p>
                   </div>
-                  <div className="text-[11px] font-mono text-neutral-300 bg-[#F5F5F7] dark:bg-white/[0.06] px-2.5 py-1 rounded-lg">
+                  <div className="text-[11px] font-mono font-semibold text-slate-800 dark:text-neutral-200 bg-[#F5F5F7] dark:bg-white/[0.06] px-2.5 py-1 rounded-lg">
                     User Configured
                   </div>
                 </div>
@@ -1304,7 +1304,7 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setShowAnswers(!showAnswers)}
-                  className="px-4 py-2 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] hover:bg-[#F5F5F7] dark:bg-white/[0.06] text-neutral-200 text-xs font-bold border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center gap-1.5 cursor-pointer transition-colors"
+                  className="px-4 py-2 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] hover:bg-[#EBF5FF] dark:hover:bg-white/[0.06] text-slate-800 dark:text-neutral-200 text-xs font-bold border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center gap-1.5 cursor-pointer transition-colors"
                 >
                   <Eye className="w-4 h-4 text-[#007AFF]" />
                   <span>{showAnswers ? 'Hide Solution Key' : 'Reveal Model Answer Key'}</span>
@@ -1312,9 +1312,9 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
 
                 <button
                   onClick={() => handleDownloadPDF(false)}
-                  className="px-3.5 py-2 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] hover:bg-[#F5F5F7] dark:bg-white/[0.06] text-neutral-300 text-xs font-bold border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center gap-1.5 cursor-pointer"
+                  className="px-3.5 py-2 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] hover:bg-[#EBF5FF] dark:hover:bg-white/[0.06] text-slate-800 dark:text-neutral-200 text-xs font-bold border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center gap-1.5 cursor-pointer"
                 >
-                  <Printer className="w-4 h-4 text-neutral-400" />
+                  <Printer className="w-4 h-4 text-slate-600 dark:text-neutral-400" />
                   <span>Print</span>
                 </button>
               </div>

@@ -155,7 +155,7 @@ export const PyqPredictorVault: React.FC<PyqPredictorVaultProps> = ({
             <button
               type="button"
               onClick={handlePrintPaper}
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-[#F5F5F7] dark:bg-white/[0.04] hover:bg-[#F5F5F7] dark:bg-white/[0.06] text-xs font-mono font-bold text-neutral-200 border border-[#AAAAAA]/30 dark:border-white/[0.08] transition-all cursor-pointer shadow-xs"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-white dark:bg-white/[0.04] hover:bg-[#F0F9FF] dark:hover:bg-white/[0.06] text-xs font-mono font-bold text-slate-800 dark:text-neutral-200 border border-[#AAAAAA]/30 dark:border-white/[0.08] transition-all cursor-pointer shadow-xs"
             >
               <Printer className="w-4 h-4 text-[#007AFF]" />
               <span>Print / PDF ↗</span>
@@ -164,7 +164,7 @@ export const PyqPredictorVault: React.FC<PyqPredictorVaultProps> = ({
             <button
               type="button"
               onClick={handleCopyPaperMarkdown}
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-[#F5F5F7] dark:bg-white/[0.04] hover:bg-[#F5F5F7] dark:bg-white/[0.06] text-xs font-mono font-bold text-neutral-200 border border-[#AAAAAA]/30 dark:border-white/[0.08] transition-all cursor-pointer shadow-xs"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-white dark:bg-white/[0.04] hover:bg-[#F0F9FF] dark:hover:bg-white/[0.06] text-xs font-mono font-bold text-slate-800 dark:text-neutral-200 border border-[#AAAAAA]/30 dark:border-white/[0.08] transition-all cursor-pointer shadow-xs"
             >
               <Copy className="w-4 h-4 text-[#007AFF]" />
               <span>Copy Markdown</span>

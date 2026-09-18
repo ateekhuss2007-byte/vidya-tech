@@ -101,7 +101,7 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight leading-tight">
               B.Tech & Technical University Engine
             </h1>
-            <p className="text-sm sm:text-base text-[#1D1D1F]/70 dark:text-[#AAAAAA] mt-2 max-w-3xl leading-relaxed font-sans">
+            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 mt-2 max-w-3xl leading-relaxed font-sans font-medium">
               Curricula across 35 institutions (MAKAUT, AKTU, VTU, Anna Univ, JNTU, IITs, NITs), topic-accredited teachers, official blueprints, and recurring PYQs.
             </p>
           </div>
@@ -112,7 +112,7 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'semesterAnalyzer'
                   ? 'bg-[#007AFF] text-white shadow-sm'
-                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
+                  : 'text-slate-700 dark:text-slate-200 hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               <GraduationCap className="w-3.5 h-3.5" />
@@ -123,7 +123,7 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'facultyFinder'
                   ? 'bg-[#007AFF] text-white shadow-sm'
-                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
+                  : 'text-slate-700 dark:text-slate-200 hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               <Users className="w-3.5 h-3.5" />
@@ -134,7 +134,7 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'blueprint'
                   ? 'bg-[#007AFF] text-white shadow-sm'
-                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
+                  : 'text-slate-700 dark:text-slate-200 hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               <FileCheck className="w-3.5 h-3.5" />
@@ -145,7 +145,7 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'pyqVault'
                   ? 'bg-[#007AFF] text-white shadow-sm'
-                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
+                  : 'text-slate-700 dark:text-slate-200 hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               <Flame className="w-3.5 h-3.5" />
@@ -156,7 +156,7 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'deepDive'
                   ? 'bg-[#007AFF] text-white shadow-sm'
-                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
+                  : 'text-slate-700 dark:text-slate-200 hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               <Sparkles className="w-3.5 h-3.5" />
@@ -167,7 +167,7 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'materials'
                   ? 'bg-[#007AFF] text-white shadow-sm'
-                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
+                  : 'text-slate-700 dark:text-slate-200 hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               📚 Subject Materials
@@ -177,7 +177,7 @@ export const CollegeHubView: React.FC<CollegeHubViewProps> = ({
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'viva'
                   ? 'bg-[#007AFF] text-white shadow-sm'
-                  : 'text-[#1D1D1F]/70 dark:text-[#AAAAAA] hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
+                  : 'text-slate-700 dark:text-slate-200 hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/[0.08]'
               }`}
             >
               🎤 Lab Viva Trainer

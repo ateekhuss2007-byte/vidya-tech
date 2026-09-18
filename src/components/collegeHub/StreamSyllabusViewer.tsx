@@ -266,20 +266,20 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
                     <div
                       key={idx}
                       onClick={() => handleExploreTopic(mod)}
-                      className="p-3.5 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF]/50 hover:bg-[#1C2128] transition-all flex items-start justify-between gap-4 cursor-pointer group"
+                      className="p-3.5 rounded-xl bg-white dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] hover:border-[#007AFF]/50 hover:bg-[#F0F9FF] dark:hover:bg-[#1C2128] transition-all flex items-start justify-between gap-4 cursor-pointer group shadow-2xs"
                     >
                       <div className="flex items-start gap-3">
-                        <span className="w-6 h-6 rounded-full bg-[#F5F5F7] dark:bg-white/[0.06] border border-[#AAAAAA]/30 dark:border-white/[0.08] text-[11px] font-mono font-bold text-[#007AFF] flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-[#007AFF] group-hover:text-white transition-colors">
+                        <span className="w-6 h-6 rounded-full bg-[#EBF5FF] dark:bg-white/[0.06] border border-[#007AFF]/30 dark:border-white/[0.08] text-[11px] font-mono font-bold text-[#007AFF] flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-[#007AFF] group-hover:text-white transition-colors">
                           {idx + 1}
                         </span>
                         <div>
-                          <p className="text-xs sm:text-sm font-medium text-neutral-200 group-hover:text-white leading-relaxed">
+                          <p className="text-xs sm:text-sm font-semibold text-[#0F172A] dark:text-neutral-100 group-hover:text-[#007AFF] transition-colors leading-relaxed font-sans">
                             {mod}
                           </p>
                         </div>
                       </div>
 
-                      <span className="text-xs font-mono text-[#007AFF] opacity-0 group-hover:opacity-100 transition-opacity shrink-0 flex items-center gap-1">
+                      <span className="text-xs font-mono font-bold text-[#007AFF] shrink-0 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                         Explore →
                       </span>
                     </div>
@@ -295,7 +295,7 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
       {activeViewMode === 'pyqs' && (
         <div className="space-y-4">
           <div className="p-4 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center justify-between">
-            <span className="text-xs font-mono text-neutral-300">
+            <span className="text-xs font-mono font-medium text-slate-700 dark:text-neutral-300">
               High-Frequency Questions asked repeatedly in past {streamData.title} board/competitive exams.
             </span>
             <span className="text-xs font-mono font-bold text-[#007AFF]">
@@ -370,7 +370,7 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
                   <button
                     type="button"
                     onClick={() => handleCopyFormula(item.formula, idx)}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#F5F5F7] dark:bg-white/[0.06] hover:bg-[#30363D] text-xs font-mono text-neutral-200 transition-all cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-white/[0.06] hover:bg-[#EBF5FF] dark:hover:bg-[#30363D] text-xs font-mono font-medium text-slate-800 dark:text-neutral-200 border border-slate-200 dark:border-white/10 transition-all cursor-pointer"
                   >
                     {copiedFormulaIndex === idx ? (
                       <>
@@ -395,22 +395,22 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
       {activeViewMode === 'strategy' && (
         <div className="space-y-4">
           <div className="p-4 rounded-xl bg-[#F5F5F7] dark:bg-white/[0.04] border border-[#AAAAAA]/30 dark:border-white/[0.08] flex items-center justify-between">
-            <span className="text-xs font-mono text-neutral-300">
+            <span className="text-xs font-mono font-medium text-slate-700 dark:text-neutral-300">
               High-yield 30-day revision roadmap designed to maximize marks with minimum stress.
             </span>
-            <span className="text-xs font-mono font-bold text-emerald-400">Target: 90%+ Marks</span>
+            <span className="text-xs font-mono font-bold text-emerald-500 dark:text-emerald-400">Target: 90%+ Marks</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {streamData.thirtyDayPassStrategy.map((step, idx) => (
               <div
                 key={idx}
-                className="p-5 rounded-xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] space-y-2 relative overflow-hidden"
+                className="p-5 rounded-xl bg-white dark:bg-[#1D1D1F] border border-[#AAAAAA]/30 dark:border-white/[0.08] space-y-2 relative overflow-hidden shadow-2xs"
               >
                 <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30 text-xs font-mono font-bold">
                   <span>{step.week}</span>
                 </div>
-                <p className="text-xs sm:text-sm text-neutral-200 font-sans leading-relaxed pt-1">
+                <p className="text-xs sm:text-sm text-slate-800 dark:text-neutral-200 font-sans leading-relaxed pt-1">
                   {step.focus}
                 </p>
               </div>

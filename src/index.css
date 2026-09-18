@@ -6,16 +6,16 @@
   :root {
     --color-canvas: #F5F5F7;
     --color-dark: #1D1D1F;
-    --color-gray: #AAAAAA;
+    --color-gray: #475569;
     --color-blue: #007AFF;
 
     --bg-primary: #F5F5F7;
     --bg-secondary: #FFFFFF;
     --card-bg: rgba(255, 255, 255, 0.95);
     --border-color: rgba(170, 170, 170, 0.3);
-    --text-primary: #1D1D1F;
+    --text-primary: #0F172A;
     --text-secondary: #007AFF;
-    --text-muted: #8E8E93;
+    --text-muted: #475569;
     --royal-blue: #007AFF;
 
     /* Apple Modern Liquid Glass Tokens (Light Mode) */
@@ -30,29 +30,29 @@
   }
 
   .dark {
-    --color-canvas: #F5F5F7;
-    --color-dark: #1D1D1F;
-    --color-gray: #AAAAAA;
-    --color-blue: #007AFF;
+    --color-canvas: #060B14;
+    --color-dark: #F8FAFC;
+    --color-gray: #94A3B8;
+    --color-blue: #38BDF8;
 
-    --bg-primary: #1D1D1F;
-    --bg-secondary: #2C2C2E;
-    --card-bg: rgba(29, 29, 31, 0.85);
-    --border-color: rgba(170, 170, 170, 0.25);
-    --text-primary: #F5F5F7;
-    --text-secondary: #007AFF;
-    --text-muted: #AAAAAA;
-    --royal-blue: #007AFF;
+    --bg-primary: #060B14;
+    --bg-secondary: #0F172A;
+    --card-bg: rgba(15, 23, 42, 0.85);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --text-primary: #F8FAFC;
+    --text-secondary: #38BDF8;
+    --text-muted: #94A3B8;
+    --royal-blue: #38BDF8;
 
     /* Apple Modern Liquid Glass Tokens (Dark Mode) */
-    --glass-bg: linear-gradient(135deg, rgba(37, 37, 40, 0.9) 0%, rgba(29, 29, 31, 0.85) 100%);
-    --glass-bg-subtle: rgba(29, 29, 31, 0.85);
+    --glass-bg: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(10, 16, 30, 0.85) 100%);
+    --glass-bg-subtle: rgba(15, 23, 42, 0.85);
     --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-border-subtle: rgba(170, 170, 170, 0.2);
+    --glass-border-subtle: rgba(255, 255, 255, 0.08);
     --glass-blur: 26px;
     --glass-blur-strong: 34px;
     --glass-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85);
-    --glass-shadow-hover: 0 20px 48px -10px rgba(0, 122, 255, 0.2);
+    --glass-shadow-hover: 0 20px 48px -10px rgba(56, 189, 248, 0.2);
   }
 
   html {
@@ -64,7 +64,8 @@
   }
 
   body {
-    font-family: 'Avenir', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Avenir / Avenir Next — Silky, humanistic body font */
+    font-family: 'Avenir Next', 'Avenir', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     letter-spacing: -0.012em;
     line-height: 1.6;
     overflow-x: hidden;
@@ -74,42 +75,95 @@
     transition: background-color 0.25s ease, color 0.25s ease;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', 'Avenir', sans-serif;
+  /* Editorial & Prestigious Academic Titles: Playfair Display */
+  .font-display, .font-editorial, .font-serif, .font-playfair {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+    letter-spacing: -0.02em;
+    font-feature-settings: "liga", "clig", "kern";
+  }
+
+  /* Primary UI Headings & Structural Titles: Montserrat */
+  h1, h2, h3, h4, h5, h6, .font-heading, .font-montserrat {
+    font-family: 'Montserrat', 'Avenir Next', 'Avenir', sans-serif;
     letter-spacing: -0.025em;
-    font-weight: 750;
+    font-weight: 700;
     color: #0F172A;
   }
 
-  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6, .dark .font-heading {
     color: #F8FAFC;
   }
 
-  /* Deepen slate utility colors so secondary text is not washed out */
-  .text-slate-400 {
-    color: #4A6B5D;
-  }
-  .text-slate-500 {
-    color: #1F4D3C;
-  }
-  .text-slate-600 {
-    color: #0A2B1F;
-  }
-  .text-slate-700 {
-    color: #061812;
+  /* Precision UI Controls: Montserrat */
+  nav, button, input, select, textarea, label, th, [role="button"] {
+    font-family: 'Montserrat', 'Avenir Next', 'Avenir', sans-serif;
+    letter-spacing: -0.01em;
   }
 
-  .dark .text-slate-400 {
-    color: #CBDCD3;
+  /* Body Copy, Chapter Notes & Syllabus Descriptions: Avenir */
+  p, li, dd, .font-avenir {
+    font-family: 'Avenir Next', 'Avenir', 'Montserrat', sans-serif;
   }
-  .dark .text-slate-500 {
-    color: #A3C9B8;
+
+  /* Monospace Code: JetBrains Mono */
+  code, pre, kbd, .font-mono {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
   }
-  .dark .text-slate-600 {
-    color: #67B291;
+
+  /* ──────────────────────────────────────────────────────────
+     HIGH CONTRAST RULES: Eliminate Low-Contrast Faded Text
+     Ensures all study text, notes, & indicators are readable
+     without having to hover with cursor / arrow
+     ────────────────────────────────────────────────────────── */
+  html:not(.dark) .text-\[\#AAAAAA\],
+  html:not(.dark) .text-\[\#8E8E93\],
+  html:not(.dark) .text-\[\#777777\] {
+    color: #475569 !important;
   }
-  .dark .text-slate-700 {
-    color: #F2FAF6;
+  html:not(.dark) .text-neutral-200 {
+    color: #0F172A !important;
+  }
+  html:not(.dark) .text-neutral-300 {
+    color: #334155 !important;
+  }
+  html:not(.dark) .text-neutral-400 {
+    color: #475569 !important;
+  }
+  html:not(.dark) .text-slate-400 {
+    color: #475569 !important;
+  }
+  html:not(.dark) .text-slate-500 {
+    color: #334155 !important;
+  }
+  html:not(.dark) .text-gray-400 {
+    color: #475569 !important;
+  }
+  html:not(.dark) .text-zinc-400 {
+    color: #475569 !important;
+  }
+
+  /* Dark mode crisp high contrast */
+  .dark .text-\[\#AAAAAA\],
+  .dark .text-\[\#8E8E93\],
+  .dark .text-\[\#777777\] {
+    color: #94A3B8 !important;
+  }
+  .dark .text-neutral-200 {
+    color: #E2E8F0 !important;
+  }
+  .dark .text-neutral-300 {
+    color: #CBD5E1 !important;
+  }
+  .dark .text-neutral-400 {
+    color: #94A3B8 !important;
+  }
+
+  /* Always keep helpful action cues & explore buttons clearly visible */
+  .group .opacity-0.group-hover\:opacity-100 {
+    opacity: 0.9 !important;
+  }
+  .group:hover .opacity-0.group-hover\:opacity-100 {
+    opacity: 1 !important;
   }
 
   /* GPU Hardware Acceleration on Animated Layers */

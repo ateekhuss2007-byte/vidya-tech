@@ -247,13 +247,14 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Avenir', 'Montserrat', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        display: ['Montserrat', 'Avenir', 'system-ui', 'sans-serif'],
-        avenir: ['Avenir', 'Montserrat', 'system-ui', 'sans-serif'],
-        montserrat: ['Montserrat', 'Avenir', 'system-ui', 'sans-serif'],
+        sans: ['"Avenir Next"', 'Avenir', 'Montserrat', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        avenir: ['"Avenir Next"', 'Avenir', 'Montserrat', '-apple-system', 'sans-serif'],
+        montserrat: ['Montserrat', '"Avenir Next"', 'Avenir', 'sans-serif'],
+        display: ['"Playfair Display"', 'Georgia', 'serif'],
         editorial: ['"Playfair Display"', 'Georgia', 'serif'],
         serif: ['"Playfair Display"', 'Georgia', 'serif'],
         playfair: ['"Playfair Display"', 'Georgia', 'serif'],
+        heading: ['Montserrat', '"Avenir Next"', 'Avenir', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'Fira Code', 'ui-monospace', 'monospace']
       },
       boxShadow: {

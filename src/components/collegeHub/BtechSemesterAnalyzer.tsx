@@ -729,7 +729,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                             {mod.title}
                           </h5>
 
-                          <p className="text-xs text-[#AAAAAA] dark:text-[#AAAAAA] font-sans line-clamp-2">
+                          <p className="text-xs text-slate-600 dark:text-slate-400 font-sans font-medium line-clamp-2">
                             Includes {mod.topics?.length || 0} chapters: {mod.topics?.slice(0, 3).join(', ')}...
                           </p>
                         </div>
@@ -746,7 +746,7 @@ export const BtechSemesterAnalyzer: React.FC<BtechSemesterAnalyzerProps> = ({
                             <span>View {mod.topics?.length || 0} Chapters</span>
                             <ArrowRight className="w-3.5 h-3.5" />
                           </button>
-                          <span className="text-[11px] text-[#AAAAAA] font-semibold">
+                          <span className="text-[11px] text-slate-600 dark:text-slate-400 font-semibold">
                             {mod.topics?.length || 0} Topics
                           </span>
                         </div>
