@@ -72,7 +72,7 @@ export const HomePage = ({
       {/* 2. Quick Concept & Syllabus Search Studio (Seamlessly Integrated) */}
       <section className="w-full bg-[#EAF8FD] pb-12 sm:pb-16 px-2 sm:px-4 md:px-6 lg:px-8 xl:px-10 -mt-2">
         <div className="w-full max-w-[96vw] xl:max-w-[1680px] 2xl:max-w-[1780px] mx-auto">
-          <div className="bg-[#FFFFFF] rounded-[32px] sm:rounded-[42px] p-6 sm:p-10 border border-slate-200/50 dark:border-white/10 shadow-[0_12px_35px_rgba(69,181,229,0.06)]">
+          <div className="bg-[#FFFFFF] rounded-[32px] sm:rounded-[42px] p-6 sm:p-10 border border-slate-200/20 dark:border-white/[0.04] shadow-[0_12px_35px_rgba(69,181,229,0.05)]">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
               
               <div className="space-y-1.5 max-w-xl text-left">
@@ -93,7 +93,7 @@ export const HomePage = ({
                     placeholder="e.g. Eigenvalues, Calculus, Normalization..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 rounded-full bg-[#F8FAFC] border border-[#E5E5E5] text-sm text-[#111111] focus:ring-2 focus:ring-[#45B5E5] focus:outline-none"
+                    className="w-full pl-10 pr-4 py-3 rounded-full bg-[#F8FAFC] border border-slate-200/40 text-sm text-[#111111] focus:ring-2 focus:ring-[#45B5E5] focus:outline-none"
                   />
                 </div>
                 <button
@@ -107,7 +107,7 @@ export const HomePage = ({
             </div>
 
             {/* Quick Topic Pills */}
-            <div className="pt-5 mt-5 border-t border-[#E5E5E5]/70 flex flex-wrap items-center gap-2 text-xs">
+            <div className="pt-5 mt-5 border-t border-slate-200/30 flex flex-wrap items-center gap-2 text-xs">
               <span className="text-[#777777] font-semibold">Popular Topics:</span>
               {[
                 'Matrices & Determinants',
