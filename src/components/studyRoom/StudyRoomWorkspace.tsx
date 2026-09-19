@@ -177,20 +177,20 @@ export const StudyRoomWorkspace: React.FC<StudyRoomWorkspaceProps> = ({
           )}
         </div>
 
-        {/* Subject Title & Action Buttons */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
-          <div>
+        {/* Subject Header Card (Exact Match to Screenshot Layout) */}
+        <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#18181A] border border-black/[0.06] dark:border-white/[0.08] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1">
             <div className="flex items-center gap-2.5 flex-wrap">
-              <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-display font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight">
                 {subject.name}
               </h1>
-              <span className="px-2.5 py-0.5 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-xs font-mono text-neutral-500 font-semibold">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF] text-xs font-mono font-bold">
                 {subject.creditsOrMarks}
               </span>
             </div>
 
             {activeUnit ? (
-              <p className="text-sm text-neutral-500 mt-1 flex items-center gap-2 flex-wrap">
+              <p className="text-xs sm:text-sm text-neutral-500 flex items-center gap-2 flex-wrap">
                 <span className="font-bold text-[#007AFF]">Unit {activeUnit.unitNumber}:</span>
                 <span className="font-medium text-[#1D1D1F] dark:text-[#F5F5F7]">{activeUnit.title}</span>
                 <button
@@ -202,15 +202,28 @@ export const StudyRoomWorkspace: React.FC<StudyRoomWorkspaceProps> = ({
                 </button>
               </p>
             ) : (
-              <p className="text-xs sm:text-sm text-neutral-400 mt-0.5 font-mono">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 font-sans leading-relaxed">
                 {subject.category} • {subject.contactHours || 'Standard University Curriculum'}
               </p>
             )}
+
+            <div className="text-[11px] font-mono text-neutral-400 pt-0.5">
+              {subject.units.length} Modules • {subject.pyqs.length} PYQs • {subject.formulas.length} Formulas
+            </div>
           </div>
 
-          {/* Subtle Utilities (Zoom & Copy) */}
-          <div className="flex items-center gap-2 shrink-0">
-            {/* Reading Font Scaler (Aa) */}
+          {/* Action Buttons: [ Show questions ] [ Clean / Zoom ] [ Action ] */}
+          <div className="flex items-center gap-2 shrink-0 flex-wrap">
+            <button
+              type="button"
+              onClick={() => onSelectMode('pyqs')}
+              className="px-3 py-1.5 rounded-xl border border-black/[0.08] dark:border-white/[0.08] text-xs font-mono font-semibold text-neutral-700 dark:text-neutral-300 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors cursor-pointer"
+              title="Show exam previous year questions"
+            >
+              Show questions
+            </button>
+
+            {/* Reading Font Scaler (Aa: Clean Reading Control) */}
             <div className="flex items-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06] p-0.5 border border-black/[0.06] dark:border-white/[0.08]" title="Reading Text Size">
               <button
                 type="button"
@@ -222,7 +235,7 @@ export const StudyRoomWorkspace: React.FC<StudyRoomWorkspaceProps> = ({
                 }`}
                 title="Standard Text Size (100%)"
               >
-                Aa
+                Clean
               </button>
               <button
                 type="button"
@@ -236,27 +249,15 @@ export const StudyRoomWorkspace: React.FC<StudyRoomWorkspaceProps> = ({
               >
                 Aa+
               </button>
-              <button
-                type="button"
-                onClick={() => handleScaleChange('xlarge')}
-                className={`px-2 py-1 rounded-lg text-xs font-mono font-extrabold transition-all cursor-pointer ${
-                  textScale === 'xlarge'
-                    ? 'bg-white dark:bg-[#252528] text-[#007AFF] shadow-xs'
-                    : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'
-                }`}
-                title="Extra Large (130%)"
-              >
-                Aa++
-              </button>
             </div>
 
             <button
               type="button"
-              onClick={handleCopySyllabus}
-              className="p-2 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition-colors cursor-pointer border border-black/[0.04] dark:border-white/[0.06]"
-              title="Copy Course Syllabus"
+              onClick={handleLaunchMockExam}
+              className="px-4 py-1.5 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white text-xs font-mono font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
+              title="Practice Mock Exam"
             >
-              <Copy className="w-3.5 h-3.5" />
+              <span>Action</span>
             </button>
           </div>
         </div>

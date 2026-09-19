@@ -35,8 +35,10 @@ import {
   Building2,
   BookOpen,
   Target,
-  X
+  X,
+  RotateCcw
 } from 'lucide-react';
+import { UniversitySelectorBar } from './collegeHub/UniversitySelectorBar';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -252,6 +254,9 @@ export const StudyRoomView: React.FC<StudyRoomViewProps> = ({
   // 8. Dismissible College Notification Banner (keeps interface clean & distraction-free)
   const [dismissCollegeBanner, setDismissCollegeBanner] = useState(false);
 
+  // 9. Full Switch Curriculum Modal
+  const [showCurriculumModal, setShowCurriculumModal] = useState(false);
+
   const getGoalBadgeInfo = (outcome?: string) => {
     switch (outcome) {
       case 'pass_blueprint':
@@ -410,108 +415,113 @@ export const StudyRoomView: React.FC<StudyRoomViewProps> = ({
       {/* =======================================================================
           1. INTEGRATED STUDIO SUB-HEADER BAR (Distraction-Free, Apple-Grade)
           ======================================================================= */}
-      <header className="min-h-13 border-b border-black/[0.06] dark:border-white/[0.06] bg-white dark:bg-[#18181A] px-4 sm:px-6 py-2 flex items-center justify-between gap-3 shrink-0 select-none z-30">
+      <header className="min-h-14 border-b border-black/[0.06] dark:border-white/[0.06] bg-white dark:bg-[#18181A] px-4 sm:px-6 py-2 flex items-center justify-between gap-3 shrink-0 select-none z-30">
         
         {/* Left: Stream Selector & Minimalist Semester Pills */}
         <div className="flex items-center gap-3 overflow-x-auto custom-scrollbar py-0.5 min-w-0">
-          {/* Stream Switcher Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button
-                type="button"
-                className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors cursor-pointer text-xs sm:text-sm font-semibold text-[#1D1D1F] dark:text-[#F5F5F7] shrink-0 group border border-black/[0.06] dark:border-white/[0.08]"
-                title="Switch curriculum stream or customize target"
-              >
-                <span className="text-base">{currentTrackMeta.icon}</span>
-                <span className="font-bold truncate max-w-[150px] sm:max-w-[200px]">
-                  {learnerProfile.programmeName
-                    ? (learnerProfile.programmeName.length > 22 ? (learnerProfile.branch || learnerProfile.programmeName) : learnerProfile.programmeName)
-                    : trackData.isBtech
-                    ? `B.Tech ${learnerProfile.branch || 'CSE'}`
-                    : (learnerProfile.trackId === 'bca_college' || learnerProfile.trackId === 'bca_mca'
-                        ? `BCA (${learnerProfile.branch || 'Core'})`
-                        : currentTrackMeta.title)}
-                </span>
-                {learnerProfile.collegeName && (
-                  <span className="hidden lg:inline-block text-[11px] text-neutral-400 font-normal truncate max-w-[140px]">
-                    • {learnerProfile.collegeName}
+          <div className="flex flex-col shrink-0">
+            <span className="text-[10px] font-mono font-bold text-neutral-400 uppercase tracking-wider mb-0.5">
+              Target Selection
+            </span>
+            {/* Stream Switcher Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors cursor-pointer text-xs sm:text-sm font-semibold text-[#1D1D1F] dark:text-[#F5F5F7] shrink-0 group border border-black/[0.06] dark:border-white/[0.08]"
+                  title="Switch curriculum stream or customize target"
+                >
+                  <span className="text-base">{currentTrackMeta.icon}</span>
+                  <span className="font-bold truncate max-w-[150px] sm:max-w-[200px]">
+                    {learnerProfile.programmeName
+                      ? (learnerProfile.programmeName.length > 22 ? (learnerProfile.branch || learnerProfile.programmeName) : learnerProfile.programmeName)
+                      : trackData.isBtech
+                      ? `B.Tech ${learnerProfile.branch || 'CSE'}`
+                      : (learnerProfile.trackId === 'bca_college' || learnerProfile.trackId === 'bca_mca'
+                          ? `BCA (${learnerProfile.branch || 'Core'})`
+                          : currentTrackMeta.title)}
                   </span>
-                )}
-                <ChevronDown className="w-3.5 h-3.5 text-neutral-400 group-hover:text-[#007AFF] transition-colors shrink-0" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-72 p-2">
-              <DropdownMenuLabel className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 px-2 py-1">
-                Switch Course / Stream
-              </DropdownMenuLabel>
-              {TARGET_TRACK_OPTIONS.map((track) => {
-                const isSelected = selectedTrack === track.id || (track.id === 'bca_college' && (selectedTrack === 'bca_mca' || selectedTrack === 'bca'));
-                return (
-                  <DropdownMenuItem
-                    key={track.id}
-                    onClick={() => handleSwitchTrack(track.id)}
-                    className="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span className="text-base">{track.icon}</span>
-                      <div className="flex flex-col">
-                        <span className={`text-xs font-semibold ${isSelected ? 'text-[#007AFF]' : 'text-neutral-800 dark:text-neutral-200'}`}>
-                          {track.title}
-                        </span>
-                        <span className="text-[10px] text-neutral-400 font-mono">
-                          {track.subtitle}
-                        </span>
+                  {learnerProfile.collegeName && (
+                    <span className="hidden lg:inline-block text-[11px] text-neutral-400 font-normal truncate max-w-[140px]">
+                      • {learnerProfile.collegeName}
+                    </span>
+                  )}
+                  <ChevronDown className="w-3.5 h-3.5 text-neutral-400 group-hover:text-[#007AFF] transition-colors shrink-0" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-72 p-2">
+                <DropdownMenuLabel className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 px-2 py-1">
+                  Switch Course / Stream
+                </DropdownMenuLabel>
+                {TARGET_TRACK_OPTIONS.map((track) => {
+                  const isSelected = selectedTrack === track.id || (track.id === 'bca_college' && (selectedTrack === 'bca_mca' || selectedTrack === 'bca'));
+                  return (
+                    <DropdownMenuItem
+                      key={track.id}
+                      onClick={() => handleSwitchTrack(track.id)}
+                      className="flex items-center justify-between p-2 rounded-xl cursor-pointer hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span className="text-base">{track.icon}</span>
+                        <div className="flex flex-col">
+                          <span className={`text-xs font-semibold ${isSelected ? 'text-[#007AFF]' : 'text-neutral-800 dark:text-neutral-200'}`}>
+                            {track.title}
+                          </span>
+                          <span className="text-[10px] text-neutral-400 font-mono">
+                            {track.subtitle}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    {isSelected && <Check className="w-4 h-4 text-[#007AFF]" />}
-                  </DropdownMenuItem>
-                );
-              })}
-              <DropdownMenuSeparator className="my-1.5" />
-              <DropdownMenuItem
-                onClick={() => {
-                  setProfileModalInitialStep(4);
-                  setShowProfileModal(true);
-                }}
-                className="flex items-center gap-2 px-2 py-2 text-xs font-medium text-neutral-600 dark:text-neutral-300 rounded-xl cursor-pointer hover:text-[#007AFF] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
-              >
-                <Target className="w-3.5 h-3.5 text-amber-500" />
-                <span>Change Study Goal ({getGoalBadgeInfo(learnerProfile.targetOutcome).label})...</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => {
-                  setProfileModalInitialStep(3);
-                  setShowProfileModal(true);
-                }}
-                className="flex items-center gap-2 px-2 py-2 text-xs font-medium text-neutral-600 dark:text-neutral-300 rounded-xl cursor-pointer hover:text-[#007AFF] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
-              >
-                <GraduationCap className="w-3.5 h-3.5 text-[#007AFF]" />
-                <span className="truncate">
-                  {learnerProfile.universityId === 'makaut'
-                    ? (learnerProfile.programmeName || learnerProfile.collegeName
-                        ? `MAKAUT Degree & College (${(learnerProfile.programmeName || learnerProfile.collegeName || '').split('(')[0].trim()})`
-                        : 'Select MAKAUT Degree & College...')
-                    : learnerProfile.universityId === 'calcutta_univ'
-                    ? (learnerProfile.collegeName ? `Change College (${learnerProfile.collegeName.split('(')[0].trim()})` : 'Enter CU College...')
-                    : 'Select Affiliated College...'}
-                </span>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => {
-                  setProfileModalInitialStep(1);
-                  setShowProfileModal(true);
-                }}
-                className="flex items-center gap-2 px-2 py-2 text-xs font-medium text-neutral-600 dark:text-neutral-300 rounded-xl cursor-pointer hover:text-[#007AFF] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
-              >
-                <Edit3 className="w-3.5 h-3.5" />
-                <span>Edit Profile & Target Semester (Steps 1–4)...</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                      {isSelected && <Check className="w-4 h-4 text-[#007AFF]" />}
+                    </DropdownMenuItem>
+                  );
+                })}
+                <DropdownMenuSeparator className="my-1.5" />
+                <DropdownMenuItem
+                  onClick={() => {
+                    setProfileModalInitialStep(4);
+                    setShowProfileModal(true);
+                  }}
+                  className="flex items-center gap-2 px-2 py-2 text-xs font-medium text-neutral-600 dark:text-neutral-300 rounded-xl cursor-pointer hover:text-[#007AFF] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+                >
+                  <Target className="w-3.5 h-3.5 text-amber-500" />
+                  <span>Change Study Goal ({getGoalBadgeInfo(learnerProfile.targetOutcome).label})...</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setProfileModalInitialStep(3);
+                    setShowProfileModal(true);
+                  }}
+                  className="flex items-center gap-2 px-2 py-2 text-xs font-medium text-neutral-600 dark:text-neutral-300 rounded-xl cursor-pointer hover:text-[#007AFF] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+                >
+                  <GraduationCap className="w-3.5 h-3.5 text-[#007AFF]" />
+                  <span className="truncate">
+                    {learnerProfile.universityId === 'makaut'
+                      ? (learnerProfile.programmeName || learnerProfile.collegeName
+                          ? `MAKAUT Degree & College (${(learnerProfile.programmeName || learnerProfile.collegeName || '').split('(')[0].trim()})`
+                          : 'Select MAKAUT Degree & College...')
+                      : learnerProfile.universityId === 'calcutta_univ'
+                      ? (learnerProfile.collegeName ? `Change College (${learnerProfile.collegeName.split('(')[0].trim()})` : 'Enter CU College...')
+                      : 'Select Affiliated College...'}
+                  </span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setProfileModalInitialStep(1);
+                    setShowProfileModal(true);
+                  }}
+                  className="flex items-center gap-2 px-2 py-2 text-xs font-medium text-neutral-600 dark:text-neutral-300 rounded-xl cursor-pointer hover:text-[#007AFF] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+                >
+                  <Edit3 className="w-3.5 h-3.5" />
+                  <span>Edit Profile & Target Semester (Steps 1–4)...</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
 
           {/* Minimalist Semester Pills */}
           {Boolean(trackData.semestersAvailable && trackData.semestersAvailable.length > 0) && (
-            <div className="flex items-center gap-1 shrink-0">
+            <div className="flex items-center gap-1 shrink-0 self-end mb-1">
               {trackData.semestersAvailable!.map((semNum) => {
                 const isSelected = activeSem === semNum;
 
@@ -543,8 +553,19 @@ export const StudyRoomView: React.FC<StudyRoomViewProps> = ({
           )}
         </div>
 
-        {/* Right: Goal Pill & Profile Settings Button */}
+        {/* Right: Switch Curriculum, Goal Pill & Profile Settings Button */}
         <div className="flex items-center gap-2 shrink-0">
+          {/* Switch Curriculum Button (Exact match to screenshot) */}
+          <button
+            type="button"
+            onClick={() => setShowCurriculumModal(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-black/[0.08] dark:border-white/[0.1] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-xs font-mono font-bold text-neutral-700 dark:text-neutral-200 transition-all cursor-pointer shadow-2xs bg-white dark:bg-[#202023]"
+            title="Switch University Curriculum or Exam Target"
+          >
+            <RotateCcw className="w-3.5 h-3.5 text-neutral-400" />
+            <span>Switch Curriculum</span>
+          </button>
+
           {/* Subtle Goal Pill */}
           <button
             type="button"
@@ -552,11 +573,11 @@ export const StudyRoomView: React.FC<StudyRoomViewProps> = ({
               setProfileModalInitialStep(4);
               setShowProfileModal(true);
             }}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/20 transition-all cursor-pointer text-xs font-mono"
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/20 transition-all cursor-pointer text-xs font-mono"
             title="Active Study Goal — Click to Change"
           >
             <span>{getGoalBadgeInfo(learnerProfile.targetOutcome).icon}</span>
-            <span className="hidden sm:inline font-medium">
+            <span className="hidden md:inline font-medium">
               {getGoalBadgeInfo(learnerProfile.targetOutcome).label}
             </span>
           </button>
@@ -568,7 +589,7 @@ export const StudyRoomView: React.FC<StudyRoomViewProps> = ({
               setProfileModalInitialStep(1);
               setShowProfileModal(true);
             }}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono text-neutral-600 dark:text-neutral-300 hover:text-[#007AFF] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono text-neutral-600 dark:text-neutral-300 hover:text-[#007AFF] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] transition-all cursor-pointer"
             title="Edit Track, Degree, College & Semester"
           >
             <Edit3 className="w-3.5 h-3.5" />
@@ -576,6 +597,46 @@ export const StudyRoomView: React.FC<StudyRoomViewProps> = ({
           </button>
         </div>
       </header>
+
+      {/* Switch Curriculum Modal with Authentic University Selector Grid */}
+      {showCurriculumModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#18181A] rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-y-auto p-6 relative shadow-2xl border border-black/[0.08] dark:border-white/[0.1] animate-in fade-in zoom-in-95">
+            <div className="flex items-center justify-between pb-4 mb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
+              <div className="flex items-center gap-2">
+                <Layers className="w-5 h-5 text-[#007AFF]" />
+                <h3 className="text-lg font-bold text-neutral-900 dark:text-white font-display">
+                  Select University Curriculum & Authority
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowCurriculumModal(false)}
+                className="p-1.5 rounded-lg text-neutral-400 hover:text-neutral-800 dark:hover:text-white cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <UniversitySelectorBar
+              selectedUniversityId={learnerProfile.universityId || 'makaut'}
+              onSelectUniversity={(uniId) => {
+                const updated: LearnerProfile = {
+                  ...learnerProfile,
+                  universityId: uniId,
+                  universityName: uniId.toUpperCase()
+                };
+                setLearnerProfile(updated);
+                localStorage.setItem('vidya_learner_profile', JSON.stringify(updated));
+                setShowCurriculumModal(false);
+              }}
+              onOpenUploadModal={() => {
+                setShowCurriculumModal(false);
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Sleek, Non-Intrusive Dismissible College Prompt (MAKAUT) */}
       {!dismissCollegeBanner && learnerProfile.universityId === 'makaut' && !learnerProfile.collegeName && (

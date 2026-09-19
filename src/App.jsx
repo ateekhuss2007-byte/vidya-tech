@@ -191,7 +191,7 @@ export const App = () => {
 
   return (
     <TooltipProvider delayDuration={150}>
-      <div className={`min-h-screen bg-[#F5F5F7] dark:bg-[#1D1D1F] text-[#1D1D1F] dark:text-[#F5F5F7] flex flex-col font-sans transition-colors duration-300 selection:bg-[#007AFF] selection:text-white relative ${activeTab === 'studyHub' ? 'h-screen max-h-screen overflow-hidden' : 'overflow-x-hidden'}`}>
+      <div className={`min-h-screen bg-[#F5F5F7] dark:bg-[#1D1D1F] text-[#1D1D1F] dark:text-[#F5F5F7] flex flex-col font-sans transition-colors duration-300 selection:bg-[#007AFF] selection:text-white relative ${(activeTab === 'studyHub' || activeTab === 'collegeHub') ? 'h-screen max-h-screen overflow-hidden' : 'overflow-x-hidden'}`}>
         
         {/* motion.dev Interactive Scroll Progress Indicator */}
         <motion.div
@@ -243,7 +243,7 @@ export const App = () => {
       )}
 
       {/* Main View Container */}
-      <main className={`flex-1 w-full relative z-10 ${activeTab === 'studyHub' ? 'min-h-0 overflow-hidden flex flex-col' : ''}`}>
+      <main className={`flex-1 w-full relative z-10 ${(activeTab === 'studyHub' || activeTab === 'collegeHub') ? 'min-h-0 overflow-hidden flex flex-col' : ''}`}>
         <ErrorBoundary>
           <Suspense fallback={
             <div className="w-full fluid-container py-12">
@@ -257,7 +257,7 @@ export const App = () => {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                className={`w-full ${activeTab === 'studyHub' ? 'h-full flex-1 min-h-0 flex flex-col overflow-hidden' : ''}`}
+                className={`w-full ${(activeTab === 'studyHub' || activeTab === 'collegeHub') ? 'h-full flex-1 min-h-0 flex flex-col overflow-hidden' : ''}`}
               >
                 {activeTab === 'home' && (
                   <HomePage 
