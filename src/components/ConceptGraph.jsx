@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Tooltip from '@radix-ui/react-tooltip';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { 
   Network, 
   Search, 

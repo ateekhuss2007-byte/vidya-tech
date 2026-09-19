@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, TrendingUp, Zap } from 'lucide-react';
+import { ArrowRight, Sparkles, CheckCircle2, TrendingUp, Zap } from 'lucide-react';
 
 export const ModernHero = ({ setActiveTab, onOpenAuth, user, onExploreMore }) => {
   const handlePrimaryClick = () => {

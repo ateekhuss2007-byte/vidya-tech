@@ -1,0 +1,71 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Learner Profiles: Only the authenticated owner can read and write their profile
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId) 
+        && request.resource.data.uid == userId;
+      allow delete: if isOwner(userId);
+      
+      // Sub-collections: Learner's private memory twin state, test history, notes
+      match /{subcollection}/{docId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // Cognitive Memory Twin sync collection
+    match /memoryTwins/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+
+    // Assessment & Diagnostic records: readable only by the learner who took the test
+    match /assessmentSubmissions/{submissionId} {
+      allow read: if isAuthenticated() && resource.data.learnerId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.learnerId == request.auth.uid;
+      allow update, delete: if false; // Immutable audit log
+    }
+
+    // Official Syllabus, Curricula, and iGOT Competency Catalog: Read-only to all authenticated learners
+    match /officialCurricula/{docId} {
+      allow read: if isAuthenticated();
+      allow write: if false; // System administered only
+    }
+    
+    match /competencyRegistry/{docId} {
+      allow read: if isAuthenticated();
+      allow write: if false; // System administered only
+    }
+
+    // Academic Profiles: Read/Write for the owner (authenticated) or any device key (guest students)
+    // Guest learners do not need to sign up just to save their semester & track.
+    // The document key matches either Firebase UID (authenticated) or device_* (guest).
+    match /academic_profiles/{profileId} {
+      // Authenticated users own their UID-keyed doc
+      allow read: if isAuthenticated() && request.auth.uid == profileId;
+      allow write: if isAuthenticated() && request.auth.uid == profileId
+        && request.resource.data.userId == profileId;
+
+      // Guest/device-ID based access: allow any read/write on device_* keys.
+      // These are ephemeral device identifiers generated client-side;
+      // no authentication required as data is non-sensitive academic config.
+      allow read, write: if !isAuthenticated() && profileId.matches('device_.*');
+    }
+
+    // Default deny all other paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

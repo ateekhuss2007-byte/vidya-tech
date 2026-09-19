@@ -11,8 +11,10 @@ export type VerificationStatus =
   | 'PARTIALLY_VERIFIED'
   | 'UNVERIFIED'
   | 'NOT_AVAILABLE'
+  | 'AI_DERIVED'
   | 'DEMO'
-  | 'AI_DERIVED';
+  | 'MOCK'
+  | 'LIVE';
 
 export type SourceType =
   | 'OFFICIAL_UNIVERSITY'
@@ -21,11 +23,25 @@ export type SourceType =
   | 'OFFICIAL_EXAM_PORTAL'
   | 'OFFICIAL_INSTITUTIONAL_REPOSITORY'
   | 'OFFICIAL_PDF'
+  | 'OFFICIAL_IGOT_KARMAYOGI'
   | 'TRUSTED_SECONDARY'
   | 'COMMUNITY'
   | 'USER_UPLOADED'
   | 'DEMO'
+  | 'MOCK'
   | 'AI_DERIVED';
+
+/**
+ * Standard Provenance Model for all AI-generated educational and remediation content
+ */
+export interface AiGeneratedContentMetadata {
+  sourceDocumentId?: string;
+  sourcePages?: number[];
+  sourceTextReference?: string;
+  generatedByAI: true;
+  verificationStatus: VerificationStatus;
+  generatedAt: string;
+}
 
 export interface SourceMetadata {
   sourceType: SourceType;
@@ -208,7 +224,25 @@ export const VERIFICATION_BADGE_CONFIGS: Record<VerificationStatus, Verification
     colorClass: 'text-purple-300',
     bgClass: 'bg-purple-500/10',
     borderClass: 'border-purple-500/30',
-    description: 'Logically decomposed from official university syllabus topics for micro-remediation (SIH26043). Not claimed as verbatim university text.'
+    description: 'Logically decomposed from official competency curriculum for micro-remediation. Not claimed as verbatim statutory text.'
+  },
+  MOCK: {
+    label: 'Mock Integration Mode',
+    shortLabel: 'Mock Mode',
+    icon: '⚙',
+    colorClass: 'text-blue-400',
+    bgClass: 'bg-blue-500/10',
+    borderClass: 'border-blue-500/30',
+    description: 'Operating in local mock development adapter mode. Simulated for evaluation.'
+  },
+  LIVE: {
+    label: 'Official Live Gateway',
+    shortLabel: 'Live Gateway',
+    icon: '●',
+    colorClass: 'text-emerald-400',
+    bgClass: 'bg-emerald-500/10',
+    borderClass: 'border-emerald-500/30',
+    description: 'Directly connected and authenticated with production government portal gateway.'
   }
 };
 

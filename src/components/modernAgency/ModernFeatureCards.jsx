@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Sparkles, Cpu, Target, ShieldCheck, ArrowUpRight } from 'lucide-react';
 
 export const ModernFeatureCards = ({ setActiveTab }) => {

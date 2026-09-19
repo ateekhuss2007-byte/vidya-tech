@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   FileCheck, 
   Sparkles, 
@@ -185,8 +185,8 @@ export const MockTestEngine = ({ _user, initialSubject }) => {
     setIsTimerRunning(false);
     setScoreResult({ score, totalMcq, correctCount, incorrectCount });
     confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
-    toast.success('Mock Paper Evaluated!', {
-      description: `Final Score: ${score.toFixed(1)} Marks. Detailed step-marking rubric now visible.`
+    toast.success('Objective Section Evaluated!', {
+      description: `Section A Score: ${score.toFixed(1)} / ${totalMcq} Marks. Subjective Sections B & C answer keys & step-marking rubrics now unlocked.`
     });
   }, [activeTestPaper, userAnswers, selectedStreamId]);
 

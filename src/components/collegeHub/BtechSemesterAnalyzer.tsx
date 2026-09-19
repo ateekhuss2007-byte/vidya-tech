@@ -1,6 +1,6 @@
    import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { TopicNotesModal } from './TopicNotesModal';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   GraduationCap, 
   Search, 

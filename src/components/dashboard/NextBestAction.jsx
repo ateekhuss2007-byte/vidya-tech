@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Sparkles, ArrowRight, Zap, Target, Flame } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { SpotlightCard } from '../ui/SpotlightCard';

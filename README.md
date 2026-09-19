@@ -1,18 +1,18 @@
-# 🎓 VIDYA AI — Cognitive Learning, Remediation & Semantic Teacher Discovery Engine
+# 🎓 VIDYA AI — Cognitive Capacity Building, Remediation & iGOT Karmayogi Integration Engine
 
 <p align="center">
   <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&auto=format&fit=crop&q=80" alt="VIDYA AI Banner" width="100%" style="border-radius: 12px;" />
 </p>
 
 <p align="center">
-  <strong>Smart India Hackathon (SIH) | Problem Statement ID: SIH1431</strong><br/>
-  <em>"Online personalized learning remediation/tutoring tool. Search for best teacher for specific topics."</em><br/>
-  <strong>Ministry of Education, Government of India</strong>
+  <strong>Smart India Hackathon (SIH) | Problem Statement ID: SIH26101</strong><br/>
+  <em>"Cognitive Capacity Building, Competency Gap Detection & Learning Recommendation System"</em><br/>
+  <strong>Ministry of Statistics & Programme Implementation (MoSPI) | Core Integration: iGOT Karmayogi</strong>
 </p>
 
 <p align="center">
-  <a href="#-problem-understanding--real-world-need"><img src="https://img.shields.io/badge/SIH_Problem_ID-SIH1431-blue?style=for-the-badge&logo=gov" alt="SIH 1431" /></a>
-  <a href="#-core-pillars--feature-suite"><img src="https://img.shields.io/badge/Exam_Simulators-32%2B_Official_Patterns-0055FE?style=for-the-badge" alt="32+ Exam Patterns" /></a>
+  <a href="#-sih26101-core-architecture"><img src="https://img.shields.io/badge/SIH_Problem_ID-SIH26101-blue?style=for-the-badge&logo=gov" alt="SIH 26101" /></a>
+  <a href="#-igot-karmayogi-integration-boundary"><img src="https://img.shields.io/badge/iGOT_Integration-Mock_Adapter_Ready-orange?style=for-the-badge" alt="iGOT Adapter Ready" /></a>
   <a href="#-mathematical-formulation--core-algorithms"><img src="https://img.shields.io/badge/Retention_Engine-SuperMemo_SM--2-00C853?style=for-the-badge" alt="SuperMemo SM-2" /></a>
   <a href="#-tech-stack"><img src="https://img.shields.io/badge/Stack-React_19_%7C_Vite_8_%7C_Tailwind-61DAFB?style=for-the-badge&logo=react" alt="React 19" /></a>
   <a href="#-license"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="MIT License" /></a>

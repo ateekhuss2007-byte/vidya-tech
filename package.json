@@ -10,6 +10,7 @@
     "validate:registry": "npx vite-node scripts/validateUniversityRegistry.ts",
     "validate:syllabus": "npx vite-node scripts/validateSyllabusRegistry.ts",
     "validate:pyq": "npx vite-node scripts/validatePyqRegistry.ts",
+    "test:igot": "npx vite-node scripts/testIgotIntegration.ts",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -26,7 +27,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "firebase": "^12.19.0",
-    "framer-motion": "^13.1.1",
+    "lenis": "^1.3.26",
     "lucide-react": "^1.39.0",
     "motion": "^13.1.1",
     "react": "^19.2.8",

@@ -51,16 +51,17 @@ export const AuthModal = ({
     try {
       if (!isFirebaseConfigured()) {
         const demoGoogleUser = {
-          name: 'Demo Student',
-          email: 'student.demo@vidya.ai',
-          examTarget: 'B.Tech CSE & GATE 2027',
+          name: 'Demo Statistical Officer',
+          email: 'officer.demo@vidya.ai',
+          examTarget: 'Public Statistics & Capacity Building (SIH26101)',
           avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
           role: 'student',
-          isLoggedIn: true
+          isLoggedIn: true,
+          isDemoAuth: true
         };
         notifySuccess(demoGoogleUser);
         confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
-        toast.success('Signed in with Google (Local Mode)');
+        toast.info('DEMO AUTHENTICATION: Local evaluation session active (Cloud sync offline).');
         return;
       }
 
@@ -68,22 +69,22 @@ export const AuthModal = ({
         const user = await loginWithGoogle();
         notifySuccess(user);
         confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
-        toast.success(`Welcome, ${user.name}! Cloud sync active.`);
+        toast.success(`Welcome, ${user.name}! Authenticated with Firebase.`);
       } catch (fbErr) {
-        console.warn('Firebase Google Sign-In error:', fbErr);
-        if (fbErr.code === 'auth/operation-not-allowed' || fbErr.code === 'auth/configuration-not-found') {
+        console.warn('Firebase Google Sign-In error:', fbErr?.code || fbErr);
+        if (fbErr?.code === 'auth/operation-not-allowed' || fbErr?.code === 'auth/configuration-not-found') {
           toast.error('Firebase Setup Required: Please enable "Google" provider in Firebase Console > Authentication > Sign-in method.', {
             duration: 9000
           });
-        } else if (fbErr.code === 'auth/popup-closed-by-user') {
+        } else if (fbErr?.code === 'auth/popup-closed-by-user') {
           toast.info('Google sign-in popup was closed.');
         } else {
-          toast.error('Google Sign-In failed: ' + (fbErr.message || 'Check Firebase settings'));
+          toast.error('Google Sign-In failed: ' + (fbErr?.message || 'Check Firebase settings'));
         }
       }
     } catch (err) {
-      console.warn('Google sign-in error:', err);
-      toast.error('Google Sign-In failed: ' + (err.message || 'Check settings'));
+      console.warn('Google sign-in error:', err?.message || err);
+      toast.error('Google Sign-In failed: ' + (err?.message || 'Check settings'));
     } finally {
       setLoading(false);
     }
@@ -98,7 +99,7 @@ export const AuthModal = ({
     }
 
     if (password.length < 6) {
-      toast.error('Password must be at least 6 characters for Firebase Authentication.');
+      toast.error('Password must be at least 6 characters.');
       return;
     }
 
@@ -111,57 +112,55 @@ export const AuthModal = ({
           email: email,
           examTarget: examTarget,
           avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
-          isLoggedIn: true
+          role: 'student',
+          isLoggedIn: true,
+          isDemoAuth: true
         };
         notifySuccess(fallbackUserData);
         confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
-        toast.success(authMode === 'login' ? `Welcome back, ${fallbackUserData.name}!` : `Account created! Welcome to VIDYA AI.`);
+        toast.info(authMode === 'login' 
+          ? `[DEMO AUTHENTICATION] Welcome back, ${fallbackUserData.name} (Offline Session)!` 
+          : `[DEMO AUTHENTICATION] Profile initialized locally for testing.`
+        );
         return;
       }
 
-      // If Firebase is configured, attempt Firebase Auth
+      // If Firebase is configured, attempt production Firebase Auth
       try {
         let profile;
         if (authMode === 'login') {
-          try {
-            profile = await loginWithEmail(email, password);
-          } catch (loginErr) {
-            // If user not registered yet, auto-register them seamlessly in Firebase
-            if (
-              loginErr.code === 'auth/user-not-found' || 
-              loginErr.code === 'auth/invalid-credential' ||
-              loginErr.code === 'auth/invalid-login-credentials'
-            ) {
-              profile = await registerWithEmail(name || email.split('@')[0], email, password, examTarget);
-            } else {
-              throw loginErr;
-            }
-          }
-          toast.success(`Welcome back, ${profile.name}! Account synced with Firebase.`);
+          profile = await loginWithEmail(email, password);
+          toast.success(`Welcome back, ${profile.name}! Authenticated with Firebase.`);
         } else {
           profile = await registerWithEmail(name, email, password, examTarget);
-          toast.success(`Account created in Firebase! User: ${profile.email}`);
+          toast.success(`Account registered in Firebase! User: ${profile.email}`);
         }
 
         notifySuccess(profile);
         confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
       } catch (cloudErr) {
-        console.warn('Firebase Auth error:', cloudErr);
-        if (cloudErr.code === 'auth/operation-not-allowed') {
+        console.warn('Firebase Auth error code:', cloudErr?.code || cloudErr);
+        if (cloudErr?.code === 'auth/operation-not-allowed') {
           toast.error('Firebase Setup Needed: Enable "Email/Password" in Firebase Console > Authentication > Sign-in method.', {
             duration: 10000
           });
-        } else if (cloudErr.code === 'auth/weak-password') {
+        } else if (cloudErr?.code === 'auth/weak-password') {
           toast.error('Password must be at least 6 characters.');
-        } else if (cloudErr.code === 'auth/email-already-in-use') {
+        } else if (cloudErr?.code === 'auth/email-already-in-use') {
           toast.error('This email is already registered. Please sign in instead.');
+        } else if (
+          cloudErr?.code === 'auth/invalid-credential' ||
+          cloudErr?.code === 'auth/wrong-password' ||
+          cloudErr?.code === 'auth/user-not-found'
+        ) {
+          toast.error('Invalid email or password. Please verify your credentials or register a new account.');
         } else {
-          toast.error('Firebase Auth failed: ' + (cloudErr.message || 'Please check your inputs.'));
+          toast.error('Authentication failed: ' + (cloudErr?.message || 'Please check your inputs.'));
         }
       }
     } catch (err) {
-      console.warn('Auth error:', err);
-      toast.error(err.message || 'Authentication failed.');
+      console.warn('Auth error:', err?.message || err);
+      toast.error(err?.message || 'Authentication failed.');
     } finally {
       setLoading(false);
     }

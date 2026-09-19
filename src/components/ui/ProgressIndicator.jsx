@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 export const ProgressIndicator = ({
   value = 0, // 0 to 100

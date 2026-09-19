@@ -25,16 +25,64 @@ export type UniversityMeta = VerifiedUniversityRecord;
 
 export const AUTHORITY_CATEGORIES: { id: AuthorityType | 'all'; label: string; count: number; badge: string }[] = [
   { id: 'all', label: 'All Authorities (36 Institutions)', count: 36, badge: 'PAN-INDIA' },
-  { id: 'state_technical', label: 'State Technical Boards (Affiliating)', count: 16, badge: 'AFFILIATING' },
+  { id: 'state_technical', label: 'State Technical Boards & Universities', count: 17, badge: 'STATE-BOARD' },
   { id: 'national_importance', label: 'Institutes of National Importance', count: 10, badge: 'AUTONOMOUS' },
   { id: 'private_deemed', label: 'Private & Deemed Universities', count: 5, badge: 'DEEMED' },
-  { id: 'state_autonomous', label: 'State-Funded Autonomous', count: 5, badge: 'STATE-AUTO' }
+  { id: 'state_autonomous', label: 'State-Funded Autonomous', count: 4, badge: 'STATE-AUTO' }
+];
+
+export const POPULAR_UNIVERSITY_IDS: string[] = [
+  'calcutta_univ',
+  'makaut',
+  'aktu',
+  'vtu',
+  'anna_univ',
+  'jadavpur',
+  'dtu',
+  'iit_bombay',
+  'bits_pilani'
 ];
 
 export const PAN_INDIA_UNIVERSITIES: UniversityMeta[] = [
   // =========================================================================
   // 1. STATE TECHNICAL UNIVERSITIES (AFFILIATING BOARDS — 16 STATES)
   // =========================================================================
+  {
+    id: 'calcutta_univ',
+    officialName: 'University of Calcutta',
+    name: 'University of Calcutta',
+    shortName: 'Calcutta University (CU)',
+    state: 'West Bengal',
+    city: 'Kolkata',
+    authorityType: 'state_technical',
+    authorityLabel: 'State Technical University & Board',
+    institutionalStatus: 'State Public Research University (Faculty of Engineering & Technology)',
+    establishedYear: 1857,
+    autonomous: true,
+    affiliatedCollegesCount: null,
+    affiliatingCollegesCount: null,
+    affiliatedCollegesCountAsOf: null,
+    headquarters: 'Kolkata, West Bengal',
+    officialWebsite: 'https://www.caluniv.ac.in',
+    regulationCode: 'CU 4-Year B.Tech Regulations (AY 2024-25 / CBCS)',
+    gradingSystem: '10-Point Absolute/Relative Grading (Letter Grades O, A+, A, B+, B, C, P, F) with SGPA/CGPA',
+    semesterSystem: '8-Semester CBCS System (Degree Code 401)',
+    blueprintPattern: 'Mid-Term Assessment (30%) + End-Semester Theory Examination (70%)',
+    icon: '🏛️',
+    popularBranches: ['Computer Science and Engineering', 'Information Technology', 'Applied Physics', 'Chemical Engineering', 'Optics & Optoelectronics'],
+    description: 'Founded in 1857, the University of Calcutta is one of India’s premier heritage universities. Its Faculty of Engineering & Technology offers a full 4-year B.Tech in CSE (Code 401).',
+    isPopular: true,
+    source: {
+      sourceType: 'OFFICIAL_UNIVERSITY',
+      sourceName: 'University of Calcutta Official Academic Portal & B.Tech Regulations',
+      sourceUrl: 'https://www.caluniv.ac.in/academic/ChemTech/BTech-Regulation-New.pdf',
+      regulation: 'CU 4-Year B.Tech Regulations (AY 2024-25)',
+      verifiedAt: '2026-09-15',
+      verifiedBy: 'VIDYA AI Academic Extraction Engine',
+      verificationStatus: 'VERIFIED',
+      verificationNotes: 'Verified against official CU B.Tech Regulations, curriculum CSR-B.Tech-19-2-19.pdf, and B.Tech-15-1-19.pdf.'
+    }
+  },
   {
     id: 'makaut',
     officialName: 'Maulana Abul Kalam Azad University of Technology, West Bengal',
@@ -1306,44 +1354,10 @@ export const PAN_INDIA_UNIVERSITIES: UniversityMeta[] = [
       verificationStatus: 'VERIFIED',
       verificationNotes: 'Autonomous engineering college affiliated to University of Mumbai; not an affiliating authority.'
     }
-  },
-  {
-    id: 'calcutta_univ',
-    officialName: 'University of Calcutta',
-    name: 'University of Calcutta',
-    shortName: 'Calcutta University (CU)',
-    state: 'West Bengal',
-    city: 'Kolkata',
-    authorityType: 'state_autonomous',
-    authorityLabel: 'State-Funded Autonomous',
-    institutionalStatus: 'State Public Research University (Faculty of Engineering & Technology)',
-    establishedYear: 1857,
-    autonomous: true,
-    affiliatedCollegesCount: null,
-    affiliatingCollegesCount: null,
-    affiliatedCollegesCountAsOf: null,
-    headquarters: 'Kolkata, West Bengal',
-    officialWebsite: 'https://www.caluniv.ac.in',
-    regulationCode: 'CU 4-Year B.Tech Regulations (AY 2024-25 / CBCS)',
-    gradingSystem: '10-Point Absolute/Relative Grading (Letter Grades O, A+, A, B+, B, C, P, F) with SGPA/CGPA',
-    semesterSystem: '8-Semester CBCS System (Degree Code 401)',
-    blueprintPattern: 'Mid-Term Assessment (30%) + End-Semester Theory Examination (70%)',
-    icon: '🏛️',
-    popularBranches: ['Computer Science and Engineering', 'Information Technology', 'Applied Physics', 'Chemical Engineering', 'Optics & Optoelectronics'],
-    description: 'Founded in 1857, the University of Calcutta is one of India’s premier heritage universities. Its Faculty of Engineering & Technology offers a full 4-year B.Tech in CSE (Code 401).',
-    isPopular: true,
-    source: {
-      sourceType: 'OFFICIAL_UNIVERSITY',
-      sourceName: 'University of Calcutta Official Academic Portal & B.Tech Regulations',
-      sourceUrl: 'https://www.caluniv.ac.in/academic/ChemTech/BTech-Regulation-New.pdf',
-      regulation: 'CU 4-Year B.Tech Regulations (AY 2024-25)',
-      verifiedAt: '2026-09-15',
-      verifiedBy: 'VIDYA AI Academic Extraction Engine',
-      verificationStatus: 'VERIFIED',
-      verificationNotes: 'Verified against official CU B.Tech Regulations, curriculum CSR-B.Tech-19-2-19.pdf, and B.Tech-15-1-19.pdf.'
-    }
   }
 ];
+
+export const POPULAR_UNIVERSITIES = PAN_INDIA_UNIVERSITIES.filter(u => u.isPopular);
 
 export const getUniversityById = (id: string): UniversityMeta => {
   return PAN_INDIA_UNIVERSITIES.find(u => u.id === id) || PAN_INDIA_UNIVERSITIES[0];
