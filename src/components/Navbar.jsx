@@ -31,7 +31,8 @@ import {
   X,
   Search,
   Sparkles,
-  Award
+  Award,
+  GraduationCap
 } from 'lucide-react';
 
 import { AuthModal } from './AuthModal';
@@ -98,6 +99,7 @@ export const Navbar = ({
     { id: 'studyHub', label: 'Study Room' },
     { id: 'collegeHub', label: 'Curriculum' },
     { id: 'mockTests', label: 'Mock Tests' },
+    { id: 'igotKarmayogi', label: 'iGOT Karmayogi' },
     { id: 'dashboard', label: 'Dashboard' }
   ];
 
@@ -123,26 +125,33 @@ export const Navbar = ({
           
           {/* 1. Left: Gemini Notebook-style Logo (Blue Arches + Vidya AI) */}
           <div className="flex items-center shrink-0">
+            {/* Logo button - no nested buttons inside */}
             <button 
               type="button"
               onClick={() => setActiveTab('home')} 
               className="flex items-center gap-2.5 text-left group cursor-pointer focus:outline-none"
             >
               <NotebookArchesIcon />
-              <div className="flex items-center gap-2">
-                <span className="font-sans font-medium text-[17px] sm:text-[18px] tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">
-                  Vidya AI
-                </span>
-                <div className="hidden lg:flex items-center gap-1.5">
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30">
-                    SIH26101
-                  </span>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30" title="Truthfully operating in Mock Adapter mode until Prompt 4">
-                    iGOT: Mock Adapter
-                  </span>
-                </div>
-              </div>
+              <span className="font-sans font-medium text-[17px] sm:text-[18px] tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">
+                Vidya AI
+              </span>
             </button>
+            {/* iGOT badge — separate element outside the logo button to avoid nested <button> */}
+            <div className="hidden lg:flex items-center gap-1.5 ml-2">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30">
+                SIH26101
+              </span>
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => setActiveTab('igotKarmayogi')}
+                onKeyDown={(e) => e.key === 'Enter' && setActiveTab('igotKarmayogi')}
+                className="px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 cursor-pointer transition-colors select-none" 
+                title="Open official iGOT Karmayogi capacity building dashboard"
+              >
+                iGOT: Mock Adapter ↗
+              </div>
+            </div>
           </div>
 
           {/* 2. Right: Overview (underlined) + Links + Discord/Reddit/X + Get the App */}
@@ -215,6 +224,14 @@ export const Navbar = ({
                   >
                     <LayoutDashboard className="w-3.5 h-3.5 text-[#007AFF]" />
                     <span>Dashboard</span>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem
+                    onClick={() => setActiveTab('studyHub')}
+                    className="px-3 py-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 flex items-center gap-2.5 cursor-pointer font-medium"
+                  >
+                    <GraduationCap className="w-3.5 h-3.5 text-emerald-500" />
+                    <span>Edit Academic Profile</span>
                   </DropdownMenuItem>
 
                   <DropdownMenuSeparator />

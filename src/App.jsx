@@ -29,6 +29,7 @@ const PublicApiHub = lazy(() => import('./components/PublicApiHub').then(m => ({
 const DeckStudio = lazy(() => import('./components/DeckStudio').then(m => ({ default: m.DeckStudio })));
 const CollegeHubView = lazy(() => import('./components/collegeHub/CollegeHubView').then(m => ({ default: m.CollegeHubView })));
 const PyqPredictorVault = lazy(() => import('./components/collegeHub/PyqPredictorVault').then(m => ({ default: m.PyqPredictorVault })));
+const IGOTDashboard = lazy(() => import('./components/igot/IGOTDashboard').then(m => ({ default: m.IGOTDashboard })));
 
 const VALID_TABS = [
   'home',
@@ -49,7 +50,8 @@ const VALID_TABS = [
   'publicApiHub',
   'deckStudio',
   'collegeHub',
-  'pyqVault'
+  'pyqVault',
+  'igotKarmayogi'
 ];
 
 const getInitialTabFromUrl = () => {
@@ -311,6 +313,7 @@ export const App = () => {
                     />
                   </div>
                 )}
+                {activeTab === 'igotKarmayogi' && <IGOTDashboard />}
               </motion.div>
             </AnimatePresence>
           </Suspense>

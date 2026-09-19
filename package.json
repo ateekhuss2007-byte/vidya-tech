@@ -10,6 +10,7 @@
     "validate:registry": "npx vite-node scripts/validateUniversityRegistry.ts",
     "validate:syllabus": "npx vite-node scripts/validateSyllabusRegistry.ts",
     "validate:pyq": "npx vite-node scripts/validatePyqRegistry.ts",
+    "test:igot": "npx vite-node scripts/testIgotIntegration.ts",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -48,6 +48,21 @@ service cloud.firestore {
       allow write: if false; // System administered only
     }
 
+    // Academic Profiles: Read/Write for the owner (authenticated) or any device key (guest students)
+    // Guest learners do not need to sign up just to save their semester & track.
+    // The document key matches either Firebase UID (authenticated) or device_* (guest).
+    match /academic_profiles/{profileId} {
+      // Authenticated users own their UID-keyed doc
+      allow read: if isAuthenticated() && request.auth.uid == profileId;
+      allow write: if isAuthenticated() && request.auth.uid == profileId
+        && request.resource.data.userId == profileId;
+
+      // Guest/device-ID based access: allow any read/write on device_* keys.
+      // These are ephemeral device identifiers generated client-side;
+      // no authentication required as data is non-sensitive academic config.
+      allow read, write: if !isAuthenticated() && profileId.matches('device_.*');
+    }
+
     // Default deny all other paths
     match /{document=**} {
       allow read, write: if false;

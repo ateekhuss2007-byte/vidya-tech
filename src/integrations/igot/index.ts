@@ -1,44 +1,56 @@
 /**
  * ============================================================================
- * iGOT Karmayogi Integration Module Entrypoint
+ * VIDYA AI — SIH26101: iGOT Karmayogi Integration Module Entrypoint
  * ============================================================================
- * Factory and exports for Mission Karmayogi adapters.
+ * Clean exports and factory singletons for Mission Karmayogi adapters.
  * ============================================================================
  */
 
 import { IIGOTAdapter } from './IGOTAdapter';
 import { IGOTMockAdapter } from './IGOTMockAdapter';
-import { PROJECT_CONFIG } from '../../config/projectConfig';
+import { IGOTLiveAdapter } from './IGOTLiveAdapter';
+import { IGOTService } from './IGOTService';
+import { IGOT_CONFIG } from './IGOTConfig';
 
 export * from './IGOTTypes';
 export * from './IGOTConfig';
 export * from './IGOTAdapter';
 export * from './IGOTMockAdapter';
+export * from './IGOTLiveAdapter';
+export * from './IGOTService';
 
 let adapterInstance: IIGOTAdapter | null = null;
+let serviceInstance: IGOTService | null = null;
 
 /**
  * Singleton factory to get the active iGOT Adapter based on environment configuration.
- * Currently returns IGOTMockAdapter (mode: MOCK) until official live API credentials
- * and government integration contracts are established in Prompt 4.
+ * Returns IGOTLiveAdapter if configured for LIVE or SANDBOX, otherwise returns
+ * the transparent IGOTMockAdapter for local development and jury evaluation.
  */
 export function getIGOTAdapter(): IIGOTAdapter {
   if (!adapterInstance) {
-    const mode = PROJECT_CONFIG.igot.integrationMode;
+    const mode = IGOT_CONFIG.mode;
     switch (mode) {
+      case 'LIVE':
+      case 'SANDBOX':
+        adapterInstance = new IGOTLiveAdapter();
+        break;
       case 'MOCK':
       case 'NOT_CONFIGURED':
-      case 'SANDBOX':
-        adapterInstance = new IGOTMockAdapter();
-        break;
-      case 'LIVE':
-        // Live integration adapter will be activated in Prompt 4 with verified endpoints
-        console.warn('[VIDYA AI] Live iGOT credentials not yet verified. Utilizing safe mock adapter.');
-        adapterInstance = new IGOTMockAdapter();
-        break;
       default:
         adapterInstance = new IGOTMockAdapter();
+        break;
     }
   }
   return adapterInstance;
+}
+
+/**
+ * Singleton factory to get the active high-level IGOTService.
+ */
+export function getIGOTService(): IGOTService {
+  if (!serviceInstance) {
+    serviceInstance = new IGOTService(getIGOTAdapter());
+  }
+  return serviceInstance;
 }
