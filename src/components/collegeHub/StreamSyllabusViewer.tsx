@@ -163,12 +163,6 @@ export const StreamSyllabusViewer: React.FC<StreamSyllabusViewerProps> = ({
         </button>
       </div>
 
-      {/* 3. WELCOME BANNER (Soft powder-blue / grey-blue card) */}
-      <div className="w-full rounded-2xl bg-[#DFECF4] border border-[#CEE0EC] px-5 py-3.5 shadow-2xs">
-        <p className="text-xs sm:text-[13px] text-slate-800 font-medium leading-relaxed">
-          Welcome Learner! Sign in is in to access all university syllabus in notes, step-marked PYQs, and your cognitive core learning.
-        </p>
-      </div>
 
       {/* 4. HEADING & SUBJECT SELECTOR TABS */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
