@@ -140,9 +140,6 @@ export const Navbar = ({
                 <span className="font-sans font-extrabold text-[20px] sm:text-[22px] tracking-tight text-slate-900 dark:text-white group-hover:text-[#0EA5E9] dark:group-hover:text-[#38BDF8] transition-colors duration-200">
                   Vidya AI
                 </span>
-                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#38BDF8]/15 dark:text-[#38BDF8] border border-[#007AFF]/20 shadow-xs">
-                  2.0
-                </span>
               </div>
             </button>
             {/* iGOT badge — separate element outside the logo button to avoid nested <button> */}
