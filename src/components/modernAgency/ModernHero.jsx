@@ -1,6 +1,5 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, CheckCircle2, TrendingUp, Zap } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export const ModernHero = ({ setActiveTab, onOpenAuth, user, onExploreMore }) => {
   const handlePrimaryClick = () => {
@@ -135,42 +134,6 @@ export const ModernHero = ({ setActiveTab, onOpenAuth, user, onExploreMore }) =>
               {/* Glass Overlay Vignette at bottom */}
               <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
             </motion.div>
-
-            {/* Floating Metric Badge 1 (Top-Right) */}
-            <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ repeat: Infinity, duration: 4.2, ease: "easeInOut" }}
-              className="absolute -top-4 right-0 sm:-right-4 bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl border border-slate-200/30 dark:border-white/[0.06] shadow-lg shadow-[#45B5E5]/10 flex items-center gap-3 z-20"
-            >
-              <div className="w-9 h-9 rounded-xl bg-[#EAF8FD] flex items-center justify-center text-[#168FC4]">
-                <Zap className="w-5 h-5 fill-[#45B5E5] text-[#45B5E5]" />
-              </div>
-              <div>
-                <div className="text-[11px] text-[#777777] font-semibold tracking-wide">Speed Velocity</div>
-                <div className="text-sm font-extrabold text-[#111111] font-display flex items-center gap-1">
-                  <span>+94% Faster</span>
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Floating Metric Badge 2 (Bottom-Left) */}
-            <motion.div
-              animate={{ y: [0, -7, 0] }}
-              transition={{ repeat: Infinity, duration: 4.8, ease: "easeInOut" }}
-              className="absolute -bottom-6 left-0 sm:-left-4 bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl border border-slate-200/30 dark:border-white/[0.06] shadow-lg shadow-[#45B5E5]/10 flex items-center gap-3 z-20"
-            >
-              <div className="w-9 h-9 rounded-xl bg-[#EAF8FD] flex items-center justify-center text-[#168FC4]">
-                <TrendingUp className="w-5 h-5 text-[#168FC4]" />
-              </div>
-              <div>
-                <div className="text-[11px] text-[#777777] font-semibold tracking-wide">Exam Readiness</div>
-                <div className="text-sm font-extrabold text-[#111111] font-display">
-                  98.4% Optimal
-                </div>
-              </div>
-            </motion.div>
-
           </div>
 
         </div>
