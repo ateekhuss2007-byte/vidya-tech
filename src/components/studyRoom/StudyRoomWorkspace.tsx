@@ -65,6 +65,7 @@ export const StudyRoomWorkspace: React.FC<StudyRoomWorkspaceProps> = ({
 }) => {
   const [copiedFormulaIndex, setCopiedFormulaIndex] = useState<number | null>(null);
   const [pyqMarkFilter, setPyqMarkFilter] = useState<'all' | 2 | 5 | 10>('all');
+  const [showObjectives, setShowObjectives] = useState(false);
 
   // Reading scale: default 'large' so reading is comfortable as requested
   const [textScale, setTextScale] = useState<'normal' | 'large' | 'xlarge'>(() => {
@@ -207,90 +208,55 @@ export const StudyRoomWorkspace: React.FC<StudyRoomWorkspaceProps> = ({
             )}
           </div>
 
-          {/* Quick Action Buttons + Reading Zoom Toggle */}
-          <div className="flex items-center gap-2 shrink-0 flex-wrap">
-            
-            {/* Reading Font Scaler (Aa: Normal / Large / Extra Large) */}
-            <div className="flex items-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06] p-1 border border-black/[0.06] dark:border-white/[0.08]" title="Reading Text Size (पढ़ने में आसानी)">
-              <span className="text-xs font-mono font-bold text-neutral-500 px-1.5 flex items-center gap-0.5">
-                Aa
-              </span>
+          {/* Subtle Utilities (Zoom & Copy) */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Reading Font Scaler (Aa) */}
+            <div className="flex items-center rounded-xl bg-black/[0.04] dark:bg-white/[0.06] p-0.5 border border-black/[0.06] dark:border-white/[0.08]" title="Reading Text Size">
               <button
                 type="button"
                 onClick={() => handleScaleChange('normal')}
-                className={`px-2 py-1 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
+                className={`px-2 py-1 rounded-lg text-xs font-mono font-semibold transition-all cursor-pointer ${
                   textScale === 'normal'
-                    ? 'bg-[#007AFF] text-white shadow-xs'
+                    ? 'bg-white dark:bg-[#252528] text-[#007AFF] shadow-xs'
                     : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'
                 }`}
                 title="Standard Text Size (100%)"
               >
-                100%
+                Aa
               </button>
               <button
                 type="button"
                 onClick={() => handleScaleChange('large')}
-                className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
+                className={`px-2 py-1 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
                   textScale === 'large'
-                    ? 'bg-[#007AFF] text-white shadow-xs'
+                    ? 'bg-white dark:bg-[#252528] text-[#007AFF] shadow-xs'
                     : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'
                 }`}
-                title="Large Text (115% — Easy Reading)"
+                title="Large Text (115%)"
               >
-                115%
+                Aa+
               </button>
               <button
                 type="button"
                 onClick={() => handleScaleChange('xlarge')}
-                className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
+                className={`px-2 py-1 rounded-lg text-xs font-mono font-extrabold transition-all cursor-pointer ${
                   textScale === 'xlarge'
-                    ? 'bg-[#007AFF] text-white shadow-xs'
+                    ? 'bg-white dark:bg-[#252528] text-[#007AFF] shadow-xs'
                     : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'
                 }`}
-                title="Extra Large (130% — Maximum Readability)"
+                title="Extra Large (130%)"
               >
-                130%
+                Aa++
               </button>
             </div>
 
             <button
               type="button"
-              onClick={() => onSelectMode('handwritten')}
-              className={`px-3.5 py-2 rounded-xl border text-xs font-mono font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs ${
-                activeMode === 'handwritten'
-                  ? 'bg-amber-500 text-white border-amber-500 shadow-amber-500/20'
-                  : 'bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 border-amber-500/30'
-              }`}
-              title="Read Authentic University Topper Handwritten Notes"
-            >
-              <span>✍️ Topper's Notes</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleLaunchMockExam}
-              className="px-4 py-2 rounded-xl bg-[#007AFF] hover:bg-[#007AFF]/90 text-white text-xs font-mono font-bold transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
-            >
-              <Award className="w-4 h-4" />
-              <span>Practice Mock</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleLaunchDeepDive(activeUnit ? `${subject.name}: ${activeUnit.title}` : subject.name)}
-              className="px-4 py-2 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#007AFF]/10 text-[#007AFF] text-xs font-mono font-bold transition-all flex items-center gap-1.5 cursor-pointer"
-            >
-              <Sparkles className="w-4 h-4" />
-              <span>AI Deep Dive</span>
-            </button>
-
-            <button
-              type="button"
               onClick={handleCopySyllabus}
-              className="p-2 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] hover:bg-black/[0.06] text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition-colors cursor-pointer"
+              className="p-2 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition-colors cursor-pointer border border-black/[0.04] dark:border-white/[0.06]"
               title="Copy Course Syllabus"
             >
-              <Copy className="w-4 h-4" />
+              <Copy className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
@@ -358,39 +324,60 @@ export const StudyRoomWorkspace: React.FC<StudyRoomWorkspaceProps> = ({
             {activeMode === 'syllabus' && (
               <div className="space-y-6">
                 
-                {/* Objectives & Outcomes Box */}
+                {/* Objectives & Outcomes (Clean Collapsible Accordion to prevent clutter) */}
                 {(subject.courseObjectives || subject.courseOutcomes) && (
-                  <div className="p-6 rounded-2xl bg-[#FBFBFC] dark:bg-[#18181A] border border-black/[0.06] dark:border-white/[0.08] space-y-3.5">
-                    <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-[#007AFF] font-bold uppercase tracking-wider">
-                      <GraduationCap className="w-4 h-4" />
-                      <span>Course Learning Objectives & Outcomes</span>
-                    </div>
-
-                    {subject.courseObjectives && subject.courseObjectives.length > 0 && (
-                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-neutral-700 dark:text-neutral-300 font-sans leading-relaxed">
-                        {subject.courseObjectives.map((obj, i) => (
-                          <li key={i} className="flex items-start gap-2.5">
-                            <span className="text-[#007AFF] font-extrabold text-base">•</span>
-                            <span>{obj}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-
-                    {subject.courseOutcomes && subject.courseOutcomes.length > 0 && (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 pt-3 border-t border-black/[0.04] dark:border-white/[0.04]">
-                        {subject.courseOutcomes.map((co, i) => (
-                          <div key={i} className="p-3.5 rounded-xl bg-white dark:bg-[#121214] border border-black/[0.04] dark:border-white/[0.04]">
-                            <span className="px-2 py-0.5 rounded bg-[#007AFF]/10 text-[#007AFF] text-xs font-mono font-bold">
-                              {co.co}
-                            </span>
-                            <p className="text-sm text-neutral-600 dark:text-neutral-300 font-sans mt-1.5 leading-relaxed">
-                              {co.description}
-                            </p>
-                          </div>
-                        ))}
+                  <div className="rounded-2xl border border-black/[0.06] dark:border-white/[0.08] overflow-hidden bg-[#FBFBFC] dark:bg-[#18181A]">
+                    <button
+                      type="button"
+                      onClick={() => setShowObjectives(prev => !prev)}
+                      className="w-full flex items-center justify-between px-5 py-3 text-left cursor-pointer hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors select-none"
+                    >
+                      <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-[#007AFF] font-semibold">
+                        <GraduationCap className="w-4 h-4" />
+                        <span>Course Learning Objectives & Outcomes</span>
                       </div>
-                    )}
+                      <div className="flex items-center gap-1.5 text-xs text-neutral-400 font-mono">
+                        <span>{showObjectives ? 'Collapse' : 'Expand Details'}</span>
+                        <ChevronRight className={`w-3.5 h-3.5 transition-transform duration-200 ${showObjectives ? 'rotate-90' : ''}`} />
+                      </div>
+                    </button>
+
+                    <AnimatePresence>
+                      {showObjectives && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="px-5 pb-5 pt-1 space-y-4 border-t border-black/[0.04] dark:border-white/[0.04]"
+                        >
+                          {subject.courseObjectives && subject.courseObjectives.length > 0 && (
+                            <ul className="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 font-sans leading-relaxed">
+                              {subject.courseObjectives.map((obj, i) => (
+                                <li key={i} className="flex items-start gap-2">
+                                  <span className="text-[#007AFF] font-bold text-base leading-none">•</span>
+                                  <span>{obj}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+
+                          {subject.courseOutcomes && subject.courseOutcomes.length > 0 && (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 pt-2 border-t border-black/[0.04] dark:border-white/[0.04]">
+                              {subject.courseOutcomes.map((co, i) => (
+                                <div key={i} className="p-3 rounded-xl bg-white dark:bg-[#121214] border border-black/[0.04] dark:border-white/[0.04]">
+                                  <span className="px-1.5 py-0.5 rounded bg-[#007AFF]/10 text-[#007AFF] text-[11px] font-mono font-bold">
+                                    {co.co}
+                                  </span>
+                                  <p className="text-xs text-neutral-600 dark:text-neutral-300 font-sans mt-1 leading-relaxed">
+                                    {co.description}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 )}
 
@@ -403,25 +390,32 @@ export const StudyRoomWorkspace: React.FC<StudyRoomWorkspaceProps> = ({
                     </h3>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-3.5">
                     {subject.units.map((unit) => {
                       const isSelectedUnit = activeUnitId === unit.id;
 
                       return (
                         <div
                           key={unit.id}
-                          className={`p-6 rounded-2xl border transition-all ${
+                          className={`p-5 sm:p-6 rounded-2xl border transition-all ${
                             isSelectedUnit
-                              ? 'bg-white dark:bg-[#18181A] border-[#007AFF] shadow-md ring-2 ring-[#007AFF]/40'
-                              : 'bg-white dark:bg-[#18181A] border-black/[0.06] dark:border-white/[0.08] hover:border-[#007AFF]/40'
+                              ? 'bg-white dark:bg-[#18181A] border-[#007AFF] shadow-sm ring-1 ring-[#007AFF]/30'
+                              : 'bg-white dark:bg-[#18181A] border-black/[0.06] dark:border-white/[0.08] hover:border-black/[0.12] dark:hover:border-white/[0.15]'
                           }`}
                         >
-                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-black/[0.04] dark:border-white/[0.04]">
-                            <div className="flex items-center gap-3 flex-wrap">
-                              <span className="font-mono text-xs sm:text-sm font-bold text-[#007AFF] px-2.5 py-1 rounded-lg bg-[#007AFF]/10">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-black/[0.04] dark:border-white/[0.04]">
+                            <div 
+                              onClick={() => onSelectUnit(isSelectedUnit ? null : unit.id)}
+                              className="flex items-center gap-2.5 flex-wrap cursor-pointer group"
+                            >
+                              <span className={`font-mono text-xs font-bold px-2 py-0.5 rounded-md transition-colors ${
+                                isSelectedUnit 
+                                  ? 'bg-[#007AFF] text-white' 
+                                  : 'bg-[#007AFF]/10 text-[#007AFF] group-hover:bg-[#007AFF]/20'
+                              }`}>
                                 Unit {unit.unitNumber}
                               </span>
-                              <h4 className="font-display font-bold text-base sm:text-lg text-[#1D1D1F] dark:text-[#F5F5F7]">
+                              <h4 className="font-display font-bold text-base sm:text-lg text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors">
                                 {unit.title}
                               </h4>
                               {unit.contactHours && (
@@ -430,44 +424,33 @@ export const StudyRoomWorkspace: React.FC<StudyRoomWorkspaceProps> = ({
                                 </span>
                               )}
                               {unit.isHardest && (
-                                <span className="text-xs font-mono text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-lg font-bold flex items-center gap-1">
-                                  <Flame className="w-3.5 h-3.5" /> High Yield
+                                <span className="text-[11px] font-mono text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md font-semibold flex items-center gap-1">
+                                  <Flame className="w-3 h-3" /> High Yield
                                 </span>
                               )}
                             </div>
 
-                            <div className="flex items-center gap-2">
-                              <button
-                                type="button"
-                                onClick={() => onSelectUnit(isSelectedUnit ? null : unit.id)}
-                                className={`px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono transition-all cursor-pointer ${
-                                  isSelectedUnit
-                                    ? 'bg-[#007AFF] text-white font-bold shadow-xs'
-                                    : 'bg-black/[0.04] dark:bg-white/[0.06] text-neutral-600 dark:text-neutral-300 hover:text-[#007AFF]'
-                                }`}
-                              >
-                                {isSelectedUnit ? '✓ Focused' : 'Focus'}
-                              </button>
-
-                              <button
-                                type="button"
-                                onClick={() => handleLaunchDeepDive(`${subject.name}: ${unit.title}`)}
-                                className="px-3 py-1.5 rounded-xl bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] text-xs sm:text-sm font-mono font-bold transition-colors flex items-center gap-1.5 cursor-pointer"
-                              >
-                                <Sparkles className="w-3.5 h-3.5" />
-                                <span>AI Notes</span>
-                              </button>
-
+                            {/* Clean Minimal Action Buttons */}
+                            <div className="flex items-center gap-2 shrink-0">
                               <button
                                 type="button"
                                 onClick={() => {
                                   onSelectUnit(unit.id);
                                   onSelectMode('handwritten');
                                 }}
-                                className="px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/30 text-xs sm:text-sm font-mono font-bold transition-colors flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                                className="px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/25 text-xs font-mono font-semibold transition-colors flex items-center gap-1.5 cursor-pointer"
                                 title="Read Topper Handwritten Notebook for this unit"
                               >
                                 <span>✍️ Notes</span>
+                              </button>
+
+                              <button
+                                type="button"
+                                onClick={() => handleLaunchDeepDive(`${subject.name}: ${unit.title}`)}
+                                className="px-3 py-1.5 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#007AFF]/10 hover:text-[#007AFF] text-neutral-600 dark:text-neutral-300 text-xs font-mono font-semibold transition-colors flex items-center gap-1.5 cursor-pointer"
+                              >
+                                <Sparkles className="w-3.5 h-3.5 text-[#007AFF]" />
+                                <span>AI Study</span>
                               </button>
                             </div>
                           </div>

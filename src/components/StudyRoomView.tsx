@@ -34,7 +34,8 @@ import {
   Award,
   Building2,
   BookOpen,
-  Target
+  Target,
+  X
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -248,6 +249,9 @@ export const StudyRoomView: React.FC<StudyRoomViewProps> = ({
   // 7. Mobile Drawer State
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
 
+  // 8. Dismissible College Notification Banner (keeps interface clean & distraction-free)
+  const [dismissCollegeBanner, setDismissCollegeBanner] = useState(false);
+
   const getGoalBadgeInfo = (outcome?: string) => {
     switch (outcome) {
       case 'pass_blueprint':
@@ -404,44 +408,36 @@ export const StudyRoomView: React.FC<StudyRoomViewProps> = ({
       )}
 
       {/* =======================================================================
-          1. INTEGRATED STUDIO SUB-HEADER BAR
+          1. INTEGRATED STUDIO SUB-HEADER BAR (Distraction-Free, Apple-Grade)
           ======================================================================= */}
-      <header className="min-h-14 border-b border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#18181A] px-5 sm:px-8 py-2 flex items-center justify-between gap-4 shrink-0 select-none z-30">
+      <header className="min-h-13 border-b border-black/[0.06] dark:border-white/[0.06] bg-white dark:bg-[#18181A] px-4 sm:px-6 py-2 flex items-center justify-between gap-3 shrink-0 select-none z-30">
         
-        {/* Left: Personalized Profile Badge & Semester Switcher */}
-        <div className="flex items-center gap-3 overflow-x-auto custom-scrollbar py-0.5">
-          {/* Personalized Learner Badge & 1-Click Stream Switcher Dropdown */}
+        {/* Left: Stream Selector & Minimalist Semester Pills */}
+        <div className="flex items-center gap-3 overflow-x-auto custom-scrollbar py-0.5 min-w-0">
+          {/* Stream Switcher Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
                 type="button"
-                className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors cursor-pointer text-sm font-semibold text-[#1D1D1F] dark:text-[#F5F5F7] shrink-0 group border border-black/[0.06] dark:border-white/[0.08]"
+                className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors cursor-pointer text-xs sm:text-sm font-semibold text-[#1D1D1F] dark:text-[#F5F5F7] shrink-0 group border border-black/[0.06] dark:border-white/[0.08]"
                 title="Switch curriculum stream or customize target"
               >
-                <span className="text-lg">{currentTrackMeta.icon}</span>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold">
-                    {learnerProfile.programmeName
-                      ? (learnerProfile.programmeName.length > 26 ? (learnerProfile.branch || learnerProfile.programmeName) : learnerProfile.programmeName)
-                      : trackData.isBtech
-                      ? `B.Tech ${learnerProfile.branch || 'CSE'}`
-                      : (learnerProfile.trackId === 'bca_college' || learnerProfile.trackId === 'bca_mca'
-                          ? `BCA (${learnerProfile.branch || 'Core'})`
-                          : currentTrackMeta.title)}
+                <span className="text-base">{currentTrackMeta.icon}</span>
+                <span className="font-bold truncate max-w-[150px] sm:max-w-[200px]">
+                  {learnerProfile.programmeName
+                    ? (learnerProfile.programmeName.length > 22 ? (learnerProfile.branch || learnerProfile.programmeName) : learnerProfile.programmeName)
+                    : trackData.isBtech
+                    ? `B.Tech ${learnerProfile.branch || 'CSE'}`
+                    : (learnerProfile.trackId === 'bca_college' || learnerProfile.trackId === 'bca_mca'
+                        ? `BCA (${learnerProfile.branch || 'Core'})`
+                        : currentTrackMeta.title)}
+                </span>
+                {learnerProfile.collegeName && (
+                  <span className="hidden lg:inline-block text-[11px] text-neutral-400 font-normal truncate max-w-[140px]">
+                    • {learnerProfile.collegeName}
                   </span>
-                  <span 
-                    className="text-xs font-semibold text-neutral-600 dark:text-neutral-300 bg-black/[0.05] dark:bg-white/[0.08] px-2.5 py-0.5 rounded-lg border border-black/[0.04] dark:border-white/[0.06] max-w-[280px] truncate flex items-center gap-1.5"
-                    title={learnerProfile.collegeName || learnerProfile.universityName}
-                  >
-                    <span>{(trackData.isBtech || learnerProfile.trackId === 'bca_college' || learnerProfile.trackId === 'bca_mca') ? '🎓' : '🏫'}</span>
-                    <span className="truncate">
-                      {learnerProfile.collegeName 
-                        ? learnerProfile.collegeName 
-                        : (learnerProfile.universityId === 'makaut' ? 'MAKAUT • Enter College' : learnerProfile.universityName)}
-                    </span>
-                  </span>
-                  <ChevronDown className="w-3.5 h-3.5 text-neutral-400 group-hover:text-[#007AFF] transition-colors" />
-                </div>
+                )}
+                <ChevronDown className="w-3.5 h-3.5 text-neutral-400 group-hover:text-[#007AFF] transition-colors shrink-0" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-72 p-2">
@@ -508,19 +504,14 @@ export const StudyRoomView: React.FC<StudyRoomViewProps> = ({
                 className="flex items-center gap-2 px-2 py-2 text-xs font-medium text-neutral-600 dark:text-neutral-300 rounded-xl cursor-pointer hover:text-[#007AFF] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
               >
                 <Edit3 className="w-3.5 h-3.5" />
-                <span>Edit Track, Board, College & Semester (Steps 1–4)...</span>
+                <span>Edit Profile & Target Semester (Steps 1–4)...</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Divider */}
+          {/* Minimalist Semester Pills */}
           {Boolean(trackData.semestersAvailable && trackData.semestersAvailable.length > 0) && (
-            <div className="h-5 w-px bg-black/[0.1] dark:bg-white/[0.1] shrink-0" />
-          )}
-
-          {/* Minimalist Semester Pills (Works for both B.Tech and BCA) */}
-          {Boolean(trackData.semestersAvailable && trackData.semestersAvailable.length > 0) && (
-            <div className="flex items-center gap-1.5 shrink-0">
+            <div className="flex items-center gap-1 shrink-0">
               {trackData.semestersAvailable!.map((semNum) => {
                 const isSelected = activeSem === semNum;
 
@@ -529,7 +520,7 @@ export const StudyRoomView: React.FC<StudyRoomViewProps> = ({
                     key={semNum}
                     type="button"
                     onClick={() => handleSelectSemester(semNum)}
-                    className={`relative px-3 py-1.5 rounded-lg text-xs sm:text-[13px] font-mono font-semibold transition-colors cursor-pointer select-none shrink-0 ${
+                    className={`relative px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-colors cursor-pointer select-none shrink-0 ${
                       isSelected
                         ? 'text-[#007AFF] font-bold'
                         : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'
@@ -552,112 +543,104 @@ export const StudyRoomView: React.FC<StudyRoomViewProps> = ({
           )}
         </div>
 
-        {/* Right: Meta, Goal Badge & Edit Profile Button */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          <span className="hidden xl:inline text-xs font-mono text-neutral-400">
-            {trackData.authority} • {trackData.totalMarksOrCredits}
-          </span>
-
-          {/* Interactive Goal Badge (Click to open Step 4 Goal Picker) */}
+        {/* Right: Goal Pill & Profile Settings Button */}
+        <div className="flex items-center gap-2 shrink-0">
+          {/* Subtle Goal Pill */}
           <button
             type="button"
             onClick={() => {
               setProfileModalInitialStep(4);
               setShowProfileModal(true);
             }}
-            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 transition-all cursor-pointer text-xs font-mono font-bold"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/20 transition-all cursor-pointer text-xs font-mono"
             title="Active Study Goal — Click to Change"
           >
             <span>{getGoalBadgeInfo(learnerProfile.targetOutcome).icon}</span>
-            <span className="hidden md:inline">Goal:</span>
-            <span className="truncate max-w-[130px] sm:max-w-[190px]">
+            <span className="hidden sm:inline font-medium">
               {getGoalBadgeInfo(learnerProfile.targetOutcome).label}
             </span>
           </button>
 
+          {/* Profile Setup Trigger */}
           <button
             type="button"
             onClick={() => {
               setProfileModalInitialStep(1);
               setShowProfileModal(true);
             }}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-mono text-neutral-600 dark:text-neutral-300 hover:text-[#007AFF] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.08] transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono text-neutral-600 dark:text-neutral-300 hover:text-[#007AFF] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] transition-all cursor-pointer"
+            title="Edit Track, Degree, College & Semester"
           >
             <Edit3 className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Edit Profile & Setup</span>
+            <span className="hidden md:inline">Profile</span>
           </button>
         </div>
       </header>
 
-      {/* MAKAUT College Selection Prompt Banner */}
-      {learnerProfile.universityId === 'makaut' && !learnerProfile.collegeName && (
-        <div className="mx-5 sm:mx-8 mt-3 mb-1 p-3 sm:p-3.5 rounded-2xl bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-amber-500/10 border border-[#007AFF]/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs animate-fade-in shrink-0">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="w-8 h-8 rounded-xl bg-[#007AFF]/15 border border-[#007AFF]/25 flex items-center justify-center text-base shrink-0">
-              🏛️
-            </div>
-            <div className="min-w-0">
-              <h4 className="text-xs sm:text-sm font-display font-bold text-neutral-900 dark:text-neutral-100 flex items-center gap-2 flex-wrap">
-                <span>Please enter or select your college under MAKAUT</span>
-                <span className="px-2 py-0.2 text-[10px] font-mono font-bold bg-[#007AFF]/15 text-[#007AFF] rounded border border-[#007AFF]/20">
-                  Official 2025-2026 Directory (101–392)
-                </span>
-              </h4>
-              <p className="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 mt-0.5">
-                Select your college (e.g. Heritage, Techno Main, Kalyani Govt, Jalpaiguri, RCCIIT, Narula, HIT, etc.) to tailor college-specific notes & PYQs.
-              </p>
-            </div>
+      {/* Sleek, Non-Intrusive Dismissible College Prompt (MAKAUT) */}
+      {!dismissCollegeBanner && learnerProfile.universityId === 'makaut' && !learnerProfile.collegeName && (
+        <div className="mx-4 sm:mx-6 mt-2 p-2.5 sm:px-4 rounded-xl bg-blue-500/[0.06] dark:bg-blue-500/[0.08] border border-[#007AFF]/20 flex items-center justify-between gap-3 text-xs shrink-0 animate-fade-in">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-sm shrink-0">🏛️</span>
+            <p className="text-neutral-700 dark:text-neutral-300 truncate">
+              Select your MAKAUT college to personalize college-specific notes & PYQs.
+            </p>
           </div>
-          <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               type="button"
               onClick={() => {
                 setProfileModalInitialStep(3);
                 setShowProfileModal(true);
               }}
-              className="px-3.5 py-1.5 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white text-xs font-mono font-bold shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+              className="px-2.5 py-1 rounded-lg bg-[#007AFF] text-white font-mono font-semibold text-[11px] hover:bg-[#0062CC] transition-colors cursor-pointer"
             >
-              <GraduationCap className="w-3.5 h-3.5" />
-              <span>Select Your College</span>
+              Select College
+            </button>
+            <button
+              type="button"
+              onClick={() => setDismissCollegeBanner(true)}
+              className="p-1 rounded-md text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition-colors"
+              title="Dismiss notification"
+            >
+              <X className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
       )}
 
-      {/* Calcutta University College Selection Prompt Banner */}
-      {learnerProfile.universityId === 'calcutta_univ' && !learnerProfile.collegeName && (
-        <div className="mx-5 sm:mx-8 mt-3 mb-1 p-3 sm:p-3.5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-yellow-500/10 border border-amber-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs animate-fade-in shrink-0">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-base shrink-0">
-              🏛️
-            </div>
-            <div className="min-w-0">
-              <h4 className="text-xs sm:text-sm font-display font-bold text-neutral-900 dark:text-neutral-100 flex items-center gap-2 flex-wrap">
-                <span>Please enter or select your college under Calcutta University (CU)</span>
-                <span className="px-2 py-0.2 text-[10px] font-mono font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300 rounded border border-amber-500/20">
-                  Official 155 CU Colleges
-                </span>
-              </h4>
-              <p className="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 mt-0.5">
-                Select your college (e.g. Asutosh, Scottish Church, Maulana Azad, Goenka, Bethune, Serampore, etc.) to tailor college-specific notes & PYQs.
-              </p>
-            </div>
+      {/* Sleek, Non-Intrusive Dismissible College Prompt (CU) */}
+      {!dismissCollegeBanner && learnerProfile.universityId === 'calcutta_univ' && !learnerProfile.collegeName && (
+        <div className="mx-4 sm:mx-6 mt-2 p-2.5 sm:px-4 rounded-xl bg-amber-500/[0.06] dark:bg-amber-500/[0.08] border border-amber-500/20 flex items-center justify-between gap-3 text-xs shrink-0 animate-fade-in">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-sm shrink-0">🏛️</span>
+            <p className="text-neutral-700 dark:text-neutral-300 truncate">
+              Select your CU college to personalize college-specific notes & PYQs.
+            </p>
           </div>
-          <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               type="button"
               onClick={() => {
                 setProfileModalInitialStep(3);
                 setShowProfileModal(true);
               }}
-              className="px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-mono font-bold shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+              className="px-2.5 py-1 rounded-lg bg-amber-600 text-white font-mono font-semibold text-[11px] hover:bg-amber-700 transition-colors cursor-pointer"
             >
-              <GraduationCap className="w-3.5 h-3.5" />
-              <span>Select Your CU College</span>
+              Select CU College
+            </button>
+            <button
+              type="button"
+              onClick={() => setDismissCollegeBanner(true)}
+              className="p-1 rounded-md text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition-colors"
+              title="Dismiss notification"
+            >
+              <X className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
       )}
+
 
       {/* =======================================================================
           2. SEAMLESS MASTER-DETAIL SPLIT PANE
