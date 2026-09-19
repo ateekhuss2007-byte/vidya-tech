@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'sonner';
 
 // Radix UI Dropdown for user menu
@@ -129,9 +129,19 @@ export const Navbar = ({
               className="flex items-center gap-2.5 text-left group cursor-pointer focus:outline-none"
             >
               <NotebookArchesIcon />
-              <span className="font-sans font-medium text-[17px] sm:text-[18px] tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">
-                Vidya AI
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="font-sans font-medium text-[17px] sm:text-[18px] tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">
+                  Vidya AI
+                </span>
+                <div className="hidden lg:flex items-center gap-1.5">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/30">
+                    SIH26101
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30" title="Truthfully operating in Mock Adapter mode until Prompt 4">
+                    iGOT: Mock Adapter
+                  </span>
+                </div>
+              </div>
             </button>
           </div>
 

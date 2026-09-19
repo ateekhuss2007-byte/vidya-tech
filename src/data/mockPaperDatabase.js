@@ -7,6 +7,26 @@ import { EXTENDED_SUBJECT_POOLS } from './comprehensiveSubjectPools.js';
 
 export const COURSE_DEFINITIONS = [
   {
+    id: 'btech_calcutta',
+    name: 'B.Tech (Calcutta University - CU)',
+    category: 'Engineering & Technical',
+    standard: '1st - 4th Year B.Tech (Faculty of Engg & Tech)',
+    boardLogo: '🏛️',
+    defaultMarks: 70,
+    defaultDuration: 180,
+    patternName: 'CU 70-Mark End-Sem Blueprint (10×1m + 3×5m + 3×15m)',
+    subjects: [
+      { id: 'cu_dsp', name: 'Data Structures & Programming in C/C++', code: 'CS201', semester: 2 },
+      { id: 'cu_dld', name: 'Digital Logic & Computer Design', code: 'CS301', semester: 3 },
+      { id: 'cu_dm', name: 'Discrete Mathematical Structures', code: 'CS302', semester: 3 },
+      { id: 'cu_daa', name: 'Design & Analysis of Algorithms', code: 'CS401', semester: 4 },
+      { id: 'cu_os', name: 'Operating Systems', code: 'CS402', semester: 4 },
+      { id: 'cu_dbms', name: 'Database Management Systems', code: 'CS501', semester: 5 },
+      { id: 'cu_cn', name: 'Computer Networks', code: 'CS502', semester: 5 },
+      { id: 'cu_aiml', name: 'Artificial Intelligence & Machine Learning', code: 'CS701', semester: 7 }
+    ]
+  },
+  {
     id: 'btech_makaut',
     name: 'B.Tech (MAKAUT / University)',
     category: 'Engineering & Technical',

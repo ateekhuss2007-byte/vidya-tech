@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useSpring } from 'motion/react';
 import { Toaster, toast } from 'sonner';
 import { Navbar } from './components/Navbar';
 import { HomePage } from './components/HomePage';
@@ -178,10 +178,24 @@ export const App = () => {
     exit: { opacity: 0, y: -8, transition: { duration: 0.15, ease: 'easeIn' } }
   };
 
+  // Motion.dev scroll progress synchronization
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 25,
+    restDelta: 0.001
+  });
+
   return (
     <TooltipProvider delayDuration={150}>
-      <div className="min-h-screen bg-[#F5F5F7] dark:bg-[#1D1D1F] text-[#1D1D1F] dark:text-[#F5F5F7] flex flex-col font-sans transition-colors duration-300 selection:bg-[#007AFF] selection:text-white relative overflow-x-hidden">
+      <div className={`min-h-screen bg-[#F5F5F7] dark:bg-[#1D1D1F] text-[#1D1D1F] dark:text-[#F5F5F7] flex flex-col font-sans transition-colors duration-300 selection:bg-[#007AFF] selection:text-white relative ${activeTab === 'studyHub' ? 'h-screen max-h-screen overflow-hidden' : 'overflow-x-hidden'}`}>
         
+        {/* motion.dev Interactive Scroll Progress Indicator */}
+        <motion.div
+          style={{ scaleX }}
+          className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#083A4F] via-[#407E8C] to-[#A58D66] origin-left z-[9999] pointer-events-none"
+        />
+
         {/* Apple Modern Fluid Ambient Light Mesh */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
           <div className="absolute w-[700px] h-[700px] -top-32 -left-20 bg-[#007AFF]/[0.06] dark:bg-[#007AFF]/[0.08] rounded-full blur-[130px] pointer-events-none" />
@@ -226,21 +240,21 @@ export const App = () => {
       )}
 
       {/* Main View Container */}
-      <main className="flex-1 w-full relative z-10">
+      <main className={`flex-1 w-full relative z-10 ${activeTab === 'studyHub' ? 'min-h-0 overflow-hidden flex flex-col' : ''}`}>
         <ErrorBoundary>
           <Suspense fallback={
             <div className="w-full fluid-container py-12">
               <DashboardSkeleton />
             </div>
           }>
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={activeTab}
                 variants={pageVariants}
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                className="w-full"
+                className={`w-full ${activeTab === 'studyHub' ? 'h-full flex-1 min-h-0 flex flex-col overflow-hidden' : ''}`}
               >
                 {activeTab === 'home' && (
                   <HomePage 
@@ -316,8 +330,8 @@ export const App = () => {
       {/* Persistent Floating AI Assistant */}
       <AiAssistant setActiveTab={setActiveTab} />
 
-      {/* Modern SaaS Footer */}
-      <Footer setActiveTab={setActiveTab} />
+      {/* Modern SaaS Footer (Shown on landing and other pages, hidden in full-height Study Studio) */}
+      {activeTab !== 'studyHub' && <Footer setActiveTab={setActiveTab} />}
 
     </div>
   </TooltipProvider>

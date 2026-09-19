@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   Mic, 
   MicOff, 
@@ -119,11 +119,8 @@ export const VivaExaminer = () => {
         };
         recognition.start();
       } else {
-        setTimeout(() => {
-          setIsRecording(false);
-          setStudentAnswer(currentQ.sampleAnswer);
-          toast.success('Speech recognized (simulated demo transcript inserted)!');
-        }, 3000);
+        setIsRecording(false);
+        toast.info('Speech recognition API is unavailable in this browser environment. Please type your answer directly into the response box.');
       }
     } else {
       setIsRecording(false);
@@ -149,20 +146,37 @@ export const VivaExaminer = () => {
         if (lower.includes(kw.toLowerCase())) matchedCount++;
       });
 
-      const keywordRatio = matchedCount / currentQ.expectedKeywords.length;
-      const computedScore = Math.min(100, Math.round(55 + (keywordRatio * 40) + (studentAnswer.length > 50 ? 5 : 0)));
-      
-      const feedback = computedScore >= 80 
-        ? "Excellent viva response! You clearly articulated the balance criteria and production index tradeoffs."
-        : "Good attempt, but make sure to explicitly mention time complexities, height balance invariants, and memory overhead.";
+      const keywordRatio = currentQ.expectedKeywords.length > 0 
+        ? matchedCount / currentQ.expectedKeywords.length 
+        : 0;
+
+      // Realistic and honest score calculation based on keyword coverage and depth
+      let computedScore = 0;
+      if (studentAnswer.trim().length >= 15 && matchedCount > 0) {
+        computedScore = Math.min(100, Math.round((keywordRatio * 80) + (studentAnswer.trim().length > 60 ? 20 : 10)));
+      } else if (studentAnswer.trim().length >= 15) {
+        computedScore = 15; // Minimal attempt mark
+      }
+
+      const missing = currentQ.expectedKeywords.filter(kw => !lower.includes(kw.toLowerCase()));
+      const matched = currentQ.expectedKeywords.filter(kw => lower.includes(kw.toLowerCase()));
+
+      let feedback = '';
+      if (computedScore >= 80) {
+        feedback = `Excellent technical response! Successfully covered core concepts: [${matched.join(', ')}].`;
+      } else if (computedScore >= 50) {
+        feedback = `Satisfactory answer. Mentioned [${matched.join(', ')}], but missing critical keywords: [${missing.slice(0, 3).join(', ')}].`;
+      } else {
+        feedback = `Incomplete or off-topic answer. Examiner expected key terms such as: [${missing.slice(0, 3).join(', ')}].`;
+      }
 
       setEvaluationResult({
         score: computedScore,
-        confidence: computedScore >= 85 ? 'High (88%)' : 'Medium (72%)',
-        clarity: computedScore >= 80 ? 'Crisp & Technical' : 'Needs Formal Terminology',
+        confidence: computedScore >= 75 ? 'High (85%)' : 'Moderate (65%)',
+        clarity: computedScore >= 70 ? 'Crisp & Technical' : 'Needs Formal Terminology',
         feedback,
-        matchedKeywords: currentQ.expectedKeywords.filter(kw => lower.includes(kw.toLowerCase())),
-        missingKeywords: currentQ.expectedKeywords.filter(kw => !lower.includes(kw.toLowerCase()))
+        matchedKeywords: matched,
+        missingKeywords: missing
       });
 
       setSessionScore(prev => ({

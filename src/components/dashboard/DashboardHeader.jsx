@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Sparkles, Calendar, Zap, ShieldCheck } from 'lucide-react';
 
 export const DashboardHeader = ({ user, aiStatus, upcomingExam }) => {

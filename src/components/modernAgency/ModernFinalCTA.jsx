@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { ArrowRight, Sparkles, BookOpen } from 'lucide-react';
 
 export const ModernFinalCTA = ({ setActiveTab, onOpenAuth, user }) => {

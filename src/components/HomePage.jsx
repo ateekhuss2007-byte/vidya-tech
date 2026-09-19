@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Search, Sparkles, ArrowRight, BookOpen, GraduationCap } from 'lucide-react';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';

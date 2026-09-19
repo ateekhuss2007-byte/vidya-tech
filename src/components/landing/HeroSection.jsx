@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'motion/react';
 import { 
   Sparkles, 
   ArrowRight, 
@@ -292,10 +292,11 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester, user, o
     localStorage.setItem('vidya_target_track', trackKey);
     localStorage.setItem('vidya_selected_exam', examKey);
 
-    const targetTab = selectedGoal === 'mockTest' ? 'mockTests' : selectedGoal === 'cheatsheet' ? 'cheatSheets' : 'studyHub';
+    const targetSem = selectedStream === 'bca' ? selectedBcaSem : selectedSem;
+    localStorage.setItem('vidya_selected_sem', String(targetSem));
 
-    if (selectedStream === 'btech' && onOpenSemester) {
-      onOpenSemester(selectedSem, targetTab);
+    if ((selectedStream === 'btech' || selectedStream === 'bca') && onOpenSemester) {
+      onOpenSemester(targetSem, targetTab);
     } else {
       setActiveTab(targetTab);
     }
@@ -1129,17 +1130,20 @@ export const HeroSection = ({ setActiveTab, onOpenTopic, onOpenSemester, user, o
                       completedAt: new Date().toISOString()
                     };
 
+                    const actualSem = selectedStream === 'bca' ? selectedBcaSem : selectedSem;
+                    const actualTrack = selectedStream === 'bca' ? 'bca_college' : (selectedStream === 'btech' ? 'btech' : selectedStream);
+
                     localStorage.setItem('vidya_diagnostic_profile', JSON.stringify(diagnosticProfile));
-                    localStorage.setItem('vidya_target_track', selectedStream);
+                    localStorage.setItem('vidya_target_track', actualTrack);
                     localStorage.setItem('vidya_target_university', selectedUniversity);
-                    localStorage.setItem('vidya_selected_sem', String(selectedSem));
+                    localStorage.setItem('vidya_selected_sem', String(actualSem));
 
                     toast.success("AI Diagnostic Assessment Complete!", {
-                      description: `Generated custom ${dailyHours}h/day roadmap for ${selectedUniversity} Semester ${selectedSem}.`
+                      description: `Generated custom ${dailyHours}h/day roadmap for ${selectedUniversity} Semester ${actualSem}.`
                     });
 
-                    if (onOpenSemester) {
-                      onOpenSemester(selectedSem, 'studyHub');
+                    if (onOpenSemester && (selectedStream === 'btech' || selectedStream === 'bca')) {
+                      onOpenSemester(actualSem, 'studyHub');
                     } else {
                       setActiveTab('studyHub');
                     }

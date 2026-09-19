@@ -317,3 +317,143 @@ export async function recordMockTestToCloud(
     return null;
   }
 }
+
+// ==========================================
+// 🎓 ACADEMIC PROFILE FIRESTORE PERSISTENCE
+// ==========================================
+
+export interface SavedAcademicProfile {
+  trackId: string;
+  trackTitle: string;
+  semester?: number;
+  branch?: string;
+  universityId: string;
+  universityName: string;
+  collegeId?: string;
+  collegeName?: string;
+  programmeId?: string;
+  programmeName?: string;
+  targetOutcome: string;
+  updatedAt?: any;
+}
+
+/**
+ * Unique device identifier for guest/unauthenticated students
+ */
+export function getLearnerDeviceId(): string {
+  if (typeof window === 'undefined') return 'guest_default';
+  try {
+    let deviceId = localStorage.getItem('vidya_learner_device_id');
+    if (!deviceId) {
+      deviceId = 'device_' + Math.random().toString(36).substring(2, 11) + '_' + Date.now().toString(36);
+      localStorage.setItem('vidya_learner_device_id', deviceId);
+    }
+    return deviceId;
+  } catch {
+    return 'guest_default';
+  }
+}
+
+/**
+ * Saves learner academic profile to Firebase Firestore and localStorage
+ */
+export async function saveLearnerProfileToFirebase(
+  profile: SavedAcademicProfile,
+  explicitUserId?: string
+): Promise<boolean> {
+  const targetUid = explicitUserId || auth?.currentUser?.uid || getLearnerDeviceId();
+  
+  // 1. Instant local persistence for zero-lag hydration
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem('vidya_learner_profile', JSON.stringify(profile));
+      localStorage.setItem('vidya_target_track', profile.trackId);
+    } catch (e) {
+      console.warn('[Storage] Could not write profile to localStorage:', e);
+    }
+  }
+
+  // 2. Persist to Firebase Firestore
+  if (!db || !isFirebaseConfigured()) {
+    console.info('[VIDYA Firebase] Profile saved locally (Firebase not initialized or missing env).');
+    return false;
+  }
+
+  try {
+    // Primary storage under academic_profiles collection
+    const profileDocRef = doc(db, 'academic_profiles', targetUid);
+    await setDoc(profileDocRef, {
+      ...profile,
+      userId: targetUid,
+      updatedAt: serverTimestamp()
+    }, { merge: true });
+
+    // If authenticated user is present, also mirror under users/{uid}/academic_profile/current
+    if (auth?.currentUser?.uid) {
+      const userProfileRef = doc(db, 'users', auth.currentUser.uid, 'academic_profile', 'current');
+      await setDoc(userProfileRef, {
+        ...profile,
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+    }
+
+    console.info(`[VIDYA Firebase] Academic profile saved successfully in Firestore for ID: ${targetUid}`);
+    return true;
+  } catch (err) {
+    console.warn('[VIDYA Firebase] Error saving academic profile to Firestore:', err);
+    return false;
+  }
+}
+
+/**
+ * Loads learner academic profile from Firebase Firestore (with localStorage fallback)
+ */
+export async function loadLearnerProfileFromFirebase(
+  explicitUserId?: string
+): Promise<SavedAcademicProfile | null> {
+  const targetUid = explicitUserId || auth?.currentUser?.uid || getLearnerDeviceId();
+
+  // 1. Try fetching from Cloud Firestore
+  if (db && isFirebaseConfigured()) {
+    try {
+      // Check authenticated user document first
+      if (auth?.currentUser?.uid) {
+        const userDocRef = doc(db, 'users', auth.currentUser.uid, 'academic_profile', 'current');
+        const snap = await getDoc(userDocRef);
+        if (snap.exists()) {
+          const data = snap.data() as SavedAcademicProfile;
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('vidya_learner_profile', JSON.stringify(data));
+          }
+          return data;
+        }
+      }
+
+      // Check academic_profiles collection
+      const docRef = doc(db, 'academic_profiles', targetUid);
+      const snap = await getDoc(docRef);
+      if (snap.exists()) {
+        const data = snap.data() as SavedAcademicProfile;
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('vidya_learner_profile', JSON.stringify(data));
+        }
+        return data;
+      }
+    } catch (err) {
+      console.warn('[VIDYA Firebase] Error reading academic profile from Firestore, falling back to local storage:', err);
+    }
+  }
+
+  // 2. Local fallback
+  if (typeof window !== 'undefined') {
+    try {
+      const stored = localStorage.getItem('vidya_learner_profile');
+      if (stored) {
+        return JSON.parse(stored) as SavedAcademicProfile;
+      }
+    } catch {}
+  }
+
+  return null;
+}
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Search, Compass, PlayCircle, TrendingUp, ArrowRight } from 'lucide-react';
 
 export const ModernHowItWorks = ({ setActiveTab }) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { ArrowRight, Sparkles, CheckCircle2, TrendingUp, Zap } from 'lucide-react';
 
 export const ModernHero = ({ setActiveTab, onOpenAuth, user, onExploreMore }) => {
