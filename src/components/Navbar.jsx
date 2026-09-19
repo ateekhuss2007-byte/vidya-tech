@@ -95,20 +95,12 @@ export const Navbar = ({
 
   // Clean Reference Navigation Links with Icons
   const navLinks = [
-<<<<<<< HEAD
     { id: 'home', label: 'Overview', icon: Home },
     { id: 'studyHub', label: 'Study Room', icon: BookOpen },
     { id: 'collegeHub', label: 'Curriculum', icon: Layers },
     { id: 'mockTests', label: 'Mock Tests', icon: FileCheck },
+    { id: 'igotKarmayogi', label: 'iGOT Karmayogi', icon: Award },
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard }
-=======
-    { id: 'home', label: 'Overview' },
-    { id: 'studyHub', label: 'Study Room' },
-    { id: 'collegeHub', label: 'Curriculum' },
-    { id: 'mockTests', label: 'Mock Tests' },
-    { id: 'igotKarmayogi', label: 'iGOT Karmayogi' },
-    { id: 'dashboard', label: 'Dashboard' }
->>>>>>> upstream/main
   ];
 
   const handleLogout = () => {
